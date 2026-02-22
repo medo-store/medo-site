@@ -53,6 +53,24 @@
       box-shadow:0 0 0 4px rgba(56,189,248,.10);
     }
 
+    .ramadanPill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(245,158,11,.35);
+      background:rgba(245,158,11,.10);
+      color:#fff;font-weight:900;font-size:12px;
+      white-space:nowrap;
+    }
+    .lantern{
+      width:14px;height:14px;display:inline-block;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255,255,255,.85), rgba(255,255,255,.12) 55%, transparent 60%),
+        linear-gradient(180deg, rgba(245,158,11,.95), rgba(245,158,11,.45));
+      border-radius:6px;
+      box-shadow:0 0 14px rgba(245,158,11,.25);
+      border:1px solid rgba(255,255,255,.15);
+    }
+
     .searchWrap{flex:1;min-width:220px;display:flex;align-items:center;gap:8px}
     .search{
       flex:1;
@@ -126,7 +144,7 @@
       overflow:hidden;
       box-shadow: var(--shadow);
       display:flex;flex-direction:column;
-      min-height:240px;
+      min-height:270px;
     }
     .thumb{
       height:96px;
@@ -138,7 +156,13 @@
       display:flex;align-items:center;justify-content:center;
       font-weight:900;letter-spacing:.7px;font-size:12px;
       position:relative;
+      overflow:hidden;
     }
+    .thumb img{
+      width:100%;height:100%;object-fit:cover;opacity:.92;
+      display:block;
+    }
+
     .badge{
       position:absolute;top:8px;inset-inline-start:8px;
       padding:6px 8px;border-radius:999px;
@@ -146,6 +170,7 @@
       background:rgba(0,0,0,.25);
       font-size:11px;font-weight:900;
       display:inline-flex;gap:6px;align-items:center;
+      backdrop-filter: blur(6px);
     }
     .badge.top{border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.12)}
     .badge.offer{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.12)}
@@ -155,6 +180,18 @@
     .meta{margin:0;font-size:12px;color:var(--muted);line-height:1.4}
     .priceRow{display:flex;align-items:center;justify-content:space-between;gap:8px}
     .price{margin:0;font-size:12px;font-weight:900}
+
+    .ratingRow{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      margin-top:2px;
+    }
+    .starsView{
+      display:inline-flex;gap:2px;align-items:center;
+      font-size:12px;color:rgba(246,247,255,.92);font-weight:900;
+    }
+    .starsView .s{opacity:.35}
+    .starsView .s.on{opacity:1}
+    .starsMini{color:rgba(185,193,217,.9);font-weight:800;font-size:12px}
 
     /* Actions */
     .actions{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
@@ -178,7 +215,7 @@
     .overlay{position:fixed;inset:0;background:rgba(0,0,0,.58);display:none;z-index:80}
     .overlay.show{display:block}
 
-    /* ✅ DRAWER FIX for RTL (no transform) */
+    /* Drawer */
     .drawer{
       position:fixed;top:0;bottom:0;
       width:min(360px, 92vw);
@@ -187,12 +224,15 @@
       border:1px solid var(--border);
       box-shadow: var(--shadow);
       z-index:90;
-      transition: right .22s ease;
+      transition: right .22s ease, left .22s ease;
       display:flex;flex-direction:column;
-
-      right:-420px; /* hidden */
     }
-    .drawer.show{ right:0; }
+    /* RTL default: open from right */
+    html[dir="rtl"] .drawer{ right:-420px; left:auto; }
+    html[dir="rtl"] .drawer.show{ right:0; }
+    /* LTR: open from left */
+    html[dir="ltr"] .drawer{ left:-420px; right:auto; }
+    html[dir="ltr"] .drawer.show{ left:0; }
 
     .drawerHeader{
       padding:12px;border-bottom:1px solid var(--border);
@@ -225,7 +265,7 @@
     .modal{position:fixed;inset:0;display:none;z-index:95;align-items:center;justify-content:center;padding:14px}
     .modal.show{display:flex}
     .modalBox{
-      width:min(720px, 96vw);
+      width:min(760px, 96vw);
       background:rgba(14,24,59,.94);
       border:1px solid var(--border);
       border-radius:16px;
@@ -275,15 +315,13 @@
     .cartThumb{
       width:54px;height:54px;border-radius:14px;
       border:1px solid var(--border);
-      background:
-        radial-gradient(40px 30px at 20% 20%, rgba(56,189,248,.25), transparent 65%),
-        radial-gradient(40px 30px at 80% 0%, rgba(225,29,72,.18), transparent 60%),
-        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      background:rgba(255,255,255,.04);
       overflow:hidden;
       flex:0 0 auto;
       display:flex;align-items:center;justify-content:center;
-      font-weight:900;font-size:11px;opacity:.9;
+      font-weight:900;font-size:11px;opacity:.95;
     }
+    .cartThumb img{width:100%;height:100%;object-fit:cover}
     .cartName{font-weight:900;font-size:13px;margin:0 0 4px}
     .cartMeta{margin:0;color:var(--muted);font-size:12px;font-weight:800}
     .qtyRow{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
@@ -323,27 +361,29 @@
       user-select:none;
     }
 
-    /* Gallery */
+    /* Details Gallery */
     .galleryBig{
       width:100%;
       height:220px;
       border-radius:14px;
       border:1px solid var(--border);
-      background:
-        radial-gradient(280px 160px at 25% 30%, rgba(56,189,248,.22), transparent 65%),
-        radial-gradient(280px 160px at 75% 0%, rgba(225,29,72,.18), transparent 60%),
-        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      background:rgba(255,255,255,.04);
+      overflow:hidden;
       display:flex;align-items:center;justify-content:center;
       font-weight:900;letter-spacing:.7px;
+      position:relative;
     }
+    .galleryBig img{width:100%;height:100%;object-fit:cover;display:block}
     .galleryRow{display:flex;gap:10px;flex-wrap:wrap}
     .gThumb{
       width:74px;height:54px;border-radius:12px;
       border:1px solid var(--border);
       background:rgba(255,255,255,.04);
+      overflow:hidden;
       display:flex;align-items:center;justify-content:center;
       cursor:pointer;font-weight:900;font-size:11px;color:rgba(246,247,255,.9);
     }
+    .gThumb img{width:100%;height:100%;object-fit:cover;display:block}
     .gThumb.active{border-color:rgba(56,189,248,.55);background:rgba(56,189,248,.10)}
 
     /* Footer */
@@ -361,7 +401,6 @@
       font-weight:900;font-size:12px;
     }
     .social:hover{filter:brightness(1.08)}
-    .mutedRight{margin-inline-start:auto;font-weight:900;font-size:12px;color:rgba(185,193,217,.9)}
   </style>
 </head>
 
@@ -371,6 +410,7 @@
       <div class="brand">
         <span class="dot"></span>
         <span id="brandText">Medo Gaming Store</span>
+        <span class="ramadanPill" id="ramadanPill"><span class="lantern"></span><span id="ramadanText">رمضان كريم</span></span>
       </div>
 
       <div class="searchWrap">
@@ -405,35 +445,34 @@
   </div>
 
   <div class="container">
-    <div class="sectionTitle">🔥 Top <span class="sectionHint">الأكثر طلبًا</span></div>
+    <div class="sectionTitle" id="titleTop">🔥 Top <span class="sectionHint" id="hintTop">الأكثر طلبًا</span></div>
     <div id="gridTop" class="grid"></div>
 
     <div class="spacer"></div>
 
-    <div class="sectionTitle">🎁 Offers <span class="sectionHint">عروض</span></div>
+    <div class="sectionTitle" id="titleOffers">🎁 Offers <span class="sectionHint" id="hintOffers">عروض</span></div>
     <div id="gridOffers" class="grid"></div>
 
     <div class="spacer"></div>
 
-    <div class="sectionTitle">🎮 Games</div>
+    <div class="sectionTitle" id="titleGames">🎮 Games</div>
     <div id="gridGames" class="grid"></div>
 
     <div class="spacer"></div>
 
-    <div class="sectionTitle">💻 Programs</div>
+    <div class="sectionTitle" id="titlePrograms">💻 Programs</div>
     <div id="gridPrograms" class="grid"></div>
 
     <div class="spacer"></div>
 
-    <div class="sectionTitle">🧾 Accounts</div>
+    <div class="sectionTitle" id="titleAccounts">🧾 Accounts</div>
     <div id="gridAccounts" class="grid"></div>
 
-    <div class="footer">
-      <a class="social" href="https://wa.me/201006760663" target="_blank" rel="noreferrer">WhatsApp</a>
-      <a class="social" href="https://www.instagram.com/medo__rami" target="_blank" rel="noreferrer">Instagram</a>
-      <a class="social" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" rel="noreferrer">Facebook</a>
-      <a class="social" href="mailto:medorami77@gmail.com">Email</a>
-      <span class="mutedRight">© <span id="year"></span> Medo Gaming</span>
+    <div class="footer" id="footer">
+      <a class="social" href="https://wa.me/201006760663" target="_blank" rel="noreferrer" id="waLink">WhatsApp</a>
+      <a class="social" href="https://www.instagram.com/medo__rami" target="_blank" rel="noreferrer" id="igLink">Instagram</a>
+      <a class="social" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" rel="noreferrer" id="fbLink">Facebook</a>
+      <a class="social" href="mailto:medorami77@gmail.com" id="mailLink">Email</a>
     </div>
   </div>
 
@@ -442,7 +481,7 @@
   <!-- MENU DRAWER -->
   <div class="drawer" id="menuDrawer" aria-hidden="true">
     <div class="drawerHeader">
-      <div class="drawerTitle">Menu</div>
+      <div class="drawerTitle" id="menuTitle">Menu</div>
       <button class="iconBtn" id="menuClose">✕</button>
     </div>
     <div class="drawerBody">
@@ -450,23 +489,25 @@
         <div class="note ok" id="drawerUserNote"></div>
         <div class="row">
           <button class="btn" id="editProfileBtn">Edit profile</button>
-          <button class="btn" id="logoutBtn">Logout</button>
+          <button class="btn" id="changePassBtn">Change password</button>
+        </div>
+        <div class="row">
+          <button class="btn btnRed" id="logoutBtn">Logout</button>
         </div>
       </div>
 
       <div class="drawerSection">
-        <p class="drawerLabel">Quick</p>
+        <p class="drawerLabel" id="quickLabel">Quick</p>
         <div class="drawerList">
-          <div class="linkRow" data-scroll="gridTop"><span>Top</span><span class="mini">→</span></div>
-          <div class="linkRow" data-scroll="gridOffers"><span>Offers</span><span class="mini">→</span></div>
-          <div class="linkRow" data-scroll="gridGames"><span>Games</span><span class="mini">→</span></div>
-          <div class="linkRow" data-scroll="gridPrograms"><span>Programs</span><span class="mini">→</span></div>
-          <div class="linkRow" data-scroll="gridAccounts"><span>Accounts</span><span class="mini">→</span></div>
-          <div class="linkRow" id="openContactRow"><span>Contact</span><span class="mini">→</span></div>
-          <div class="linkRow" id="openReviewsRow"><span>Reviews</span><span class="mini">→</span></div>
-          <div class="linkRow" id="openGiftRow"><span>Send Gift</span><span class="mini">→</span></div>
-          <div class="linkRow" id="openInboxRow"><span>Inbox</span><span class="mini">→</span></div>
-          <div class="linkRow" id="openBonusRow"><span>Bonus (Gems)</span><span class="mini">→</span></div>
+          <div class="linkRow" data-scroll="gridTop"><span id="mTop">Top</span><span class="mini">→</span></div>
+          <div class="linkRow" data-scroll="gridOffers"><span id="mOffers">Offers</span><span class="mini">→</span></div>
+          <div class="linkRow" data-scroll="gridGames"><span id="mGames">Games</span><span class="mini">→</span></div>
+          <div class="linkRow" data-scroll="gridPrograms"><span id="mPrograms">Programs</span><span class="mini">→</span></div>
+          <div class="linkRow" data-scroll="gridAccounts"><span id="mAccounts">Accounts</span><span class="mini">→</span></div>
+          <div class="linkRow" id="openContactRow"><span id="mContact">Contact</span><span class="mini">→</span></div>
+          <div class="linkRow" id="openReviewsRow"><span id="mReviews">Reviews</span><span class="mini">→</span></div>
+          <div class="linkRow" id="openInboxRow"><span id="mInbox">Inbox</span><span class="mini">→</span></div>
+          <div class="linkRow" id="openBonusRow"><span id="mBonus">Bonus</span><span class="mini">→</span></div>
         </div>
       </div>
     </div>
@@ -475,40 +516,40 @@
   <!-- FILTER DRAWER -->
   <div class="drawer" id="filterDrawer" aria-hidden="true">
     <div class="drawerHeader">
-      <div class="drawerTitle">Filter</div>
+      <div class="drawerTitle" id="filterTitle">Filter</div>
       <button class="iconBtn" id="filterClose">✕</button>
     </div>
     <div class="drawerBody">
-      <div class="note">اختار القسم والترتيب والسعر وبعدين تطبيق.</div>
+      <div class="note" id="filterNote">اختار القسم والترتيب والسعر وبعدين تطبيق.</div>
 
       <div class="drawerSection">
-        <p class="drawerLabel">Category</p>
+        <p class="drawerLabel" id="filterCatLbl">Category</p>
         <select class="select" id="filterCategory">
-          <option value="all">All</option>
-          <option value="games">Games</option>
-          <option value="programs">Programs</option>
-          <option value="accounts">Accounts</option>
+          <option value="all" id="catAll">All</option>
+          <option value="games" id="catGames">Games</option>
+          <option value="programs" id="catPrograms">Programs</option>
+          <option value="accounts" id="catAccounts">Accounts</option>
         </select>
       </div>
 
       <div class="drawerSection">
-        <p class="drawerLabel">Sort</p>
+        <p class="drawerLabel" id="filterSortLbl">Sort</p>
         <select class="select" id="filterSort">
-          <option value="new">Newest</option>
-          <option value="old">Oldest</option>
-          <option value="low">Low → High</option>
-          <option value="high">High → Low</option>
+          <option value="new" id="sNew">Newest</option>
+          <option value="old" id="sOld">Oldest</option>
+          <option value="low" id="sLow">Low → High</option>
+          <option value="high" id="sHigh">High → Low</option>
         </select>
       </div>
 
       <div class="drawerSection">
-        <p class="drawerLabel">Price</p>
+        <p class="drawerLabel" id="filterPriceLbl">Price</p>
         <div class="row">
           <select class="select" id="priceMode">
-            <option value="off">Off</option>
-            <option value="eq">Equal</option>
-            <option value="lte">≤</option>
-            <option value="gte">≥</option>
+            <option value="off" id="pOff">Off</option>
+            <option value="eq" id="pEq">Equal</option>
+            <option value="lte" id="pLte">≤</option>
+            <option value="gte" id="pGte">≥</option>
           </select>
           <input class="input" id="priceValue" type="number" min="0" placeholder="مثلاً 300" />
         </div>
@@ -522,15 +563,15 @@
   <div class="modal" id="contactModal">
     <div class="modalBox">
       <div class="modalHeader">
-        <div class="modalTitle">Contact</div>
+        <div class="modalTitle" id="contactTitle">Contact</div>
         <button class="iconBtn" id="contactClose">✕</button>
       </div>
       <div class="modalBody">
         <div class="stack">
-          <a class="btn" href="https://wa.me/201006760663" target="_blank">WhatsApp</a>
-          <a class="btn" href="https://www.instagram.com/medo__rami" target="_blank">Instagram</a>
-          <a class="btn" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank">Facebook</a>
-          <a class="btn" href="mailto:medorami77@gmail.com">Email</a>
+          <a class="btn" href="https://wa.me/201006760663" target="_blank" id="contactWA">WhatsApp</a>
+          <a class="btn" href="https://www.instagram.com/medo__rami" target="_blank" id="contactIG">Instagram</a>
+          <a class="btn" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" id="contactFB">Facebook</a>
+          <a class="btn" href="mailto:medorami77@gmail.com" id="contactMail">Email</a>
         </div>
       </div>
     </div>
@@ -540,12 +581,11 @@
   <div class="modal" id="reviewsModal">
     <div class="modalBox">
       <div class="modalHeader">
-        <div class="modalTitle">Reviews</div>
+        <div class="modalTitle" id="reviewsTitle">Reviews</div>
         <button class="iconBtn" id="reviewsClose">✕</button>
       </div>
       <div class="modalBody">
         <div class="stack">
-          <div class="note">المراجعات بتتخزن على نفس الجهاز (Demo).</div>
           <div class="row">
             <input class="input" id="reviewText" placeholder="اكتب رأيك..." />
             <button class="btn btnRed tight" id="addReviewBtn" style="flex:0 0 auto">Post</button>
@@ -556,45 +596,15 @@
     </div>
   </div>
 
-  <!-- GIFT MODAL -->
-  <div class="modal" id="giftModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle">Send Gift</div>
-        <button class="iconBtn" id="giftClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="note">اكتب بريد المستلم. لو مش مسجل هيرفض (Demo).</div>
-          <input class="input" id="giftToEmail" type="email" placeholder="Receiver email" />
-          <div class="row">
-            <select class="select" id="giftType">
-              <option value="gems">Gems</option>
-              <option value="product">Product ID</option>
-            </select>
-            <input class="input" id="giftAmount" type="text" placeholder="Amount / Product ID" />
-          </div>
-          <button class="btn btnRed" id="sendGiftBtn">Send</button>
-          <div class="note err" id="giftErr" style="display:none"></div>
-          <div class="note ok" id="giftOk" style="display:none"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- INBOX MODAL -->
   <div class="modal" id="inboxModal">
     <div class="modalBox">
       <div class="modalHeader">
-        <div class="modalTitle">Inbox</div>
+        <div class="modalTitle" id="inboxTitle">Inbox</div>
         <button class="iconBtn" id="inboxClose">✕</button>
       </div>
       <div class="modalBody">
-        <div class="stack">
-          <div class="note">الرسائل بتتخزن حسب المستخدم (Demo).</div>
-          <div id="inboxList" class="stack"></div>
-          <button class="btn" id="clearInboxBtn">Clear</button>
-        </div>
+        <div class="stack" id="inboxList"></div>
       </div>
     </div>
   </div>
@@ -603,33 +613,178 @@
   <div class="modal" id="bonusModal">
     <div class="modalBox">
       <div class="modalHeader">
-        <div class="modalTitle">Bonus (Gems)</div>
+        <div class="modalTitle" id="bonusTitle">Bonus (Gems)</div>
         <button class="iconBtn" id="bonusClose">✕</button>
       </div>
       <div class="modalBody">
         <div class="stack">
-          <div class="note">كل 100 جنيه شراء = 1 Gem (Demo). تقدر تبدّل الجواهر بكارت خصم.</div>
-          <div class="note ok" id="bonusState"></div>
+          <div class="note ok" id="bonusNote"></div>
+          <div class="note" id="bonusHint"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-          <div class="drawerSection">
-            <p class="drawerLabel">Redeem</p>
+  <!-- AUTH MODAL (Login/Register Step by Step) -->
+  <div class="modal" id="authModal">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="authTitle">Account</div>
+        <button class="iconBtn" id="authClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="row" style="margin-bottom:10px">
+          <button class="btn btnBlue" id="tabLogin">Login</button>
+          <button class="btn btnRed" id="tabRegister">Create account</button>
+        </div>
+
+        <!-- LOGIN -->
+        <div class="stack" id="loginBox">
+          <input class="input" id="loginEmail" type="email" placeholder="Email" />
+          <div class="row">
+            <input class="input" id="loginPass" type="password" placeholder="Password" />
+            <button class="iconBtn" id="loginEye" style="flex:0 0 auto" title="Show/Hide">👁</button>
+          </div>
+          <button class="btn btnRed" id="doLogin">Login</button>
+          <div class="note err" id="loginErr" style="display:none"></div>
+        </div>
+
+        <!-- REGISTER STEPS -->
+        <div class="stack" id="registerBox" style="display:none">
+          <!-- step 1 -->
+          <div class="stack" data-step="1">
+            <input class="input" id="firstName" placeholder="First name" />
+            <input class="input" id="lastName" placeholder="Last name" />
+            <button class="btn btnRed" id="rNext1">Next</button>
+          </div>
+
+          <!-- step 2 -->
+          <div class="stack" data-step="2" style="display:none">
+            <input class="input" id="regEmail" type="email" placeholder="Email" />
             <div class="row">
-              <select class="select" id="redeemChoice">
-                <option value="10">10% (10 Gems)</option>
-                <option value="20">20% (20 Gems)</option>
-                <option value="30">30% (30 Gems)</option>
-                <option value="40">40% (40 Gems)</option>
-              </select>
-              <button class="btn btnRed tight" id="redeemBtn" style="flex:0 0 auto">Redeem</button>
+              <input class="input" id="regPass" type="password" placeholder="Password" />
+              <button class="iconBtn" id="regEye" style="flex:0 0 auto" title="Show/Hide">👁</button>
             </div>
-            <div class="note warn" id="redeemMsg" style="display:none"></div>
-            <div class="note ok" id="redeemOk" style="display:none"></div>
+            <div class="row">
+              <button class="btn" id="rBack2">Back</button>
+              <button class="btn btnRed" id="rNext2">Next</button>
+            </div>
           </div>
 
-          <div class="drawerSection">
-            <p class="drawerLabel">Your Discount Card</p>
-            <div class="note" id="discountCardBox">No active discount card.</div>
+          <!-- step 3 -->
+          <div class="stack" data-step="3" style="display:none">
+            <select class="select" id="regGender">
+              <option value="">Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            <input class="input" id="regAge" type="number" min="1" placeholder="Age" />
+            <div class="row">
+              <button class="btn" id="rBack3">Back</button>
+              <button class="btn btnRed" id="rNext3">Next</button>
+            </div>
           </div>
+
+          <!-- step 4 -->
+          <div class="stack" data-step="4" style="display:none">
+            <input class="input" id="regPhoto" type="file" accept="image/*" />
+            <button class="btn btnRed" id="saveAccount">Save</button>
+            <button class="btn" id="rBack4">Back</button>
+            <div class="note err" id="regErr" style="display:none"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT PROFILE MODAL -->
+  <div class="modal" id="profileModal">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="profileTitle">Edit profile</div>
+        <button class="iconBtn" id="profileClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack">
+          <div class="row">
+            <input class="input" id="editFirst" placeholder="First name" />
+            <input class="input" id="editLast" placeholder="Last name" />
+          </div>
+          <div class="row">
+            <select class="select" id="editGender">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            <input class="input" id="editAge" type="number" min="1" placeholder="Age" />
+          </div>
+          <input class="input" id="editPhoto" type="file" accept="image/*" />
+          <button class="btn btnRed" id="saveProfile">Save</button>
+          <div class="note ok" id="profileOk" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHANGE PASSWORD MODAL -->
+  <div class="modal" id="passModal">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="passTitle">Change password</div>
+        <button class="iconBtn" id="passClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack">
+          <div class="row">
+            <input class="input" id="oldPass" type="password" placeholder="Old password" />
+            <button class="iconBtn" id="oldEye" style="flex:0 0 auto">👁</button>
+          </div>
+          <div class="row">
+            <input class="input" id="newPass" type="password" placeholder="New password" />
+            <button class="iconBtn" id="newEye" style="flex:0 0 auto">👁</button>
+          </div>
+          <button class="btn btnRed" id="savePass">Save</button>
+          <div class="note err" id="passErr" style="display:none"></div>
+          <div class="note ok" id="passOk" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT DETAILS MODAL -->
+  <div class="modal" id="detailsModal">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="detailsTitle">Details</div>
+        <button class="iconBtn" id="detailsClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack">
+          <div class="galleryBig" id="galleryBig"></div>
+          <div class="galleryRow" id="galleryRow"></div>
+
+          <div class="row">
+            <div class="note ok" style="margin:0" id="detailsPrice"></div>
+            <div class="note" style="margin:0" id="detailsRating"></div>
+          </div>
+
+          <div class="note" id="detailsDesc"></div>
+
+          <div class="row">
+            <button class="btn btnBlue" id="detailsAddCart">Add to cart</button>
+            <button class="btn btnRed" id="detailsBuyNow">Buy</button>
+          </div>
+
+          <div class="note warn" id="rateHint"></div>
+          <div class="row" id="rateRow">
+            <button class="iconBtn" data-rate="1">⭐</button>
+            <button class="iconBtn" data-rate="2">⭐</button>
+            <button class="iconBtn" data-rate="3">⭐</button>
+            <button class="iconBtn" data-rate="4">⭐</button>
+            <button class="iconBtn" data-rate="5">⭐</button>
+          </div>
+          <div class="note ok" id="rateOk" style="display:none"></div>
+          <div class="note err" id="rateErr" style="display:none"></div>
         </div>
       </div>
     </div>
@@ -639,1003 +794,1455 @@
   <div class="modal" id="cartModal">
     <div class="modalBox">
       <div class="modalHeader">
-        <div class="modalTitle">Cart</div>
+        <div class="modalTitle" id="cartTitle">Cart</div>
         <button class="iconBtn" id="cartClose">✕</button>
       </div>
       <div class="modalBody">
-        <div class="stack">
-          <div id="cartItems"></div>
-          <div class="totalBar" id="totalBar">
-            <span>الإجمالي</span>
-            <strong id="cartTotal">EGP 0</strong>
-          </div>
-
-          <div class="drawerSection">
-            <p class="drawerLabel">Coupon</p>
-            <div class="row">
-              <input class="input" id="couponInput" placeholder="اكتب كود الخصم (MG1..MI10)" />
-              <button class="btn tight" id="applyCouponBtn" style="flex:0 0 auto">Apply</button>
-            </div>
-            <div class="note warn" id="couponMsg" style="display:none"></div>
-            <div class="note ok" id="couponOk" style="display:none"></div>
-          </div>
-
-          <button class="btn btnRed" id="checkoutBtn">Buy (Checkout)</button>
-          <div class="note" id="checkoutNote" style="display:none"></div>
+        <div class="stack" id="cartList"></div>
+        <div class="totalBar" id="totalBar">
+          <span id="totalLabel">Total</span>
+          <strong id="totalValue">0</strong>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- DETAILS MODAL -->
-  <div class="modal" id="detailsModal">
+  <!-- CHECKOUT MODAL (summary -> confirm -> payment methods) -->
+  <div class="modal" id="checkoutModal">
     <div class="modalBox">
       <div class="modalHeader">
-        <div class="modalTitle" id="detailsTitle">Details</div>
-        <button class="iconBtn" id="detailsClose">✕</button>
+        <div class="modalTitle" id="checkoutTitle">Checkout</div>
+        <button class="iconBtn" id="checkoutClose">✕</button>
       </div>
       <div class="modalBody">
-        <div class="stack">
-          <div class="galleryBig" id="galleryBig">IMG</div>
-          <div class="galleryRow" id="galleryRow"></div>
+        <div class="stack" id="checkoutStep1">
+          <div class="note ok" id="checkoutSummary"></div>
 
-          <div class="note" id="detailsDesc"></div>
           <div class="row">
-            <div class="note ok" id="detailsPrice"></div>
-            <button class="btn btnBlue tight" id="detailsAddCart" style="flex:0 0 auto">🛒 Add</button>
-            <button class="btn btnRed tight" id="detailsBuy" style="flex:0 0 auto">⚡ Buy</button>
+            <input class="input" id="couponInput" placeholder="Coupon code" />
+            <button class="btn btnBlue tight" id="applyCouponBtn" style="flex:0 0 auto">Apply</button>
           </div>
+          <div class="note" id="couponMsg"></div>
+
+          <button class="btn btnRed" id="confirmCheckoutBtn">Confirm</button>
+        </div>
+
+        <div class="stack" id="checkoutStep2" style="display:none">
+          <div class="note ok" id="payHint"></div>
+
+          <div class="stack">
+            <button class="btn" id="payVodafone">Vodafone Cash</button>
+            <button class="btn" id="payEtisalat">Etisalat Cash</button>
+            <button class="btn" id="payOrange">Orange Cash</button>
+            <button class="btn" id="payWe">WE Pay</button>
+            <button class="btn" id="payInsta">InstaPay</button>
+            <button class="btn" id="payCard">Visa / Card</button>
+            <button class="btn" id="payBill">Bill Pay</button>
+            <button class="btn" id="payTelda">Telda</button>
+          </div>
+
+          <div class="row">
+            <button class="btn btnBlue" id="backToSummary">Back</button>
+            <button class="btn btnRed" id="markPaidBtn">I Paid</button>
+          </div>
+
+          <div class="note ok" id="paidOk" style="display:none"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- AUTH MODAL -->
-  <div class="modal" id="authModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle">Account</div>
-        <button class="iconBtn" id="authClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="row">
-            <button class="btn" id="tabLogin">Login</button>
-            <button class="btn" id="tabRegister">Create Account</button>
-          </div>
+<script>
+/* ===========================
+   Helpers
+=========================== */
+const $ = (id)=>document.getElementById(id);
+const show = (el)=>{ if(el) el.classList.add("show"); };
+const hide = (el)=>{ if(el) el.classList.remove("show"); };
+const fmtEGP = (n)=> `${Number(n||0).toFixed(0)} EGP`;
 
-          <div id="loginBox" class="stack">
-            <input class="input" id="loginEmail" type="email" placeholder="Email" />
-            <input class="input" id="loginPass" type="password" placeholder="Password" />
-            <button class="btn btnRed" id="loginBtn">Login</button>
-            <div class="note err" id="loginErr" style="display:none"></div>
-          </div>
+/* ===========================
+   Language (Auto by device)
+=========================== */
+const deviceLang = (navigator.language || "en").toLowerCase().startsWith("ar") ? "ar" : "en";
+document.documentElement.lang = deviceLang;
+document.documentElement.dir  = deviceLang === "ar" ? "rtl" : "ltr";
 
-          <div id="registerBox" class="stack" style="display:none">
-            <input class="input" id="regName" placeholder="اسمك في الموقع" />
-            <input class="input" id="regEmail" type="email" placeholder="Email" />
-            <input class="input" id="regPass" type="password" placeholder="Password" />
-            <button class="btn btnRed" id="registerBtn">Create</button>
-            <div class="note err" id="regErr" style="display:none"></div>
-            <div class="note ok" id="regOk" style="display:none"></div>
-          </div>
+const I18N = {
+  ar:{
+    brand:"Medo Gaming Store",
+    ramadan:"رمضان كريم",
+    search:"🔍 ابحث...",
+    top:"Top", topHint:"الأكثر طلبًا",
+    offers:"Offers", offersHint:"عروض",
+    games:"Games",
+    programs:"Programs",
+    accounts:"Accounts",
+    menu:"القائمة",
+    quick:"سريع",
+    contact:"التواصل",
+    reviews:"المراجعات",
+    inbox:"الرسائل",
+    bonus:"الجواهر",
+    filter:"فلترة",
+    filterNote:"اختار القسم والترتيب والسعر وبعدين تطبيق.",
+    category:"القسم",
+    sort:"الترتيب",
+    price:"السعر",
+    apply:"تطبيق",
+    all:"الكل",
+    newest:"الأحدث",
+    oldest:"الأقدم",
+    lowHigh:"من الأرخص للأغلى",
+    highLow:"من الأغلى للأرخص",
+    off:"إيقاف",
+    equal:"يساوي",
+    total:"الإجمالي",
+    cart:"السلة",
+    details:"تفاصيل",
+    addCart:"إضافة للسلة",
+    buy:"شراء",
+    login:"تسجيل",
+    account:"الحساب",
+    create:"إنشاء حساب",
+    first:"الاسم الأول",
+    last:"الاسم الثاني",
+    email:"البريد",
+    pass:"كلمة السر",
+    gender:"النوع",
+    male:"ذكر",
+    female:"أنثى",
+    age:"العمر",
+    save:"حفظ",
+    next:"التالي",
+    back:"رجوع",
+    logout:"تسجيل خروج",
+    editProfile:"تعديل الحساب",
+    changePass:"تغيير كلمة السر",
+    oldPass:"كلمة السر القديمة",
+    newPass:"كلمة السر الجديدة",
+    post:"نشر",
+    writeReview:"اكتب رأيك...",
+    needLogin:"لازم تسجل دخول الأول",
+    emailUsed:"البريد ده مستخدم قبل كده",
+    wrongLogin:"بيانات الدخول غير صحيحة",
+    saved:"تم الحفظ",
+    passChanged:"تم تغيير كلمة السر",
+    wrongOld:"كلمة السر القديمة غلط",
+    rateHint:"قيّم المنتج (لازم حساب):",
+    rated:"تم تسجيل تقييمك ✅",
+    coupon:"كود الخصم",
+    couponApplied:"تم تطبيق الخصم ✅",
+    couponBad:"كود غير صحيح أو مستخدم قبل كده",
+    checkout:"الدفع",
+    confirm:"تأكيد",
+    payMethods:"طرق الدفع",
+    paid:"تم تسجيل العملية ✅",
+    bonusHint:"الجواهر بتزيد بعد تسجيل عملية شراء.",
+    gemsCount:(n)=>`جواهرك: ${n}`,
+    cartEmpty:"السلة فاضية",
+    inboxEmpty:"مفيش رسائل",
+    reviewSaved:"تم نشر المراجعة ✅"
+  },
+  en:{
+    brand:"Medo Gaming Store",
+    ramadan:"Ramadan Kareem",
+    search:"🔍 Search...",
+    top:"Top", topHint:"Most requested",
+    offers:"Offers", offersHint:"Deals",
+    games:"Games",
+    programs:"Programs",
+    accounts:"Accounts",
+    menu:"Menu",
+    quick:"Quick",
+    contact:"Contact",
+    reviews:"Reviews",
+    inbox:"Inbox",
+    bonus:"Bonus",
+    filter:"Filter",
+    filterNote:"Pick category, sort, price then apply.",
+    category:"Category",
+    sort:"Sort",
+    price:"Price",
+    apply:"Apply",
+    all:"All",
+    newest:"Newest",
+    oldest:"Oldest",
+    lowHigh:"Low → High",
+    highLow:"High → Low",
+    off:"Off",
+    equal:"Equal",
+    total:"Total",
+    cart:"Cart",
+    details:"Details",
+    addCart:"Add to cart",
+    buy:"Buy",
+    login:"Sign in",
+    account:"Account",
+    create:"Create account",
+    first:"First name",
+    last:"Last name",
+    email:"Email",
+    pass:"Password",
+    gender:"Gender",
+    male:"Male",
+    female:"Female",
+    age:"Age",
+    save:"Save",
+    next:"Next",
+    back:"Back",
+    logout:"Logout",
+    editProfile:"Edit profile",
+    changePass:"Change password",
+    oldPass:"Old password",
+    newPass:"New password",
+    post:"Post",
+    writeReview:"Write your review...",
+    needLogin:"Please login first",
+    emailUsed:"Email already exists",
+    wrongLogin:"Wrong email or password",
+    saved:"Saved",
+    passChanged:"Password changed",
+    wrongOld:"Old password is wrong",
+    rateHint:"Rate this product (login required):",
+    rated:"Your rating is saved ✅",
+    coupon:"Coupon code",
+    couponApplied:"Coupon applied ✅",
+    couponBad:"Invalid or already used coupon",
+    checkout:"Checkout",
+    confirm:"Confirm",
+    payMethods:"Payment methods",
+    paid:"Order recorded ✅",
+    bonusHint:"Gems increase after recording a purchase.",
+    gemsCount:(n)=>`Your gems: ${n}`,
+    cartEmpty:"Cart is empty",
+    inboxEmpty:"No messages",
+    reviewSaved:"Review posted ✅"
+  }
+};
+const T = (k,...args)=>{
+  const v = I18N[deviceLang][k];
+  return (typeof v === "function") ? v(...args) : (v ?? k);
+};
 
-          <div class="note warn">ملاحظة: ده Demo على GitHub Pages — الحسابات بتتخزن على نفس الجهاز.</div>
-        </div>
-      </div>
-    </div>
-  </div>
+/* Apply language texts */
+(function applyLang(){
+  $("brandText").textContent = T("brand");
+  $("ramadanText").textContent = T("ramadan");
+  $("search").placeholder = T("search");
 
-  <script>
-    /* ===== Helpers ===== */
-    const $ = (id)=>document.getElementById(id);
-    const money = (x)=> `EGP ${Math.max(0, Math.round(x))}`;
-    const now = ()=> new Date().toISOString();
-    function safeJsonParse(s, fallback){
-      try{ return JSON.parse(s); }catch{ return fallback; }
+  $("titleTop").childNodes[0].textContent = "🔥 " + T("top") + " ";
+  $("hintTop").textContent = T("topHint");
+
+  $("titleOffers").childNodes[0].textContent = "🎁 " + T("offers") + " ";
+  $("hintOffers").textContent = T("offersHint");
+
+  $("titleGames").textContent = "🎮 " + T("games");
+  $("titlePrograms").textContent = "💻 " + T("programs");
+  $("titleAccounts").textContent = "🧾 " + T("accounts");
+
+  $("authText").textContent = T("login");
+
+  $("menuTitle").textContent = T("menu");
+  $("quickLabel").textContent = T("quick");
+  $("mTop").textContent = T("top");
+  $("mOffers").textContent = T("offers");
+  $("mGames").textContent = T("games");
+  $("mPrograms").textContent = T("programs");
+  $("mAccounts").textContent = T("accounts");
+  $("mContact").textContent = T("contact");
+  $("mReviews").textContent = T("reviews");
+  $("mInbox").textContent = T("inbox");
+  $("mBonus").textContent = T("bonus");
+
+  $("filterTitle").textContent = T("filter");
+  $("filterNote").textContent = T("filterNote");
+  $("filterCatLbl").textContent = T("category");
+  $("filterSortLbl").textContent = T("sort");
+  $("filterPriceLbl").textContent = T("price");
+  $("applyFilterBtn").textContent = T("apply");
+  $("catAll").textContent = T("all");
+  $("catGames").textContent = T("games");
+  $("catPrograms").textContent = T("programs");
+  $("catAccounts").textContent = T("accounts");
+  $("sNew").textContent = T("newest");
+  $("sOld").textContent = T("oldest");
+  $("sLow").textContent = T("lowHigh");
+  $("sHigh").textContent = T("highLow");
+  $("pOff").textContent = T("off");
+  $("pEq").textContent = T("equal");
+
+  $("contactTitle").textContent = T("contact");
+  $("reviewsTitle").textContent = T("reviews");
+  $("inboxTitle").textContent = T("inbox");
+  $("bonusTitle").textContent = T("bonus");
+  $("cartTitle").textContent = T("cart");
+  $("checkoutTitle").textContent = T("checkout");
+  $("detailsTitle").textContent = T("details");
+
+  $("reviewText").placeholder = T("writeReview");
+  $("addReviewBtn").textContent = T("post");
+
+  $("tabLogin").textContent = T("login");
+  $("tabRegister").textContent = T("create");
+
+  $("loginEmail").placeholder = T("email");
+  $("loginPass").placeholder = T("pass");
+  $("doLogin").textContent = T("login");
+
+  $("firstName").placeholder = T("first");
+  $("lastName").placeholder = T("last");
+  $("rNext1").textContent = T("next");
+
+  $("regEmail").placeholder = T("email");
+  $("regPass").placeholder = T("pass");
+  $("rBack2").textContent = T("back");
+  $("rNext2").textContent = T("next");
+
+  $("regGender").options[0].textContent = T("gender");
+  $("regGender").options[1].textContent = T("male");
+  $("regGender").options[2].textContent = T("female");
+  $("regAge").placeholder = T("age");
+  $("rBack3").textContent = T("back");
+  $("rNext3").textContent = T("next");
+
+  $("saveAccount").textContent = T("save");
+  $("rBack4").textContent = T("back");
+
+  $("editProfileBtn").textContent = T("editProfile");
+  $("changePassBtn").textContent = T("changePass");
+  $("logoutBtn").textContent = T("logout");
+
+  $("profileTitle").textContent = T("editProfile");
+  $("editFirst").placeholder = T("first");
+  $("editLast").placeholder = T("last");
+  $("editGender").options[0].textContent = T("male");
+  $("editGender").options[1].textContent = T("female");
+  $("editAge").placeholder = T("age");
+  $("saveProfile").textContent = T("save");
+
+  $("passTitle").textContent = T("changePass");
+  $("oldPass").placeholder = T("oldPass");
+  $("newPass").placeholder = T("newPass");
+  $("savePass").textContent = T("save");
+
+  $("detailsAddCart").textContent = T("addCart");
+  $("detailsBuyNow").textContent = T("buy");
+  $("rateHint").textContent = T("rateHint");
+
+  $("totalLabel").textContent = T("total");
+  $("couponInput").placeholder = T("coupon");
+  $("applyCouponBtn").textContent = T("apply");
+  $("confirmCheckoutBtn").textContent = T("confirm");
+  $("payHint").textContent = T("payMethods");
+  $("backToSummary").textContent = T("back");
+  $("markPaidBtn").textContent = (deviceLang==="ar" ? "تم الدفع" : "I Paid");
+
+  $("bonusHint").textContent = T("bonusHint");
+})();
+$("ramadanPill").style.display = "inline-flex";
+
+/* ===========================
+   Local Storage keys
+=========================== */
+const LS_USERS   = "mg_users_v1";
+const LS_SESSION = "mg_session_v1";
+const LS_CART    = "mg_cart_v1";
+const LS_REVIEWS = "mg_reviews_v1";
+const LS_INBOX   = "mg_inbox_v1";
+const LS_RATINGS = "mg_ratings_v1";
+const LS_USED_COUPONS = "mg_used_coupons_v1";
+const LS_ORDERS  = "mg_orders_v1";
+
+/* ===========================
+   Data helpers
+=========================== */
+function jget(key, fallback){
+  try{ return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); }
+  catch{ return fallback; }
+}
+function jset(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+function loadUsers(){ return jget(LS_USERS, {}); }
+function saveUsers(u){ jset(LS_USERS, u); }
+function getSession(){ return jget(LS_SESSION, null); }
+function setSession(s){ jset(LS_SESSION, s); }
+function clearSession(){ localStorage.removeItem(LS_SESSION); }
+
+function loadCart(){ return jget(LS_CART, []); }
+function saveCart(c){ jset(LS_CART, c); }
+
+function loadInbox(){ return jget(LS_INBOX, []); }
+function saveInbox(x){ jset(LS_INBOX, x); }
+
+function loadReviews(){ return jget(LS_REVIEWS, []); }
+function saveReviews(x){ jset(LS_REVIEWS, x); }
+
+function loadRatings(){ return jget(LS_RATINGS, {}); }
+function saveRatings(r){ jset(LS_RATINGS, r); }
+
+function loadUsedCoupons(){ return jget(LS_USED_COUPONS, {}); }
+function saveUsedCoupons(x){ jset(LS_USED_COUPONS, x); }
+
+function loadOrders(){ return jget(LS_ORDERS, []); }
+function saveOrders(x){ jset(LS_ORDERS, x); }
+
+/* ===========================
+   Coupons (NOT visible)
+   Your codes:
+   MG1..MG10 => 10%
+   MZ1..MZ10 => 20%
+   MK1..MK10 => 30%
+   MC1..MC10 => 40%
+   MA1..MA10 => 50%
+   MB1..MB10 => 60%
+   ME1..ME10 => 70%
+   MX1..MX10 => 80%
+   MR1..MR10 => 90%
+   MI1..MI10 => 100%
+=========================== */
+function couponPercent(code){
+  const c = (code||"").trim().toUpperCase();
+  const map = {
+    MG:10, MZ:20, MK:30, MC:40, MA:50, MB:60, ME:70, MX:80, MR:90, MI:100
+  };
+  const prefix = c.slice(0,2);
+  const num = Number(c.slice(2));
+  if(!map[prefix]) return 0;
+  if(!(num>=1 && num<=10)) return 0;
+  return map[prefix];
+}
+
+/* ===========================
+   Products (Edit here only)
+   Put your images in /img/
+=========================== */
+const PRODUCTS = [
+  // Top
+  {id:"top_01", section:"top", category:"games", name:"Top Game 1", price:300, desc:"وصف المنتج هنا...", images:["img/sample1.jpg","img/sample2.jpg"], createdAt: Date.now()-100000},
+  {id:"top_02", section:"top", category:"accounts", name:"Top Account 1", price:600, desc:"وصف الحساب هنا...", images:["img/sample2.jpg"], createdAt: Date.now()-200000},
+
+  // Offers
+  {id:"off_01", section:"offers", category:"programs", name:"Offer Program 1", price:150, desc:"وصف البرنامج هنا...", images:["img/sample3.jpg"], createdAt: Date.now()-300000},
+
+  // Games
+  {id:"g_01", section:"games", category:"games", name:"Game 1", price:200, desc:"وصف اللعبة هنا...", images:["img/sample1.jpg"], createdAt: Date.now()-400000},
+  {id:"g_02", section:"games", category:"games", name:"Game 2", price:450, desc:"وصف اللعبة هنا...", images:["img/sample2.jpg"], createdAt: Date.now()-500000},
+
+  // Programs
+  {id:"p_01", section:"programs", category:"programs", name:"Program 1", price:120, desc:"وصف البرنامج هنا...", images:["img/sample3.jpg"], createdAt: Date.now()-600000},
+
+  // Accounts
+  {id:"a_pubg_01", section:"accounts", category:"accounts", name:"PUBG Account", price:700, desc:"تفاصيل الحساب هنا (سكينات/مستوى/الخ)...", images:["img/sample2.jpg","img/sample1.jpg"], createdAt: Date.now()-700000},
+  {id:"a_steam_01", section:"accounts", category:"accounts", name:"Steam Account", price:900, desc:"تفاصيل الحساب هنا...", images:["img/sample1.jpg"], createdAt: Date.now()-800000},
+];
+
+/* ===========================
+   Overlay / Drawers / Modals
+=========================== */
+const overlay = $("overlay");
+const menuDrawer = $("menuDrawer");
+const filterDrawer = $("filterDrawer");
+
+function openOverlay(){ show(overlay); }
+function closeOverlay(){ hide(overlay); }
+function closeAll(){
+  closeOverlay();
+  hide(menuDrawer);
+  hide(filterDrawer);
+}
+overlay.addEventListener("click", closeAll);
+
+$("menuBtn").addEventListener("click", ()=>{
+  openOverlay();
+  show(menuDrawer);
+});
+$("menuClose").addEventListener("click", closeAll);
+
+$("filterBtn").addEventListener("click", ()=>{
+  openOverlay();
+  show(filterDrawer);
+});
+$("filterClose").addEventListener("click", closeAll);
+
+document.querySelectorAll(".linkRow[data-scroll]").forEach(r=>{
+  r.addEventListener("click", ()=>{
+    closeAll();
+    const id = r.getAttribute("data-scroll");
+    const el = $(id);
+    if(el) el.scrollIntoView({behavior:"smooth"});
+  });
+});
+
+/* Modals helpers */
+function openModal(id){ const m=$(id); if(m){ show(m); } }
+function closeModal(id){ const m=$(id); if(m){ hide(m); } }
+
+$("contactClose").onclick = ()=> closeModal("contactModal");
+$("reviewsClose").onclick = ()=> closeModal("reviewsModal");
+$("inboxClose").onclick = ()=> closeModal("inboxModal");
+$("bonusClose").onclick = ()=> closeModal("bonusModal");
+$("authClose").onclick = ()=> closeModal("authModal");
+$("profileClose").onclick = ()=> closeModal("profileModal");
+$("passClose").onclick = ()=> closeModal("passModal");
+$("detailsClose").onclick = ()=> closeModal("detailsModal");
+$("cartClose").onclick = ()=> closeModal("cartModal");
+$("checkoutClose").onclick = ()=> closeModal("checkoutModal");
+
+$("openContactRow").onclick = ()=>{ closeAll(); openModal("contactModal"); };
+$("openReviewsRow").onclick = ()=>{ closeAll(); openModal("reviewsModal"); renderReviews(); };
+$("openInboxRow").onclick = ()=>{ closeAll(); openModal("inboxModal"); renderInbox(); };
+$("openBonusRow").onclick = ()=>{ closeAll(); openModal("bonusModal"); renderBonus(); };
+
+/* ===========================
+   Session + UI
+=========================== */
+function currentUser(){
+  const s = getSession();
+  if(!s || !s.email) return null;
+  const users = loadUsers();
+  return users[s.email] ? users[s.email] : null;
+}
+function requireLogin(){
+  openModal("authModal");
+  $("loginErr").style.display="block";
+  $("loginErr").textContent = T("needLogin");
+}
+
+function refreshUserUI(){
+  const u = currentUser();
+  if(u){
+    $("authBtn").style.display = "none";
+    $("userChip").style.display = "inline-flex";
+    $("userNameText").textContent = `${u.firstName} ${u.lastName}`;
+    if(u.photo){
+      $("avatarSmall").innerHTML = `<img src="${u.photo}" alt="avatar">`;
+    }else{
+      $("avatarSmall").textContent = (u.firstName?.[0] || "U").toUpperCase();
     }
-
-    /* ===== Storage Keys ===== */
-    const LS_USERS = "mgs_users_v1";           // { email: {name, pass, avatarDataUrl?, gems, discount?, inbox:[] } }
-    const LS_SESSION = "mgs_session_v1";       // { email }
-    const LS_CART = "mgs_cart_v1";             // { items: { [productId]: qty }, coupon?:string, usedCoupons: {code:true} }
-    const LS_REVIEWS="mgs_reviews_demo";
-
-    /* ===== Data (Products Demo) ===== */
-    const products = [
-      { id: 101, type:"games", name:"Action Game Pack", desc:"لعبة أكشن - تقدر تغير الوصف براحتك.", price:250, top:true, images:["G1","G1-2","G1-3"] },
-      { id: 102, type:"games", name:"Racing Game", desc:"سباقات - نسخة نظيفة.", price:180, offer:true, images:["G2","G2-2","G2-3"] },
-      { id: 103, type:"games", name:"Adventure Game", desc:"مغامرة - محتوى طويل.", price:300, images:["G3","G3-2","G3-3"] },
-      { id: 104, type:"games", name:"Online Game", desc:"أونلاين - مناسب للجيمرز.", price:120, offer:true, images:["G4","G4-2","G4-3"] },
-
-      { id: 201, type:"programs", name:"Video Editor Pro", desc:"برنامج مونتاج (Demo).", price:150, top:true, images:["P1","P1-2","P1-3"] },
-      { id: 202, type:"programs", name:"Design Suite", desc:"تصميم وجرافيك.", price:90, images:["P2","P2-2","P2-3"] },
-      { id: 203, type:"programs", name:"Utility Tools", desc:"أدوات مساعدة.", price:220, offer:true, images:["P3","P3-2","P3-3"] },
-      { id: 204, type:"programs", name:"Streaming Helper", desc:"مفيد للبث.", price:60, images:["P4","P4-2","P4-3"] },
-
-      { id: 301, type:"accounts", name:"PUBG Account", desc:"تفاصيل الأكونت هنا… (سكينات/أسلحة/ملابس).", price:700, top:true, images:["A1","A1-2","A1-3","A1-4"] },
-      { id: 302, type:"accounts", name:"Steam Account", desc:"تفاصيل الأكونت هنا…", price:350, offer:true, images:["A2","A2-2","A2-3"] },
-      { id: 303, type:"accounts", name:"Epic Account", desc:"تفاصيل الأكونت هنا…", price:200, images:["A3","A3-2","A3-3"] },
-      { id: 304, type:"accounts", name:"FreeFire Account", desc:"تفاصيل الأكونت هنا…", price:450, images:["A4","A4-2","A4-3"] },
-    ];
-    const productById = (id)=> products.find(p=>p.id===id);
-
-    /* ===== Coupons (MG..MI) ===== */
-    // MG 10% (MG1..MG10), MZ 20%, MK 30%, MC 40%, MA 50%, MB 60%, ME 70%, MX 80%, MR 90%, MI 100%
-    const couponMapPrefix = {
-      MG:10, MZ:20, MK:30, MC:40, MA:50, MB:60, ME:70, MX:80, MR:90, MI:100
-    };
-    function parseCoupon(code){
-      if(!code) return null;
-      const c = code.trim().toUpperCase();
-      const m = c.match(/^([A-Z]{2})(10|[1-9])$/);
-      if(!m) return null;
-      const pref = m[1];
-      const pct = couponMapPrefix[pref];
-      if(!pct) return null;
-      return { code:c, percent:pct };
-    }
-
-    /* ===== Users / Session ===== */
-    function loadUsers(){ return safeJsonParse(localStorage.getItem(LS_USERS)||"{}", {}); }
-    function saveUsers(u){ localStorage.setItem(LS_USERS, JSON.stringify(u)); }
-    function getSession(){ return safeJsonParse(localStorage.getItem(LS_SESSION)||"null", null); }
-    function setSession(s){ localStorage.setItem(LS_SESSION, JSON.stringify(s)); }
-    function clearSession(){ localStorage.removeItem(LS_SESSION); }
-
-    function getCurrentUser(){
-      const sess = getSession();
-      if(!sess || !sess.email) return null;
-      const users = loadUsers();
-      return users[sess.email] ? { email:sess.email, ...users[sess.email] } : null;
-    }
-    function updateUser(email, patch){
-      const users = loadUsers();
-      if(!users[email]) return;
-      users[email] = { ...users[email], ...patch };
-      saveUsers(users);
-    }
-
-    /* ===== Inbox / Notifications ===== */
-    function pushInbox(msg){
-      const u = getCurrentUser();
-      if(!u) return;
-      const users = loadUsers();
-      users[u.email].inbox = users[u.email].inbox || [];
-      users[u.email].inbox.unshift({ at: now(), text: msg });
-      saveUsers(users);
-      refreshCounts();
-    }
-    function loadInbox(){
-      const u = getCurrentUser();
-      if(!u) return [];
-      const users = loadUsers();
-      return (users[u.email].inbox || []);
-    }
-    function clearInbox(){
-      const u = getCurrentUser();
-      if(!u) return;
-      const users = loadUsers();
-      users[u.email].inbox = [];
-      saveUsers(users);
-      refreshCounts();
-    }
-
-    /* ===== Gems / Bonus ===== */
-    function addGemsFromSpend(amount){
-      const u = getCurrentUser();
-      if(!u) return;
-      const add = Math.floor(Math.max(0, amount) / 100); // 1 gem لكل 100
-      if(add <= 0) return;
-      const users = loadUsers();
-      users[u.email].gems = (users[u.email].gems || 0) + add;
-      saveUsers(users);
-      pushInbox(`💎 حصلت على ${add} Gems بسبب شراء بقيمة ${money(amount)}.`);
-    }
-
-    /* Discount card stored on user: {percent, code, expiresAt?} */
-    function setDiscountCard(percent){
-      const u = getCurrentUser();
-      if(!u) return;
-      const code = `GEMS-${percent}-${Math.random().toString(36).slice(2,7).toUpperCase()}`;
-      updateUser(u.email, { discount: { percent, code, at: now() } });
-      pushInbox(`🎟️ اتعملتلك كارت خصم ${percent}% (Code: ${code}).`);
-    }
-    function getDiscountCard(){
-      const u = getCurrentUser();
-      if(!u) return null;
-      return u.discount || null;
-    }
-
-    /* ===== Cart ===== */
-    function loadCart(){
-      const base = safeJsonParse(localStorage.getItem(LS_CART)||"null", null);
-      return base || { items:{}, coupon:null, usedCoupons:{} };
-    }
-    function saveCart(c){ localStorage.setItem(LS_CART, JSON.stringify(c)); }
-    function cartCount(){
-      const c = loadCart();
-      return Object.values(c.items||{}).reduce((a,b)=>a+b,0);
-    }
-    function cartLines(){
-      const c = loadCart();
-      const items = c.items || {};
-      return Object.keys(items).map(pid=>{
-        const p = productById(Number(pid));
-        return p ? { product:p, qty:items[pid] } : null;
-      }).filter(Boolean);
-    }
-    function cartSubtotal(){
-      return cartLines().reduce((sum, line)=> sum + (line.product.price * line.qty), 0);
-    }
-    function cartDiscountAmount(){
-      const c = loadCart();
-      const subtotal = cartSubtotal();
-      let pct = 0;
-
-      // coupon (single-use global on device)
-      if(c.coupon){
-        const parsed = parseCoupon(c.coupon);
-        if(parsed) pct = Math.max(pct, parsed.percent);
-      }
-
-      // discount card from gems (per user)
-      const card = getDiscountCard();
-      if(card && card.percent) pct = Math.max(pct, card.percent);
-
-      const disc = subtotal * (pct/100);
-      return { percent:pct, amount:disc };
-    }
-    function cartTotal(){
-      const sub = cartSubtotal();
-      const disc = cartDiscountAmount();
-      return Math.max(0, sub - disc.amount);
-    }
-
-    function addToCart(productId, qty=1){
-      const c = loadCart();
-      c.items = c.items || {};
-      c.items[productId] = (c.items[productId] || 0) + qty;
-      saveCart(c);
-      refreshCounts();
-      pushInbox(`🛒 اتضاف للسلة: #${productId} (+${qty}).`);
-    }
-    function setQty(productId, qty){
-      const c = loadCart();
-      c.items = c.items || {};
-      if(qty <= 0) delete c.items[productId];
-      else c.items[productId] = qty;
-      saveCart(c);
-      refreshCounts();
-    }
-    function clearCart(){
-      const c = loadCart();
-      c.items = {};
-      c.coupon = null;
-      saveCart(c);
-      refreshCounts();
-    }
-
-    /* ===== UI / Drawers / Modals ===== */
-    const overlay = $("overlay");
-    const menuDrawer = $("menuDrawer");
-    const filterDrawer = $("filterDrawer");
-
-    function openOverlay(){ overlay.classList.add("show"); }
-    function closeOverlay(){ overlay.classList.remove("show"); }
-
-    function hideAllPopups(){
-      menuDrawer.classList.remove("show");
-      filterDrawer.classList.remove("show");
-      ["contactModal","reviewsModal","giftModal","inboxModal","bonusModal","cartModal","detailsModal","authModal"].forEach(id=>{
-        $(id).classList.remove("show");
-      });
-      menuDrawer.setAttribute("aria-hidden","true");
-      filterDrawer.setAttribute("aria-hidden","true");
-    }
-
-    function closeAll(){
-      closeOverlay();
-      hideAllPopups();
-      // reset small messages
-      $("giftErr").style.display="none";
-      $("giftOk").style.display="none";
-      $("couponMsg").style.display="none";
-      $("couponOk").style.display="none";
-      $("checkoutNote").style.display="none";
-      $("redeemMsg").style.display="none";
-      $("redeemOk").style.display="none";
-      $("loginErr").style.display="none";
-      $("regErr").style.display="none";
-      $("regOk").style.display="none";
-    }
-
-    function openDrawer(drawer){
-      openOverlay();
-      drawer.classList.add("show");
-      drawer.setAttribute("aria-hidden","false");
-    }
-    function openModal(modalId){
-      openOverlay();
-      $(modalId).classList.add("show");
-    }
-
-    overlay.addEventListener("click", closeAll);
-
-    /* ===== Rendering products ===== */
-    function cardHTML(p){
-      const badge = p.top ? `<span class="badge top">🔥 Top</span>` : (p.offer ? `<span class="badge offer">🎁 Offer</span>` : "");
-      return `
-        <div class="card">
-          <div class="thumb">
-            ${badge}
-            ${p.type.toUpperCase()}
-          </div>
-          <div class="content">
-            <p class="name">${p.name}</p>
-            <p class="meta">${p.desc || ""}</p>
-            <div class="priceRow">
-              <p class="price">${money(p.price)}</p>
-              <span class="sectionHint">#${p.id}</span>
-            </div>
-            <div class="actions">
-              <button class="btn btnBlue" data-act="details" data-id="${p.id}">ℹ️ Details</button>
-              <button class="btn" data-act="add" data-id="${p.id}">🛒 Add</button>
-              <button class="btn btnRed" data-act="buy" data-id="${p.id}">⚡ Buy</button>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function applyFilters(list){
-      const q = ($("search").value||"").toLowerCase().trim();
-      const cat = $("filterCategory").value;
-      const sort = $("filterSort").value;
-      const pm = $("priceMode").value;
-      const pv = Number($("priceValue").value);
-
-      let out = [...list];
-      if(q) out = out.filter(p => (p.name + " " + (p.desc||"")).toLowerCase().includes(q));
-      if(cat !== "all") out = out.filter(p => p.type === cat);
-
-      if(pm !== "off" && !Number.isNaN(pv) && String($("priceValue").value).trim()!==""){
-        if(pm === "eq") out = out.filter(p=>p.price === pv);
-        if(pm === "lte") out = out.filter(p=>p.price <= pv);
-        if(pm === "gte") out = out.filter(p=>p.price >= pv);
-      }
-
-      if(sort === "new") out.sort((a,b)=> b.id - a.id);
-      if(sort === "old") out.sort((a,b)=> a.id - b.id);
-      if(sort === "low") out.sort((a,b)=> a.price - b.price);
-      if(sort === "high") out.sort((a,b)=> b.price - a.price);
-
-      return out;
-    }
-
-    function renderAll(){
-      const filtered = applyFilters(products);
-
-      const tops = filtered.filter(p=>p.top);
-      const offers = filtered.filter(p=>p.offer);
-
-      $("gridTop").innerHTML = tops.length ? tops.map(cardHTML).join("") : `<div class="note">مفيش Top حالياً.</div>`;
-      $("gridOffers").innerHTML = offers.length ? offers.map(cardHTML).join("") : `<div class="note">مفيش Offers حالياً.</div>`;
-      $("gridGames").innerHTML = filtered.filter(p=>p.type==="games").map(cardHTML).join("") || `<div class="note">مفيش Games.</div>`;
-      $("gridPrograms").innerHTML = filtered.filter(p=>p.type==="programs").map(cardHTML).join("") || `<div class="note">مفيش Programs.</div>`;
-      $("gridAccounts").innerHTML = filtered.filter(p=>p.type==="accounts").map(cardHTML).join("") || `<div class="note">مفيش Accounts.</div>`;
-
-      // bind actions
-      document.querySelectorAll("[data-act]").forEach(btn=>{
-        btn.onclick = ()=>{
-          const id = Number(btn.dataset.id);
-          const act = btn.dataset.act;
-          if(act==="details") openDetails(id);
-          if(act==="add"){
-            if(!getCurrentUser()){
-              openAuth();
-              $("loginErr").style.display="block";
-              $("loginErr").textContent = "لازم تعمل Login الأول عشان السلة والبونص.";
-              return;
-            }
-            addToCart(id,1);
-          }
-          if(act==="buy"){
-            if(!getCurrentUser()){
-              openAuth();
-              $("loginErr").style.display="block";
-              $("loginErr").textContent = "لازم تعمل Login الأول عشان الشراء.";
-              return;
-            }
-            // buy single item flow: add, then open cart
-            addToCart(id,1);
-            openCart();
-          }
-        };
-      });
-    }
-
-    /* ===== Details ===== */
-    let currentDetailsId = null;
-    let currentGalleryIndex = 0;
-
-    function openDetails(id){
-      const p = productById(id);
-      if(!p) return;
-
-      currentDetailsId = id;
-      currentGalleryIndex = 0;
-
-      $("detailsTitle").textContent = `${p.name} (#${p.id})`;
-      $("detailsDesc").textContent = p.desc || "";
-      $("detailsPrice").textContent = `السعر: ${money(p.price)}`;
-
-      renderGallery(p);
-
-      openModal("detailsModal");
-    }
-
-    function renderGallery(p){
-      const imgs = p.images || ["IMG"];
-      const active = imgs[currentGalleryIndex] || imgs[0];
-      $("galleryBig").textContent = active;
-
-      $("galleryRow").innerHTML = imgs.map((t,idx)=>{
-        return `<div class="gThumb ${idx===currentGalleryIndex?"active":""}" data-g="${idx}">${t}</div>`;
-      }).join("");
-
-      document.querySelectorAll("[data-g]").forEach(el=>{
-        el.onclick = ()=>{
-          currentGalleryIndex = Number(el.dataset.g);
-          renderGallery(p);
-        };
-      });
-    }
-
-    $("detailsClose").onclick = closeAll;
-    $("detailsAddCart").onclick = ()=>{
-      if(!currentDetailsId) return;
-      if(!getCurrentUser()){ openAuth(); return; }
-      addToCart(currentDetailsId,1);
-    };
-    $("detailsBuy").onclick = ()=>{
-      if(!currentDetailsId) return;
-      if(!getCurrentUser()){ openAuth(); return; }
-      addToCart(currentDetailsId,1);
-      closeAll();
-      openCart();
-    };
-
-    /* ===== Reviews ===== */
-    function loadReviews(){ return safeJsonParse(localStorage.getItem(LS_REVIEWS)||"[]", []); }
-    function saveReviews(r){ localStorage.setItem(LS_REVIEWS, JSON.stringify(r)); }
-    function escapeHtml(s){ return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
-
-    function renderReviews(){
-      const list = $("reviewsList");
-      const reviews = loadReviews();
-      if(!reviews.length){
-        list.innerHTML = `<div class="note">مفيش مراجعات لسه.</div>`;
-        return;
-      }
-      list.innerHTML = reviews.map(r=>{
-        const time = new Date(r.at).toLocaleString();
-        return `<div class="note"><strong>${escapeHtml(r.by)}</strong> — ${time}<br>${escapeHtml(r.text)}</div>`;
-      }).join("");
-    }
-
-    $("addReviewBtn").onclick = ()=>{
-      const text = ($("reviewText").value||"").trim();
-      if(!text) return;
-      const u = getCurrentUser();
-      const by = u ? u.name : "زائر";
-      const reviews = loadReviews();
-      reviews.unshift({ at: now(), by, text });
-      saveReviews(reviews);
-      $("reviewText").value="";
-      renderReviews();
-      pushInbox("📝 اتسجلت مراجعة جديدة على الموقع.");
-    };
-
-    /* ===== Auth ===== */
-    function openAuth(){
-      openModal("authModal");
-      // default tab login
-      showAuthTab("login");
-    }
-    function showAuthTab(tab){
-      $("loginBox").style.display = tab==="login" ? "flex" : "none";
-      $("registerBox").style.display = tab==="register" ? "flex" : "none";
-      $("loginErr").style.display="none";
-      $("regErr").style.display="none";
-      $("regOk").style.display="none";
-    }
-    $("authClose").onclick = closeAll;
-    $("tabLogin").onclick = ()=> showAuthTab("login");
-    $("tabRegister").onclick = ()=> showAuthTab("register");
-
-    $("registerBtn").onclick = ()=>{
-      const name = ($("regName").value||"").trim();
-      const email = ($("regEmail").value||"").trim().toLowerCase();
-      const pass = ($("regPass").value||"").trim();
-
-      $("regErr").style.display="none";
-      $("regOk").style.display="none";
-
-      if(!name || !email || !pass){
-        $("regErr").style.display="block";
-        $("regErr").textContent="املأ البيانات كلها.";
-        return;
-      }
-
-      const users = loadUsers();
-      if(users[email]){
-        $("regErr").style.display="block";
-        $("regErr").textContent="الإيميل ده متسجل قبل كده. ادخل Login.";
-        return;
-      }
-
-      users[email] = { name, pass, gems:0, inbox:[], discount:null, avatar:null };
-      saveUsers(users);
-
-      $("regOk").style.display="block";
-      $("regOk").textContent="اتعمل الحساب ✅ دلوقتي اعمل Login.";
-      pushInbox("✅ اتعمل حساب جديد.");
-    };
-
-    $("loginBtn").onclick = ()=>{
-      const email = ($("loginEmail").value||"").trim().toLowerCase();
-      const pass = ($("loginPass").value||"").trim();
-      $("loginErr").style.display="none";
-
-      const users = loadUsers();
-      if(!users[email]){
-        $("loginErr").style.display="block";
-        $("loginErr").textContent="الحساب ده مش موجود. اعمل Create Account.";
-        return;
-      }
-      if(users[email].pass !== pass){
-        $("loginErr").style.display="block";
-        $("loginErr").textContent="كلمة السر غلط.";
-        return;
-      }
-
-      setSession({ email });
-      pushInbox("👋 تم تسجيل الدخول بنجاح.");
-      closeAll();
-      refreshHeaderUser();
-      refreshCounts();
-    };
-
-    function logout(){
-      clearSession();
-      closeAll();
-      refreshHeaderUser();
-      refreshCounts();
-    }
-    $("logoutBtn").onclick = logout;
-
-    $("editProfileBtn").onclick = ()=>{
-      const u = getCurrentUser();
-      if(!u) return;
-      const newName = prompt("اكتب اسم جديد:", u.name || "");
-      if(newName && newName.trim()){
-        updateUser(u.email, { name:newName.trim() });
-        pushInbox("✏️ تم تعديل اسم الحساب.");
-        refreshHeaderUser();
-      }
-    };
-
-    /* ===== Header user state ===== */
-    function refreshHeaderUser(){
-      const u = getCurrentUser();
-      if(!u){
-        $("authBtn").style.display="inline-flex";
-        $("userChip").style.display="none";
-        $("drawerUserBox").style.display="none";
-        return;
-      }
-
-      $("authBtn").style.display="none";
-      $("userChip").style.display="inline-flex";
-      $("userNameText").textContent = u.name || u.email;
-
-      const letter = (u.name || u.email || "U").trim().charAt(0).toUpperCase();
-      $("avatarSmall").textContent = letter;
-
-      $("drawerUserBox").style.display="block";
-      $("drawerUserNote").textContent = `Logged in as: ${u.name || u.email}`;
-    }
-
-    /* ===== Cart UI ===== */
-    function openCart(){
-      renderCart();
-      openModal("cartModal");
-    }
-    $("cartClose").onclick = closeAll;
-
-    function renderCart(){
-      const lines = cartLines();
-      const box = $("cartItems");
-
-      if(!lines.length){
-        box.innerHTML = `<div class="note">السلة فاضية.</div>`;
-        $("cartTotal").textContent = money(0);
-        return;
-      }
-
-      box.innerHTML = lines.map(line=>{
-        const p = line.product;
-        const qty = line.qty;
-        return `
-          <div class="cartItem">
-            <div class="cartLeft">
-              <div class="cartThumb">${(p.images && p.images[0]) ? p.images[0] : "IMG"}</div>
-              <div style="flex:1">
-                <div class="cartName">${p.name}</div>
-                <div class="cartMeta">#${p.id} • ${money(p.price)} • ${p.type}</div>
-                <div class="qtyRow">
-                  <button class="qtyBtn" data-q="plus" data-id="${p.id}">+</button>
-                  <div class="qtyNum">${qty}</div>
-                  <button class="qtyBtn" data-q="minus" data-id="${p.id}">-</button>
-                  <button class="detailsBtn" data-det="${p.id}">Details</button>
-                  <button class="removeBtn" data-rem="${p.id}">Remove</button>
-                </div>
-              </div>
-            </div>
-            <strong>${money(p.price * qty)}</strong>
-          </div>
-        `;
-      }).join("");
-
-      const disc = cartDiscountAmount();
-      const sub = cartSubtotal();
-      const total = cartTotal();
-
-      $("cartTotal").textContent = money(total);
-
-      // bind
-      document.querySelectorAll("[data-q]").forEach(b=>{
-        b.onclick = ()=>{
-          const id = Number(b.dataset.id);
-          const c = loadCart();
-          const cur = c.items[id] || 0;
-          if(b.dataset.q==="plus") setQty(id, cur+1);
-          if(b.dataset.q==="minus") setQty(id, cur-1);
-          renderCart();
-        };
-      });
-      document.querySelectorAll("[data-rem]").forEach(b=>{
-        b.onclick = ()=>{
-          const id = Number(b.dataset.rem);
-          setQty(id,0);
-          renderCart();
-        };
-      });
-      document.querySelectorAll("[data-det]").forEach(b=>{
-        b.onclick = ()=>{
-          const id = Number(b.dataset.det);
-          closeAll();
-          openDetails(id);
-        };
-      });
-
-      // show subtotal/discount info in checkoutNote when open
-      $("checkoutNote").style.display="none";
-
-      // Coupon fields reset messages
-      $("couponMsg").style.display="none";
-      $("couponOk").style.display="none";
-    }
-
-    $("cartBtn").onclick = ()=>{
-      if(!getCurrentUser()){ openAuth(); return; }
-      openCart();
-    };
-
-    $("applyCouponBtn").onclick = ()=>{
-      const code = ($("couponInput").value||"").trim().toUpperCase();
-      $("couponMsg").style.display="none";
-      $("couponOk").style.display="none";
-
-      const parsed = parseCoupon(code);
-      if(!parsed){
-        $("couponMsg").style.display="block";
-        $("couponMsg").textContent = "الكود غير صحيح.";
-        return;
-      }
-
-      const c = loadCart();
-      c.usedCoupons = c.usedCoupons || {};
-      if(c.usedCoupons[parsed.code]){
-        $("couponMsg").style.display="block";
-        $("couponMsg").textContent = "الكود ده اتستخدم قبل كده على نفس الجهاز.";
-        return;
-      }
-
-      c.coupon = parsed.code;
-      saveCart(c);
-
-      $("couponOk").style.display="block";
-      $("couponOk").textContent = `✅ تم تطبيق خصم ${parsed.percent}% (كود: ${parsed.code}).`;
-      pushInbox(`🏷️ تم تطبيق كوبون ${parsed.code} (${parsed.percent}%).`);
-      renderCart();
-      refreshCounts();
-    };
-
-    $("checkoutBtn").onclick = ()=>{
-      const u = getCurrentUser();
-      if(!u){ openAuth(); return; }
-
-      const c = loadCart();
-      const lines = cartLines();
-      if(!lines.length) return;
-
-      const sub = cartSubtotal();
-      const disc = cartDiscountAmount();
-      const total = cartTotal();
-
-      // mark coupon as used (single-use on device)
-      if(c.coupon){
-        const parsed = parseCoupon(c.coupon);
-        if(parsed){
-          c.usedCoupons = c.usedCoupons || {};
-          c.usedCoupons[parsed.code] = true;
-          c.coupon = null; // clear after consume
-          saveCart(c);
-        }
-      }
-
-      // if user has discount card (from gems), we consume it once
-      const card = getDiscountCard();
-      if(card){
-        updateUser(u.email, { discount: null });
-      }
-
-      // grant gems based on "total paid" or subtotal? choose paid amount for balance:
-      addGemsFromSpend(total);
-
-      pushInbox(`✅ تمت عملية شراء (Demo): Subtotal ${money(sub)} - Discount ${disc.percent}% = Total ${money(total)}.`);
-
-      $("checkoutNote").style.display="block";
-      $("checkoutNote").className = "note ok";
-      $("checkoutNote").textContent = "تم الشراء (Demo) ✅ — اتضافت رسائل وبونص حسب القيمة.";
-
-      // clear cart after purchase
-      clearCart();
-      renderCart();
-    };
-
-    /* ===== Inbox UI ===== */
-    function openInbox(){
-      renderInbox();
-      openModal("inboxModal");
-    }
-    function renderInbox(){
-      const list = $("inboxList");
-      const u = getCurrentUser();
-      if(!u){
-        list.innerHTML = `<div class="note err">اعمل Login الأول.</div>`;
-        return;
-      }
-      const msgs = loadInbox();
-      if(!msgs.length){
-        list.innerHTML = `<div class="note">مفيش رسائل لسه.</div>`;
-        return;
-      }
-      list.innerHTML = msgs.map(m=>{
-        const t = new Date(m.at).toLocaleString();
-        return `<div class="note"><strong>${t}</strong><br>${escapeHtml(m.text)}</div>`;
-      }).join("");
-    }
-    $("inboxBtn").onclick = ()=>{
-      if(!getCurrentUser()){ openAuth(); return; }
-      openInbox();
-    };
-    $("inboxClose").onclick = closeAll;
-    $("clearInboxBtn").onclick = ()=>{
-      clearInbox();
-      renderInbox();
-    };
-
-    /* ===== Bonus UI ===== */
-    function openBonus(){
-      renderBonus();
-      openModal("bonusModal");
-    }
-    function renderBonus(){
-      const u = getCurrentUser();
-      if(!u){
-        $("bonusState").className="note err";
-        $("bonusState").textContent="اعمل Login الأول.";
-        $("discountCardBox").textContent="No active discount card.";
-        return;
-      }
-      $("bonusState").className="note ok";
-      $("bonusState").textContent=`💎 Gems: ${u.gems || 0}`;
-      const card = u.discount;
-      $("discountCardBox").textContent = card ? `Active: ${card.percent}% (Code: ${card.code})` : "No active discount card.";
-    }
-    $("gemsBtn").onclick = ()=>{
-      if(!getCurrentUser()){ openAuth(); return; }
-      openBonus();
-    };
-    $("bonusClose").onclick = closeAll;
-
-    $("redeemBtn").onclick = ()=>{
-      $("redeemMsg").style.display="none";
-      $("redeemOk").style.display="none";
-      const u = getCurrentUser();
-      if(!u){
-        $("redeemMsg").style.display="block";
-        $("redeemMsg").textContent="اعمل Login الأول.";
-        return;
-      }
-      const pct = Number($("redeemChoice").value);
-      const need = pct; // 10% needs 10 gems ... 40% needs 40 gems
-      if((u.gems || 0) < need){
-        $("redeemMsg").style.display="block";
-        $("redeemMsg").textContent=`معاك ${u.gems||0} Gems بس. محتاج ${need}.`;
-        return;
-      }
-
-      // spend gems
-      updateUser(u.email, { gems: (u.gems||0) - need });
-      setDiscountCard(pct);
-
-      $("redeemOk").style.display="block";
-      $("redeemOk").textContent=`✅ اتعمل كارت خصم ${pct}% واتخصمت ${need} Gems.`;
-
-      refreshCounts();
-      renderBonus();
-    };
-
-    /* ===== Gift ===== */
-    $("sendGiftBtn").onclick = ()=>{
-      $("giftErr").style.display="none";
-      $("giftOk").style.display="none";
-
-      const u = getCurrentUser();
-      if(!u){
-        $("giftErr").style.display="block";
-        $("giftErr").textContent="اعمل Login الأول.";
-        return;
-      }
-
-      const toEmail = ($("giftToEmail").value||"").trim().toLowerCase();
-      const type = $("giftType").value;
-      const amount = ($("giftAmount").value||"").trim();
-
-      const users = loadUsers();
-      if(!users[toEmail]){
-        $("giftErr").style.display="block";
-        $("giftErr").textContent="البريد ده مش عامل حساب عندنا (Demo).";
-        return;
-      }
-
-      if(type==="gems"){
-        const n = Number(amount);
-        if(!Number.isFinite(n) || n<=0){
-          $("giftErr").style.display="block";
-          $("giftErr").textContent="اكتب رقم Gems صحيح.";
-          return;
-        }
-        if((u.gems||0) < n){
-          $("giftErr").style.display="block";
-          $("giftErr").textContent="Gems مش كفاية.";
-          return;
-        }
-
-        // transfer
-        users[u.email].gems = (users[u.email].gems||0) - n;
-        users[toEmail].gems = (users[toEmail].gems||0) + n;
-
-        users[toEmail].inbox = users[toEmail].inbox || [];
-        users[toEmail].inbox.unshift({ at: now(), text: `🎁 جالك ${n} Gems هدية من ${u.name || u.email}.` });
-
-        users[u.email].inbox = users[u.email].inbox || [];
-        users[u.email].inbox.unshift({ at: now(), text: `✅ اتبعت ${n} Gems لـ ${toEmail}.` });
-
-        saveUsers(users);
-
-        $("giftOk").style.display="block";
-        $("giftOk").textContent="✅ تم إرسال الهدية.";
-        refreshCounts();
-        refreshHeaderUser();
-        return;
-      }
-
-      if(type==="product"){
-        const pid = Number(amount);
-        const p = productById(pid);
-        if(!p){
-          $("giftErr").style.display="block";
-          $("giftErr").textContent="Product ID غلط.";
-          return;
-        }
-
-        users[toEmail].inbox = users[toEmail].inbox || [];
-        users[toEmail].inbox.unshift({ at: now(), text: `🎁 جالك هدية (Demo): ${p.name} (#${p.id}) من ${u.name || u.email}.` });
-
-        users[u.email].inbox = users[u.email].inbox || [];
-        users[u.email].inbox.unshift({ at: now(), text: `✅ اتبعت هدية (Demo): #${p.id} لـ ${toEmail}.` });
-
-        saveUsers(users);
-
-        $("giftOk").style.display="block";
-        $("giftOk").textContent="✅ تم إرسال الهدية (Demo).";
-        refreshCounts();
-        return;
-      }
-    };
-
-    /* ===== Menu / Filter / Modals bindings ===== */
-    $("menuBtn").onclick = ()=> openDrawer(menuDrawer);
-    $("menuClose").onclick = closeAll;
-
-    $("filterBtn").onclick = ()=> openDrawer(filterDrawer);
-    $("filterClose").onclick = closeAll;
-
-    $("applyFilterBtn").onclick = ()=>{
-      closeAll();
-      renderAll();
-    };
-
-    document.querySelectorAll("[data-scroll]").forEach(x=>{
-      x.addEventListener("click", ()=>{
-        const el = document.getElementById(x.dataset.scroll);
-        if(!el) return;
-        closeAll();
-        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior:"smooth" });
-      });
+    $("drawerUserBox").style.display = "block";
+    $("drawerUserNote").textContent = `${u.firstName} ${u.lastName} • ${u.email}`;
+    $("gemsCount").textContent = u.gems || 0;
+  }else{
+    $("authBtn").style.display = "inline-flex";
+    $("userChip").style.display = "none";
+    $("authText").textContent = T("login");
+    $("drawerUserBox").style.display = "none";
+    $("gemsCount").textContent = 0;
+  }
+}
+
+/* user chip click opens menu */
+$("userChip").onclick = ()=>{
+  openOverlay();
+  show(menuDrawer);
+};
+
+/* ===========================
+   Auth (Login/Register)
+=========================== */
+function setAuthTab(tab){
+  if(tab==="login"){
+    $("loginBox").style.display="flex";
+    $("loginBox").style.flexDirection="column";
+    $("registerBox").style.display="none";
+    $("tabLogin").classList.add("btnRed");
+    $("tabLogin").classList.remove("btnBlue");
+    $("tabRegister").classList.add("btnBlue");
+    $("tabRegister").classList.remove("btnRed");
+  }else{
+    $("loginBox").style.display="none";
+    $("registerBox").style.display="flex";
+    $("registerBox").style.flexDirection="column";
+    $("tabRegister").classList.add("btnRed");
+    $("tabRegister").classList.remove("btnBlue");
+    $("tabLogin").classList.add("btnBlue");
+    $("tabLogin").classList.remove("btnRed");
+    showRegisterStep(1);
+  }
+  $("loginErr").style.display="none";
+  $("regErr").style.display="none";
+}
+$("tabLogin").onclick = ()=> setAuthTab("login");
+$("tabRegister").onclick = ()=> setAuthTab("register");
+
+$("authBtn").onclick = ()=>{ setAuthTab("login"); openModal("authModal"); };
+
+function toggleEye(inputId){
+  const i = $(inputId);
+  if(!i) return;
+  i.type = (i.type==="password") ? "text" : "password";
+}
+$("loginEye").onclick = ()=> toggleEye("loginPass");
+$("regEye").onclick = ()=> toggleEye("regPass");
+
+$("doLogin").onclick = ()=>{
+  const email = ($("loginEmail").value||"").trim().toLowerCase();
+  const pass = ($("loginPass").value||"");
+  const users = loadUsers();
+  if(!users[email] || users[email].password !== pass){
+    $("loginErr").style.display="block";
+    $("loginErr").textContent = T("wrongLogin");
+    return;
+  }
+  setSession({email});
+  closeModal("authModal");
+  pushInbox(email, (deviceLang==="ar"?"تم تسجيل الدخول":"Logged in"));
+  refreshUserUI();
+};
+
+function showRegisterStep(n){
+  document.querySelectorAll("#registerBox [data-step]").forEach(el=>{
+    el.style.display = (el.getAttribute("data-step")==String(n)) ? "flex" : "none";
+    if(el.style.display==="flex") el.style.flexDirection="column";
+  });
+}
+$("rNext1").onclick = ()=> showRegisterStep(2);
+$("rBack2").onclick = ()=> showRegisterStep(1);
+$("rNext2").onclick = ()=> showRegisterStep(3);
+$("rBack3").onclick = ()=> showRegisterStep(2);
+$("rNext3").onclick = ()=> showRegisterStep(4);
+$("rBack4").onclick = ()=> showRegisterStep(3);
+
+$("saveAccount").onclick = async ()=>{
+  const firstName = ($("firstName").value||"").trim();
+  const lastName  = ($("lastName").value||"").trim();
+  const email     = ($("regEmail").value||"").trim().toLowerCase();
+  const password  = ($("regPass").value||"");
+  const gender    = ($("regGender").value||"");
+  const age       = Number($("regAge").value||0);
+  const photoFile = $("regPhoto").files?.[0] || null;
+
+  if(!firstName || !lastName || !email || !password || !gender || !age){
+    $("regErr").style.display="block";
+    $("regErr").textContent = T("needLogin"); // نفس معنى "املأ البيانات"
+    $("regErr").textContent = (deviceLang==="ar" ? "املأ كل البيانات المطلوبة" : "Fill all required fields");
+    return;
+  }
+
+  const users = loadUsers();
+  if(users[email]){
+    $("regErr").style.display="block";
+    $("regErr").textContent = T("emailUsed");
+    return;
+  }
+
+  let photoData = "";
+  if(photoFile){
+    photoData = await new Promise((resolve)=>{
+      const r = new FileReader();
+      r.onload = ()=> resolve(String(r.result||""));
+      r.readAsDataURL(photoFile);
     });
+  }
 
-    $("openContactRow").onclick = ()=>{ closeAll(); openModal("contactModal"); };
-    $("contactClose").onclick = closeAll;
+  users[email] = {
+    firstName,lastName,email,password,gender,age,
+    photo: photoData,
+    gems: 0,
+    createdAt: Date.now()
+  };
+  saveUsers(users);
 
-    $("openReviewsRow").onclick = ()=>{ closeAll(); renderReviews(); openModal("reviewsModal"); };
-    $("reviewsClose").onclick = closeAll;
+  setSession({email});
+  closeModal("authModal");
+  pushInbox(email, (deviceLang==="ar"?"تم إنشاء الحساب":"Account created"));
+  refreshUserUI();
+};
 
-    $("openGiftRow").onclick = ()=>{ closeAll(); openModal("giftModal"); };
-    $("giftClose").onclick = closeAll;
+/* Logout / profile / password */
+$("logoutBtn").onclick = ()=>{
+  const u = currentUser();
+  if(u){ pushInbox(u.email, (deviceLang==="ar"?"تم تسجيل الخروج":"Logged out")); }
+  clearSession();
+  refreshUserUI();
+};
 
-    $("openInboxRow").onclick = ()=>{ closeAll(); openInbox(); };
-    $("openBonusRow").onclick = ()=>{ closeAll(); openBonus(); };
+$("editProfileBtn").onclick = ()=>{
+  const u = currentUser();
+  if(!u){ requireLogin(); return; }
+  $("editFirst").value = u.firstName;
+  $("editLast").value  = u.lastName;
+  $("editGender").value= u.gender;
+  $("editAge").value   = u.age;
+  $("profileOk").style.display="none";
+  closeAll();
+  openModal("profileModal");
+};
 
-    $("authBtn").onclick = openAuth;
-    $("userChip").onclick = ()=> openDrawer(menuDrawer);
+$("saveProfile").onclick = async ()=>{
+  const u = currentUser();
+  if(!u){ requireLogin(); return; }
+  const users = loadUsers();
+  const email = u.email;
 
-    /* ===== Counts / Header ===== */
-    function refreshCounts(){
-      const u = getCurrentUser();
-      $("cartCount").textContent = String(cartCount());
-      $("inboxCount").textContent = String(u ? loadInbox().length : 0);
-      $("gemsCount").textContent = String(u ? (u.gems || 0) : 0);
+  const firstName = ($("editFirst").value||"").trim();
+  const lastName  = ($("editLast").value||"").trim();
+  const gender    = ($("editGender").value||"");
+  const age       = Number($("editAge").value||0);
+  const photoFile = $("editPhoto").files?.[0] || null;
+
+  if(!firstName || !lastName || !gender || !age) return;
+
+  let photoData = users[email].photo || "";
+  if(photoFile){
+    photoData = await new Promise((resolve)=>{
+      const r = new FileReader();
+      r.onload = ()=> resolve(String(r.result||""));
+      r.readAsDataURL(photoFile);
+    });
+  }
+
+  users[email] = {...users[email], firstName,lastName,gender,age,photo:photoData};
+  saveUsers(users);
+  $("profileOk").style.display="block";
+  $("profileOk").textContent = T("saved");
+  refreshUserUI();
+};
+
+$("changePassBtn").onclick = ()=>{
+  const u = currentUser();
+  if(!u){ requireLogin(); return; }
+  $("passErr").style.display="none";
+  $("passOk").style.display="none";
+  $("oldPass").value="";
+  $("newPass").value="";
+  closeAll();
+  openModal("passModal");
+};
+$("oldEye").onclick = ()=> toggleEye("oldPass");
+$("newEye").onclick = ()=> toggleEye("newPass");
+
+$("savePass").onclick = ()=>{
+  const u = currentUser();
+  if(!u){ requireLogin(); return; }
+  const users = loadUsers();
+  const email = u.email;
+
+  const oldP = $("oldPass").value||"";
+  const newP = $("newPass").value||"";
+  if(users[email].password !== oldP){
+    $("passErr").style.display="block";
+    $("passErr").textContent = T("wrongOld");
+    return;
+  }
+  if(!newP || newP.length < 4){
+    $("passErr").style.display="block";
+    $("passErr").textContent = (deviceLang==="ar"?"كلمة السر قصيرة":"Password too short");
+    return;
+  }
+  users[email].password = newP;
+  saveUsers(users);
+  $("passErr").style.display="none";
+  $("passOk").style.display="block";
+  $("passOk").textContent = T("passChanged");
+  pushInbox(email, (deviceLang==="ar"?"تم تغيير كلمة السر":"Password changed"));
+};
+
+/* ===========================
+   Inbox / Reviews
+=========================== */
+function pushInbox(email, msg){
+  const inbox = loadInbox();
+  inbox.unshift({email, msg, at: Date.now()});
+  saveInbox(inbox);
+  updateInboxCount();
+}
+function updateInboxCount(){
+  const u = currentUser();
+  const inbox = loadInbox();
+  const mine = u ? inbox.filter(x=>x.email===u.email) : [];
+  $("inboxCount").textContent = mine.length;
+}
+function renderInbox(){
+  const list = $("inboxList");
+  list.innerHTML = "";
+  const u = currentUser();
+  const inbox = loadInbox();
+  const mine = u ? inbox.filter(x=>x.email===u.email) : [];
+  if(!u){
+    list.innerHTML = `<div class="note warn">${T("needLogin")}</div>`;
+    return;
+  }
+  if(mine.length===0){
+    list.innerHTML = `<div class="note">${T("inboxEmpty")}</div>`;
+    return;
+  }
+  mine.slice(0,30).forEach(it=>{
+    const d = new Date(it.at);
+    const row = document.createElement("div");
+    row.className="note";
+    row.textContent = `${it.msg} • ${d.toLocaleString()}`;
+    list.appendChild(row);
+  });
+}
+
+$("inboxBtn").onclick = ()=>{
+  openModal("inboxModal");
+  renderInbox();
+};
+
+$("addReviewBtn").onclick = ()=>{
+  const text = ($("reviewText").value||"").trim();
+  if(!text) return;
+  const u = currentUser();
+  const name = u ? `${u.firstName} ${u.lastName}` : (deviceLang==="ar"?"زائر":"Guest");
+  const reviews = loadReviews();
+  reviews.unshift({name, text, at: Date.now()});
+  saveReviews(reviews);
+  $("reviewText").value="";
+  renderReviews();
+};
+function renderReviews(){
+  const list = $("reviewsList");
+  list.innerHTML="";
+  const reviews = loadReviews();
+  if(reviews.length===0){
+    list.innerHTML = `<div class="note">${deviceLang==="ar"?"مفيش مراجعات لسه":"No reviews yet"}</div>`;
+    return;
+  }
+  reviews.slice(0,25).forEach(r=>{
+    const d = new Date(r.at);
+    const row = document.createElement("div");
+    row.className="note";
+    row.innerHTML = `<strong>${r.name}</strong><div style="height:6px"></div>${r.text}<div style="height:6px"></div><span style="opacity:.8;font-size:12px">${d.toLocaleString()}</span>`;
+    list.appendChild(row);
+  });
+}
+
+/* ===========================
+   Bonus / Gems
+=========================== */
+$("gemsBtn").onclick = ()=>{
+  openModal("bonusModal");
+  renderBonus();
+};
+function renderBonus(){
+  const u = currentUser();
+  if(!u){
+    $("bonusNote").className="note warn";
+    $("bonusNote").textContent = T("needLogin");
+    $("bonusHint").textContent = "";
+    return;
+  }
+  $("bonusNote").className="note ok";
+  $("bonusNote").textContent = T("gemsCount")(u.gems||0);
+  $("bonusHint").textContent = T("bonusHint");
+}
+
+/* ===========================
+   Ratings (1-5 stars) - requires login
+   Stored per product: {productId:{sum,count,byUser:{email:stars}}}
+=========================== */
+function getProductRating(pid){
+  const ratings = loadRatings();
+  const r = ratings[pid] || {sum:0,count:0,byUser:{}};
+  const avg = r.count ? (r.sum/r.count) : 0;
+  return {avg,count:r.count};
+}
+function setUserRating(pid, stars){
+  const u = currentUser();
+  if(!u) return {ok:false, msg:T("needLogin")};
+  const ratings = loadRatings();
+  ratings[pid] = ratings[pid] || {sum:0,count:0,byUser:{}};
+  const r = ratings[pid];
+  const prev = r.byUser[u.email];
+  if(prev){
+    // update
+    r.sum = r.sum - prev + stars;
+    r.byUser[u.email] = stars;
+  }else{
+    r.sum += stars;
+    r.count += 1;
+    r.byUser[u.email] = stars;
+  }
+  saveRatings(ratings);
+  return {ok:true};
+}
+function starsHTML(avg){
+  const full = Math.round(avg); // simple
+  let html = "";
+  for(let i=1;i<=5;i++){
+    html += `<span class="s ${i<=full?"on":""}">⭐</span>`;
+  }
+  return html;
+}
+
+/* ===========================
+   Render products
+=========================== */
+let currentFilter = {category:"all", sort:"new", priceMode:"off", priceValue:0};
+let currentDetails = null;
+
+function renderAll(){
+  renderSection("gridTop",   PRODUCTS.filter(p=>p.section==="top"));
+  renderSection("gridOffers",PRODUCTS.filter(p=>p.section==="offers"));
+  renderSection("gridGames", PRODUCTS.filter(p=>p.section==="games"));
+  renderSection("gridPrograms",PRODUCTS.filter(p=>p.section==="programs"));
+  renderSection("gridAccounts",PRODUCTS.filter(p=>p.section==="accounts"));
+  updateCartCount();
+  updateInboxCount();
+  refreshUserUI();
+}
+
+function passSearch(p){
+  const q = ($("search").value||"").trim().toLowerCase();
+  if(!q) return true;
+  return (p.name||"").toLowerCase().includes(q) || (p.desc||"").toLowerCase().includes(q);
+}
+
+function passFilter(p){
+  // category filter
+  if(currentFilter.category !== "all"){
+    if(p.category !== currentFilter.category) return false;
+  }
+  // price filter
+  const m = currentFilter.priceMode;
+  const v = Number(currentFilter.priceValue||0);
+  if(m==="eq" && p.price !== v) return false;
+  if(m==="lte" && !(p.price <= v)) return false;
+  if(m==="gte" && !(p.price >= v)) return false;
+  return true;
+}
+
+function sortProducts(arr){
+  const s = currentFilter.sort;
+  const a = [...arr];
+  if(s==="new") a.sort((x,y)=>(y.createdAt||0)-(x.createdAt||0));
+  if(s==="old") a.sort((x,y)=>(x.createdAt||0)-(y.createdAt||0));
+  if(s==="low") a.sort((x,y)=>(x.price||0)-(y.price||0));
+  if(s==="high") a.sort((x,y)=>(y.price||0)-(x.price||0));
+  return a;
+}
+
+function renderSection(gridId, items){
+  const grid = $(gridId);
+  grid.innerHTML = "";
+
+  let list = items.filter(passSearch).filter(passFilter);
+  list = sortProducts(list);
+
+  list.forEach(p=>{
+    const {avg,count} = getProductRating(p.id);
+    const card = document.createElement("div");
+    card.className="card";
+
+    const thumb = document.createElement("div");
+    thumb.className="thumb";
+    const img0 = (p.images && p.images[0]) ? p.images[0] : "";
+    if(img0){
+      thumb.innerHTML = `<img src="${img0}" alt="">`;
+    }else{
+      thumb.textContent = "IMAGE";
     }
 
-    /* ===== Search ===== */
-    $("search").addEventListener("input", renderAll);
+    // badges ONLY for top/offers section (correct)
+    if(p.section==="top"){
+      const b = document.createElement("div");
+      b.className="badge top";
+      b.textContent = T("top");
+      thumb.appendChild(b);
+    }
+    if(p.section==="offers"){
+      const b = document.createElement("div");
+      b.className="badge offer";
+      b.textContent = T("offers");
+      thumb.appendChild(b);
+    }
 
-    /* ===== Init ===== */
-    $("year").textContent = new Date().getFullYear();
+    const content = document.createElement("div");
+    content.className="content";
 
-    window.addEventListener("load", ()=>{
-      // ensure nothing opens on refresh
-      overlay.classList.remove("show");
-      menuDrawer.classList.remove("show");
-      filterDrawer.classList.remove("show");
-      menuDrawer.setAttribute("aria-hidden","true");
-      filterDrawer.setAttribute("aria-hidden","true");
-      hideAllPopups();
-      closeOverlay();
+    const name = document.createElement("p");
+    name.className="name";
+    name.textContent = p.name;
 
-      // session UI
-      refreshHeaderUser();
-      refreshCounts();
-      renderAll();
-    });
+    const meta = document.createElement("p");
+    meta.className="meta";
+    meta.textContent = (p.desc||"").slice(0,80) + ((p.desc||"").length>80 ? "..." : "");
 
-    /* ===== Bonus: if user not logged, still show base UI clean ===== */
-  </script>
+    const pr = document.createElement("div");
+    pr.className="priceRow";
+    pr.innerHTML = `<p class="price">${fmtEGP(p.price)}</p>`;
+
+    const rr = document.createElement("div");
+    rr.className="ratingRow";
+    rr.innerHTML = `
+      <div class="starsView">${starsHTML(avg)}</div>
+      <div class="starsMini">${avg.toFixed(1)} (${count})</div>
+    `;
+
+    const actions = document.createElement("div");
+    actions.className="actions";
+
+    const detailsBtn = document.createElement("button");
+    detailsBtn.className="btn btnBlue";
+    detailsBtn.textContent = T("details");
+    detailsBtn.onclick = ()=> openDetails(p.id);
+
+    const addBtn = document.createElement("button");
+    addBtn.className="btn";
+    addBtn.textContent = T("addCart");
+    addBtn.onclick = ()=> addToCart(p.id);
+
+    const buyBtn = document.createElement("button");
+    buyBtn.className="btn btnRed";
+    buyBtn.textContent = T("buy");
+    buyBtn.onclick = ()=> buyNow(p.id);
+
+    actions.appendChild(detailsBtn);
+    actions.appendChild(addBtn);
+    actions.appendChild(buyBtn);
+
+    content.appendChild(name);
+    content.appendChild(rr);
+    content.appendChild(meta);
+    content.appendChild(pr);
+    content.appendChild(actions);
+
+    card.appendChild(thumb);
+    card.appendChild(content);
+
+    grid.appendChild(card);
+  });
+}
+
+/* ===========================
+   Details modal
+=========================== */
+function openDetails(pid){
+  const p = PRODUCTS.find(x=>x.id===pid);
+  if(!p) return;
+  currentDetails = pid;
+
+  // big image + thumbs
+  const big = $("galleryBig");
+  const row = $("galleryRow");
+  row.innerHTML="";
+
+  const imgs = (p.images && p.images.length) ? p.images : [];
+  function setBig(src){
+    if(src){
+      big.innerHTML = `<img src="${src}" alt="">`;
+    }else{
+      big.textContent = "IMAGE";
+    }
+  }
+  setBig(imgs[0]||"");
+
+  imgs.forEach((src, idx)=>{
+    const t = document.createElement("div");
+    t.className = "gThumb" + (idx===0 ? " active" : "");
+    t.innerHTML = `<img src="${src}" alt="">`;
+    t.onclick = ()=>{
+      document.querySelectorAll(".gThumb").forEach(x=>x.classList.remove("active"));
+      t.classList.add("active");
+      setBig(src);
+    };
+    row.appendChild(t);
+  });
+
+  $("detailsPrice").textContent = fmtEGP(p.price);
+  const r = getProductRating(pid);
+  $("detailsRating").textContent = `${r.avg.toFixed(1)} (${r.count})`;
+  $("detailsDesc").textContent = p.desc || "";
+
+  $("rateOk").style.display="none";
+  $("rateErr").style.display="none";
+
+  openModal("detailsModal");
+}
+
+$("detailsAddCart").onclick = ()=>{ if(currentDetails) addToCart(currentDetails); };
+$("detailsBuyNow").onclick = ()=>{ if(currentDetails) buyNow(currentDetails); };
+
+document.querySelectorAll("#rateRow .iconBtn").forEach(btn=>{
+  btn.onclick = ()=>{
+    const pid = currentDetails;
+    if(!pid) return;
+    const stars = Number(btn.getAttribute("data-rate")||0);
+    if(!currentUser()){
+      $("rateErr").style.display="block";
+      $("rateErr").textContent = T("needLogin");
+      $("rateOk").style.display="none";
+      return;
+    }
+    const res = setUserRating(pid, stars);
+    if(res.ok){
+      $("rateOk").style.display="block";
+      $("rateOk").textContent = T("rated");
+      $("rateErr").style.display="none";
+      renderAll(); // update stars everywhere
+      const r = getProductRating(pid);
+      $("detailsRating").textContent = `${r.avg.toFixed(1)} (${r.count})`;
+    }
+  };
+});
+
+/* ===========================
+   Cart
+=========================== */
+function updateCartCount(){
+  const cart = loadCart();
+  const count = cart.reduce((a,x)=>a+(x.qty||1),0);
+  $("cartCount").textContent = count;
+}
+
+function addToCart(pid){
+  const cart = loadCart();
+  const i = cart.find(x=>x.id===pid);
+  if(i) i.qty += 1;
+  else cart.push({id:pid, qty:1});
+  saveCart(cart);
+  updateCartCount();
+}
+
+function cartTotal(){
+  const cart = loadCart();
+  let total = 0;
+  cart.forEach(it=>{
+    const p = PRODUCTS.find(x=>x.id===it.id);
+    if(p) total += (p.price||0) * (it.qty||1);
+  });
+  return total;
+}
+
+function renderCart(){
+  const list = $("cartList");
+  list.innerHTML="";
+  const cart = loadCart();
+  if(cart.length===0){
+    list.innerHTML = `<div class="note">${T("cartEmpty")}</div>`;
+    $("totalValue").textContent = fmtEGP(0);
+    return;
+  }
+
+  cart.forEach(it=>{
+    const p = PRODUCTS.find(x=>x.id===it.id);
+    if(!p) return;
+    const img0 = p.images?.[0] || "";
+
+    const item = document.createElement("div");
+    item.className="cartItem";
+
+    const left = document.createElement("div");
+    left.className="cartLeft";
+
+    const th = document.createElement("div");
+    th.className="cartThumb";
+    th.innerHTML = img0 ? `<img src="${img0}" alt="">` : "IMG";
+
+    const info = document.createElement("div");
+    info.style.flex="1";
+    info.innerHTML = `
+      <p class="cartName">${p.name}</p>
+      <p class="cartMeta">${fmtEGP(p.price)} • ${deviceLang==="ar"?"الكمية":"Qty"}: ${it.qty}</p>
+      <div class="qtyRow">
+        <button class="qtyBtn">-</button>
+        <span class="qtyNum">${it.qty}</span>
+        <button class="qtyBtn">+</button>
+        <button class="detailsBtn">${T("details")}</button>
+        <button class="removeBtn">${deviceLang==="ar"?"حذف":"Remove"}</button>
+      </div>
+    `;
+
+    const btnMinus = info.querySelectorAll(".qtyBtn")[0];
+    const btnPlus  = info.querySelectorAll(".qtyBtn")[1];
+    const btnDetails = info.querySelector(".detailsBtn");
+    const btnRemove  = info.querySelector(".removeBtn");
+
+    btnMinus.onclick = ()=>{
+      const c = loadCart();
+      const x = c.find(z=>z.id===it.id);
+      if(!x) return;
+      x.qty -= 1;
+      if(x.qty<=0){
+        const idx = c.findIndex(z=>z.id===it.id);
+        c.splice(idx,1);
+      }
+      saveCart(c);
+      renderCart();
+      updateCartCount();
+    };
+    btnPlus.onclick = ()=>{
+      const c = loadCart();
+      const x = c.find(z=>z.id===it.id);
+      if(x) x.qty += 1;
+      saveCart(c);
+      renderCart();
+      updateCartCount();
+    };
+    btnRemove.onclick = ()=>{
+      const c = loadCart().filter(z=>z.id!==it.id);
+      saveCart(c);
+      renderCart();
+      updateCartCount();
+    };
+    btnDetails.onclick = ()=> openDetails(it.id);
+
+    left.appendChild(th);
+    left.appendChild(info);
+
+    item.appendChild(left);
+    list.appendChild(item);
+  });
+
+  $("totalValue").textContent = fmtEGP(cartTotal());
+}
+
+$("cartBtn").onclick = ()=>{
+  openModal("cartModal");
+  renderCart();
+};
+
+$("totalBar").onclick = ()=>{
+  // checkout from cart
+  startCheckoutFromCart();
+};
+
+/* ===========================
+   Checkout / Payment
+=========================== */
+let checkoutItems = []; // [{id,qty}]
+let appliedCoupon = {code:"", percent:0, discount:0};
+
+function startCheckoutFromCart(){
+  const cart = loadCart();
+  if(cart.length===0){
+    openModal("cartModal");
+    renderCart();
+    return;
+  }
+  checkoutItems = cart.map(x=>({id:x.id, qty:x.qty||1}));
+  openCheckout();
+}
+function buyNow(pid){
+  // buy single product
+  checkoutItems = [{id:pid, qty:1}];
+  openCheckout();
+}
+
+function openCheckout(){
+  const u = currentUser();
+  if(!u){ requireLogin(); return; }
+
+  appliedCoupon = {code:"", percent:0, discount:0};
+  $("couponInput").value="";
+  $("couponMsg").textContent="";
+  $("checkoutStep1").style.display="flex";
+  $("checkoutStep1").style.flexDirection="column";
+  $("checkoutStep2").style.display="none";
+  $("paidOk").style.display="none";
+
+  updateCheckoutSummary();
+  openModal("checkoutModal");
+}
+
+function itemsSubtotal(){
+  let sub = 0;
+  checkoutItems.forEach(it=>{
+    const p = PRODUCTS.find(x=>x.id===it.id);
+    if(p) sub += (p.price||0)*(it.qty||1);
+  });
+  return sub;
+}
+
+function updateCheckoutSummary(){
+  const sub = itemsSubtotal();
+  const disc = appliedCoupon.discount || 0;
+  const total = Math.max(0, sub - disc);
+
+  const lines = checkoutItems.map(it=>{
+    const p = PRODUCTS.find(x=>x.id===it.id);
+    if(!p) return "";
+    return `• ${p.name} × ${it.qty} = ${fmtEGP((p.price||0)*(it.qty||1))}`;
+  }).join("\n");
+
+  $("checkoutSummary").textContent =
+    (deviceLang==="ar"
+      ? `ملخص الطلب:\n${lines}\n\nالإجمالي: ${fmtEGP(sub)}\nالخصم: ${fmtEGP(disc)}\nالإجمالي بعد الخصم: ${fmtEGP(total)}`
+      : `Order summary:\n${lines}\n\nSubtotal: ${fmtEGP(sub)}\nDiscount: ${fmtEGP(disc)}\nTotal: ${fmtEGP(total)}`
+    );
+
+  $("payHint").textContent = (deviceLang==="ar"
+    ? `طرق الدفع — المبلغ المطلوب: ${fmtEGP(total)}`
+    : `Payment methods — Amount: ${fmtEGP(total)}`
+  );
+}
+
+$("applyCouponBtn").onclick = ()=>{
+  const u = currentUser();
+  if(!u){ requireLogin(); return; }
+
+  const code = ($("couponInput").value||"").trim().toUpperCase();
+  const pct = couponPercent(code);
+
+  // used coupons are global (one-time) OR per user? You asked: once used, no one can use again
+  const used = loadUsedCoupons();
+  if(!pct || used[code]){
+    $("couponMsg").textContent = T("couponBad");
+    $("couponMsg").className="note err";
+    appliedCoupon = {code:"", percent:0, discount:0};
+    updateCheckoutSummary();
+    return;
+  }
+
+  const sub = itemsSubtotal();
+  const discount = Math.round(sub * (pct/100));
+
+  appliedCoupon = {code, percent:pct, discount};
+  $("couponMsg").textContent = `${T("couponApplied")} (${pct}%)`;
+  $("couponMsg").className="note ok";
+  updateCheckoutSummary();
+};
+
+$("confirmCheckoutBtn").onclick = ()=>{
+  $("checkoutStep1").style.display="none";
+  $("checkoutStep2").style.display="flex";
+  $("checkoutStep2").style.flexDirection="column";
+};
+
+/* Payment buttons (open external / placeholder) */
+function openPayLink(name){
+  // You can change links later safely
+  // For cash: open WhatsApp with message
+  const u = currentUser();
+  const total = Math.max(0, itemsSubtotal() - (appliedCoupon.discount||0));
+  const msg = encodeURIComponent(
+    (deviceLang==="ar"
+      ? `عايز أدفع (${name}) — المبلغ: ${total} جنيه — حسابي: ${u.email}`
+      : `Payment (${name}) — Amount: ${total} EGP — My account: ${u.email}`
+    )
+  );
+  window.open(`https://wa.me/201006760663?text=${msg}`, "_blank");
+}
+$("payVodafone").onclick = ()=> openPayLink("Vodafone Cash");
+$("payEtisalat").onclick = ()=> openPayLink("Etisalat Cash");
+$("payOrange").onclick = ()=> openPayLink("Orange Cash");
+$("payWe").onclick = ()=> openPayLink("WE Pay");
+$("payInsta").onclick = ()=> openPayLink("InstaPay");
+$("payCard").onclick = ()=> openPayLink("Visa/Card");
+$("payBill").onclick = ()=> openPayLink("Bill Pay");
+$("payTelda").onclick = ()=> openPayLink("Telda");
+
+$("backToSummary").onclick = ()=>{
+  $("checkoutStep2").style.display="none";
+  $("checkoutStep1").style.display="flex";
+  $("checkoutStep1").style.flexDirection="column";
+};
+
+$("markPaidBtn").onclick = ()=>{
+  const u = currentUser();
+  if(!u){ requireLogin(); return; }
+
+  // mark coupon as used (one-time globally)
+  if(appliedCoupon.code){
+    const used = loadUsedCoupons();
+    used[appliedCoupon.code] = {at:Date.now(), by:u.email};
+    saveUsedCoupons(used);
+  }
+
+  // record operation (private)
+  const sub = itemsSubtotal();
+  const disc = appliedCoupon.discount || 0;
+  const total = Math.max(0, sub - disc);
+
+  const orders = loadOrders();
+  orders.unshift({
+    id: "ord_" + Math.random().toString(16).slice(2) + "_" + Date.now(),
+    email: u.email,
+    items: checkoutItems,
+    subtotal: sub,
+    discount: disc,
+    total: total,
+    coupon: appliedCoupon.code || "",
+    at: Date.now()
+  });
+  saveOrders(orders);
+
+  // reward gems (balanced)
+  // every 100 EGP => 1 gem (you can change later)
+  const users = loadUsers();
+  const gained = Math.max(1, Math.floor(total/100));
+  users[u.email].gems = (users[u.email].gems||0) + gained;
+  saveUsers(users);
+
+  pushInbox(u.email, deviceLang==="ar"
+    ? `تم تسجيل شراء بقيمة ${total} جنيه (+${gained} جوهرة)`
+    : `Purchase recorded: ${total} EGP (+${gained} gem)`
+  );
+
+  // if checkout from cart -> clear cart
+  const cartIds = loadCart().map(x=>x.id);
+  const checkoutIds = checkoutItems.map(x=>x.id);
+  // if they match by set (simple) we clear, else leave
+  const same = cartIds.length && cartIds.every(id=>checkoutIds.includes(id));
+  if(same){
+    saveCart([]);
+    updateCartCount();
+    if($("cartModal").classList.contains("show")){
+      renderCart();
+    }
+  }
+
+  $("paidOk").style.display="block";
+  $("paidOk").textContent = T("paid");
+
+  refreshUserUI();
+  renderAll();
+};
+
+/* ===========================
+   Filter apply
+=========================== */
+$("applyFilterBtn").onclick = ()=>{
+  currentFilter.category = $("filterCategory").value;
+  currentFilter.sort = $("filterSort").value;
+  currentFilter.priceMode = $("priceMode").value;
+  currentFilter.priceValue = Number($("priceValue").value||0);
+  closeAll();
+  renderAll();
+};
+
+/* Search */
+$("search").addEventListener("input", ()=> renderAll());
+
+/* ===========================
+   Init
+=========================== */
+window.addEventListener("load", ()=>{
+  // start clean UI
+  hide(menuDrawer);
+  hide(filterDrawer);
+  hide(overlay);
+
+  // counts
+  updateCartCount();
+  updateInboxCount();
+  refreshUserUI();
+
+  // Bonus note
+  $("bonusHint").textContent = T("bonusHint");
+
+  // render
+  renderAll();
+});
+
+/* ===========================
+   Buttons open modals
+=========================== */
+$("reviewsClose").onclick = ()=> closeModal("reviewsModal");
+$("reviewsModal").addEventListener("click", (e)=>{ if(e.target=== $("reviewsModal")) closeModal("reviewsModal"); });
+$("contactModal").addEventListener("click", (e)=>{ if(e.target=== $("contactModal")) closeModal("contactModal"); });
+$("inboxModal").addEventListener("click", (e)=>{ if(e.target=== $("inboxModal")) closeModal("inboxModal"); });
+$("bonusModal").addEventListener("click", (e)=>{ if(e.target=== $("bonusModal")) closeModal("bonusModal"); });
+$("authModal").addEventListener("click", (e)=>{ if(e.target=== $("authModal")) closeModal("authModal"); });
+$("profileModal").addEventListener("click", (e)=>{ if(e.target=== $("profileModal")) closeModal("profileModal"); });
+$("passModal").addEventListener("click", (e)=>{ if(e.target=== $("passModal")) closeModal("passModal"); });
+$("detailsModal").addEventListener("click", (e)=>{ if(e.target=== $("detailsModal")) closeModal("detailsModal"); });
+$("cartModal").addEventListener("click", (e)=>{ if(e.target=== $("cartModal")) closeModal("cartModal"); });
+$("checkoutModal").addEventListener("click", (e)=>{ if(e.target=== $("checkoutModal")) closeModal("checkoutModal"); });
+
+</script>
 </body>
 </html>
