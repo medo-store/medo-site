@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Medo Gaming Store</title>
+
   <style>
     :root{
       --bg:#0b0b0f;
@@ -13,41 +14,44 @@
       --muted:#b9b9c6;
       --accent:#ff2d2d;
       --accent2:#00ffd5;
-      --border:rgba(255,255,255,.08);
+      --border:rgba(255,255,255,.10);
     }
     *{box-sizing:border-box}
     body{
-      margin:0; font-family:Arial, Helvetica, sans-serif;
-      background:radial-gradient(900px 500px at 20% 10%, rgba(255,45,45,.18), transparent 60%),
-                 radial-gradient(800px 450px at 80% 0%, rgba(0,255,213,.12), transparent 55%),
-                 var(--bg);
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(900px 500px at 20% 10%, rgba(255,45,45,.18), transparent 60%),
+        radial-gradient(800px 450px at 80% 0%, rgba(0,255,213,.12), transparent 55%),
+        var(--bg);
       color:var(--text);
+      direction: rtl;
     }
     a{color:inherit; text-decoration:none}
-    .container{max-width:1050px; margin:0 auto; padding:18px}
+    .container{max-width:1100px; margin:0 auto; padding:18px}
     .nav{
       position:sticky; top:0; z-index:10;
       backdrop-filter: blur(10px);
-      background:rgba(11,11,15,.65);
+      background:rgba(11,11,15,.70);
       border-bottom:1px solid var(--border);
     }
-    .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:14px}
+    .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap}
     .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px}
     .dot{width:10px; height:10px; border-radius:999px; background:var(--accent)}
     .links{display:flex; gap:14px; flex-wrap:wrap; color:var(--muted); font-weight:700; font-size:14px}
     .links a:hover{color:#fff}
-    .hero{
-      padding:26px 0 10px;
-    }
+
+    .hero{padding:26px 0 10px;}
     .hero-card{
       border:1px solid var(--border);
-      background:linear-gradient(180deg, rgba(20,20,33,.85), rgba(20,20,33,.65));
+      background:linear-gradient(180deg, rgba(20,20,33,.88), rgba(20,20,33,.66));
       border-radius:18px;
       padding:18px;
-      display:flex; flex-direction:column; gap:10px;
+      display:flex; flex-direction:column; gap:12px;
     }
     h1{margin:0; font-size:26px}
-    .sub{color:var(--muted); margin:0; line-height:1.5}
+    .sub{color:var(--muted); margin:0; line-height:1.6}
+
     .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
     .search{
       flex:1;
@@ -66,15 +70,18 @@
       background:rgba(255,255,255,.04);
       color:var(--muted);
       cursor:pointer;
-      font-weight:700;
+      font-weight:800;
       font-size:13px;
     }
     .pill.active{color:#000; background:var(--accent2); border-color:transparent}
+
+    .section-title{margin:22px 0 10px; font-size:18px}
+
     .grid{
       display:grid;
       grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
       gap:14px;
-      padding:14px 0 30px;
+      padding:10px 0 26px;
     }
     .card{
       border:1px solid var(--border);
@@ -82,19 +89,27 @@
       border-radius:16px;
       overflow:hidden;
       display:flex; flex-direction:column;
-      min-height:210px;
+      min-height:240px;
     }
     .thumb{
-      height:120px;
+      height:130px;
       background:linear-gradient(135deg, rgba(255,45,45,.25), rgba(0,255,213,.18));
       display:flex; align-items:center; justify-content:center;
       font-weight:900; letter-spacing:.6px;
       color:#fff;
+      position:relative;
+    }
+    .thumb::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, transparent, rgba(0,0,0,.35));
+      pointer-events:none;
     }
     .content{padding:12px; display:flex; flex-direction:column; gap:8px; flex:1}
     .title{font-size:16px; font-weight:900; margin:0}
-    .meta{color:var(--muted); font-size:13px; margin:0; line-height:1.4}
-    .price{font-weight:900}
+    .meta{color:var(--muted); font-size:13px; margin:0; line-height:1.5}
+    .price{font-weight:900; margin:0}
     .actions{display:flex; gap:10px; margin-top:auto}
     .btn{
       flex:1;
@@ -109,13 +124,7 @@
     }
     .btn.buy{background:var(--accent); border-color:transparent}
     .btn:hover{filter:brightness(1.06)}
-    .section-title{margin:22px 0 8px; font-size:18px}
-    .footer{
-      border-top:1px solid var(--border);
-      color:var(--muted);
-      padding:16px 0 26px;
-      font-size:13px;
-    }
+
     .badge{
       display:inline-block;
       padding:6px 10px;
@@ -123,11 +132,19 @@
       background:rgba(255,255,255,.06);
       border:1px solid var(--border);
       color:var(--muted);
-      font-weight:800;
+      font-weight:900;
       font-size:12px;
+    }
+
+    .footer{
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      padding:16px 0 26px;
+      font-size:13px;
     }
   </style>
 </head>
+
 <body>
 
   <div class="nav">
@@ -135,45 +152,64 @@
       <div class="brand">
         <span class="dot"></span>
         <span>Medo Gaming Store</span>
-        <span class="badge">Free Website</span>
+        <span class="badge">Games • Programs • Accounts</span>
       </div>
       <div class="links">
-        <a href="#home">Home</a>
-        <a href="#games">Games</a>
-        <a href="#programs">Programs</a>
-        <a href="#contact">Contact</a>
+        <a href="#home">الرئيسية</a>
+        <a href="#games">الألعاب</a>
+        <a href="#programs">البرامج</a>
+        <a href="#accounts">الأكونتات</a>
+        <a href="#contact">تواصل</a>
       </div>
     </div>
   </div>
 
   <div id="home" class="container hero">
     <div class="hero-card">
-      <h1>Store for Games & Programs</h1>
-      <p class="sub">Choose what you need and order مباشرة على واتساب. (هنضيف صور ومنتجات أكتر بعدين)</p>
+      <h1>متجر ميدو للألعاب والبرامج والأكونتات</h1>
+      <p class="sub">ابحث، فلتر، واختار اللي محتاجه — والطلب مباشر على واتساب.</p>
 
       <div class="row">
-        <input id="search" class="search" placeholder="Search products..." />
-        <button class="pill active" data-filter="all">All</button>
-        <button class="pill" data-filter="games">Games</button>
-        <button class="pill" data-filter="programs">Programs</button>
+        <input id="search" class="search" placeholder="ابحث عن منتج..." />
+        <button class="pill active" data-filter="all">الكل</button>
+        <button class="pill" data-filter="games">ألعاب</button>
+        <button class="pill" data-filter="programs">برامج</button>
+        <button class="pill" data-filter="accounts">أكونتات</button>
       </div>
     </div>
   </div>
 
   <div class="container">
-    <h2 id="games" class="section-title">🎮 Games</h2>
+    <h2 id="games" class="section-title">🎮 الألعاب</h2>
     <div id="grid-games" class="grid"></div>
 
-    <h2 id="programs" class="section-title">💻 Programs</h2>
+    <h2 id="programs" class="section-title">💻 البرامج</h2>
     <div id="grid-programs" class="grid"></div>
 
-    <h2 id="contact" class="section-title">📱 Contact</h2>
+    <h2 id="accounts" class="section-title">🧾 الأكونتات</h2>
+
+    <div class="row" style="padding:6px 0 0">
+      <button class="pill active" data-acc="all">كل الأكونتات</button>
+      <button class="pill" data-acc="Epic">Epic</button>
+      <button class="pill" data-acc="Steam">Steam</button>
+      <button class="pill" data-acc="PUBG">PUBG</button>
+      <button class="pill" data-acc="Free Fire">Free Fire</button>
+      <button class="pill" data-acc="Roblox">Roblox</button>
+      <button class="pill" data-acc="eFootball">eFootball</button>
+      <button class="pill" data-acc="EA Sports FC">EA Sports FC</button>
+      <button class="pill" data-acc="PlayStation">PlayStation</button>
+    </div>
+
+    <div id="grid-accounts" class="grid"></div>
+
+    <h2 id="contact" class="section-title">📱 تواصل</h2>
     <div class="hero-card">
       <p class="sub" style="margin:0">
-        WhatsApp: <a class="badge" href="https://wa.me/201006760663" target="_blank">Chat Now</a>
+        واتساب: <a class="badge" href="https://wa.me/201006760663" target="_blank">Chat Now</a>
         &nbsp; | &nbsp;
-        Email: <span class="badge">medorami77@gmail.com</span>
+        الإيميل: <span class="badge">medorami77@gmail.com</span>
       </p>
+      <p class="sub" style="margin:0">ملاحظة: هنضيف صور الأكونتات بسهولة (خطوة الجاية).</p>
     </div>
 
     <div class="footer">
@@ -181,78 +217,124 @@
     </div>
   </div>
 
-<script>
-  const WHATSAPP = "https://wa.me/201006760663";
+  <script>
+    const WHATSAPP = "https://wa.me/201006760663";
 
-  // منتجات تجريبية (هنغيرهم بمنتجاتك بعدين)
-  const products = [
-    { id: 1, type: "games", name: "Game Pack 1", desc: "PC game — fast delivery", price: "EGP 250" },
-    { id: 2, type: "games", name: "Game Pack 2", desc: "PC game — support included", price: "EGP 180" },
-    { id: 3, type: "programs", name: "Editing Software", desc: "For video editing needs", price: "EGP 150" },
-    { id: 4, type: "programs", name: "Design Software", desc: "For graphics & design", price: "EGP 120" }
-  ];
+    // ضع منتجاتك هنا (تقدر تغيّر الاسم/السعر/الوصف)
+    // لو عايز صورة: حط img: "images/اسم-الصورة.jpg"
+    const products = [
+      // Games
+      { id: 1, type: "games", name: "Game #1", desc: "وصف بسيط للعبة", price: "EGP 0", img: "" },
+      { id: 2, type: "games", name: "Game #2", desc: "وصف بسيط للعبة", price: "EGP 0", img: "" },
 
-  const gridGames = document.getElementById("grid-games");
-  const gridPrograms = document.getElementById("grid-programs");
-  const search = document.getElementById("search");
-  const pills = document.querySelectorAll(".pill");
+      // Programs
+      { id: 11, type: "programs", name: "Program #1", desc: "وصف بسيط للبرنامج", price: "EGP 0", img: "" },
+      { id: 12, type: "programs", name: "Program #2", desc: "وصف بسيط للبرنامج", price: "EGP 0", img: "" },
 
-  function cardHTML(p){
-    const msg = encodeURIComponent(`Hello, I want: ${p.name} (${p.price})`);
-    return `
-      <div class="card" data-type="${p.type}" data-name="${p.name.toLowerCase()}">
-        <div class="thumb">${p.type === "games" ? "GAME" : "APP"}</div>
-        <div class="content">
-          <p class="title">${p.name}</p>
-          <p class="meta">${p.desc}</p>
-          <p class="price">${p.price}</p>
-          <div class="actions">
-            <a class="btn" href="#contact">Details</a>
-            <a class="btn buy" target="_blank" href="${WHATSAPP}?text=${msg}">Buy</a>
+      // Accounts (تصنيفات)
+      { id: 101, type: "accounts", cat: "Epic", name: "Epic Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" },
+      { id: 102, type: "accounts", cat: "Steam", name: "Steam Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" },
+      { id: 103, type: "accounts", cat: "PUBG", name: "PUBG Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" },
+      { id: 104, type: "accounts", cat: "Free Fire", name: "Free Fire Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" },
+      { id: 105, type: "accounts", cat: "Roblox", name: "Roblox Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" },
+      { id: 106, type: "accounts", cat: "eFootball", name: "eFootball Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" },
+      { id: 107, type: "accounts", cat: "EA Sports FC", name: "EA Sports FC Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" },
+      { id: 108, type: "accounts", cat: "PlayStation", name: "PlayStation Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" }
+    ];
+
+    const gridGames = document.getElementById("grid-games");
+    const gridPrograms = document.getElementById("grid-programs");
+    const gridAccounts = document.getElementById("grid-accounts");
+    const search = document.getElementById("search");
+    const pills = document.querySelectorAll("[data-filter]");
+    const accPills = document.querySelectorAll("[data-acc]");
+
+    function cardHTML(p){
+      const msg = encodeURIComponent(`Hello, I want: ${p.name} (${p.price})`);
+      const label = (p.type === "games") ? "GAME" : (p.type === "programs" ? "APP" : (p.cat || "ACC"));
+      const thumbStyle = p.img
+        ? `background-image:url('${p.img}'); background-size:cover; background-position:center;`
+        : "";
+      const thumbText = p.img ? "" : label;
+
+      return `
+        <div class="card" data-type="${p.type}" data-cat="${(p.cat || "").toLowerCase()}" data-search="${(p.name + " " + (p.desc||"") + " " + (p.cat||"")).toLowerCase()}">
+          <div class="thumb" style="${thumbStyle}">${thumbText}</div>
+          <div class="content">
+            <p class="title">${p.name}</p>
+            <p class="meta">${p.type === "accounts" ? `<span class="badge">${p.cat}</span> &nbsp;` : ""}${p.desc}</p>
+            <p class="price">${p.price}</p>
+            <div class="actions">
+              <a class="btn" href="#contact">تفاصيل</a>
+              <a class="btn buy" target="_blank" href="${WHATSAPP}?text=${msg}">شراء</a>
+            </div>
           </div>
         </div>
-      </div>
-    `;
-  }
+      `;
+    }
 
-  function render(){
-    gridGames.innerHTML = "";
-    gridPrograms.innerHTML = "";
-    const q = search.value.trim().toLowerCase();
+    function render(){
+      gridGames.innerHTML = "";
+      gridPrograms.innerHTML = "";
+      gridAccounts.innerHTML = "";
 
-    products.forEach(p=>{
-      if(q && !p.name.toLowerCase().includes(q) && !p.desc.toLowerCase().includes(q)) return;
-      const html = cardHTML(p);
-      if(p.type === "games") gridGames.insertAdjacentHTML("beforeend", html);
-      else gridPrograms.insertAdjacentHTML("beforeend", html);
+      const q = search.value.trim().toLowerCase();
+
+      products.forEach(p=>{
+        const hay = (p.name + " " + (p.desc||"") + " " + (p.cat||"")).toLowerCase();
+        if(q && !hay.includes(q)) return;
+
+        const html = cardHTML(p);
+        if(p.type === "games") gridGames.insertAdjacentHTML("beforeend", html);
+        else if(p.type === "programs") gridPrograms.insertAdjacentHTML("beforeend", html);
+        else if(p.type === "accounts") gridAccounts.insertAdjacentHTML("beforeend", html);
+      });
+
+      applyFilter(currentFilter);
+      applyAccountFilter(currentAccCat);
+    }
+
+    let currentFilter = "all";
+    function applyFilter(filter){
+      currentFilter = filter;
+      document.querySelectorAll(".card").forEach(card=>{
+        const type = card.getAttribute("data-type");
+        const show = (filter === "all" || type === filter);
+        card.style.display = show ? "" : "none";
+      });
+    }
+
+    let currentAccCat = "all";
+    function applyAccountFilter(cat){
+      currentAccCat = cat;
+      document.querySelectorAll("#grid-accounts .card").forEach(card=>{
+        const c = card.getAttribute("data-cat"); // lowercase
+        const show = (cat === "all" || c === cat.toLowerCase());
+        card.style.display = show ? "" : "none";
+      });
+    }
+
+    pills.forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        pills.forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        applyFilter(btn.dataset.filter);
+      });
     });
 
-    applyFilter(currentFilter);
-  }
-
-  let currentFilter = "all";
-  function applyFilter(filter){
-    currentFilter = filter;
-    document.querySelectorAll(".card").forEach(card=>{
-      const type = card.getAttribute("data-type");
-      const show = (filter === "all" || type === filter);
-      card.style.display = show ? "" : "none";
+    accPills.forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        accPills.forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        applyAccountFilter(btn.dataset.acc);
+      });
     });
-  }
 
-  pills.forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      pills.forEach(b=>b.classList.remove("active"));
-      btn.classList.add("active");
-      applyFilter(btn.dataset.filter);
-    });
-  });
+    search.addEventListener("input", render);
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-  search.addEventListener("input", render);
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  render();
-</script>
+    render();
+  </script>
 
 </body>
 </html>
