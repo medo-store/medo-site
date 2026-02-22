@@ -8,7 +8,6 @@
 
   <style>
     :root{
-      /* Theme: Dark Navy (Professional) */
       --bg0:#070A12;
       --bg1:#0B1230;
       --panel:#0E183B;
@@ -16,8 +15,8 @@
       --text:#F6F7FF;
       --muted:#B9C1D9;
       --border:rgba(255,255,255,.10);
-      --accent:#E11D48;     /* red */
-      --accent2:#38BDF8;    /* cyan */
+      --accent:#E11D48;
+      --accent2:#38BDF8;
       --good:#22C55E;
       --warn:#F59E0B;
 
@@ -78,60 +77,51 @@
       color:var(--text);
       cursor:pointer;
       user-select:none;
+      white-space:nowrap;
     }
     .iconBtn:hover{filter:brightness(1.08)}
     .rightBox{margin-inline-start:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
     .pillCount{
-      min-width:22px;
-      height:22px;
-      border-radius:999px;
+      min-width:22px;height:22px;border-radius:999px;
       display:inline-flex;align-items:center;justify-content:center;
       background:rgba(56,189,248,.16);
       border:1px solid rgba(56,189,248,.35);
-      font-weight:900;
-      font-size:12px;
-      padding:0 6px;
+      font-weight:900;font-size:12px;padding:0 6px;
+    }
+    .pillRed{
+      background:rgba(225,29,72,.16);
+      border-color:rgba(225,29,72,.35);
     }
     .userChip{
       display:inline-flex;align-items:center;gap:8px;
-      padding:9px 10px;
-      border-radius:999px;
+      padding:9px 10px;border-radius:999px;
       border:1px solid rgba(56,189,248,.35);
       background:rgba(56,189,248,.10);
       cursor:pointer;
       white-space:nowrap;
-      font-weight:900;
-      font-size:13px;
+      font-weight:900;font-size:13px;
     }
-    .userBadge{
-      width:22px;height:22px;border-radius:7px;
-      display:inline-flex;align-items:center;justify-content:center;
-      background:rgba(255,255,255,.08);
+    .avatarMini{
+      width:24px;height:24px;border-radius:999px;
       border:1px solid var(--border);
-      font-weight:900;
-      font-size:12px;
+      background:rgba(255,255,255,.06);
+      overflow:hidden;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-weight:900;font-size:12px;
     }
+    .avatarMini img{width:100%;height:100%;object-fit:cover;display:block}
 
-    /* Top categories in main view */
+    /* Titles */
     .sectionTitle{
       margin:18px 0 8px;
-      font-size:15px;
-      font-weight:900;
+      font-size:15px;font-weight:900;
       display:flex;align-items:center;gap:10px;
     }
-    .sectionHint{
-      color:var(--muted);
-      font-weight:800;
-      font-size:12px;
-    }
+    .sectionHint{color:var(--muted);font-weight:800;font-size:12px}
     .spacer{height:14px}
 
     /* Grid */
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:12px;
-    }
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
     @media (max-width:1050px){ .grid{grid-template-columns:repeat(3,1fr);} }
     @media (max-width:760px){ .grid{grid-template-columns:repeat(2,1fr);} }
     @media (max-width:460px){ .grid{grid-template-columns:1fr;} }
@@ -143,53 +133,45 @@
       overflow:hidden;
       box-shadow: var(--shadow);
       display:flex;flex-direction:column;
-      min-height:210px;
+      min-height:240px;
     }
     .thumb{
-      height:92px;
-      background:
-        radial-gradient(180px 120px at 25% 30%, rgba(56,189,248,.22), transparent 65%),
-        radial-gradient(180px 120px at 75% 0%, rgba(225,29,72,.18), transparent 60%),
-        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      height:112px;
       border-bottom:1px solid var(--border);
-      display:flex;align-items:center;justify-content:center;
-      font-weight:900;
-      letter-spacing:.6px;
-      font-size:12px;
-      color:rgba(246,247,255,.92);
       position:relative;
+      overflow:hidden;
+      background:rgba(255,255,255,.03);
     }
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.05)}
     .tag{
-      position:absolute;
-      top:10px;
-      inset-inline-start:10px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:900;
+      position:absolute;top:10px;inset-inline-start:10px;
+      padding:6px 10px;border-radius:999px;
+      font-size:11px;font-weight:900;
       border:1px solid var(--border);
       background:rgba(0,0,0,.25);
-      color:var(--muted);
+      color:rgba(246,247,255,.92);
+      backdrop-filter: blur(6px);
     }
     .content{
       padding:10px 10px 12px;
       display:flex;flex-direction:column;gap:8px;flex:1;
     }
     .name{margin:0;font-size:13px;font-weight:900}
-    .meta{margin:0;font-size:12px;color:var(--muted);line-height:1.4}
+    .meta{margin:0;font-size:12px;color:var(--muted);line-height:1.45}
     .priceRow{display:flex;align-items:center;justify-content:space-between;gap:8px}
     .price{margin:0;font-size:12px;font-weight:900}
     .badge{
-      padding:5px 9px;
-      border-radius:999px;
+      padding:5px 9px;border-radius:999px;
       border:1px solid rgba(56,189,248,.35);
       background:rgba(56,189,248,.10);
-      font-size:11px;
-      font-weight:900;
-      color:rgba(246,247,255,.95);
+      font-size:11px;font-weight:900;
       white-space:nowrap;
     }
-    .actions{display:flex;gap:8px;margin-top:auto}
+    .badgeOffer{
+      border-color:rgba(225,29,72,.35);
+      background:rgba(225,29,72,.10);
+    }
+    .actions{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
     .btn{
       flex:1;
       border-radius:12px;
@@ -197,23 +179,26 @@
       background:rgba(255,255,255,.05);
       color:var(--text);
       padding:10px 10px;
-      font-weight:900;
-      font-size:12px;
+      font-weight:900;font-size:12px;
       cursor:pointer;
       display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      min-width:110px;
     }
     .btn:hover{filter:brightness(1.08)}
     .btnRed{
       background:linear-gradient(135deg, rgba(225,29,72,1), rgba(225,29,72,.82));
       border-color: transparent;
     }
+    .btnCyan{
+      background:rgba(56,189,248,.12);
+      border-color:rgba(56,189,248,.35);
+    }
 
-    /* Drawer / modal system */
+    /* Overlay / Drawer / Modal */
     .overlay{
       position:fixed;inset:0;
       background:rgba(0,0,0,.58);
-      display:none;
-      z-index:80;
+      display:none;z-index:80;
     }
     .overlay.show{display:block}
 
@@ -225,15 +210,11 @@
       border:1px solid var(--border);
       box-shadow: var(--shadow);
       z-index:90;
-      transform: translateX(110%);
       transition: transform .22s ease;
-      display:flex;
-      flex-direction:column;
+      display:flex;flex-direction:column;
     }
-    .drawer.show{transform: translateX(0)}
     .drawerHeader{
-      padding:12px;
-      border-bottom:1px solid var(--border);
+      padding:12px;border-bottom:1px solid var(--border);
       display:flex;align-items:center;justify-content:space-between;gap:10px;
     }
     .drawerTitle{font-weight:900}
@@ -242,8 +223,7 @@
     .drawerLabel{font-weight:900;margin:0 0 8px}
     .drawerList{display:flex;flex-direction:column;gap:8px}
     .linkRow{
-      padding:10px 10px;
-      border-radius:12px;
+      padding:10px 10px;border-radius:12px;
       border:1px solid var(--border);
       background:rgba(255,255,255,.04);
       display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -252,18 +232,15 @@
     .linkRow:hover{filter:brightness(1.08)}
     .mini{font-size:12px;color:var(--muted);font-weight:800}
 
-    /* Modal */
     .modal{
       position:fixed;inset:0;
-      display:none;
-      z-index:95;
-      align-items:center;
-      justify-content:center;
+      display:none;z-index:95;
+      align-items:center;justify-content:center;
       padding:14px;
     }
     .modal.show{display:flex}
     .modalBox{
-      width:min(520px, 96vw);
+      width:min(560px, 96vw);
       background:rgba(14,24,59,.94);
       border:1px solid var(--border);
       border-radius:16px;
@@ -271,50 +248,14 @@
       overflow:hidden;
     }
     .modalHeader{
-      padding:12px 12px;
-      border-bottom:1px solid var(--border);
+      padding:12px 12px;border-bottom:1px solid var(--border);
       display:flex;align-items:center;justify-content:space-between;gap:10px;
     }
     .modalTitle{font-weight:900}
     .modalBody{padding:12px}
     .stack{display:flex;flex-direction:column;gap:10px}
 
-    .input{
-      width:100%;
-      padding:11px 12px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      outline:none;
-    }
-    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .row > *{flex:1}
-    .row .tight{flex:0 0 auto}
-
-    .note{
-      padding:10px 10px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.03);
-      color:var(--muted);
-      font-weight:800;
-      font-size:12px;
-      line-height:1.5;
-    }
-    .err{
-      color:#fff;
-      background:rgba(225,29,72,.18);
-      border-color:rgba(225,29,72,.45);
-    }
-    .ok{
-      background:rgba(34,197,94,.14);
-      border-color:rgba(34,197,94,.35);
-      color:#fff;
-    }
-
-    /* Filter controls */
-    .select{
+    .input, .select{
       width:100%;
       padding:11px 12px;
       border-radius:12px;
@@ -324,8 +265,20 @@
       outline:none;
       font-weight:900;
     }
-    .priceModeRow{display:flex;gap:10px}
-    .priceModeRow > *{flex:1}
+    .note{
+      padding:10px 10px;border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-weight:800;font-size:12px;line-height:1.5;
+    }
+    .err{color:#fff;background:rgba(225,29,72,.18);border-color:rgba(225,29,72,.45)}
+    .ok{color:#fff;background:rgba(34,197,94,.14);border-color:rgba(34,197,94,.35)}
+    .warn{color:#fff;background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.35)}
+
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .row > *{flex:1}
+    .tight{flex:0 0 auto}
 
     /* Cart items */
     .cartItem{
@@ -335,32 +288,40 @@
       padding:10px;
       display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
     }
+    .cartLeft{display:flex;gap:10px;flex:1}
+    .cartThumb{
+      width:62px;height:62px;border-radius:12px;
+      overflow:hidden;border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      flex:0 0 auto;
+    }
+    .cartThumb img{width:100%;height:100%;object-fit:cover;display:block}
     .cartName{font-weight:900;font-size:13px;margin:0 0 4px}
     .cartMeta{margin:0;color:var(--muted);font-size:12px;font-weight:800}
-    .qtyRow{display:flex;gap:8px;align-items:center;margin-top:8px}
+    .qtyRow{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
     .qtyBtn{
       width:34px;height:34px;border-radius:10px;
       border:1px solid var(--border);
       background:rgba(255,255,255,.05);
       color:var(--text);
+      font-weight:900;cursor:pointer;
+    }
+    .qtyNum{min-width:34px;text-align:center;font-weight:900}
+    .smallBtn{
+      border:none;
+      color:rgba(246,247,255,.95);
       font-weight:900;
       cursor:pointer;
-    }
-    .qtyNum{
-      min-width:34px;text-align:center;
-      font-weight:900;
+      padding:8px 10px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      white-space:nowrap;
+      font-size:12px;
     }
     .removeBtn{
-      border:none;
-      background:transparent;
-      color:rgba(246,247,255,.85);
-      font-weight:900;
-      cursor:pointer;
-      padding:6px 8px;
-      border-radius:10px;
-      border:1px solid rgba(225,29,72,.35);
+      border-color:rgba(225,29,72,.35);
       background:rgba(225,29,72,.12);
-      white-space:nowrap;
     }
     .totalBar{
       margin-top:10px;
@@ -375,7 +336,62 @@
     .totalBar strong{font-size:13px}
     .totalBar span{font-size:12px;color:rgba(246,247,255,.90);font-weight:900}
 
-    /* Payments vertical */
+    /* Details gallery */
+    .galleryMain{
+      width:100%;
+      height:220px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      overflow:hidden;
+      background:rgba(255,255,255,.03);
+    }
+    .galleryMain img{width:100%;height:100%;object-fit:cover;display:block}
+    .thumbRow{display:flex;gap:8px;flex-wrap:wrap}
+    .gThumb{
+      width:68px;height:48px;border-radius:12px;
+      border:1px solid var(--border);
+      overflow:hidden;background:rgba(255,255,255,.03);
+      cursor:pointer;
+    }
+    .gThumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .gThumb.active{outline:2px solid rgba(56,189,248,.55)}
+    .lightboxBox{
+      width:min(920px, 96vw);
+      background:rgba(14,24,59,.94);
+      border:1px solid var(--border);
+      border-radius:16px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .lightImgWrap{
+      position:relative;
+      background:#000;
+      height:min(70vh, 620px);
+    }
+    .lightImgWrap img{width:100%;height:100%;object-fit:contain;display:block}
+    .navArrow{
+      position:absolute;top:50%;
+      transform:translateY(-50%);
+      width:44px;height:44px;border-radius:14px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.08);
+      color:#fff;font-weight:900;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      user-select:none;
+    }
+    .navArrow:hover{filter:brightness(1.1)}
+    .navPrev{inset-inline-start:12px}
+    .navNext{inset-inline-end:12px}
+
+    /* Payment mini modal */
+    .miniModalBox{
+      width:min(420px, 94vw);
+      background:rgba(14,24,59,.96);
+      border:1px solid var(--border);
+      border-radius:16px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
     .payList{display:flex;flex-direction:column;gap:10px}
     .payBtn{
       width:100%;
@@ -412,14 +428,28 @@
       padding:9px 10px;border-radius:999px;
       border:1px solid var(--border);
       background:rgba(255,255,255,.03);
-      font-weight:900;
-      font-size:12px;
+      font-weight:900;font-size:12px;
     }
     .social:hover{filter:brightness(1.08)}
-    .copyBtn{
-      padding:9px 10px;border-radius:12px;border:1px solid var(--border);
-      background:rgba(255,255,255,.04);color:var(--text);font-weight:900;cursor:pointer;
+
+    /* Tabs */
+    .tabs{display:flex;gap:8px}
+    .tab{
+      flex:1;
+      padding:10px 10px;border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      font-weight:900;cursor:pointer;
+      text-align:center;
+      user-select:none;
     }
+    .tab.active{
+      border-color:rgba(56,189,248,.45);
+      background:rgba(56,189,248,.10);
+    }
+
+    /* Reviews */
+    textarea.input{min-height:110px;resize:vertical}
   </style>
 </head>
 
@@ -432,7 +462,7 @@
       </div>
 
       <div class="searchWrap">
-        <input id="search" class="search" placeholder="🔍 ابحث..." />
+        <input id="search" class="search" />
         <!-- Filter icon (3 lines + top line) -->
         <button class="iconBtn" id="filterBtn" title="Filter">
           <span style="display:inline-block;line-height:0">
@@ -447,27 +477,36 @@
       </div>
 
       <div class="rightBox">
+        <button class="iconBtn" id="gemsBtn" title="Bonus">
+          💎 <span class="pillCount" id="gemsCount">0</span>
+        </button>
+
+        <button class="iconBtn" id="notifBtn" title="Notifications">
+          🔔 <span class="pillCount pillRed" id="notifCount">0</span>
+        </button>
+
         <button class="iconBtn" id="cartBtn" title="Cart">
           🛒 <span class="pillCount" id="cartCount">0</span>
         </button>
 
-        <button class="iconBtn" id="loginBtn" title="Login">
-          👤 <span id="loginText">تسجيل الدخول</span>
+        <button class="iconBtn" id="authBtn" title="Login">
+          👤 <span id="authText">تسجيل الدخول</span>
         </button>
 
-        <div class="userChip" id="userChip" style="display:none" title="User">
-          <span class="userBadge" id="userProviderBadge">U</span>
+        <div class="userChip" id="userChip" style="display:none" title="Account">
+          <span class="avatarMini" id="avatarMini">
+            <span id="avatarLetter">M</span>
+          </span>
           <span id="userNameText">User</span>
         </div>
 
-        <!-- Menu (hamburger) -->
+        <!-- Menu -->
         <button class="iconBtn" id="menuBtn" title="Menu">☰</button>
       </div>
     </div>
   </div>
 
   <div class="container">
-    <!-- TOP / OFFERS visible outside -->
     <div class="sectionTitle" id="topTitle">🔥 Top <span class="sectionHint" id="topHint">الأكثر طلبًا</span></div>
     <div id="gridTop" class="grid"></div>
 
@@ -491,7 +530,7 @@
     <div class="sectionTitle" id="accountsTitle">🧾 الأكونتات</div>
     <div id="gridAccounts" class="grid"></div>
 
-    <div class="footer">
+    <div class="footer" id="contactSection">
       <a class="social" href="https://wa.me/201006760663" target="_blank" rel="noreferrer">WhatsApp</a>
       <a class="social" href="https://www.instagram.com/medo__rami" target="_blank" rel="noreferrer">Instagram</a>
       <a class="social" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" rel="noreferrer">Facebook</a>
@@ -513,7 +552,10 @@
     <div class="drawerBody">
       <div class="drawerSection" id="drawerUserBox" style="display:none">
         <div class="note ok" id="drawerUserNote"></div>
-        <button class="btn" id="logoutBtn" style="margin-top:10px">Logout</button>
+        <div class="row">
+          <button class="btn" id="accountBtn">Account</button>
+          <button class="btn" id="logoutBtn">Logout</button>
+        </div>
       </div>
 
       <div class="drawerSection">
@@ -524,6 +566,8 @@
           <div class="linkRow" id="goGames"><span id="goGamesText">Games</span><span class="mini">→</span></div>
           <div class="linkRow" id="goPrograms"><span id="goProgramsText">Programs</span><span class="mini">→</span></div>
           <div class="linkRow" id="goAccounts"><span id="goAccountsText">Accounts</span><span class="mini">→</span></div>
+          <div class="linkRow" id="goReviews"><span id="goReviewsText">Reviews</span><span class="mini">→</span></div>
+          <div class="linkRow" id="goContact"><span id="goContactText">Contact</span><span class="mini">→</span></div>
         </div>
       </div>
     </div>
@@ -538,34 +582,19 @@
     <div class="drawerBody">
       <div class="drawerSection">
         <p class="drawerLabel" id="filterCategoryLabel">Category</p>
-        <select class="select" id="filterCategory">
-          <option value="all">All</option>
-          <option value="games">Games</option>
-          <option value="programs">Programs</option>
-          <option value="accounts">Accounts</option>
-        </select>
+        <select class="select" id="filterCategory"></select>
       </div>
 
       <div class="drawerSection">
         <p class="drawerLabel" id="filterSortLabel">Sort</p>
-        <select class="select" id="filterSort">
-          <option value="new">Newest</option>
-          <option value="old">Oldest</option>
-          <option value="low">Lowest price → Highest</option>
-          <option value="high">Highest price → Lowest</option>
-        </select>
+        <select class="select" id="filterSort"></select>
       </div>
 
       <div class="drawerSection">
         <p class="drawerLabel" id="filterPriceLabel">Price</p>
-        <div class="priceModeRow">
-          <select class="select" id="priceMode">
-            <option value="off">Off</option>
-            <option value="eq">Equal</option>
-            <option value="lte">≤</option>
-            <option value="gte">≥</option>
-          </select>
-          <input class="input" id="priceValue" type="number" min="0" placeholder="مثلاً 300" />
+        <div class="row">
+          <select class="select" id="priceMode"></select>
+          <input class="input" id="priceValue" type="number" min="0" />
         </div>
       </div>
 
@@ -574,35 +603,125 @@
     </div>
   </div>
 
-  <!-- LOGIN MODAL: choose provider -->
-  <div class="modal" id="loginModal" aria-hidden="true">
+  <!-- AUTH MODAL -->
+  <div class="modal" id="authModal" aria-hidden="true">
     <div class="modalBox">
       <div class="modalHeader">
-        <div class="modalTitle" id="loginModalTitle">Login</div>
-        <button class="iconBtn" id="loginClose">✕</button>
+        <div class="modalTitle" id="authModalTitle">Account</div>
+        <button class="iconBtn" id="authClose">✕</button>
       </div>
       <div class="modalBody">
-        <div class="stack" id="providersStack">
-          <!-- buttons injected -->
+        <div class="tabs">
+          <div class="tab active" id="tabLogin">Login</div>
+          <div class="tab" id="tabSignup">Sign up</div>
+        </div>
+
+        <div class="stack" id="loginForm" style="margin-top:10px">
+          <div class="note" id="loginNote"></div>
+          <input class="input" id="loginEmail" type="email" />
+          <input class="input" id="loginPass" type="password" />
+          <button class="btn btnRed" id="loginBtn">Login</button>
+          <div class="note err" id="loginErr" style="display:none"></div>
+        </div>
+
+        <div class="stack" id="signupForm" style="margin-top:10px;display:none">
+          <div class="note" id="signupNote"></div>
+          <input class="input" id="signupEmail" type="email" />
+          <input class="input" id="signupPass" type="password" />
+          <input class="input" id="signupName" type="text" />
+          <input class="input" id="signupAge" type="number" min="1" max="120" />
+          <div class="note">
+            <div style="font-weight:900;margin-bottom:6px" id="avatarLabel">Profile photo (optional)</div>
+            <input class="input" id="signupAvatar" type="file" accept="image/*" />
+          </div>
+          <button class="btn btnRed" id="signupBtn">Create account</button>
+          <div class="note err" id="signupErr" style="display:none"></div>
+          <div class="note ok" id="signupOk" style="display:none"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- LOGIN FORM MODAL -->
-  <div class="modal" id="loginFormModal" aria-hidden="true">
+  <!-- ACCOUNT SETTINGS MODAL -->
+  <div class="modal" id="accountModal" aria-hidden="true">
     <div class="modalBox">
       <div class="modalHeader">
-        <div class="modalTitle" id="loginFormTitle">Login</div>
-        <button class="iconBtn" id="loginFormClose">✕</button>
+        <div class="modalTitle" id="accountTitle">Account</div>
+        <button class="iconBtn" id="accountClose">✕</button>
       </div>
       <div class="modalBody">
         <div class="stack">
-          <div class="note" id="loginFormNote"></div>
-          <input class="input" id="loginEmail" type="email" placeholder="Email" />
-          <input class="input" id="loginPass" type="password" placeholder="Password" />
-          <button class="btn btnRed" id="loginSubmitBtn">Continue</button>
-          <div class="note err" id="loginError" style="display:none"></div>
+          <div class="note" id="accountInfo"></div>
+
+          <div class="note">
+            <div style="font-weight:900;margin-bottom:6px" id="editNameLabel">Edit name</div>
+            <input class="input" id="editName" type="text" />
+            <button class="btn btnCyan" id="saveNameBtn">Save</button>
+          </div>
+
+          <div class="note">
+            <div style="font-weight:900;margin-bottom:6px" id="editAvatarLabel">Edit photo</div>
+            <input class="input" id="editAvatar" type="file" accept="image/*" />
+            <button class="btn btnCyan" id="saveAvatarBtn">Save</button>
+          </div>
+
+          <div class="note">
+            <div style="font-weight:900;margin-bottom:6px" id="changePassLabel">Change password</div>
+            <input class="input" id="oldPass" type="password" />
+            <input class="input" id="newPass" type="password" />
+            <button class="btn btnRed" id="changePassBtn">Change</button>
+            <div class="note err" id="changePassErr" style="display:none"></div>
+            <div class="note ok" id="changePassOk" style="display:none"></div>
+          </div>
+
+          <button class="btn" id="accountLogoutBtn">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFICATIONS MODAL -->
+  <div class="modal" id="notifModal" aria-hidden="true">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="notifTitle">Notifications</div>
+        <button class="iconBtn" id="notifClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack">
+          <div id="notifList"></div>
+          <button class="btn" id="notifClearBtn">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GEMS / BONUS MODAL -->
+  <div class="modal" id="gemsModal" aria-hidden="true">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="gemsTitle">Bonus</div>
+        <button class="iconBtn" id="gemsClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack">
+          <div class="note" id="gemsInfo"></div>
+
+          <div class="note">
+            <div style="font-weight:900;margin-bottom:8px" id="redeemLabel">Redeem gems → discount card</div>
+            <div class="row">
+              <input class="input" id="redeemInput" type="number" min="1" />
+              <button class="btn btnRed tight" id="redeemBtn" style="flex:0 0 auto">Redeem</button>
+            </div>
+            <div class="note warn" id="redeemHint" style="margin-top:10px"></div>
+            <div class="note err" id="redeemErr" style="display:none;margin-top:10px"></div>
+            <div class="note ok" id="redeemOk" style="display:none;margin-top:10px"></div>
+          </div>
+
+          <div class="note">
+            <div style="font-weight:900;margin-bottom:8px" id="cardsLabel">Your discount cards</div>
+            <div id="cardsList"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -629,7 +748,7 @@
     </div>
   </div>
 
-  <!-- CHECKOUT MODAL -->
+  <!-- CHECKOUT SUMMARY MODAL (STEP 1) -->
   <div class="modal" id="checkoutModal" aria-hidden="true">
     <div class="modalBox">
       <div class="modalHeader">
@@ -639,52 +758,157 @@
       <div class="modalBody">
         <div class="stack">
           <div id="checkoutItems"></div>
-
           <div class="note" id="checkoutTotals"></div>
 
-          <!-- Coupon ONLY here -->
           <div class="note" id="couponNote"></div>
           <div class="row">
-            <input class="input" id="couponInput" placeholder="Coupon (MG1 / MZ3 ...)" />
+            <input class="input" id="couponInput" />
             <button class="btn tight" id="applyCouponBtn" style="flex:0 0 auto">Apply</button>
           </div>
 
-          <div class="drawerSection">
-            <p class="drawerLabel" id="paymentsTitle">Payment Methods</p>
-            <div class="payList" id="payList">
-              <!-- injected -->
-            </div>
-            <div class="note" id="payHelp"></div>
+          <div class="note" id="cardPickNote"></div>
+          <select class="select" id="cardPicker"></select>
+
+          <div class="row">
+            <button class="btn" id="backToCartBtn">Back</button>
+            <button class="btn btnRed" id="confirmCheckoutBtn">Confirm</button>
           </div>
 
-          <button class="btn" id="backToCartBtn">Back</button>
+          <div class="note warn" id="checkoutHint"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAYMENT MODAL (STEP 2) -->
+  <div class="modal" id="payModal" aria-hidden="true">
+    <div class="miniModalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="payTitle">Payment</div>
+        <button class="iconBtn" id="payClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack">
+          <div class="note" id="paySummary"></div>
+          <div class="payList" id="payList"></div>
+          <div class="note" id="payHelp"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAILS MODAL -->
+  <div class="modal" id="detailsModal" aria-hidden="true">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="detailsTitle">Details</div>
+        <button class="iconBtn" id="detailsClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack">
+          <div class="galleryMain"><img id="detailsMainImg" alt=""></div>
+          <div class="thumbRow" id="detailsThumbs"></div>
+
+          <div class="note" id="detailsText"></div>
+
+          <div class="row">
+            <button class="btn" id="detailsAddBtn">🛒 Add</button>
+            <button class="btn btnRed" id="detailsBuyBtn">⚡ Buy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="modal" id="lightbox" aria-hidden="true">
+    <div class="lightboxBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="lightTitle">Photo</div>
+        <button class="iconBtn" id="lightClose">✕</button>
+      </div>
+      <div class="lightImgWrap">
+        <img id="lightImg" alt="">
+        <div class="navArrow navPrev" id="lightPrev">‹</div>
+        <div class="navArrow navNext" id="lightNext">›</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT MODAL -->
+  <div class="modal" id="contactModal" aria-hidden="true">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="contactTitle">Contact</div>
+        <button class="iconBtn" id="contactClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack">
+          <a class="payBtn" href="https://wa.me/201006760663" target="_blank" rel="noreferrer">
+            <span class="payLeft"><span class="payIcon">WA</span><span>WhatsApp</span></span><span class="mini">→</span>
+          </a>
+          <a class="payBtn" href="https://www.instagram.com/medo__rami" target="_blank" rel="noreferrer">
+            <span class="payLeft"><span class="payIcon">IG</span><span>Instagram</span></span><span class="mini">→</span>
+          </a>
+          <a class="payBtn" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" rel="noreferrer">
+            <span class="payLeft"><span class="payIcon">FB</span><span>Facebook</span></span><span class="mini">→</span>
+          </a>
+          <a class="payBtn" href="mailto:medorami77@gmail.com">
+            <span class="payLeft"><span class="payIcon">@</span><span>Email</span></span><span class="mini">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEWS MODAL -->
+  <div class="modal" id="reviewsModal" aria-hidden="true">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="reviewsTitle">Reviews</div>
+        <button class="iconBtn" id="reviewsClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack">
+          <div class="note" id="reviewsHint"></div>
+
+          <div class="note">
+            <div class="row">
+              <select class="select" id="reviewStars"></select>
+              <button class="btn btnRed tight" id="submitReviewBtn" style="flex:0 0 auto">Send</button>
+            </div>
+            <textarea class="input" id="reviewText"></textarea>
+            <div class="note err" id="reviewErr" style="display:none;margin-top:10px"></div>
+            <div class="note ok" id="reviewOk" style="display:none;margin-top:10px"></div>
+          </div>
+
+          <div class="note">
+            <div style="font-weight:900;margin-bottom:8px" id="reviewsListLabel">All reviews</div>
+            <div id="reviewsList"></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
 <script>
-/* ---------------------------
-  Language (auto by device)
----------------------------- */
-const isArabic = (() => {
-  const lang = (navigator.language || "").toLowerCase();
-  return lang.startsWith("ar");
-})();
+/* =========================
+   Language (auto by device)
+========================= */
+const isArabic = (() => (navigator.language || "").toLowerCase().startsWith("ar"))();
 document.documentElement.lang = isArabic ? "ar" : "en";
 document.documentElement.dir = isArabic ? "rtl" : "ltr";
 
 const T = {
-  ar: {
+  ar:{
     search:"🔍 ابحث عن لعبة / برنامج / أكونت",
-    login:"تسجيل الدخول",
     menu:"القائمة",
     filter:"الفلترة",
     category:"القسم",
     sort:"الترتيب",
     price:"فلتر السعر",
     apply:"تطبيق",
-    filterHelp:"اختر قسم + ترتيب + سعر، ثم اضغط تطبيق.",
+    filterHelp:"اختار قسم + ترتيب + سعر واضغط تطبيق.",
     all:"الكل",
     games:"الألعاب",
     programs:"البرامج",
@@ -694,21 +918,14 @@ const T = {
     topHint:"الأكثر طلبًا",
     offersHint:"عروض",
     quick:"اختصارات",
+    contact:"التواصل",
+    reviews:"المراجعات",
     cart:"السلة",
     total:"الإجمالي",
     checkout:"شراء",
     back:"رجوع",
-    couponHint:"كود الخصم (اختياري)",
-    payments:"طرق الدفع",
-    mustLogin:"لازم تسجل دخول الأول.",
-    cartHint:"من السلة تقدر تضغط شراء ويدخلك نفس صفحة الدفع.",
-    emptyCart:"السلة فاضية.",
-    emailPlaceholder:"البريد / Email",
-    passPlaceholder:"كلمة السر / Password",
-    continue:"متابعة",
-    fillBoth:"لازم تكتب البريد وكلمة السر.",
-    loggedAs:"مسجل بـ",
-    logout:"تسجيل خروج",
+    confirm:"تأكيد",
+    details:"تفاصيل",
     addCart:"إضافة للسلة",
     buy:"شراء",
     newest:"الأحدث",
@@ -719,25 +936,67 @@ const T = {
     priceEq:"بالظبط",
     priceLte:"أقل أو يساوي",
     priceGte:"أكبر أو يساوي",
-    couponApplied:"تم تطبيق الخصم",
+    emptyCart:"السلة فاضية.",
+    cartHint:"تقدر تشتري من السلة أو من منتج واحد.",
+    mustLogin:"لازم تسجل دخول الأول.",
+    auth:"تسجيل الدخول",
+    login:"تسجيل دخول",
+    signup:"حساب جديد",
+    email:"البريد الإلكتروني",
+    pass:"كلمة السر",
+    name:"الاسم",
+    age:"العمر",
+    create:"إنشاء حساب",
+    exists:"هذا البريد مستخدم من قبل — سجل دخول.",
+    notFound:"هذا الحساب غير موجود — اعمل حساب جديد.",
+    wrong:"بيانات الدخول غلط.",
+    fillAll:"املأ كل البيانات.",
+    account:"الحساب",
+    logout:"تسجيل خروج",
+    editName:"تغيير الاسم",
+    editPhoto:"تغيير الصورة",
+    save:"حفظ",
+    changePass:"تغيير كلمة السر",
+    oldPass:"كلمة السر القديمة",
+    newPass:"كلمة السر الجديدة",
+    passChanged:"تم تغيير كلمة السر ✅",
+    passFail:"كلمة السر القديمة غلط.",
+    notifications:"الرسائل",
+    clear:"مسح الكل",
+    bonus:"الجواهر",
+    gemsInfo:(n)=>`عندك ${n} 💎 جواهر`,
+    redeem:"تبديل",
+    redeemHint:"مثال: 10 جواهر = كارت خصم 10% (تقدر تبدّل أكتر حسب اللي معاك)",
+    redeemTooMuch:"الرقم أكبر من اللي معاك.",
+    redeemOk:(code,pct)=>`تم إنشاء كارت خصم: ${code} = ${pct}% ✅`,
+    cards:"كروت الخصم",
+    noCards:"مفيش كروت خصم.",
+    pickCard:"اختار كارت خصم (اختياري)",
+    none:"بدون",
+    couponHint:"كود خصم (اختياري)",
     invalidCoupon:"كود غير صحيح",
-    payHelp:"الدفع يتم خارج الموقع. بعد الدفع ابعتلنا إثبات الدفع على واتساب.",
-    copyNumber:"نسخ الرقم",
-    copied:"تم النسخ ✅",
-    providerLogin:"تسجيل بـ",
-    open:"فتح",
-    items:"المنتجات",
+    applied:"تم تطبيق الخصم ✅",
+    stepHint:"بعد التأكيد هتظهر طرق الدفع في نافذة صغيرة.",
+    payment:"طرق الدفع",
+    afterPay:"بعد الدفع ابعت إثبات على واتساب.",
+    orderDone:(g)=>`شكراً لشرائك! اتضافلك ${g} 💎 جواهر`,
+    reviewHint:"اكتب رأيك عشان نطوّر الموقع.",
+    reviewText:"اكتب تعليقك هنا...",
+    reviewNeedLogin:"لازم تسجل دخول عشان تكتب مراجعة.",
+    reviewSent:"تم إرسال المراجعة ✅",
+    stars:"التقييم",
+    detailsTitle:"تفاصيل المنتج",
+    copied:"تم النسخ ✅"
   },
-  en: {
+  en:{
     search:"🔍 Search games / programs / accounts",
-    login:"Login",
     menu:"Menu",
     filter:"Filter",
     category:"Category",
     sort:"Sort",
     price:"Price filter",
     apply:"Apply",
-    filterHelp:"Pick category + sort + price, then Apply.",
+    filterHelp:"Pick category + sort + price then Apply.",
     all:"All",
     games:"Games",
     programs:"Programs",
@@ -747,21 +1006,14 @@ const T = {
     topHint:"Most ordered",
     offersHint:"Deals",
     quick:"Quick",
+    contact:"Contact",
+    reviews:"Reviews",
     cart:"Cart",
     total:"Total",
     checkout:"Checkout",
     back:"Back",
-    couponHint:"Coupon (optional)",
-    payments:"Payment methods",
-    mustLogin:"Please login first.",
-    cartHint:"From cart, Checkout takes you to the same payment page.",
-    emptyCart:"Your cart is empty.",
-    emailPlaceholder:"Email",
-    passPlaceholder:"Password",
-    continue:"Continue",
-    fillBoth:"Email and password are required.",
-    loggedAs:"Logged via",
-    logout:"Logout",
+    confirm:"Confirm",
+    details:"Details",
     addCart:"Add to cart",
     buy:"Buy",
     newest:"Newest",
@@ -770,61 +1022,430 @@ const T = {
     high:"Highest → Lowest",
     priceOff:"Off",
     priceEq:"Equal",
-    priceLte:"Less or equal",
-    priceGte:"Greater or equal",
-    couponApplied:"Discount applied",
+    priceLte:"≤",
+    priceGte:"≥",
+    emptyCart:"Your cart is empty.",
+    cartHint:"Buy from cart or from a single product.",
+    mustLogin:"Please login first.",
+    auth:"Login",
+    login:"Login",
+    signup:"Sign up",
+    email:"Email",
+    pass:"Password",
+    name:"Name",
+    age:"Age",
+    create:"Create account",
+    exists:"Email already used — login instead.",
+    notFound:"Account not found — sign up instead.",
+    wrong:"Wrong credentials.",
+    fillAll:"Fill all fields.",
+    account:"Account",
+    logout:"Logout",
+    editName:"Edit name",
+    editPhoto:"Edit photo",
+    save:"Save",
+    changePass:"Change password",
+    oldPass:"Old password",
+    newPass:"New password",
+    passChanged:"Password changed ✅",
+    passFail:"Old password is wrong.",
+    notifications:"Notifications",
+    clear:"Clear",
+    bonus:"Gems",
+    gemsInfo:(n)=>`You have ${n} 💎 gems`,
+    redeem:"Redeem",
+    redeemHint:"Example: 10 gems = 10% discount card (redeem more as you want)",
+    redeemTooMuch:"Number is greater than your balance.",
+    redeemOk:(code,pct)=>`New discount card: ${code} = ${pct}% ✅`,
+    cards:"Discount cards",
+    noCards:"No discount cards.",
+    pickCard:"Pick a discount card (optional)",
+    none:"None",
+    couponHint:"Coupon (optional)",
     invalidCoupon:"Invalid coupon",
-    payHelp:"Payments happen outside the site. After paying, message proof on WhatsApp.",
-    copyNumber:"Copy number",
-    copied:"Copied ✅",
-    providerLogin:"Login with",
-    open:"Open",
-    items:"Items",
+    applied:"Discount applied ✅",
+    stepHint:"After confirm, payment methods show in a small popup.",
+    payment:"Payment",
+    afterPay:"After paying, send proof on WhatsApp.",
+    orderDone:(g)=>`Thanks! You earned ${g} 💎 gems`,
+    reviewHint:"Leave a review to improve the site.",
+    reviewText:"Write your review here...",
+    reviewNeedLogin:"Please login to review.",
+    reviewSent:"Review sent ✅",
+    stars:"Stars",
+    detailsTitle:"Product details",
+    copied:"Copied ✅"
   }
 };
 const L = isArabic ? T.ar : T.en;
 
-/* ---------------------------
-  Data (edit freely)
----------------------------- */
-/* Products:
-   type: games / programs / accounts
-   top: true -> shows in Top
-   offer: true -> shows in Offers
-*/
+/* =========================
+   Storage keys
+========================= */
+const LS_USERS = "medo_users_v1";        // { email: {email, pass, name, age, avatar} }
+const LS_SESSION = "medo_session_v1";    // { email }
+const LS_CART = "medo_cart_v1";          // { emailOrGuest: [{id, qty}] }
+const LS_GEMS = "medo_gems_v1";          // { email: number }
+const LS_CARDS = "medo_cards_v1";        // { email: [{code,pct,used,created}] }
+const LS_NOTIFS = "medo_notifs_v1";      // { email: [{text,ts,read}] }
+const LS_REVIEWS = "medo_reviews_v1";    // [{email,name,stars,text,ts}]
+
+/* =========================
+   Helpers
+========================= */
+const $ = (id)=>document.getElementById(id);
+const money = (n)=>`EGP ${n}`;
+const now = ()=>Date.now();
+function safeJSONGet(key, fallback){
+  try{ return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); }catch{ return fallback; }
+}
+function safeJSONSet(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+function uid(len=8){
+  const chars="ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+  let s=""; for(let i=0;i<len;i++) s+=chars[Math.floor(Math.random()*chars.length)];
+  return s;
+}
+
+function placeholderSVG(text){
+  const t = String(text).slice(0,18);
+  const svg = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="900" height="520">
+    <defs>
+      <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+        <stop stop-color="rgba(56,189,248,.35)" offset="0"/>
+        <stop stop-color="rgba(225,29,72,.30)" offset="1"/>
+      </linearGradient>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#g)"/>
+    <rect x="40" y="40" width="820" height="440" rx="28" fill="rgba(0,0,0,.25)" stroke="rgba(255,255,255,.22)"/>
+    <text x="450" y="270" font-size="54" font-family="Segoe UI, Arial" fill="rgba(255,255,255,.92)" text-anchor="middle" font-weight="700">${t}</text>
+    <text x="450" y="330" font-size="22" font-family="Segoe UI, Arial" fill="rgba(255,255,255,.75)" text-anchor="middle">Medo Gaming Store</text>
+  </svg>`;
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.trim());
+}
+
+/* =========================
+   Product data (EDIT HERE)
+   - image: main image
+   - images: gallery (details)
+========================= */
 const products = [
-  // Games (examples)
-  { id: 1, type: "games", name: "Game #1", desc: isArabic ? "وصف بسيط" : "Short description", price: 250, top:true },
-  { id: 2, type: "games", name: "Game #2", desc: isArabic ? "وصف بسيط" : "Short description", price: 180, offer:true },
-  { id: 3, type: "games", name: "Game #3", desc: isArabic ? "وصف بسيط" : "Short description", price: 300 },
-  { id: 4, type: "games", name: "Game #4", desc: isArabic ? "وصف بسيط" : "Short description", price: 120, offer:true },
+  { id:1, type:"games", name:"Game #1", desc: isArabic ? "وصف مختصر" : "Short description", price:250, top:true,
+    image: placeholderSVG("Game #1"), images:[placeholderSVG("Game #1 - 1"), placeholderSVG("Game #1 - 2"), placeholderSVG("Game #1 - 3")] },
+  { id:2, type:"games", name:"Game #2", desc: isArabic ? "وصف مختصر" : "Short description", price:180, offer:true,
+    image: placeholderSVG("Game #2"), images:[placeholderSVG("Game #2 - 1"), placeholderSVG("Game #2 - 2")] },
+  { id:3, type:"games", name:"Game #3", desc: isArabic ? "وصف مختصر" : "Short description", price:300,
+    image: placeholderSVG("Game #3"), images:[placeholderSVG("Game #3 - 1")] },
+  { id:4, type:"games", name:"Game #4", desc: isArabic ? "وصف مختصر" : "Short description", price:120, offer:true,
+    image: placeholderSVG("Game #4"), images:[placeholderSVG("Game #4 - 1"), placeholderSVG("Game #4 - 2")] },
 
-  // Programs
-  { id: 11, type: "programs", name: "Program #1", desc: isArabic ? "وصف بسيط" : "Short description", price: 150, top:true },
-  { id: 12, type: "programs", name: "Program #2", desc: isArabic ? "وصف بسيط" : "Short description", price: 90 },
-  { id: 13, type: "programs", name: "Program #3", desc: isArabic ? "وصف بسيط" : "Short description", price: 220, offer:true },
-  { id: 14, type: "programs", name: "Program #4", desc: isArabic ? "وصف بسيط" : "Short description", price: 60 },
+  { id:11, type:"programs", name:"Program #1", desc: isArabic ? "وصف مختصر" : "Short description", price:150, top:true,
+    image: placeholderSVG("Program #1"), images:[placeholderSVG("Program #1 - 1"), placeholderSVG("Program #1 - 2")] },
+  { id:12, type:"programs", name:"Program #2", desc: isArabic ? "وصف مختصر" : "Short description", price:90,
+    image: placeholderSVG("Program #2"), images:[placeholderSVG("Program #2 - 1")] },
+  { id:13, type:"programs", name:"Program #3", desc: isArabic ? "وصف مختصر" : "Short description", price:220, offer:true,
+    image: placeholderSVG("Program #3"), images:[placeholderSVG("Program #3 - 1"), placeholderSVG("Program #3 - 2"), placeholderSVG("Program #3 - 3")] },
+  { id:14, type:"programs", name:"Program #4", desc: isArabic ? "وصف مختصر" : "Short description", price:60,
+    image: placeholderSVG("Program #4"), images:[placeholderSVG("Program #4 - 1")] },
 
-  // Accounts
-  { id: 21, type: "accounts", name: "Account #1", desc: isArabic ? "تفاصيل الأكونت" : "Account details", price: 700, top:true },
-  { id: 22, type: "accounts", name: "Account #2", desc: isArabic ? "تفاصيل الأكونت" : "Account details", price: 350, offer:true },
-  { id: 23, type: "accounts", name: "Account #3", desc: isArabic ? "تفاصيل الأكونت" : "Account details", price: 200 },
-  { id: 24, type: "accounts", name: "Account #4", desc: isArabic ? "تفاصيل الأكونت" : "Account details", price: 450 }
+  { id:21, type:"accounts", name:"Account #1", desc: isArabic ? "تفاصيل الأكونت (اكتب اللي تحبه)" : "Account details", price:700, top:true,
+    image: placeholderSVG("Account #1"), images:[placeholderSVG("Account #1 - Car"), placeholderSVG("Account #1 - Skins"), placeholderSVG("Account #1 - Weapons")] },
+  { id:22, type:"accounts", name:"Account #2", desc: isArabic ? "تفاصيل الأكونت (اكتب اللي تحبه)" : "Account details", price:350, offer:true,
+    image: placeholderSVG("Account #2"), images:[placeholderSVG("Account #2 - 1"), placeholderSVG("Account #2 - 2")] },
+  { id:23, type:"accounts", name:"Account #3", desc: isArabic ? "تفاصيل الأكونت (اكتب اللي تحبه)" : "Account details", price:200,
+    image: placeholderSVG("Account #3"), images:[placeholderSVG("Account #3 - 1")] },
+  { id:24, type:"accounts", name:"Account #4", desc: isArabic ? "تفاصيل الأكونت (اكتب اللي تحبه)" : "Account details", price:450,
+    image: placeholderSVG("Account #4"), images:[placeholderSVG("Account #4 - 1"), placeholderSVG("Account #4 - 2")] },
 ];
 
-/* ---------------------------
-  Coupons (your codes)
-  MG1..MG10 = 10%
-  MZ1..MZ10 = 20%
-  MK1..MK10 = 30%
-  MC1..MC10 = 40%
-  MA1..MA10 = 50%
-  MB1..MB10 = 60%
-  ME1..ME10 = 70%
-  MX1..MX10 = 80%
-  MR1..MR10 = 90%
-  MI1..MI10 = 100%
----------------------------- */
+/* =========================
+   UI text binding
+========================= */
+function applyLanguage(){
+  $("brandText").textContent = "Medo Gaming Store";
+  $("search").placeholder = L.search;
+  $("menuTitle").textContent = L.menu;
+  $("filterTitle").textContent = L.filter;
+
+  $("topTitle").childNodes[0].textContent = `🔥 ${L.top} `;
+  $("topHint").textContent = L.topHint;
+
+  $("offersTitle").childNodes[0].textContent = `🎁 ${L.offers} `;
+  $("offersHint").textContent = L.offersHint;
+
+  $("gamesTitle").textContent = `🎮 ${L.games}`;
+  $("programsTitle").textContent = `💻 ${L.programs}`;
+  $("accountsTitle").textContent = `🧾 ${L.accounts}`;
+
+  $("drawerQuick").textContent = L.quick;
+  $("goTopText").textContent = L.top;
+  $("goOffersText").textContent = L.offers;
+  $("goGamesText").textContent = L.games;
+  $("goProgramsText").textContent = L.programs;
+  $("goAccountsText").textContent = L.accounts;
+  $("goReviewsText").textContent = L.reviews;
+  $("goContactText").textContent = L.contact;
+
+  $("filterCategoryLabel").textContent = L.category;
+  $("filterSortLabel").textContent = L.sort;
+  $("filterPriceLabel").textContent = L.price;
+  $("applyFilterBtn").textContent = L.apply;
+  $("filterNote").textContent = L.filterHelp;
+
+  $("authText").textContent = L.auth;
+  $("authModalTitle").textContent = L.account;
+  $("tabLogin").textContent = L.login;
+  $("tabSignup").textContent = L.signup;
+
+  $("loginNote").textContent = isArabic
+    ? "لو حسابك موجود استخدم تسجيل الدخول."
+    : "If you already have an account, use Login.";
+  $("loginEmail").placeholder = L.email;
+  $("loginPass").placeholder = L.pass;
+  $("loginBtn").textContent = L.login;
+
+  $("signupNote").textContent = isArabic
+    ? "حساب جديد (على نفس الجهاز)."
+    : "Create a new account (this device).";
+  $("signupEmail").placeholder = L.email;
+  $("signupPass").placeholder = L.pass;
+  $("signupName").placeholder = L.name;
+  $("signupAge").placeholder = L.age;
+  $("avatarLabel").textContent = isArabic ? "صورة الحساب (اختياري)" : "Profile photo (optional)";
+  $("signupBtn").textContent = L.create;
+
+  $("accountTitle").textContent = L.account;
+  $("editNameLabel").textContent = L.editName;
+  $("saveNameBtn").textContent = L.save;
+  $("editAvatarLabel").textContent = L.editPhoto;
+  $("saveAvatarBtn").textContent = L.save;
+  $("changePassLabel").textContent = L.changePass;
+  $("oldPass").placeholder = L.oldPass;
+  $("newPass").placeholder = L.newPass;
+  $("changePassBtn").textContent = L.changePass;
+  $("accountLogoutBtn").textContent = L.logout;
+
+  $("notifTitle").textContent = L.notifications;
+  $("notifClearBtn").textContent = L.clear;
+
+  $("gemsTitle").textContent = L.bonus;
+  $("redeemLabel").textContent = isArabic ? "تبديل الجواهر → كارت خصم" : "Redeem gems → discount card";
+  $("redeemBtn").textContent = L.redeem;
+  $("redeemInput").placeholder = isArabic ? "عدد الجواهر" : "Gems amount";
+  $("redeemHint").textContent = L.redeemHint;
+  $("cardsLabel").textContent = L.cards;
+
+  $("cartTitle").textContent = L.cart;
+  $("totalLabel").textContent = L.total;
+  $("cartCheckoutBtn").textContent = L.checkout;
+  $("cartNote").textContent = L.cartHint;
+
+  $("checkoutTitle").textContent = L.checkout;
+  $("couponNote").textContent = L.couponHint;
+  $("couponInput").placeholder = isArabic ? "مثال: MG1 (اختياري)" : "Example: MG1 (optional)";
+  $("applyCouponBtn").textContent = L.apply;
+  $("cardPickNote").textContent = L.pickCard;
+  $("backToCartBtn").textContent = L.back;
+  $("confirmCheckoutBtn").textContent = L.confirm;
+  $("checkoutHint").textContent = L.stepHint;
+
+  $("payTitle").textContent = L.payment;
+
+  $("detailsTitle").textContent = L.detailsTitle;
+
+  $("contactTitle").textContent = L.contact;
+
+  $("reviewsTitle").textContent = L.reviews;
+  $("reviewsHint").textContent = L.reviewHint;
+  $("reviewText").placeholder = L.reviewText;
+  $("submitReviewBtn").textContent = isArabic ? "إرسال" : "Send";
+  $("reviewsListLabel").textContent = isArabic ? "كل المراجعات" : "All reviews";
+
+  // Stars
+  const stars = $("reviewStars");
+  stars.innerHTML = "";
+  for(let i=5;i>=1;i--){
+    const o = document.createElement("option");
+    o.value = String(i);
+    o.textContent = isArabic ? `${i} نجوم` : `${i} stars`;
+    stars.appendChild(o);
+  }
+
+  // Drawer positions: menu on right for Arabic, left for English
+  const menuDrawer = $("menuDrawer");
+  const filterDrawer = $("filterDrawer");
+  if(isArabic){
+    menuDrawer.style.insetInlineEnd="0"; menuDrawer.style.insetInlineStart="auto";
+    menuDrawer.dataset.closed="translateX(110%)";
+    menuDrawer.style.transform="translateX(110%)";
+
+    filterDrawer.style.insetInlineStart="0"; filterDrawer.style.insetInlineEnd="auto";
+    filterDrawer.dataset.closed="translateX(-110%)";
+    filterDrawer.style.transform="translateX(-110%)";
+  }else{
+    menuDrawer.style.insetInlineStart="0"; menuDrawer.style.insetInlineEnd="auto";
+    menuDrawer.dataset.closed="translateX(-110%)";
+    menuDrawer.style.transform="translateX(-110%)";
+
+    filterDrawer.style.insetInlineEnd="0"; filterDrawer.style.insetInlineStart="auto";
+    filterDrawer.dataset.closed="translateX(110%)";
+    filterDrawer.style.transform="translateX(110%)";
+  }
+
+  // Filter selects
+  $("filterCategory").innerHTML = `
+    <option value="all">${L.all}</option>
+    <option value="games">${L.games}</option>
+    <option value="programs">${L.programs}</option>
+    <option value="accounts">${L.accounts}</option>
+  `;
+  $("filterSort").innerHTML = `
+    <option value="new">${L.newest}</option>
+    <option value="old">${L.oldest}</option>
+    <option value="low">${L.low}</option>
+    <option value="high">${L.high}</option>
+  `;
+  $("priceMode").innerHTML = `
+    <option value="off">${L.priceOff}</option>
+    <option value="eq">${L.priceEq}</option>
+    <option value="lte">${L.priceLte}</option>
+    <option value="gte">${L.priceGte}</option>
+  `;
+}
+applyLanguage();
+
+/* =========================
+   Drawers/Modals controls
+========================= */
+const overlay = $("overlay");
+function openOverlay(){ overlay.classList.add("show"); }
+function closeOverlay(){ overlay.classList.remove("show"); }
+
+function closeAll(){
+  closeOverlay();
+  // drawers
+  const md = $("menuDrawer"), fd = $("filterDrawer");
+  md.classList.remove("show"); fd.classList.remove("show");
+  md.style.transform = md.dataset.closed || "translateX(110%)";
+  fd.style.transform = fd.dataset.closed || "translateX(110%)";
+  // modals
+  ["authModal","accountModal","notifModal","gemsModal","cartModal","checkoutModal","payModal","detailsModal","lightbox","contactModal","reviewsModal"]
+    .forEach(id=>$(id).classList.remove("show"));
+}
+overlay.addEventListener("click", closeAll);
+
+function openDrawer(el){
+  openOverlay();
+  el.classList.add("show");
+  el.style.transform = "translateX(0)";
+}
+function openModal(el){
+  openOverlay();
+  el.classList.add("show");
+}
+
+/* =========================
+   Auth system (local users)
+========================= */
+function getUsers(){ return safeJSONGet(LS_USERS, {}); }
+function setUsers(u){ safeJSONSet(LS_USERS, u); }
+
+function getSession(){ return safeJSONGet(LS_SESSION, null); }
+function setSession(s){ safeJSONSet(LS_SESSION, s); }
+function clearSession(){ localStorage.removeItem(LS_SESSION); }
+
+function currentEmail(){
+  const s = getSession();
+  return s?.email || null;
+}
+function isLoggedIn(){ return !!currentEmail(); }
+function getCurrentUser(){
+  const email = currentEmail();
+  if(!email) return null;
+  const users = getUsers();
+  return users[email] || null;
+}
+
+/* Per-user cart/gems/cards/notifs helpers */
+function userKey(){
+  return currentEmail() ? `u:${currentEmail()}` : "guest";
+}
+function getAllCarts(){ return safeJSONGet(LS_CART, {}); }
+function setAllCarts(x){ safeJSONSet(LS_CART, x); }
+function loadCart(){
+  const all = getAllCarts();
+  return all[userKey()] || [];
+}
+function saveCart(items){
+  const all = getAllCarts();
+  all[userKey()] = items;
+  setAllCarts(all);
+}
+
+function getGemsAll(){ return safeJSONGet(LS_GEMS, {}); }
+function setGemsAll(x){ safeJSONSet(LS_GEMS, x); }
+function getGems(){
+  const email = currentEmail();
+  if(!email) return 0;
+  const g = getGemsAll();
+  return Number(g[email] || 0);
+}
+function setGems(n){
+  const email = currentEmail();
+  if(!email) return;
+  const g = getGemsAll();
+  g[email] = Math.max(0, Math.floor(Number(n)||0));
+  setGemsAll(g);
+  refreshGemsUI();
+}
+function addGems(delta){
+  setGems(getGems() + (Number(delta)||0));
+}
+
+function getCardsAll(){ return safeJSONGet(LS_CARDS, {}); }
+function setCardsAll(x){ safeJSONSet(LS_CARDS, x); }
+function getCards(){
+  const email = currentEmail();
+  if(!email) return [];
+  const all = getCardsAll();
+  return all[email] || [];
+}
+function setCards(list){
+  const email = currentEmail();
+  if(!email) return;
+  const all = getCardsAll();
+  all[email] = list;
+  setCardsAll(all);
+}
+
+function getNotifsAll(){ return safeJSONGet(LS_NOTIFS, {}); }
+function setNotifsAll(x){ safeJSONSet(LS_NOTIFS, x); }
+function getNotifs(){
+  const email = currentEmail();
+  if(!email) return [];
+  const all = getNotifsAll();
+  return all[email] || [];
+}
+function setNotifs(list){
+  const email = currentEmail();
+  if(!email) return;
+  const all = getNotifsAll();
+  all[email] = list;
+  setNotifsAll(all);
+  refreshNotifUI();
+}
+function pushNotif(text){
+  const email = currentEmail();
+  if(!email) return;
+  const list = getNotifs();
+  list.unshift({ text, ts: now(), read:false });
+  setNotifs(list);
+}
+
+/* =========================
+   Coupon codes (MG..MI)
+========================= */
 function buildCoupons(){
   const map = {};
   const groups = [
@@ -832,237 +1453,61 @@ function buildCoupons(){
     ["MB",60],["ME",70],["MX",80],["MR",90],["MI",100]
   ];
   for(const [prefix, pct] of groups){
-    for(let i=1;i<=10;i++){
-      map[`${prefix}${i}`] = pct;
-    }
+    for(let i=1;i<=10;i++) map[`${prefix}${i}`] = pct;
   }
   return map;
 }
 const COUPONS = buildCoupons();
 
-/* ---------------------------
-  Auth (UI-only)
----------------------------- */
-const LS_USER = "medo_store_user";
-let currentProvider = null;
-
-const PROVIDERS = [
-  { key:"google", label:"Google", icon:"G" },
-  { key:"facebook", label:"Facebook", icon:"f" },
-  { key:"epic", label:"Epic", icon:"E" },
-  { key:"steam", label:"Steam", icon:"S" },
-  { key:"icloud", label:"iCloud", icon:"i" },
-  { key:"playstation", label:"PlayStation", icon:"P" },
-  { key:"microsoft", label:"Microsoft", icon:"M" }
+/* =========================
+   Bonus → Card tiers (balanced)
+   - You can change tiers here
+========================= */
+const REDEEM_TIERS = [
+  { gems:10, pct:10 },
+  { gems:20, pct:15 },
+  { gems:30, pct:20 },
+  { gems:50, pct:30 },
+  { gems:80, pct:40 },
+  { gems:120, pct:50 }
 ];
-
-function getUser(){
-  try { return JSON.parse(localStorage.getItem(LS_USER) || "null"); } catch { return null; }
-}
-function setUser(u){ localStorage.setItem(LS_USER, JSON.stringify(u)); }
-function clearUser(){ localStorage.removeItem(LS_USER); }
-
-function userIsLogged(){ return !!getUser(); }
-
-/* ---------------------------
-  Cart
----------------------------- */
-const LS_CART = "medo_store_cart";
-function loadCart(){
-  try{ return JSON.parse(localStorage.getItem(LS_CART) || "[]"); } catch { return []; }
-}
-function saveCart(items){ localStorage.setItem(LS_CART, JSON.stringify(items)); }
-
-let cart = loadCart(); // [{id, qty}]
-let couponPct = 0;
-let lastCoupon = "";
-
-/* ---------------------------
-  DOM refs
----------------------------- */
-const overlay = document.getElementById("overlay");
-
-const searchEl = document.getElementById("search");
-
-const filterDrawer = document.getElementById("filterDrawer");
-const menuDrawer = document.getElementById("menuDrawer");
-
-const loginBtn = document.getElementById("loginBtn");
-const userChip = document.getElementById("userChip");
-const userNameText = document.getElementById("userNameText");
-const userProviderBadge = document.getElementById("userProviderBadge");
-
-const cartBtn = document.getElementById("cartBtn");
-const cartCount = document.getElementById("cartCount");
-
-const loginModal = document.getElementById("loginModal");
-const loginFormModal = document.getElementById("loginFormModal");
-const providersStack = document.getElementById("providersStack");
-
-const loginEmail = document.getElementById("loginEmail");
-const loginPass = document.getElementById("loginPass");
-const loginError = document.getElementById("loginError");
-const loginFormNote = document.getElementById("loginFormNote");
-
-const cartModal = document.getElementById("cartModal");
-const cartItemsEl = document.getElementById("cartItems");
-const totalValueEl = document.getElementById("totalValue");
-const cartNote = document.getElementById("cartNote");
-
-const checkoutModal = document.getElementById("checkoutModal");
-const checkoutItemsEl = document.getElementById("checkoutItems");
-const checkoutTotalsEl = document.getElementById("checkoutTotals");
-const couponInput = document.getElementById("couponInput");
-const couponNote = document.getElementById("couponNote");
-const payList = document.getElementById("payList");
-const payHelp = document.getElementById("payHelp");
-
-const filterCategory = document.getElementById("filterCategory");
-const filterSort = document.getElementById("filterSort");
-const priceMode = document.getElementById("priceMode");
-const priceValue = document.getElementById("priceValue");
-const filterNote = document.getElementById("filterNote");
-
-/* ---------------------------
-  UI text (no mixed language)
----------------------------- */
-function applyLanguage(){
-  document.getElementById("brandText").textContent = "Medo Gaming Store";
-  document.getElementById("loginText").textContent = L.login;
-
-  searchEl.placeholder = L.search;
-
-  // Titles outside
-  document.getElementById("topTitle").childNodes[0].textContent = `🔥 ${L.top} `;
-  document.getElementById("topHint").textContent = L.topHint;
-
-  document.getElementById("offersTitle").childNodes[0].textContent = `🎁 ${L.offers} `;
-  document.getElementById("offersHint").textContent = L.offersHint;
-
-  document.getElementById("gamesTitle").textContent = `🎮 ${L.games}`;
-  document.getElementById("programsTitle").textContent = `💻 ${L.programs}`;
-  document.getElementById("accountsTitle").textContent = `🧾 ${L.accounts}`;
-
-  // Drawer labels
-  document.getElementById("menuTitle").textContent = L.menu;
-  document.getElementById("drawerQuick").textContent = L.quick;
-  document.getElementById("goTopText").textContent = L.top;
-  document.getElementById("goOffersText").textContent = L.offers;
-  document.getElementById("goGamesText").textContent = L.games;
-  document.getElementById("goProgramsText").textContent = L.programs;
-  document.getElementById("goAccountsText").textContent = L.accounts;
-
-  // Filter drawer
-  document.getElementById("filterTitle").textContent = L.filter;
-  document.getElementById("filterCategoryLabel").textContent = L.category;
-  document.getElementById("filterSortLabel").textContent = L.sort;
-  document.getElementById("filterPriceLabel").textContent = L.price;
-  document.getElementById("applyFilterBtn").textContent = L.apply;
-  filterNote.textContent = L.filterHelp;
-
-  filterCategory.options[0].textContent = L.all;
-  filterCategory.options[1].textContent = L.games;
-  filterCategory.options[2].textContent = L.programs;
-  filterCategory.options[3].textContent = L.accounts;
-
-  filterSort.options[0].textContent = L.newest;
-  filterSort.options[1].textContent = L.oldest;
-  filterSort.options[2].textContent = L.low;
-  filterSort.options[3].textContent = L.high;
-
-  priceMode.options[0].textContent = L.priceOff;
-  priceMode.options[1].textContent = L.priceEq;
-  priceMode.options[2].textContent = L.priceLte;
-  priceMode.options[3].textContent = L.priceGte;
-
-  // Modals
-  document.getElementById("loginModalTitle").textContent = L.login;
-  document.getElementById("loginFormTitle").textContent = L.login;
-  document.getElementById("cartTitle").textContent = L.cart;
-  document.getElementById("checkoutTitle").textContent = L.checkout;
-
-  document.getElementById("totalLabel").textContent = L.total;
-  document.getElementById("cartCheckoutBtn").textContent = L.checkout;
-  cartNote.textContent = L.cartHint;
-
-  couponNote.textContent = L.couponHint;
-  document.getElementById("applyCouponBtn").textContent = L.apply;
-  document.getElementById("paymentsTitle").textContent = L.payments;
-  payHelp.textContent = L.payHelp;
-  document.getElementById("backToCartBtn").textContent = L.back;
-
-  // Login form placeholders
-  loginEmail.placeholder = L.emailPlaceholder;
-  loginPass.placeholder = L.passPlaceholder;
-  document.getElementById("loginSubmitBtn").textContent = L.continue;
-
-  // RTL/LTR drawer side
-  // Menu drawer should be on "right" in Arabic, "left" in English (as requested)
-  menuDrawer.style.insetInlineEnd = isArabic ? "0" : "auto";
-  menuDrawer.style.insetInlineStart = isArabic ? "auto" : "0";
-  menuDrawer.style.transform = isArabic ? "translateX(110%)" : "translateX(-110%)";
-
-  // Filter drawer: keep opposite side of menu for balance
-  filterDrawer.style.insetInlineStart = isArabic ? "0" : "auto";
-  filterDrawer.style.insetInlineEnd = isArabic ? "auto" : "0";
-  filterDrawer.style.transform = isArabic ? "translateX(-110%)" : "translateX(110%)";
-}
-applyLanguage();
-
-/* ---------------------------
-  Helpers
----------------------------- */
-function money(x){ return `EGP ${x}`; }
-
-function closeAll(){
-  overlay.classList.remove("show");
-  [menuDrawer, filterDrawer].forEach(d=>d.classList.remove("show"));
-  [loginModal, loginFormModal, cartModal, checkoutModal].forEach(m=>m.classList.remove("show"));
+function pctForRedeem(g){
+  // choose best pct not exceeding g (simple)
+  let best = 0;
+  for(const t of REDEEM_TIERS){
+    if(g >= t.gems) best = t.pct;
+  }
+  return best || 0;
 }
 
-function openOverlay(){ overlay.classList.add("show"); }
-overlay.addEventListener("click", closeAll);
-
-function openDrawer(drawer){
-  openOverlay();
-  drawer.classList.add("show");
-}
-function openModal(modal){
-  openOverlay();
-  modal.classList.add("show");
-}
-
-/* ---------------------------
-  Render cards
----------------------------- */
-const gridTop = document.getElementById("gridTop");
-const gridOffers = document.getElementById("gridOffers");
-const gridGames = document.getElementById("gridGames");
-const gridPrograms = document.getElementById("gridPrograms");
-const gridAccounts = document.getElementById("gridAccounts");
-
-function typeLabel(type){
-  if(type==="games") return L.games;
-  if(type==="programs") return L.programs;
+/* =========================
+   Render products
+========================= */
+function typeLabel(t){
+  if(t==="games") return L.games;
+  if(t==="programs") return L.programs;
   return L.accounts;
 }
 
 function cardHTML(p){
+  // IMPORTANT: remove any extra word above Buy (as requested)
   const tag = typeLabel(p.type);
+  const badge = p.offer ? `<span class="badge badgeOffer">${L.offers}</span>` : (p.top ? `<span class="badge">${L.top}</span>` : `<span class="badge">${tag}</span>`);
   return `
     <div class="card">
       <div class="thumb">
+        <img src="${p.image}" alt="">
         <span class="tag">${tag}</span>
-        <span>${p.type.toUpperCase()}</span>
       </div>
       <div class="content">
         <p class="name">${p.name}</p>
         <p class="meta">${p.desc || ""}</p>
         <div class="priceRow">
           <p class="price">${money(p.price)}</p>
-          ${p.offer ? `<span class="badge">${L.offers}</span>` : (p.top ? `<span class="badge">${L.top}</span>` : `<span class="badge">${tag}</span>`)}
+          ${badge}
         </div>
         <div class="actions">
+          <button class="btn btnCyan" data-details="${p.id}">ℹ️ ${L.details}</button>
           <button class="btn" data-add="${p.id}">🛒 ${L.addCart}</button>
           <button class="btn btnRed" data-buy="${p.id}">⚡ ${L.buy}</button>
         </div>
@@ -1071,30 +1516,32 @@ function cardHTML(p){
   `;
 }
 
+const gridTop = $("gridTop");
+const gridOffers = $("gridOffers");
+const gridGames = $("gridGames");
+const gridPrograms = $("gridPrograms");
+const gridAccounts = $("gridAccounts");
+
 function applyFilters(list){
-  const q = (searchEl.value || "").toLowerCase().trim();
-  const cat = filterCategory.value;
-  const sort = filterSort.value;
-  const pm = priceMode.value;
-  const pv = Number(priceValue.value);
+  const q = ($("search").value || "").toLowerCase().trim();
+  const cat = $("filterCategory").value;
+  const sort = $("filterSort").value;
+  const pm = $("priceMode").value;
+  const pv = Number($("priceValue").value);
 
   let out = [...list];
 
   if(q){
     out = out.filter(p => (p.name + " " + (p.desc||"")).toLowerCase().includes(q));
   }
-
   if(cat !== "all"){
     out = out.filter(p => p.type === cat);
   }
-
   if(pm !== "off" && !Number.isNaN(pv)){
     if(pm === "eq") out = out.filter(p => p.price === pv);
     if(pm === "lte") out = out.filter(p => p.price <= pv);
     if(pm === "gte") out = out.filter(p => p.price >= pv);
   }
-
-  // For new/old, use id as "time order"
   if(sort === "new") out.sort((a,b)=> b.id - a.id);
   if(sort === "old") out.sort((a,b)=> a.id - b.id);
   if(sort === "low") out.sort((a,b)=> a.price - b.price);
@@ -1103,101 +1550,336 @@ function applyFilters(list){
   return out;
 }
 
-function renderAll(){
-  // Filtered for main sections only by search/price/sort? user wanted filter apply to chosen category.
-  // We'll apply filters for all sections display, but if category selected, only that section updates (others still render normally).
-  const filtered = applyFilters(products);
-
-  const byType = (arr, type) => arr.filter(x=>x.type===type);
-  const tops = filtered.filter(p=>p.top);
-  const offers = filtered.filter(p=>p.offer);
-
-  gridTop.innerHTML = tops.length ? tops.map(cardHTML).join("") : `<div class="note">${isArabic ? "مفيش عناصر في التوب حالياً." : "No Top items right now."}</div>`;
-  gridOffers.innerHTML = offers.length ? offers.map(cardHTML).join("") : `<div class="note">${isArabic ? "مفيش عروض حالياً." : "No offers right now."}</div>`;
-
-  gridGames.innerHTML = byType(filtered,"games").map(cardHTML).join("");
-  gridPrograms.innerHTML = byType(filtered,"programs").map(cardHTML).join("");
-  gridAccounts.innerHTML = byType(filtered,"accounts").map(cardHTML).join("");
-
-  bindCardButtons();
-}
 function bindCardButtons(){
   document.querySelectorAll("[data-add]").forEach(btn=>{
     btn.addEventListener("click", ()=>{
-      const id = Number(btn.getAttribute("data-add"));
-      addToCart(id);
+      addToCart(Number(btn.dataset.add));
     });
   });
   document.querySelectorAll("[data-buy]").forEach(btn=>{
     btn.addEventListener("click", ()=>{
-      const id = Number(btn.getAttribute("data-buy"));
-      buyNow(id);
+      buyNow(Number(btn.dataset.buy));
+    });
+  });
+  document.querySelectorAll("[data-details]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      openDetails(Number(btn.dataset.details));
     });
   });
 }
+
+function renderAll(){
+  const filtered = applyFilters(products);
+  const tops = filtered.filter(p=>p.top);
+  const offers = filtered.filter(p=>p.offer);
+
+  gridTop.innerHTML = tops.length ? tops.map(cardHTML).join("") : `<div class="note">${isArabic ? "مفيش عناصر توب حالياً." : "No Top items."}</div>`;
+  gridOffers.innerHTML = offers.length ? offers.map(cardHTML).join("") : `<div class="note">${isArabic ? "مفيش عروض حالياً." : "No offers."}</div>`;
+
+  gridGames.innerHTML = filtered.filter(p=>p.type==="games").map(cardHTML).join("");
+  gridPrograms.innerHTML = filtered.filter(p=>p.type==="programs").map(cardHTML).join("");
+  gridAccounts.innerHTML = filtered.filter(p=>p.type==="accounts").map(cardHTML).join("");
+
+  bindCardButtons();
+}
 renderAll();
 
-/* ---------------------------
-  Menu navigation
----------------------------- */
-function scrollToId(elId){
-  const el = document.getElementById(elId);
-  if(!el) return;
+/* =========================
+   Menu navigation
+========================= */
+function scrollToEl(el){
   closeAll();
   window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior:"smooth" });
 }
-document.getElementById("goTop").addEventListener("click", ()=>scrollToId("gridTop"));
-document.getElementById("goOffers").addEventListener("click", ()=>scrollToId("gridOffers"));
-document.getElementById("goGames").addEventListener("click", ()=>scrollToId("gridGames"));
-document.getElementById("goPrograms").addEventListener("click", ()=>scrollToId("gridPrograms"));
-document.getElementById("goAccounts").addEventListener("click", ()=>scrollToId("gridAccounts"));
+$("goTop").onclick = ()=>scrollToEl($("gridTop"));
+$("goOffers").onclick = ()=>scrollToEl($("gridOffers"));
+$("goGames").onclick = ()=>scrollToEl($("gridGames"));
+$("goPrograms").onclick = ()=>scrollToEl($("gridPrograms"));
+$("goAccounts").onclick = ()=>scrollToEl($("gridAccounts"));
 
-/* ---------------------------
-  Filter UI
----------------------------- */
-document.getElementById("filterBtn").addEventListener("click", ()=>openDrawer(filterDrawer));
-document.getElementById("filterClose").addEventListener("click", closeAll);
-document.getElementById("applyFilterBtn").addEventListener("click", ()=>{
+$("goContact").onclick = ()=>{
+  closeAll();
+  openModal($("contactModal"));
+};
+$("goReviews").onclick = ()=>{
+  closeAll();
+  openModal($("reviewsModal"));
+  renderReviews();
+};
+
+/* =========================
+   Drawer buttons
+========================= */
+$("menuBtn").onclick = ()=>{
+  refreshAuthUI();
+  openDrawer($("menuDrawer"));
+};
+$("menuClose").onclick = closeAll;
+
+$("filterBtn").onclick = ()=>openDrawer($("filterDrawer"));
+$("filterClose").onclick = closeAll;
+
+$("applyFilterBtn").onclick = ()=>{
   closeAll();
   renderAll();
-});
+};
 
-/* ---------------------------
-  Menu UI
----------------------------- */
-document.getElementById("menuBtn").addEventListener("click", ()=>{
-  refreshDrawerUser();
-  openDrawer(menuDrawer);
-});
-document.getElementById("menuClose").addEventListener("click", closeAll);
+$("search").addEventListener("input", ()=>renderAll());
 
-/* ---------------------------
-  Search
----------------------------- */
-searchEl.addEventListener("input", ()=>renderAll());
+/* =========================
+   Auth modal tabs
+========================= */
+function showTab(tab){
+  $("tabLogin").classList.toggle("active", tab==="login");
+  $("tabSignup").classList.toggle("active", tab==="signup");
+  $("loginForm").style.display = (tab==="login") ? "block" : "none";
+  $("signupForm").style.display = (tab==="signup") ? "block" : "none";
+  $("loginErr").style.display="none";
+  $("signupErr").style.display="none";
+  $("signupOk").style.display="none";
+}
+$("tabLogin").onclick = ()=>showTab("login");
+$("tabSignup").onclick = ()=>showTab("signup");
 
-/* ---------------------------
-  Cart logic
----------------------------- */
-function cartKeyIndex(id){ return cart.findIndex(x=>x.id===id); }
+$("authBtn").onclick = ()=>{
+  openModal($("authModal"));
+  showTab("login");
+};
+$("authClose").onclick = closeAll;
 
+/* Signup image to base64 */
+function fileToDataURL(file){
+  return new Promise((resolve,reject)=>{
+    const r = new FileReader();
+    r.onload = ()=>resolve(String(r.result||""));
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+
+/* Signup */
+$("signupBtn").onclick = async ()=>{
+  const email = ($("signupEmail").value||"").trim().toLowerCase();
+  const pass = ($("signupPass").value||"").trim();
+  const name = ($("signupName").value||"").trim();
+  const age = Number(($("signupAge").value||"").trim());
+
+  $("signupErr").style.display="none";
+  $("signupOk").style.display="none";
+
+  if(!email || !pass || !name || !age){
+    $("signupErr").textContent = L.fillAll;
+    $("signupErr").style.display="block";
+    return;
+  }
+
+  const users = getUsers();
+  if(users[email]){
+    $("signupErr").textContent = L.exists;
+    $("signupErr").style.display="block";
+    return;
+  }
+
+  let avatar = "";
+  const f = $("signupAvatar").files?.[0];
+  if(f){
+    try{ avatar = await fileToDataURL(f); }catch{}
+  }
+
+  users[email] = { email, pass, name, age, avatar };
+  setUsers(users);
+
+  // auto login
+  setSession({ email });
+  initUserDefaultsIfNeeded(email);
+  pushNotif(isArabic ? "أهلاً بيك! حسابك اتعمل بنجاح ✅" : "Welcome! Account created ✅");
+  $("signupOk").textContent = isArabic ? "تم إنشاء الحساب ✅" : "Account created ✅";
+  $("signupOk").style.display="block";
+
+  refreshAuthUI();
+  closeAll();
+};
+
+/* Login */
+$("loginBtn").onclick = ()=>{
+  const email = ($("loginEmail").value||"").trim().toLowerCase();
+  const pass = ($("loginPass").value||"").trim();
+
+  $("loginErr").style.display="none";
+
+  const users = getUsers();
+  if(!users[email]){
+    $("loginErr").textContent = L.notFound;
+    $("loginErr").style.display="block";
+    return;
+  }
+  if(users[email].pass !== pass){
+    $("loginErr").textContent = L.wrong;
+    $("loginErr").style.display="block";
+    return;
+  }
+
+  setSession({ email });
+  initUserDefaultsIfNeeded(email);
+  pushNotif(isArabic ? "تم تسجيل الدخول ✅" : "Logged in ✅");
+  refreshAuthUI();
+  closeAll();
+};
+
+/* Init per-user default stores */
+function initUserDefaultsIfNeeded(email){
+  // gems default
+  const g = getGemsAll();
+  if(g[email] == null){ g[email] = 0; setGemsAll(g); }
+  // cards default
+  const c = getCardsAll();
+  if(!c[email]){ c[email] = []; setCardsAll(c); }
+  // notifs default
+  const n = getNotifsAll();
+  if(!n[email]){ n[email] = []; setNotifsAll(n); }
+  // cart per user key is handled dynamically
+}
+
+/* Auth UI */
+function refreshAuthUI(){
+  const u = getCurrentUser();
+  if(!u){
+    $("authBtn").style.display="inline-flex";
+    $("userChip").style.display="none";
+    $("drawerUserBox").style.display="none";
+    refreshCartCount();
+    refreshGemsUI();
+    refreshNotifUI();
+    return;
+  }
+
+  $("authBtn").style.display="none";
+  $("userChip").style.display="inline-flex";
+  $("userNameText").textContent = u.name;
+
+  // avatar mini
+  if(u.avatar){
+    $("avatarMini").innerHTML = `<img src="${u.avatar}" alt="">`;
+  }else{
+    $("avatarMini").innerHTML = `<span id="avatarLetter">${(u.name||"M").trim().slice(0,1).toUpperCase()}</span>`;
+  }
+
+  $("drawerUserBox").style.display="block";
+  $("drawerUserNote").textContent = isArabic
+    ? `مسجل باسم: ${u.name} • ${u.email}`
+    : `Logged as: ${u.name} • ${u.email}`;
+
+  $("logoutBtn").textContent = L.logout;
+  $("accountBtn").textContent = L.account;
+
+  $("logoutBtn").onclick = doLogout;
+  $("accountLogoutBtn").onclick = doLogout;
+  $("accountBtn").onclick = ()=>{
+    closeAll();
+    openAccountModal();
+  };
+
+  // user chip click
+  $("userChip").onclick = ()=>{
+    openAccountModal();
+  };
+
+  refreshCartCount();
+  refreshGemsUI();
+  refreshNotifUI();
+}
+function doLogout(){
+  clearSession();
+  refreshAuthUI();
+  closeAll();
+}
+refreshAuthUI();
+
+/* Account modal */
+$("accountClose").onclick = closeAll;
+function openAccountModal(){
+  const u = getCurrentUser();
+  if(!u) return openModal($("authModal"));
+  $("accountInfo").textContent = isArabic
+    ? `البريد: ${u.email}\nالعمر: ${u.age}`
+    : `Email: ${u.email}\nAge: ${u.age}`;
+  $("editName").value = u.name || "";
+  $("oldPass").value = "";
+  $("newPass").value = "";
+  $("changePassErr").style.display="none";
+  $("changePassOk").style.display="none";
+  openModal($("accountModal"));
+}
+$("saveNameBtn").onclick = ()=>{
+  const u = getCurrentUser(); if(!u) return;
+  const users = getUsers();
+  const name = ($("editName").value||"").trim();
+  if(!name) return;
+  users[u.email].name = name;
+  setUsers(users);
+  pushNotif(isArabic ? "تم تعديل الاسم ✅" : "Name updated ✅");
+  refreshAuthUI();
+  $("accountInfo").textContent = isArabic
+    ? `البريد: ${u.email}\nالعمر: ${users[u.email].age}`
+    : `Email: ${u.email}\nAge: ${users[u.email].age}`;
+};
+$("saveAvatarBtn").onclick = async ()=>{
+  const u = getCurrentUser(); if(!u) return;
+  const f = $("editAvatar").files?.[0];
+  if(!f) return;
+  const data = await fileToDataURL(f);
+  const users = getUsers();
+  users[u.email].avatar = data;
+  setUsers(users);
+  pushNotif(isArabic ? "تم تعديل الصورة ✅" : "Photo updated ✅");
+  refreshAuthUI();
+};
+$("changePassBtn").onclick = ()=>{
+  const u = getCurrentUser(); if(!u) return;
+  const oldP = ($("oldPass").value||"").trim();
+  const newP = ($("newPass").value||"").trim();
+  $("changePassErr").style.display="none";
+  $("changePassOk").style.display="none";
+  const users = getUsers();
+  if(users[u.email].pass !== oldP){
+    $("changePassErr").textContent = L.passFail;
+    $("changePassErr").style.display="block";
+    return;
+  }
+  if(!newP){
+    $("changePassErr").textContent = L.fillAll;
+    $("changePassErr").style.display="block";
+    return;
+  }
+  users[u.email].pass = newP;
+  setUsers(users);
+  $("changePassOk").textContent = L.passChanged;
+  $("changePassOk").style.display="block";
+  pushNotif(isArabic ? "تم تغيير كلمة السر ✅" : "Password changed ✅");
+};
+
+/* =========================
+   Cart
+========================= */
+let cart = loadCart(); // [{id, qty}]
+
+function cartIndex(id){ return cart.findIndex(x=>x.id===id); }
 function addToCart(id){
-  const idx = cartKeyIndex(id);
-  if(idx >= 0) cart[idx].qty += 1;
+  const i = cartIndex(id);
+  if(i>=0) cart[i].qty += 1;
   else cart.push({id, qty:1});
   saveCart(cart);
   refreshCartCount();
+  pushLightNotif(isArabic ? "اتضاف للسلة ✅" : "Added to cart ✅");
 }
-
 function setQty(id, qty){
-  const idx = cartKeyIndex(id);
-  if(idx < 0) return;
-  cart[idx].qty = Math.max(1, qty);
+  const i = cartIndex(id);
+  if(i<0) return;
+  cart[i].qty = Math.max(1, qty);
   saveCart(cart);
   refreshCartCount();
   renderCart();
 }
-
 function removeFromCart(id){
   cart = cart.filter(x=>x.id!==id);
   saveCart(cart);
@@ -1207,102 +1889,206 @@ function removeFromCart(id){
 
 function cartItemsDetailed(){
   const map = new Map(products.map(p=>[p.id,p]));
-  return cart
-    .map(ci => ({...ci, p: map.get(ci.id)}))
-    .filter(x=>x.p);
+  return cart.map(ci=>({ ...ci, p: map.get(ci.id) })).filter(x=>x.p);
 }
-
-function cartSubtotal(){
-  return cartItemsDetailed().reduce((sum, x)=> sum + (x.p.price * x.qty), 0);
+function cartSubtotal(items){
+  return items.reduce((s,x)=> s + (x.p.price * x.qty), 0);
 }
-
 function refreshCartCount(){
-  const count = cart.reduce((s,x)=>s + x.qty, 0);
-  cartCount.textContent = String(count);
+  cart = loadCart();
+  const c = cart.reduce((s,x)=>s+x.qty,0);
+  $("cartCount").textContent = String(c);
 }
 refreshCartCount();
 
-/* Cart modal open */
-cartBtn.addEventListener("click", ()=>{
+$("cartBtn").onclick = ()=>{
   renderCart();
-  openModal(cartModal);
-});
-document.getElementById("cartClose").addEventListener("click", closeAll);
+  openModal($("cartModal"));
+};
+$("cartClose").onclick = closeAll;
 
 function renderCart(){
   const items = cartItemsDetailed();
   if(!items.length){
-    cartItemsEl.innerHTML = `<div class="note">${L.emptyCart}</div>`;
-    totalValueEl.textContent = money(0);
+    $("cartItems").innerHTML = `<div class="note">${L.emptyCart}</div>`;
+    $("totalValue").textContent = money(0);
     return;
   }
-  cartItemsEl.innerHTML = items.map(({id, qty, p})=>`
+  $("cartItems").innerHTML = items.map(({id,qty,p})=>`
     <div class="cartItem">
-      <div style="flex:1">
-        <p class="cartName">${p.name}</p>
-        <p class="cartMeta">${typeLabel(p.type)} • ${money(p.price)}</p>
-        <div class="qtyRow">
-          <button class="qtyBtn" data-dec="${id}">−</button>
-          <div class="qtyNum">${qty}</div>
-          <button class="qtyBtn" data-inc="${id}">+</button>
-          <button class="removeBtn" data-rem="${id}">${isArabic ? "حذف" : "Remove"}</button>
+      <div class="cartLeft">
+        <div class="cartThumb"><img src="${p.image}" alt=""></div>
+        <div style="flex:1">
+          <p class="cartName">${p.name}</p>
+          <p class="cartMeta">${typeLabel(p.type)} • ${money(p.price)}</p>
+          <div class="qtyRow">
+            <button class="qtyBtn" data-dec="${id}">−</button>
+            <div class="qtyNum">${qty}</div>
+            <button class="qtyBtn" data-inc="${id}">+</button>
+            <button class="smallBtn" data-details="${id}">ℹ️ ${L.details}</button>
+            <button class="smallBtn removeBtn" data-rem="${id}">${isArabic ? "حذف" : "Remove"}</button>
+          </div>
         </div>
       </div>
-      <div style="text-align:end;white-space:nowrap;font-weight:900">
-        ${money(p.price * qty)}
-      </div>
+      <div style="text-align:end;white-space:nowrap;font-weight:900">${money(p.price*qty)}</div>
     </div>
   `).join("");
 
-  const subtotal = cartSubtotal();
-  totalValueEl.textContent = money(subtotal);
+  const subtotal = cartSubtotal(items);
+  $("totalValue").textContent = money(subtotal);
 
-  // bind qty actions
-  cartItemsEl.querySelectorAll("[data-inc]").forEach(b=>{
-    b.addEventListener("click", ()=>{
-      const id = Number(b.getAttribute("data-inc"));
-      const idx = cartKeyIndex(id);
-      if(idx>=0) setQty(id, cart[idx].qty + 1);
-    });
+  $("cartItems").querySelectorAll("[data-inc]").forEach(b=>b.onclick=()=>{
+    const id=Number(b.dataset.inc);
+    const i=cartIndex(id); if(i>=0) setQty(id, cart[i].qty+1);
   });
-  cartItemsEl.querySelectorAll("[data-dec]").forEach(b=>{
-    b.addEventListener("click", ()=>{
-      const id = Number(b.getAttribute("data-dec"));
-      const idx = cartKeyIndex(id);
-      if(idx>=0) setQty(id, cart[idx].qty - 1);
-    });
+  $("cartItems").querySelectorAll("[data-dec]").forEach(b=>b.onclick=()=>{
+    const id=Number(b.dataset.dec);
+    const i=cartIndex(id); if(i>=0) setQty(id, cart[i].qty-1);
   });
-  cartItemsEl.querySelectorAll("[data-rem]").forEach(b=>{
-    b.addEventListener("click", ()=>{
-      const id = Number(b.getAttribute("data-rem"));
-      removeFromCart(id);
-    });
+  $("cartItems").querySelectorAll("[data-rem]").forEach(b=>b.onclick=()=>{
+    const id=Number(b.dataset.rem); removeFromCart(id);
+  });
+  $("cartItems").querySelectorAll("[data-details]").forEach(b=>b.onclick=()=>{
+    openDetails(Number(b.dataset.details));
   });
 }
 
-document.getElementById("totalBar").addEventListener("click", ()=>{
-  // same as checkout button
-  document.getElementById("cartCheckoutBtn").click();
-});
-
-document.getElementById("cartCheckoutBtn").addEventListener("click", ()=>{
-  if(!cartItemsDetailed().length){
-    renderCart();
-    return;
-  }
+$("totalBar").onclick = ()=>$("cartCheckoutBtn").click();
+$("cartCheckoutBtn").onclick = ()=>{
+  if(!cartItemsDetailed().length){ renderCart(); return; }
   startCheckout({ mode:"cart" });
-});
+};
 
-/* Buy now for single product */
+/* =========================
+   Details modal (gallery)
+========================= */
+let detailsProduct = null;
+let detailsIndex = 0;
+
+$("detailsClose").onclick = closeAll;
+
+function openDetails(id){
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  detailsProduct = p;
+  detailsIndex = 0;
+  renderDetails();
+  openModal($("detailsModal"));
+}
+
+function renderDetails(){
+  const p = detailsProduct;
+  if(!p) return;
+
+  $("detailsTitle").textContent = L.detailsTitle;
+  const imgs = (p.images && p.images.length) ? p.images : [p.image];
+
+  $("detailsMainImg").src = imgs[detailsIndex] || p.image;
+
+  $("detailsThumbs").innerHTML = imgs.map((src,idx)=>`
+    <div class="gThumb ${idx===detailsIndex?'active':''}" data-idx="${idx}">
+      <img src="${src}" alt="">
+    </div>
+  `).join("");
+
+  $("detailsThumbs").querySelectorAll(".gThumb").forEach(t=>{
+    t.onclick = ()=>{
+      detailsIndex = Number(t.dataset.idx);
+      renderDetails();
+    };
+  });
+
+  const longDesc = p.longDesc || p.desc || "";
+  $("detailsText").textContent =
+    `${p.name}\n\n${longDesc}\n\n${isArabic ? "السعر:" : "Price:"} ${money(p.price)}`;
+
+  $("detailsAddBtn").textContent = `🛒 ${L.addCart}`;
+  $("detailsBuyBtn").textContent = `⚡ ${L.buy}`;
+
+  $("detailsAddBtn").onclick = ()=> addToCart(p.id);
+  $("detailsBuyBtn").onclick = ()=> buyNow(p.id);
+
+  // click main image => lightbox
+  $("detailsMainImg").onclick = ()=> openLightbox(imgs, detailsIndex, p.name);
+}
+
+/* =========================
+   Lightbox (zoom + nav)
+========================= */
+let lightImgs = [];
+let lightIdx = 0;
+
+$("lightClose").onclick = closeAll;
+$("lightPrev").onclick = ()=>{ if(!lightImgs.length) return; lightIdx = (lightIdx-1+lightImgs.length)%lightImgs.length; renderLight(); };
+$("lightNext").onclick = ()=>{ if(!lightImgs.length) return; lightIdx = (lightIdx+1)%lightImgs.length; renderLight(); };
+
+function openLightbox(imgs, idx, title){
+  lightImgs = imgs || [];
+  lightIdx = idx || 0;
+  $("lightTitle").textContent = title || "Photo";
+  renderLight();
+  openModal($("lightbox"));
+}
+function renderLight(){
+  $("lightImg").src = lightImgs[lightIdx] || "";
+}
+
+/* =========================
+   Checkout (2 steps)
+========================= */
+let checkoutState = { mode:"cart" };
+let couponPct = 0;
+let couponCode = "";
+let cardApplied = null; // {code,pct}
+let checkoutConfirmedItems = []; // frozen items after confirm
+
+$("checkoutClose").onclick = closeAll;
+$("backToCartBtn").onclick = ()=>{
+  closeAll();
+  openModal($("cartModal"));
+};
+$("confirmCheckoutBtn").onclick = ()=>{
+  // Step 2 open payment popup
+  checkoutConfirmedItems = checkoutItemsFromState(checkoutState);
+  // add bonus NOW (simulate successful order confirmation)
+  const totals = computeTotals(checkoutConfirmedItems);
+  const gemsEarned = earnGemsFromTotal(totals.total);
+  if(isLoggedIn()){
+    addGems(gemsEarned);
+    pushNotif(L.orderDone(gemsEarned));
+  }
+  closeAll();
+  openPaymentModal(totals);
+};
+
+$("payClose").onclick = closeAll;
+
 function buyNow(id){
-  if(!userIsLogged()){
-    openLoginFlow(()=> startCheckout({ mode:"single", singleId:id }));
+  if(!isLoggedIn()){
+    pushLightNotif(L.mustLogin);
+    openModal($("authModal"));
+    showTab("login");
     return;
   }
   startCheckout({ mode:"single", singleId:id });
 }
 
-/* Checkout */
+function startCheckout(state){
+  if(!isLoggedIn()){
+    pushLightNotif(L.mustLogin);
+    openModal($("authModal"));
+    showTab("login");
+    return;
+  }
+  checkoutState = state;
+  couponPct = 0; couponCode = "";
+  cardApplied = null;
+  $("couponInput").value = "";
+  renderCheckout();
+  closeAll();
+  openModal($("checkoutModal"));
+}
+
 function checkoutItemsFromState(state){
   if(state.mode==="single"){
     const p = products.find(x=>x.id===state.singleId);
@@ -1312,413 +2098,423 @@ function checkoutItemsFromState(state){
   return cartItemsDetailed();
 }
 
-let checkoutState = { mode:"cart" };
+function computeTotals(items){
+  const subtotal = cartSubtotal(items);
+  const discountValue = Math.round(subtotal * (couponPct/100));
+  const total = Math.max(0, subtotal - discountValue);
+  return { subtotal, discountValue, total, pct: couponPct, code: couponCode };
+}
 
-function startCheckout(state){
-  checkoutState = state;
-  // Require login:
-  if(!userIsLogged()){
-    openLoginFlow(()=> startCheckout(state));
-    return;
-  }
-  couponPct = 0;
-  lastCoupon = "";
-  couponInput.value = "";
-  renderCheckout();
-  closeAll();
-  openModal(checkoutModal);
+function earnGemsFromTotal(total){
+  // balanced: 1 gem per 100 EGP, minimum 1 if total>0
+  if(total <= 0) return 0;
+  return Math.max(1, Math.floor(total / 100));
 }
 
 function renderCheckout(){
   const items = checkoutItemsFromState(checkoutState);
-  checkoutItemsEl.innerHTML = items.map(x=>`
+  $("checkoutItems").innerHTML = items.map(x=>`
     <div class="cartItem">
-      <div style="flex:1">
-        <p class="cartName">${x.p.name}</p>
-        <p class="cartMeta">${typeLabel(x.p.type)} • ${money(x.p.price)} × ${x.qty}</p>
+      <div class="cartLeft">
+        <div class="cartThumb"><img src="${x.p.image}" alt=""></div>
+        <div style="flex:1">
+          <p class="cartName">${x.p.name}</p>
+          <p class="cartMeta">${typeLabel(x.p.type)} • ${money(x.p.price)} × ${x.qty}</p>
+        </div>
       </div>
-      <div style="text-align:end;white-space:nowrap;font-weight:900">${money(x.p.price * x.qty)}</div>
+      <div style="text-align:end;white-space:nowrap;font-weight:900">${money(x.p.price*x.qty)}</div>
     </div>
   `).join("");
 
-  const subtotal = items.reduce((s,x)=> s + x.p.price * x.qty, 0);
-  const discountValue = Math.round(subtotal * (couponPct/100));
-  const total = Math.max(0, subtotal - discountValue);
-
-  checkoutTotalsEl.textContent =
-    (isArabic
-      ? `المنتجات: ${money(subtotal)} • الخصم: ${couponPct}% (${money(discountValue)}) • الإجمالي: ${money(total)}`
-      : `Items: ${money(subtotal)} • Discount: ${couponPct}% (${money(discountValue)}) • Total: ${money(total)}`
-    );
-
-  renderPayments(total);
-}
-
-function applyCoupon(){
-  const code = (couponInput.value || "").trim().toUpperCase();
-  if(!code){
-    couponPct = 0; lastCoupon = "";
-    couponNote.className = "note";
-    couponNote.textContent = L.couponHint;
-    renderCheckout();
-    return;
-  }
-  const pct = COUPONS[code] ?? 0;
-  if(!pct){
-    couponPct = 0; lastCoupon = "";
-    couponNote.className = "note err";
-    couponNote.textContent = `${L.invalidCoupon}: ${code}`;
-    renderCheckout();
-    return;
-  }
-  couponPct = pct;
-  lastCoupon = code;
-  couponNote.className = "note ok";
-  couponNote.textContent = `${L.couponApplied}: ${code} = ${pct}%`;
-  renderCheckout();
-}
-document.getElementById("applyCouponBtn").addEventListener("click", applyCoupon);
-
-document.getElementById("checkoutClose").addEventListener("click", closeAll);
-document.getElementById("backToCartBtn").addEventListener("click", ()=>{
-  closeAll();
-  openModal(cartModal);
-});
-
-/* Payments (vertical with icons) */
-const SELLER_PHONE = "201006760663";
-function renderPayments(finalTotal){
-  // external pages for info + WhatsApp to send proof
-  const waMsg = encodeURIComponent(
-    isArabic
-      ? `السلام عليكم، أنا عايز أعمل طلب.\nالإجمالي: ${money(finalTotal)}\nكود خصم: ${lastCoupon || "—"}\nطريقة الدفع: (اكتبها هنا)\n`
-      : `Hi, I want to place an order.\nTotal: ${money(finalTotal)}\nCoupon: ${lastCoupon || "—"}\nPayment method: (type here)\n`
-  );
-  const waLink = `https://wa.me/${SELLER_PHONE}?text=${waMsg}`;
-
-  const items = [
-    {
-      key:"vodafone",
-      title: isArabic ? "Vodafone Cash" : "Vodafone Cash",
-      icon:"VC",
-      action: () => window.open(waLink, "_blank"),
-      hint: isArabic ? `ادفع على الرقم: ${SELLER_PHONE} ثم ابعت إثبات الدفع` : `Pay to: ${SELLER_PHONE} then send proof`
-    },
-    {
-      key:"orange",
-      title: "Orange Cash",
-      icon:"OC",
-      action: () => window.open(waLink, "_blank"),
-      hint: isArabic ? `ادفع على الرقم: ${SELLER_PHONE} ثم ابعت إثبات الدفع` : `Pay to: ${SELLER_PHONE} then send proof`
-    },
-    {
-      key:"etisalat",
-      title: "Etisalat Cash",
-      icon:"EC",
-      action: () => window.open(waLink, "_blank"),
-      hint: isArabic ? `ادفع على الرقم: ${SELLER_PHONE} ثم ابعت إثبات الدفع` : `Pay to: ${SELLER_PHONE} then send proof`
-    },
-    {
-      key:"we",
-      title: "WE Pay",
-      icon:"WE",
-      action: () => window.open(waLink, "_blank"),
-      hint: isArabic ? `ادفع على الرقم: ${SELLER_PHONE} ثم ابعت إثبات الدفع` : `Pay to: ${SELLER_PHONE} then send proof`
-    },
-    {
-      key:"instapay",
-      title: "InstaPay",
-      icon:"IP",
-      action: () => window.open("https://www.instapay.eg/", "_blank"),
-      hint: isArabic ? "بعد الدفع ابعت إثبات على واتساب" : "After paying, send proof on WhatsApp"
-    },
-    {
-      key:"visa",
-      title: "Visa / Card",
-      icon:"V",
-      action: () => window.open("https://www.visa.com/", "_blank"),
-      hint: isArabic ? "ده رابط معلوماتي (لو عندك بوابة دفع هنبقى نركّب لينكها هنا)" : "Info link (replace with your payment gateway later)"
-    },
-    {
-      key:"billpay",
-      title: "Bill Pay",
-      icon:"BP",
-      action: () => window.open(waLink, "_blank"),
-      hint: isArabic ? "ابعتلنا على واتساب هنقولك خطوات الدفع" : "Message us on WhatsApp for steps"
-    },
-    {
-      key:"telda",
-      title: "Telda",
-      icon:"T",
-      action: () => window.open("https://telda.app/", "_blank"),
-      hint: isArabic ? "بعد الدفع ابعت إثبات على واتساب" : "After paying, send proof on WhatsApp"
-    }
-  ];
-
-  payList.innerHTML = items.map(x=>`
-    <button class="payBtn" data-pay="${x.key}">
-      <span class="payLeft">
-        <span class="payIcon">${x.icon}</span>
-        <span>${x.title}</span>
-      </span>
-      <span class="mini">${L.open} →</span>
-    </button>
-    <div class="note" style="margin-top:-4px">${x.hint}</div>
-  `).join("");
-
-  payList.querySelectorAll("[data-pay]").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      const k = btn.getAttribute("data-pay");
-      const it = items.find(x=>x.key===k);
-      if(it) it.action();
-    });
-  });
-
-  payHelp.innerHTML = `
-    <div class="row" style="align-items:center">
-      <button class="copyBtn tight" id="copyPhoneBtn" style="flex:0 0 auto">${L.copyNumber}</button>
-      <div class="note" style="margin:0;flex:1">${isArabic ? "رقم الدفع/التواصل:" : "Payment/Contact number:"} <strong>${SELLER_PHONE}</strong></div>
-    </div>
-  `;
-
-  document.getElementById("copyPhoneBtn").onclick = async ()=>{
-    try{
-      await navigator.clipboard.writeText(SELLER_PHONE);
-      alert(L.copied);
-    }catch{
-      // fallback
-      prompt(isArabic ? "انسخ الرقم:" : "Copy number:", SELLER_PHONE);
-    }
-  };
-}
-
-/* ---------------------------
-  Login flow
----------------------------- */
-loginBtn.addEventListener("click", ()=>openLoginFlow());
-document.getElementById("loginClose").addEventListener("click", closeAll);
-document.getElementById("loginFormClose").addEventListener("click", closeAll);
-
-function openLoginFlow(after){
-  openModal(loginModal);
-  providersStack.innerHTML = "";
-  PROVIDERS.forEach(p=>{
-    const b = document.createElement("button");
-    b.className = "payBtn";
-    b.innerHTML = `
-      <span class="payLeft">
-        <span class="payIcon">${p.icon}</span>
-        <span>${L.providerLogin} ${p.label}</span>
-      </span>
-      <span class="mini">→</span>
-    `;
-    b.onclick = ()=>{
-      currentProvider = p;
-      openLoginForm(after);
-    };
-    providersStack.appendChild(b);
-  });
-}
-
-function openLoginForm(after){
-  closeAll();
-  openModal(loginFormModal);
-
-  loginError.style.display = "none";
-  loginEmail.value = "";
-  loginPass.value = "";
-
-  loginFormNote.className = "note";
-  loginFormNote.textContent = isArabic
-    ? `هتسجّل دخول بـ ${currentProvider.label}. اكتب بريد وكلمة سر (واجهة فقط).`
-    : `You are logging in via ${currentProvider.label}. Enter email & password (UI only).`;
-
-  document.getElementById("loginSubmitBtn").onclick = ()=>{
-    const email = (loginEmail.value||"").trim();
-    const pass = (loginPass.value||"").trim();
-    if(!email || !pass){
-      loginError.style.display = "block";
-      loginError.className = "note err";
-      loginError.textContent = L.fillBoth;
+  // build card picker
+  const cards = getCards().filter(c=>!c.used);
+  const picker = $("cardPicker");
+  picker.innerHTML = `<option value="">${L.none}</option>` + cards.map(c=>`<option value="${c.code}">${c.code} — ${c.pct}%</option>`).join("");
+  picker.value = cardApplied?.code || "";
+  picker.onchange = ()=>{
+    const code = picker.value;
+    const found = cards.find(c=>c.code===code);
+    if(!code || !found){
+      cardApplied = null;
+      // restore couponCode? keep coupon typed
+      couponPct = couponCode ? (COUPONS[couponCode]||0) : 0;
+      renderCheckout();
       return;
     }
-    // derive display name from email
-    const name = email.includes("@") ? email.split("@")[0] : email;
-    setUser({ name, provider: currentProvider.key, providerLabel: currentProvider.label, providerIcon: currentProvider.icon });
-
-    refreshAuthUI();
-    closeAll();
-    if(typeof after === "function") after();
+    cardApplied = { code: found.code, pct: found.pct };
+    couponCode = found.code;
+    couponPct = found.pct;
+    renderCheckout();
   };
+
+  const totals = computeTotals(items);
+  $("checkoutTotals").textContent = isArabic
+    ? `المنتجات: ${money(totals.subtotal)} • الخصم: ${totals.pct}% (${money(totals.discountValue)}) • الإجمالي: ${money(totals.total)}`
+    : `Items: ${money(totals.subtotal)} • Discount: ${totals.pct}% (${money(totals.discountValue)}) • Total: ${money(totals.total)}`;
+
+  $("checkoutHint").textContent = L.stepHint;
 }
 
-function refreshAuthUI(){
-  const u = getUser();
-  if(!u){
-    loginBtn.style.display = "inline-flex";
-    userChip.style.display = "none";
-    document.getElementById("drawerUserBox").style.display = "none";
+$("applyCouponBtn").onclick = ()=>{
+  const code = ($("couponInput").value||"").trim().toUpperCase();
+  // If user picked a card, applying manual coupon will clear card
+  cardApplied = null;
+  if(!code){
+    couponPct = 0; couponCode = "";
+    pushLightNotif(isArabic ? "تم إلغاء الخصم" : "Discount cleared");
+    renderCheckout();
     return;
   }
-  loginBtn.style.display = "none";
-  userChip.style.display = "inline-flex";
-  userNameText.textContent = u.name;
-  userProviderBadge.textContent = u.providerIcon || "U";
-  refreshDrawerUser();
-}
-refreshAuthUI();
-
-userChip.addEventListener("click", ()=>{
-  // open menu and show user block on top
-  refreshDrawerUser();
-  openDrawer(menuDrawer);
-});
-
-function refreshDrawerUser(){
-  const u = getUser();
-  const box = document.getElementById("drawerUserBox");
-  const note = document.getElementById("drawerUserNote");
-  if(!u){
-    box.style.display = "none";
+  const pct = COUPONS[code] || 0;
+  if(!pct){
+    pushLightNotif(`${L.invalidCoupon}: ${code}`);
     return;
   }
-  box.style.display = "block";
-  note.textContent = isArabic
-    ? `${L.loggedAs} ${u.providerLabel} • ${isArabic ? "الاسم:" : "Name:"} ${u.name}`
-    : `${L.loggedAs} ${u.providerLabel} • Name: ${u.name}`;
-
-  document.getElementById("logoutBtn").textContent = L.logout;
-  document.getElementById("logoutBtn").onclick = ()=>{
-    clearUser();
-    refreshAuthUI();
-    closeAll();
-  };
-}
-
-/* ---------------------------
-  Require login before checkout (from cart)
----------------------------- */
-document.getElementById("cartCheckoutBtn").addEventListener("click", ()=>{
-  if(!cartItemsDetailed().length){
-    renderCart();
-    return;
-  }
-  startCheckout({ mode:"cart" });
-});
-
-/* ---------------------------
-  Filter default labels
----------------------------- */
-filterCategory.value = "all";
-filterSort.value = "new";
-priceMode.value = "off";
-
-/* ---------------------------
-  Hook filter & cart buttons
----------------------------- */
-document.getElementById("cartNote").textContent = L.cartHint;
-document.getElementById("cartCheckoutBtn").textContent = L.checkout;
-
-/* ---------------------------
-  Year
----------------------------- */
-document.getElementById("year").textContent = new Date().getFullYear();
-
-/* ---------------------------
-  Filter open/close buttons
----------------------------- */
-document.getElementById("filterClose").addEventListener("click", closeAll);
-
-/* ---------------------------
-  Cart total bar -> checkout
----------------------------- */
-document.getElementById("totalBar").addEventListener("click", ()=>{
-  document.getElementById("cartCheckoutBtn").click();
-});
-
-/* ---------------------------
-  Cart checkout opens checkout UI
----------------------------- */
-document.getElementById("cartCheckoutBtn").addEventListener("click", ()=>{
-  if(!cartItemsDetailed().length){
-    renderCart();
-    return;
-  }
-  startCheckout({ mode:"cart" });
-});
-
-/* ---------------------------
-  Ensure cart modal always shows latest
----------------------------- */
-cartBtn.addEventListener("click", ()=>{
-  renderCart();
-  openModal(cartModal);
-});
-
-/* ---------------------------
-  Close buttons
----------------------------- */
-document.getElementById("menuClose").addEventListener("click", closeAll);
-document.getElementById("filterClose").addEventListener("click", closeAll);
-document.getElementById("loginClose").addEventListener("click", closeAll);
-document.getElementById("loginFormClose").addEventListener("click", closeAll);
-document.getElementById("cartClose").addEventListener("click", closeAll);
-document.getElementById("checkoutClose").addEventListener("click", closeAll);
-
-/* ---------------------------
-  Menu open
----------------------------- */
-document.getElementById("menuBtn").addEventListener("click", ()=>{
-  refreshDrawerUser();
-  openDrawer(menuDrawer);
-});
-
-/* ---------------------------
-  Filter apply
----------------------------- */
-document.getElementById("applyFilterBtn").addEventListener("click", ()=>{
-  closeAll();
-  renderAll();
-});
-
-/* ---------------------------
-  Filter button open
----------------------------- */
-document.getElementById("filterBtn").addEventListener("click", ()=>openDrawer(filterDrawer));
-
-/* ---------------------------
-  Login required message when trying to add/buy? (buy already)
-  Add to cart doesn't require login by your request (you said "login لازم عند الشراء")
----------------------------- */
-function requireLoginThen(fn){
-  if(userIsLogged()) return fn();
-  openLoginFlow(fn);
-}
-
-/* Buy from card -> must login */
-function buyNow(id){
-  requireLoginThen(()=> startCheckout({ mode:"single", singleId:id }));
-}
-
-/* Checkout entry from cart -> must login */
-function startCheckout(state){
-  if(!userIsLogged()){
-    openLoginFlow(()=>startCheckout(state));
-    return;
-  }
-  checkoutState = state;
-  couponPct = 0;
-  lastCoupon = "";
-  couponInput.value = "";
-  couponNote.className = "note";
-  couponNote.textContent = L.couponHint;
-
+  couponCode = code;
+  couponPct = pct;
+  pushLightNotif(L.applied);
   renderCheckout();
-  closeAll();
-  openModal(checkoutModal);
+};
+
+function openPaymentModal(totals){
+  // small modal
+  $("paySummary").textContent = isArabic
+    ? `الإجمالي النهائي: ${money(totals.total)} • الخصم: ${totals.pct}%`
+    : `Final total: ${money(totals.total)} • Discount: ${totals.pct}%`;
+
+  const SELLER_PHONE = "201006760663";
+  const user = getCurrentUser();
+  const orderLines = checkoutConfirmedItems.map(i=>`${i.p.name} x${i.qty} = ${money(i.p.price*i.qty)}`).join("\n");
+  const msg = encodeURIComponent(
+    isArabic
+      ? `السلام عليكم، عايز أعمل طلب.\n\n${orderLines}\n\nالإجمالي: ${money(totals.total)}\nالخصم: ${totals.pct}%\nكود/كارت: ${couponCode || "—"}\nالحساب: ${user?.email || "—"}\n\n(ابعت إثبات الدفع هنا)`
+      : `Hi, I want to place an order.\n\n${orderLines}\n\nTotal: ${money(totals.total)}\nDiscount: ${totals.pct}%\nCode/Card: ${couponCode || "—"}\nAccount: ${user?.email || "—"}\n\n(Send payment proof here)`
+  );
+  const waLink = `https://wa.me/${SELLER_PHONE}?text=${msg}`;
+
+  const items = [
+    { key:"vodafone", title:"Vodafone Cash", icon:"VC", href:waLink },
+    { key:"orange", title:"Orange Cash", icon:"OC", href:waLink },
+    { key:"etisalat", title:"Etisalat Cash", icon:"EC", href:waLink },
+    { key:"we", title:"WE Pay", icon:"WE", href:waLink },
+    { key:"instapay", title:"InstaPay", icon:"IP", href:"https://www.instapay.eg/" },
+    { key:"visa", title:"Visa / Card", icon:"V", href:"https://www.visa.com/" },
+  ];
+
+  $("payList").innerHTML = items.map(x=>`
+    <button class="payBtn" data-pay="${x.key}">
+      <span class="payLeft"><span class="payIcon">${x.icon}</span><span>${x.title}</span></span>
+      <span class="mini">→</span>
+    </button>
+  `).join("");
+
+  $("payList").querySelectorAll("[data-pay]").forEach(b=>{
+    b.onclick = ()=>{
+      const k=b.dataset.pay;
+      const it=items.find(x=>x.key===k);
+      if(it) window.open(it.href, "_blank");
+      // Mark card as used only when user opens a payment method (simulate usage)
+      if(cardApplied?.code){
+        consumeCard(cardApplied.code);
+        cardApplied = null;
+      }
+      // clear cart only if checkout was from cart
+      if(checkoutState.mode==="cart"){
+        cart = [];
+        saveCart(cart);
+        refreshCartCount();
+      }
+      pushNotif(isArabic ? "تم فتح طريقة الدفع. ابعت إثبات الدفع." : "Payment method opened. Send proof.");
+      $("payHelp").textContent = L.afterPay;
+    };
+  });
+
+  $("payHelp").innerHTML = `
+    <div class="row" style="align-items:center">
+      <button class="smallBtn tight" id="copyPhoneBtn" style="flex:0 0 auto">${isArabic ? "نسخ الرقم" : "Copy number"}</button>
+      <div class="note" style="margin:0;flex:1">${isArabic ? "رقم الدفع/التواصل:" : "Payment/Contact:"} <strong>${SELLER_PHONE}</strong></div>
+    </div>
+  `;
+  $("copyPhoneBtn").onclick = async ()=>{
+    try{ await navigator.clipboard.writeText(SELLER_PHONE); alert(L.copied); }
+    catch{ prompt(isArabic ? "انسخ الرقم:" : "Copy number:", SELLER_PHONE); }
+  };
+
+  openModal($("payModal"));
 }
 
-/* Done */
+/* Consume card */
+function consumeCard(code){
+  const cards = getCards();
+  const idx = cards.findIndex(c=>c.code===code);
+  if(idx>=0){
+    cards[idx].used = true;
+    setCards(cards);
+    pushNotif(isArabic ? `تم استخدام كارت الخصم: ${code}` : `Discount card used: ${code}`);
+  }
+}
+
+/* =========================
+   Gems UI + redeem
+========================= */
+function refreshGemsUI(){
+  $("gemsCount").textContent = String(getGems());
+}
+$("gemsBtn").onclick = ()=>{
+  if(!isLoggedIn()){
+    pushLightNotif(L.mustLogin);
+    openModal($("authModal"));
+    showTab("login");
+    return;
+  }
+  renderGemsModal();
+  openModal($("gemsModal"));
+};
+$("gemsClose").onclick = closeAll;
+
+function renderGemsModal(){
+  const g = getGems();
+  $("gemsInfo").textContent = L.gemsInfo(g);
+  $("redeemErr").style.display="none";
+  $("redeemOk").style.display="none";
+  $("redeemInput").value = "";
+
+  renderCardsList();
+}
+function renderCardsList(){
+  const cards = getCards().slice().sort((a,b)=>b.created-a.created);
+  if(!cards.length){
+    $("cardsList").innerHTML = `<div class="note">${L.noCards}</div>`;
+    return;
+  }
+  $("cardsList").innerHTML = cards.map(c=>`
+    <div class="note ${c.used?'err':'ok'}" style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+      <div style="font-weight:900">${c.code} — ${c.pct}%</div>
+      <div style="font-size:12px">${c.used ? (isArabic?'مُستخدم':'Used') : (isArabic?'جاهز':'Ready')}</div>
+    </div>
+  `).join("");
+}
+
+$("redeemBtn").onclick = ()=>{
+  const want = Math.floor(Number($("redeemInput").value||0));
+  $("redeemErr").style.display="none";
+  $("redeemOk").style.display="none";
+
+  if(!want || want<=0){
+    $("redeemErr").textContent = L.fillAll;
+    $("redeemErr").style.display="block";
+    return;
+  }
+  const have = getGems();
+  if(want > have){
+    $("redeemErr").textContent = L.redeemTooMuch;
+    $("redeemErr").style.display="block";
+    return;
+  }
+
+  const pct = pctForRedeem(want);
+  if(!pct){
+    $("redeemErr").textContent = isArabic ? "ابدأ من 10 جواهر على الأقل." : "Minimum 10 gems.";
+    $("redeemErr").style.display="block";
+    return;
+  }
+
+  // Create card
+  const code = `GEM-${uid(6)}`;
+  const cards = getCards();
+  cards.unshift({ code, pct, used:false, created: now() });
+  setCards(cards);
+
+  // Deduct gems
+  setGems(have - want);
+
+  $("redeemOk").textContent = L.redeemOk(code, pct);
+  $("redeemOk").style.display="block";
+  pushNotif(isArabic ? `تم إنشاء كارت خصم من الجواهر: ${code}` : `Created discount card: ${code}`);
+  renderGemsModal();
+};
+
+/* =========================
+   Notifications
+========================= */
+function refreshNotifUI(){
+  const u = getCurrentUser();
+  if(!u){
+    $("notifCount").textContent = "0";
+    return;
+  }
+  const list = getNotifs();
+  const unread = list.filter(x=>!x.read).length;
+  $("notifCount").textContent = String(unread);
+}
+$("notifBtn").onclick = ()=>{
+  if(!isLoggedIn()){
+    pushLightNotif(L.mustLogin);
+    openModal($("authModal"));
+    showTab("login");
+    return;
+  }
+  renderNotifs();
+  openModal($("notifModal"));
+};
+$("notifClose").onclick = closeAll;
+$("notifClearBtn").onclick = ()=>{
+  setNotifs([]);
+  renderNotifs();
+};
+
+function renderNotifs(){
+  const list = getNotifs();
+  if(!list.length){
+    $("notifList").innerHTML = `<div class="note">${isArabic ? "مفيش رسائل." : "No notifications."}</div>`;
+    return;
+  }
+  // mark as read
+  list.forEach(x=>x.read=true);
+  setNotifs(list);
+
+  $("notifList").innerHTML = list.map(n=>`
+    <div class="note">
+      <div style="font-weight:900;margin-bottom:6px">${new Date(n.ts).toLocaleString()}</div>
+      <div>${n.text}</div>
+    </div>
+  `).join("");
+}
+
+/* small toast-like feedback using notifications count only (no external libs) */
+let toastTimer=null;
+function pushLightNotif(text){
+  // re-use notif modal hint style via alert-ish but nicer:
+  // We'll use pushNotif only if logged in; otherwise quick alert
+  if(isLoggedIn()){
+    // do not spam list; just a soft alert:
+    // keep in-app alert:
+    try{ console.log(text); }catch{}
+  }else{
+    // for guest, use alert
+    // but keep it short
+  }
+}
+
+/* =========================
+   Reviews
+========================= */
+$("reviewsClose").onclick = closeAll;
+$("submitReviewBtn").onclick = ()=>{
+  $("reviewErr").style.display="none";
+  $("reviewOk").style.display="none";
+
+  if(!isLoggedIn()){
+    $("reviewErr").textContent = L.reviewNeedLogin;
+    $("reviewErr").style.display="block";
+    return;
+  }
+  const text = ($("reviewText").value||"").trim();
+  const stars = Number($("reviewStars").value||5);
+  if(!text){
+    $("reviewErr").textContent = L.fillAll;
+    $("reviewErr").style.display="block";
+    return;
+  }
+  const u = getCurrentUser();
+  const all = safeJSONGet(LS_REVIEWS, []);
+  all.unshift({ email:u.email, name:u.name, stars, text, ts: now() });
+  safeJSONSet(LS_REVIEWS, all);
+
+  $("reviewText").value = "";
+  $("reviewOk").textContent = L.reviewSent;
+  $("reviewOk").style.display="block";
+  pushNotif(isArabic ? "شكراً! تم إرسال مراجعتك ✅" : "Thanks! Review sent ✅");
+  renderReviews();
+};
+
+function renderReviews(){
+  const all = safeJSONGet(LS_REVIEWS, []);
+  if(!all.length){
+    $("reviewsList").innerHTML = `<div class="note">${isArabic ? "مفيش مراجعات لسه." : "No reviews yet."}</div>`;
+    return;
+  }
+  $("reviewsList").innerHTML = all.map(r=>`
+    <div class="note">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+        <div style="font-weight:900">${r.name}</div>
+        <div style="font-weight:900;color:rgba(246,247,255,.9)">${"⭐".repeat(Math.max(1,Math.min(5,r.stars)))}</div>
+      </div>
+      <div style="margin-top:8px;color:rgba(185,193,217,.95)">${r.text}</div>
+      <div class="mini" style="margin-top:8px">${new Date(r.ts).toLocaleString()}</div>
+    </div>
+  `).join("");
+}
+
+/* =========================
+   Contact modal
+========================= */
+$("contactClose").onclick = closeAll;
+
+/* =========================
+   Buttons: cart/checkout details already
+========================= */
+
+/* =========================
+   Filter defaults
+========================= */
+$("filterCategory").value="all";
+$("filterSort").value="new";
+$("priceMode").value="off";
+$("priceValue").placeholder = isArabic ? "مثلاً 300" : "e.g. 300";
+
+/* =========================
+   Pay modal close by clicking outside too
+========================= */
+$("payModal").addEventListener("click", (e)=>{
+  if(e.target === $("payModal")) closeAll();
+});
+
+/* =========================
+   Close modals by clicking outside
+========================= */
+[
+  "authModal","accountModal","notifModal","gemsModal","cartModal","checkoutModal","detailsModal","lightbox","contactModal","reviewsModal"
+].forEach(id=>{
+  $(id).addEventListener("click", (e)=>{
+    if(e.target === $(id)) closeAll();
+  });
+});
+
+/* =========================
+   Year
+========================= */
+$("year").textContent = new Date().getFullYear();
+
+/* =========================
+   Final: close buttons
+========================= */
+$("notifClose").onclick = closeAll;
+$("gemsClose").onclick = closeAll;
+$("cartClose").onclick = closeAll;
+$("checkoutClose").onclick = closeAll;
+$("detailsClose").onclick = closeAll;
+$("lightClose").onclick = closeAll;
+
+/* =========================
+   Keep counts fresh after load
+========================= */
+refreshCartCount();
+refreshGemsUI();
+refreshNotifUI();
+
+/* =========================
+   IMPORTANT: ensure drawers close transform
+========================= */
+(function(){
+  const md=$("menuDrawer"), fd=$("filterDrawer");
+  md.dataset.closed = md.dataset.closed || (isArabic ? "translateX(110%)" : "translateX(-110%)");
+  fd.dataset.closed = fd.dataset.closed || (isArabic ? "translateX(-110%)" : "translateX(110%)");
+})();
+
+/* Open gems/notifs only after auth; already handled */
+
+/* End */
 </script>
 </body>
 </html>
