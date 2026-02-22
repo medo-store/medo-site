@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Medo Gaming Store</title>
+  <title>متجر ميدو للألعاب والبرامج والأكونتات</title>
 
   <style>
     :root{
       --bg:#0b0b0f;
-      --card:#141421;
+      --panel:#12121a;
+      --card:#151523;
       --text:#ffffff;
       --muted:#b9b9c6;
       --accent:#ff2d2d;
@@ -19,128 +20,123 @@
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family:"Segoe UI", Tahoma, Arial, sans-serif;
       background:
-        radial-gradient(900px 500px at 20% 10%, rgba(255,45,45,.18), transparent 60%),
-        radial-gradient(800px 450px at 80% 0%, rgba(0,255,213,.12), transparent 55%),
+        radial-gradient(900px 500px at 20% 10%, rgba(255,45,45,.14), transparent 60%),
+        radial-gradient(800px 450px at 80% 0%, rgba(0,255,213,.10), transparent 55%),
         var(--bg);
       color:var(--text);
-      direction: rtl;
+      direction:rtl;
     }
-    a{color:inherit; text-decoration:none}
-    .container{max-width:1100px; margin:0 auto; padding:18px}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:12px}
+
+    /* NAV */
     .nav{
-      position:sticky; top:0; z-index:10;
-      backdrop-filter: blur(10px);
-      background:rgba(11,11,15,.70);
+      position:sticky;top:0;z-index:10;
+      background:rgba(11,11,15,.75);
+      backdrop-filter:blur(10px);
       border-bottom:1px solid var(--border);
     }
-    .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap}
-    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px}
-    .dot{width:10px; height:10px; border-radius:999px; background:var(--accent)}
-    .links{display:flex; gap:14px; flex-wrap:wrap; color:var(--muted); font-weight:700; font-size:14px}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:8px;font-weight:900;font-size:14px}
+    .dot{width:8px;height:8px;border-radius:999px;background:var(--accent)}
+    .links{display:flex;gap:12px;color:var(--muted);font-weight:700;font-size:13px}
     .links a:hover{color:#fff}
 
-    .hero{padding:26px 0 10px;}
-    .hero-card{
+    /* TOP BAR (thin) */
+    .topbar{
+      background:linear-gradient(180deg, rgba(18,18,26,.85), rgba(18,18,26,.65));
       border:1px solid var(--border);
-      background:linear-gradient(180deg, rgba(20,20,33,.88), rgba(20,20,33,.66));
-      border-radius:18px;
-      padding:18px;
-      display:flex; flex-direction:column; gap:12px;
+      border-radius:14px;
+      padding:10px;
+      margin-top:10px;
     }
-    h1{margin:0; font-size:26px}
-    .sub{color:var(--muted); margin:0; line-height:1.6}
-
-    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .title{
+      font-size:15px;font-weight:900;white-space:nowrap
+    }
     .search{
-      flex:1;
-      min-width:220px;
-      padding:12px 12px;
-      border-radius:12px;
+      flex:1;min-width:220px;
+      padding:10px 12px;border-radius:10px;
       border:1px solid var(--border);
-      background:rgba(0,0,0,.25);
-      color:#fff;
-      outline:none;
+      background:rgba(0,0,0,.25);color:#fff;outline:none
     }
     .pill{
-      padding:10px 12px;
-      border-radius:999px;
+      padding:8px 10px;border-radius:999px;
       border:1px solid var(--border);
-      background:rgba(255,255,255,.04);
-      color:var(--muted);
-      cursor:pointer;
-      font-weight:800;
-      font-size:13px;
+      background:rgba(255,255,255,.05);
+      color:var(--muted);cursor:pointer;
+      font-weight:800;font-size:12px
     }
-    .pill.active{color:#000; background:var(--accent2); border-color:transparent}
+    .pill.active{background:var(--accent2);color:#000;border-color:transparent}
 
-    .section-title{margin:22px 0 10px; font-size:18px}
+    /* SECTIONS */
+    .section-title{
+      margin:14px 0 6px;font-size:14px;font-weight:900;color:#fff
+    }
 
+    /* GRID: 4 cards */
     .grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
-      gap:14px;
-      padding:10px 0 26px;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      padding:8px 0 18px;
     }
+
+    /* CARD */
     .card{
+      background:rgba(21,21,35,.75);
       border:1px solid var(--border);
-      background:rgba(20,20,33,.72);
-      border-radius:16px;
+      border-radius:12px;
       overflow:hidden;
-      display:flex; flex-direction:column;
-      min-height:240px;
+      display:flex;flex-direction:column;
+      min-height:190px;
     }
     .thumb{
-      height:130px;
-      background:linear-gradient(135deg, rgba(255,45,45,.25), rgba(0,255,213,.18));
-      display:flex; align-items:center; justify-content:center;
-      font-weight:900; letter-spacing:.6px;
-      color:#fff;
-      position:relative;
+      height:90px;
+      background:linear-gradient(135deg, rgba(255,45,45,.22), rgba(0,255,213,.16));
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;font-size:12px;letter-spacing:.4px
     }
-    .thumb::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(180deg, transparent, rgba(0,0,0,.35));
-      pointer-events:none;
-    }
-    .content{padding:12px; display:flex; flex-direction:column; gap:8px; flex:1}
-    .title{font-size:16px; font-weight:900; margin:0}
-    .meta{color:var(--muted); font-size:13px; margin:0; line-height:1.5}
-    .price{font-weight:900; margin:0}
-    .actions{display:flex; gap:10px; margin-top:auto}
+    .content{padding:8px;display:flex;flex-direction:column;gap:6px;flex:1}
+    .name{font-size:13px;font-weight:900;margin:0}
+    .meta{font-size:12px;color:var(--muted);margin:0;line-height:1.4}
+    .price{font-size:12px;font-weight:900;margin:0}
+    .actions{display:flex;gap:6px;margin-top:auto}
     .btn{
-      flex:1;
-      padding:10px 10px;
-      border-radius:12px;
+      flex:1;padding:8px;border-radius:10px;
       border:1px solid var(--border);
-      background:rgba(255,255,255,.04);
-      color:#fff;
-      text-align:center;
-      font-weight:900;
-      font-size:13px;
+      background:rgba(255,255,255,.06);
+      font-weight:900;font-size:12px;text-align:center
     }
-    .btn.buy{background:var(--accent); border-color:transparent}
+    .btn.buy{background:var(--accent);border-color:transparent}
     .btn:hover{filter:brightness(1.06)}
 
     .badge{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
-      background:rgba(255,255,255,.06);
+      display:inline-block;padding:4px 8px;border-radius:999px;
       border:1px solid var(--border);
-      color:var(--muted);
-      font-weight:900;
-      font-size:12px;
+      background:rgba(255,255,255,.06);
+      font-size:11px;font-weight:900;color:var(--muted)
     }
 
     .footer{
       border-top:1px solid var(--border);
       color:var(--muted);
-      padding:16px 0 26px;
-      font-size:13px;
+      padding:12px 0 20px;
+      font-size:12px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width:1100px){
+      .grid{grid-template-columns:repeat(3,1fr)}
+    }
+    @media (max-width:800px){
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .title{font-size:14px}
+    }
+    @media (max-width:480px){
+      .grid{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -152,10 +148,8 @@
       <div class="brand">
         <span class="dot"></span>
         <span>Medo Gaming Store</span>
-        <span class="badge">Games • Programs • Accounts</span>
       </div>
       <div class="links">
-        <a href="#home">الرئيسية</a>
         <a href="#games">الألعاب</a>
         <a href="#programs">البرامج</a>
         <a href="#accounts">الأكونتات</a>
@@ -164,22 +158,19 @@
     </div>
   </div>
 
-  <div id="home" class="container hero">
-    <div class="hero-card">
-      <h1>متجر ميدو للألعاب والبرامج والأكونتات</h1>
-      <p class="sub">ابحث، فلتر، واختار اللي محتاجه — والطلب مباشر على واتساب.</p>
-
+  <div class="container">
+    <!-- Thin Top Bar -->
+    <div class="topbar">
       <div class="row">
-        <input id="search" class="search" placeholder="ابحث عن منتج..." />
+        <div class="title">متجر ميدو للألعاب والبرامج والأكونتات</div>
+        <input id="search" class="search" placeholder="🔍 ابحث عن لعبة، برنامج، أو أكونت" />
         <button class="pill active" data-filter="all">الكل</button>
         <button class="pill" data-filter="games">ألعاب</button>
         <button class="pill" data-filter="programs">برامج</button>
         <button class="pill" data-filter="accounts">أكونتات</button>
       </div>
     </div>
-  </div>
 
-  <div class="container">
     <h2 id="games" class="section-title">🎮 الألعاب</h2>
     <div id="grid-games" class="grid"></div>
 
@@ -187,85 +178,75 @@
     <div id="grid-programs" class="grid"></div>
 
     <h2 id="accounts" class="section-title">🧾 الأكونتات</h2>
-
-    <div class="row" style="padding:6px 0 0">
-      <button class="pill active" data-acc="all">كل الأكونتات</button>
-      <button class="pill" data-acc="Epic">Epic</button>
-      <button class="pill" data-acc="Steam">Steam</button>
+    <div class="row">
+      <button class="pill active" data-acc="all">الكل</button>
+      <button class="pill" data-acc="PC Accounts">PC Accounts</button>
       <button class="pill" data-acc="PUBG">PUBG</button>
       <button class="pill" data-acc="Free Fire">Free Fire</button>
       <button class="pill" data-acc="Roblox">Roblox</button>
       <button class="pill" data-acc="eFootball">eFootball</button>
       <button class="pill" data-acc="EA Sports FC">EA Sports FC</button>
-      <button class="pill" data-acc="PlayStation">PlayStation</button>
     </div>
-
     <div id="grid-accounts" class="grid"></div>
 
     <h2 id="contact" class="section-title">📱 تواصل</h2>
-    <div class="hero-card">
-      <p class="sub" style="margin:0">
-        واتساب: <a class="badge" href="https://wa.me/201006760663" target="_blank">Chat Now</a>
-        &nbsp; | &nbsp;
-        الإيميل: <span class="badge">medorami77@gmail.com</span>
-      </p>
-      <p class="sub" style="margin:0">ملاحظة: هنضيف صور الأكونتات بسهولة (خطوة الجاية).</p>
+    <div class="topbar">
+      <span class="badge">واتساب</span>
+      <a class="badge" href="https://wa.me/201006760663" target="_blank">Chat Now</a>
+      &nbsp; | &nbsp;
+      <span class="badge">Email</span>
+      <span class="badge">medorami77@gmail.com</span>
     </div>
 
     <div class="footer">
-      © <span id="year"></span> Medo Gaming — Built on GitHub Pages.
+      © <span id="year"></span> Medo Gaming — GitHub Pages
     </div>
   </div>
 
   <script>
     const WHATSAPP = "https://wa.me/201006760663";
 
-    // ضع منتجاتك هنا (تقدر تغيّر الاسم/السعر/الوصف)
-    // لو عايز صورة: حط img: "images/اسم-الصورة.jpg"
+    // منتجات مبدئية (غيّر الاسم/السعر براحتك)
     const products = [
       // Games
-      { id: 1, type: "games", name: "Game #1", desc: "وصف بسيط للعبة", price: "EGP 0", img: "" },
-      { id: 2, type: "games", name: "Game #2", desc: "وصف بسيط للعبة", price: "EGP 0", img: "" },
+      {type:"games", name:"Game #1", desc:"وصف بسيط", price:"EGP 0"},
+      {type:"games", name:"Game #2", desc:"وصف بسيط", price:"EGP 0"},
+      {type:"games", name:"Game #3", desc:"وصف بسيط", price:"EGP 0"},
+      {type:"games", name:"Game #4", desc:"وصف بسيط", price:"EGP 0"},
 
       // Programs
-      { id: 11, type: "programs", name: "Program #1", desc: "وصف بسيط للبرنامج", price: "EGP 0", img: "" },
-      { id: 12, type: "programs", name: "Program #2", desc: "وصف بسيط للبرنامج", price: "EGP 0", img: "" },
+      {type:"programs", name:"Program #1", desc:"وصف بسيط", price:"EGP 0"},
+      {type:"programs", name:"Program #2", desc:"وصف بسيط", price:"EGP 0"},
+      {type:"programs", name:"Program #3", desc:"وصف بسيط", price:"EGP 0"},
+      {type:"programs", name:"Program #4", desc:"وصف بسيط", price:"EGP 0"},
 
-      // Accounts (تصنيفات)
-      { id: 101, type: "accounts", cat: "Epic", name: "Epic Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" },
-      { id: 102, type: "accounts", cat: "Steam", name: "Steam Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" },
-      { id: 103, type: "accounts", cat: "PUBG", name: "PUBG Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" },
-      { id: 104, type: "accounts", cat: "Free Fire", name: "Free Fire Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" },
-      { id: 105, type: "accounts", cat: "Roblox", name: "Roblox Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" },
-      { id: 106, type: "accounts", cat: "eFootball", name: "eFootball Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" },
-      { id: 107, type: "accounts", cat: "EA Sports FC", name: "EA Sports FC Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" },
-      { id: 108, type: "accounts", cat: "PlayStation", name: "PlayStation Account #1", desc: "مكان التفاصيل هنا", price: "EGP 0", img: "" }
+      // Accounts
+      {type:"accounts", cat:"PC Accounts", name:"PC Account #1", desc:"تفاصيل الأكونت", price:"EGP 0"},
+      {type:"accounts", cat:"PUBG", name:"PUBG Account #1", desc:"تفاصيل الأكونت", price:"EGP 0"},
+      {type:"accounts", cat:"Free Fire", name:"Free Fire Account #1", desc:"تفاصيل الأكونت", price:"EGP 0"},
+      {type:"accounts", cat:"Roblox", name:"Roblox Account #1", desc:"تفاصيل الأكونت", price:"EGP 0"},
+      {type:"accounts", cat:"eFootball", name:"eFootball Account #1", desc:"تفاصيل الأكونت", price:"EGP 0"},
+      {type:"accounts", cat:"EA Sports FC", name:"EA Sports FC Account #1", desc:"تفاصيل الأكونت", price:"EGP 0"}
     ];
 
     const gridGames = document.getElementById("grid-games");
     const gridPrograms = document.getElementById("grid-programs");
     const gridAccounts = document.getElementById("grid-accounts");
     const search = document.getElementById("search");
-    const pills = document.querySelectorAll("[data-filter]");
+    const filterPills = document.querySelectorAll("[data-filter]");
     const accPills = document.querySelectorAll("[data-acc]");
 
-    function cardHTML(p){
+    function card(p){
       const msg = encodeURIComponent(`Hello, I want: ${p.name} (${p.price})`);
-      const label = (p.type === "games") ? "GAME" : (p.type === "programs" ? "APP" : (p.cat || "ACC"));
-      const thumbStyle = p.img
-        ? `background-image:url('${p.img}'); background-size:cover; background-position:center;`
-        : "";
-      const thumbText = p.img ? "" : label;
-
+      const label = p.type === "accounts" ? p.cat : (p.type === "games" ? "GAME" : "APP");
       return `
-        <div class="card" data-type="${p.type}" data-cat="${(p.cat || "").toLowerCase()}" data-search="${(p.name + " " + (p.desc||"") + " " + (p.cat||"")).toLowerCase()}">
-          <div class="thumb" style="${thumbStyle}">${thumbText}</div>
+        <div class="card" data-type="${p.type}" data-cat="${(p.cat||"").toLowerCase()}" data-search="${(p.name+" "+p.desc+" "+(p.cat||"")).toLowerCase()}">
+          <div class="thumb">${label}</div>
           <div class="content">
-            <p class="title">${p.name}</p>
-            <p class="meta">${p.type === "accounts" ? `<span class="badge">${p.cat}</span> &nbsp;` : ""}${p.desc}</p>
+            <p class="name">${p.name}</p>
+            <p class="meta">${p.desc}${p.type==="accounts" ? " • "+p.cat : ""}</p>
             <p class="price">${p.price}</p>
             <div class="actions">
-              <a class="btn" href="#contact">تفاصيل</a>
               <a class="btn buy" target="_blank" href="${WHATSAPP}?text=${msg}">شراء</a>
             </div>
           </div>
@@ -273,68 +254,50 @@
       `;
     }
 
-    function render(){
-      gridGames.innerHTML = "";
-      gridPrograms.innerHTML = "";
-      gridAccounts.innerHTML = "";
+    let currentFilter="all", currentAcc="all";
 
-      const q = search.value.trim().toLowerCase();
+    function render(){
+      gridGames.innerHTML=""; gridPrograms.innerHTML=""; gridAccounts.innerHTML="";
+      const q = search.value.toLowerCase().trim();
 
       products.forEach(p=>{
-        const hay = (p.name + " " + (p.desc||"") + " " + (p.cat||"")).toLowerCase();
+        const hay = (p.name+" "+p.desc+" "+(p.cat||"")).toLowerCase();
         if(q && !hay.includes(q)) return;
 
-        const html = cardHTML(p);
-        if(p.type === "games") gridGames.insertAdjacentHTML("beforeend", html);
-        else if(p.type === "programs") gridPrograms.insertAdjacentHTML("beforeend", html);
-        else if(p.type === "accounts") gridAccounts.insertAdjacentHTML("beforeend", html);
+        if(p.type==="games") gridGames.insertAdjacentHTML("beforeend", card(p));
+        if(p.type==="programs") gridPrograms.insertAdjacentHTML("beforeend", card(p));
+        if(p.type==="accounts") gridAccounts.insertAdjacentHTML("beforeend", card(p));
       });
 
       applyFilter(currentFilter);
-      applyAccountFilter(currentAccCat);
+      applyAcc(currentAcc);
     }
 
-    let currentFilter = "all";
-    function applyFilter(filter){
-      currentFilter = filter;
-      document.querySelectorAll(".card").forEach(card=>{
-        const type = card.getAttribute("data-type");
-        const show = (filter === "all" || type === filter);
-        card.style.display = show ? "" : "none";
+    function applyFilter(f){
+      currentFilter=f;
+      document.querySelectorAll(".card").forEach(c=>{
+        const t=c.dataset.type;
+        c.style.display=(f==="all"||t===f)?"":"none";
+      });
+    }
+    function applyAcc(a){
+      currentAcc=a;
+      document.querySelectorAll("#grid-accounts .card").forEach(c=>{
+        const cat=c.dataset.cat;
+        c.style.display=(a==="all"||cat===a.toLowerCase())?"":"none";
       });
     }
 
-    let currentAccCat = "all";
-    function applyAccountFilter(cat){
-      currentAccCat = cat;
-      document.querySelectorAll("#grid-accounts .card").forEach(card=>{
-        const c = card.getAttribute("data-cat"); // lowercase
-        const show = (cat === "all" || c === cat.toLowerCase());
-        card.style.display = show ? "" : "none";
-      });
-    }
-
-    pills.forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        pills.forEach(b=>b.classList.remove("active"));
-        btn.classList.add("active");
-        applyFilter(btn.dataset.filter);
-      });
+    filterPills.forEach(b=>{
+      b.onclick=()=>{filterPills.forEach(x=>x.classList.remove("active"));b.classList.add("active");applyFilter(b.dataset.filter);}
     });
-
-    accPills.forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        accPills.forEach(b=>b.classList.remove("active"));
-        btn.classList.add("active");
-        applyAccountFilter(btn.dataset.acc);
-      });
+    accPills.forEach(b=>{
+      b.onclick=()=>{accPills.forEach(x=>x.classList.remove("active"));b.classList.add("active");applyAcc(b.dataset.acc);}
     });
-
-    search.addEventListener("input", render);
-    document.getElementById("year").textContent = new Date().getFullYear();
+    search.oninput=render;
+    document.getElementById("year").textContent=new Date().getFullYear();
 
     render();
   </script>
-
 </body>
 </html>
