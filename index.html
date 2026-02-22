@@ -2,415 +2,286 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Medo Gaming Store</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Medo Gaming Store</title>
 
-  <style>
-    :root{
-      --bg:#0b0b0f;
-      --panel:#12121a;
-      --card:#151523;
-      --text:#ffffff;
-      --muted:#b9b9c6;
-      --accent:#ff2d2d;
-      --accent2:#00ffd5;
-      --border:rgba(255,255,255,.10);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:"Segoe UI", Tahoma, Arial, sans-serif;
-      background:
-        radial-gradient(900px 500px at 20% 10%, rgba(255,45,45,.14), transparent 60%),
-        radial-gradient(800px 450px at 80% 0%, rgba(0,255,213,.09), transparent 55%),
-        var(--bg);
-      color:var(--text);
-      direction:rtl;
-    }
-    a{color:inherit;text-decoration:none}
-    .container{max-width:1200px;margin:0 auto;padding:10px 12px}
+<style>
+:root{
+  --bg:#0b0b0f; --panel:#12121a; --card:#151523;
+  --text:#fff; --muted:#b9b9c6; --accent:#ff2d2d; --accent2:#00ffd5;
+  --border:rgba(255,255,255,.10);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; font-family:"Segoe UI",Tahoma,Arial,sans-serif; direction:rtl; color:var(--text);
+  background:
+    radial-gradient(900px 500px at 20% 10%, rgba(255,45,45,.14), transparent 60%),
+    radial-gradient(800px 450px at 80% 0%, rgba(0,255,213,.09), transparent 55%),
+    var(--bg);
+}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:auto;padding:10px 12px}
 
-    /* NAV */
-    .nav{
-      position:sticky;top:0;z-index:10;
-      background:rgba(11,11,15,.82);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid var(--border);
-    }
-    .nav-inner{
-      display:flex;align-items:center;justify-content:space-between;
-      gap:10px;flex-wrap:wrap
-    }
-    .brand{
-      display:flex;align-items:center;gap:8px;
-      font-weight:900;font-size:15px;white-space:nowrap
-    }
-    .dot{width:8px;height:8px;border-radius:999px;background:var(--accent)}
-    .nav-left{
-      display:flex;align-items:center;gap:10px;flex:1;min-width:280px;flex-wrap:wrap
-    }
-    .search{
-      width:360px;max-width:100%;
-      padding:10px 12px;border-radius:10px;
-      border:1px solid var(--border);
-      background:rgba(0,0,0,.25);
-      color:#fff;outline:none
-    }
+/* HEADER */
+.nav{position:sticky;top:0;z-index:20;background:rgba(11,11,15,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:8px;font-weight:900;white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.search{flex:1;min-width:220px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.25);color:#fff}
+.icon-btn{padding:8px 10px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.05);cursor:pointer}
+.right{margin-right:auto;display:flex;gap:6px}
 
-    /* MENU with subtitle */
-    .menu{display:flex;gap:14px;flex-wrap:wrap}
-    .menu a{
-      display:flex;flex-direction:column;align-items:flex-start;
-      gap:2px;
-      padding:6px 8px;
-      border-radius:10px;
-      color:var(--muted);
-      font-weight:900;
-      font-size:13px;
-      border:1px solid transparent;
-    }
-    .menu a:hover{color:#fff;border-color:var(--border);background:rgba(255,255,255,.03)}
-    .menu .sub{
-      font-size:11px;
-      font-weight:800;
-      color:rgba(185,185,198,.75);
-      line-height:1;
-    }
+/* GRID */
+.section-title{margin:14px 0 6px;font-size:14px;font-weight:900}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:450px){.grid{grid-template-columns:1fr}}
 
-    /* FILTER BAR */
-    .filters{
-      margin-top:10px;
-      border:1px solid var(--border);
-      background:rgba(18,18,26,.72);
-      border-radius:12px;
-      padding:10px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .pill{
-      padding:8px 10px;border-radius:999px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.05);
-      color:var(--muted);
-      cursor:pointer;
-      font-weight:900;font-size:12px;
-      white-space:nowrap;
-    }
-    .pill.active{background:var(--accent2);color:#000;border-color:transparent}
+.card{background:rgba(21,21,35,.75);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.thumb{height:90px;display:flex;align-items:center;justify-content:center;font-weight:900;background:linear-gradient(135deg, rgba(255,45,45,.25), rgba(0,255,213,.10))}
+.content{padding:8px;display:flex;flex-direction:column;gap:6px}
+.name{font-size:13px;font-weight:900;margin:0}
+.meta{font-size:12px;color:var(--muted);margin:0}
+.price{font-size:12px;font-weight:900}
+.actions{display:flex;gap:6px}
+.btn{flex:1;padding:8px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.06);font-weight:900;font-size:12px;cursor:pointer}
+.btn.buy{background:var(--accent);border-color:transparent}
 
-    .select, .num, .smallselect{
-      padding:9px 10px;
-      border-radius:10px;
-      border:1px solid var(--border);
-      background:rgba(0,0,0,.22);
-      color:#fff;
-      outline:none;
-      font-weight:900;
-      font-size:12px;
-    }
-    .num{width:140px}
-    .hint{color:var(--muted);font-size:12px;font-weight:800}
+/* DRAWERS / MODALS */
+.drawer, .modal{position:fixed;inset:0;display:none;z-index:30}
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,.55)}
+.panel{position:absolute;top:0;bottom:0;width:320px;background:var(--panel);border-left:1px solid var(--border);padding:12px}
+.left{left:0} .rightP{right:0}
+.modal .box{position:absolute;inset:0;margin:auto;width:min(420px,92%);height:auto;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px}
+.h{font-weight:900;margin:6px 0}
 
-    /* SECTIONS */
-    .section-title{
-      margin:14px 0 6px;
-      font-size:14px;font-weight:900
-    }
+/* FILTERS */
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.select,.num{padding:9px 10px;border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.22);color:#fff}
 
-    /* GRID */
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:10px;
-      padding:8px 0 16px;
-    }
-
-    .card{
-      background:rgba(21,21,35,.75);
-      border:1px solid var(--border);
-      border-radius:12px;
-      overflow:hidden;
-      display:flex;flex-direction:column;
-      min-height:190px;
-    }
-    .thumb{
-      height:90px;
-      background:linear-gradient(135deg, rgba(255,45,45,.25), rgba(0,255,213,.10));
-      display:flex;align-items:center;justify-content:center;
-      font-weight:900;font-size:12px;letter-spacing:.4px;
-      position:relative;
-    }
-    .thumb span{
-      padding:5px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.18);
-    }
-    .content{padding:8px;display:flex;flex-direction:column;gap:6px;flex:1}
-    .name{font-size:13px;font-weight:900;margin:0}
-    .meta{font-size:12px;color:var(--muted);margin:0;line-height:1.4}
-    .price{font-size:12px;font-weight:900;margin:0}
-    .actions{display:flex;gap:6px;margin-top:auto}
-    .btn{
-      flex:1;
-      padding:8px;border-radius:10px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.05);
-      font-weight:900;font-size:12px;text-align:center;
-    }
-    .btn.buy{background:var(--accent);border-color:transparent}
-    .btn:hover{filter:brightness(1.06)}
-
-    .footer{
-      border-top:1px solid var(--border);
-      color:var(--muted);
-      padding:12px 0 18px;
-      font-size:12px;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width:1000px){
-      .grid{grid-template-columns:repeat(3,1fr)}
-      .search{width:320px}
-    }
-    @media (max-width:700px){
-      .grid{grid-template-columns:repeat(2,1fr)}
-      .search{width:100%}
-      .menu a{align-items:flex-start}
-    }
-    @media (max-width:450px){
-      .grid{grid-template-columns:1fr}
-    }
-  </style>
+/* FOOTER */
+.footer{border-top:1px solid var(--border);margin-top:16px;padding:12px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap}
+.badge{padding:6px 10px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.06);font-weight:900;font-size:12px}
+</style>
 </head>
 
 <body>
-
-  <!-- NAV -->
-  <div class="nav">
-    <div class="container nav-inner">
-
-      <div class="nav-left">
-        <div class="brand">
-          <span class="dot"></span>
-          <span>Medo Gaming Store</span>
-        </div>
-
-        <input id="search" class="search" placeholder="🔍 ابحث عن لعبة / برنامج / أكونت" />
-      </div>
-
-      <div class="menu">
-        <a href="#all" data-nav="all">
-          <span>الكل</span>
-          <span class="sub">All</span>
-        </a>
-        <a href="#games" data-nav="games">
-          <span>الألعاب</span>
-          <span class="sub">Games</span>
-        </a>
-        <a href="#programs" data-nav="programs">
-          <span>البرامج</span>
-          <span class="sub">Programs</span>
-        </a>
-        <a href="#accounts" data-nav="accounts">
-          <span>الأكونتات</span>
-          <span class="sub">Accounts</span>
-        </a>
-        <a href="#contact">
-          <span>التواصل</span>
-          <span class="sub">Contact</span>
-        </a>
-      </div>
-
+<!-- HEADER -->
+<div class="nav">
+  <div class="container nav-inner">
+    <div class="brand"><span class="dot"></span><span>Medo Gaming Store</span></div>
+    <input id="search" class="search" placeholder="🔍 ابحث عن لعبة / برنامج / أكونت"/>
+    <div class="right">
+      <button class="icon-btn" onclick="openFilter()">≡≡</button>
+      <button class="icon-btn" onclick="openCart()">🛒 <span id="cartCount">0</span></button>
+      <button class="icon-btn" id="loginBtn" onclick="openLogin()">👤 تسجيل الدخول</button>
+      <button class="icon-btn" id="userBtn" style="display:none" onclick="openUser()">👤 <span id="userName"></span></button>
+      <button class="icon-btn" onclick="openMenu()">☰</button>
     </div>
   </div>
+</div>
 
-  <div class="container">
+<div class="container">
+  <h2 class="section-title">🎮 الألعاب</h2>
+  <div id="games" class="grid"></div>
 
-    <!-- FILTERS -->
-    <div class="filters" id="all">
-      <button class="pill active" data-type="all">الكل</button>
-      <button class="pill" data-type="games">ألعاب</button>
-      <button class="pill" data-type="programs">برامج</button>
-      <button class="pill" data-type="accounts">أكونتات</button>
+  <h2 class="section-title">💻 البرامج</h2>
+  <div id="programs" class="grid"></div>
 
-      <span class="hint">|</span>
+  <h2 class="section-title">🧾 الأكونتات</h2>
+  <div id="accounts" class="grid"></div>
 
-      <label class="hint">الترتيب:</label>
-      <select id="sort" class="select">
-        <option value="new">الأحدث</option>
-        <option value="low">الأرخص → الأغلى</option>
-        <option value="high">الأغلى → الأرخص</option>
-      </select>
-
-      <label class="hint">فلتر السعر:</label>
-      <select id="priceMode" class="smallselect">
-        <option value="off">إيقاف</option>
-        <option value="eq">بالظبط</option>
-        <option value="lte">أقل أو يساوي</option>
-        <option value="gte">أكبر أو يساوي</option>
-      </select>
-      <input id="priceValue" class="num" type="number" placeholder="مثلاً 300" min="0"/>
-
-      <span class="hint" id="count"></span>
-    </div>
-
-    <!-- SECTIONS -->
-    <h2 id="games" class="section-title">🎮 الألعاب</h2>
-    <div id="grid-games" class="grid"></div>
-
-    <h2 id="programs" class="section-title">💻 البرامج</h2>
-    <div id="grid-programs" class="grid"></div>
-
-    <h2 id="accounts" class="section-title">🧾 الأكونتات</h2>
-    <div id="grid-accounts" class="grid"></div>
-
-    <!-- CONTACT -->
-    <h2 id="contact" class="section-title">📱 التواصل</h2>
-    <div class="filters" style="justify-content:space-between">
-      <div class="hint">
-        واتساب:
-        <a href="https://wa.me/201006760663" target="_blank" style="color:#fff;font-weight:900">201006760663</a>
-      </div>
-      <div class="hint">Email: <span style="color:#fff;font-weight:900">medorami77@gmail.com</span></div>
-    </div>
-
-    <div class="footer">
-      © <span id="year"></span> Medo Gaming
-    </div>
-
+  <div class="footer">
+    <a class="badge" href="https://wa.me/201006760663" target="_blank">WhatsApp</a>
+    <a class="badge" href="https://www.instagram.com/medo__rami" target="_blank">Instagram</a>
+    <a class="badge" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank">Facebook</a>
+    <a class="badge" href="mailto:medorami77@gmail.com">Email</a>
   </div>
+</div>
+
+<!-- MENU DRAWER -->
+<div id="menu" class="drawer">
+  <div class="overlay" onclick="closeAll()"></div>
+  <div class="panel rightP">
+    <div class="h">Top</div>
+    <div class="h">Offers</div>
+    <div class="h">الألعاب</div><div>4 عناصر</div>
+    <div class="h">البرامج</div><div>4 عناصر</div>
+    <div class="h">الأكونتات</div><div>4 عناصر</div>
+  </div>
+</div>
+
+<!-- FILTER DRAWER -->
+<div id="filter" class="drawer">
+  <div class="overlay" onclick="closeAll()"></div>
+  <div class="panel left">
+    <div class="h">الفلترة</div>
+    <select id="sort" class="select">
+      <option value="new">الأحدث</option>
+      <option value="old">الأقدم</option>
+      <option value="low">الأرخص → الأغلى</option>
+      <option value="high">الأغلى → الأرخص</option>
+    </select>
+    <div class="h">فلتر السعر</div>
+    <select id="priceMode" class="select">
+      <option value="off">إيقاف</option>
+      <option value="eq">بالظبط</option>
+      <option value="lte">أقل أو يساوي</option>
+      <option value="gte">أكبر أو يساوي</option>
+    </select>
+    <input id="priceVal" class="num" type="number" placeholder="مثلاً 300"/>
+    <button class="btn buy" onclick="render()">تطبيق</button>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div id="login" class="modal">
+  <div class="overlay" onclick="closeAll()"></div>
+  <div class="box">
+    <div class="h">تسجيل الدخول</div>
+    <div class="filters">
+      <button class="btn" onclick="fakeLogin('Google')">Google</button>
+      <button class="btn" onclick="fakeLogin('Facebook')">Facebook</button>
+      <button class="btn" onclick="fakeLogin('Epic')">Epic</button>
+      <button class="btn" onclick="fakeLogin('Steam')">Steam</button>
+      <button class="btn" onclick="fakeLogin('iCloud')">iCloud</button>
+      <button class="btn" onclick="fakeLogin('PlayStation')">PlayStation</button>
+      <button class="btn" onclick="fakeLogin('Microsoft')">Microsoft</button>
+    </div>
+  </div>
+</div>
+
+<!-- USER MENU -->
+<div id="user" class="modal">
+  <div class="overlay" onclick="closeAll()"></div>
+  <div class="box">
+    <div class="h">حسابي</div>
+    <button class="btn" onclick="logout()">Logout</button>
+  </div>
+</div>
+
+<!-- CART / CHECKOUT -->
+<div id="cart" class="modal">
+  <div class="overlay" onclick="closeAll()"></div>
+  <div class="box">
+    <div class="h">السلة</div>
+    <div id="cartItems"></div>
+    <div class="h">كود خصم</div>
+    <input id="coupon" class="num" placeholder="MG1 / MZ3 ..."/>
+    <button class="btn" onclick="applyCoupon()">تطبيق</button>
+    <div id="total" class="h"></div>
+    <div class="h">طرق الدفع</div>
+    <div class="filters">
+      <a class="btn" href="https://vodafone.com.eg" target="_blank">Vodafone Cash</a>
+      <a class="btn" href="https://orange.eg" target="_blank">Orange</a>
+      <a class="btn" href="https://etisalat.eg" target="_blank">Etisalat</a>
+      <a class="btn" href="https://we.eg" target="_blank">WE</a>
+      <a class="btn" href="https://instapay.eg" target="_blank">Instapay</a>
+      <a class="btn" href="#" target="_blank">Visa</a>
+      <a class="btn" href="#" target="_blank">Bill Pay</a>
+      <a class="btn" href="#" target="_blank">Telda</a>
+    </div>
+  </div>
+</div>
 
 <script>
-  const WHATSAPP = "https://wa.me/201006760663";
+/* DATA */
+const products=[
+  {id:1,type:'games',name:'Game 1',price:250},
+  {id:2,type:'games',name:'Game 2',price:180},
+  {id:3,type:'games',name:'Game 3',price:300},
+  {id:4,type:'games',name:'Game 4',price:120},
+  {id:11,type:'programs',name:'Program 1',price:150},
+  {id:12,type:'programs',name:'Program 2',price:90},
+  {id:13,type:'programs',name:'Program 3',price:220},
+  {id:14,type:'programs',name:'Program 4',price:60},
+  {id:21,type:'accounts',name:'Account 1',price:700},
+  {id:22,type:'accounts',name:'Account 2',price:350},
+  {id:23,type:'accounts',name:'Account 3',price:200},
+  {id:24,type:'accounts',name:'Account 4',price:450},
+];
 
-  // ⚠️ الأسعار لازم تكون رقم في "priceNumber" عشان الفلترة والترتيب يشتغلوا
-  // تقدر تغيّر المنتجات دي براحتك
-  const products = [
-    // Games
-    { id: 1, type:"games", name:"Game #1", desc:"وصف بسيط", priceNumber: 250, imgLabel:"GAME" },
-    { id: 2, type:"games", name:"Game #2", desc:"وصف بسيط", priceNumber: 180, imgLabel:"GAME" },
-    { id: 3, type:"games", name:"Game #3", desc:"وصف بسيط", priceNumber: 300, imgLabel:"GAME" },
-    { id: 4, type:"games", name:"Game #4", desc:"وصف بسيط", priceNumber: 120, imgLabel:"GAME" },
+const coupons = {
+  MG:10, MZ:20, MK:30, MC:40, MA:50, MB:60, ME:70, MX:80, MR:90, MI:100
+};
 
-    // Programs
-    { id: 11, type:"programs", name:"Program #1", desc:"وصف بسيط", priceNumber: 150, imgLabel:"APP" },
-    { id: 12, type:"programs", name:"Program #2", desc:"وصف بسيط", priceNumber: 90,  imgLabel:"APP" },
-    { id: 13, type:"programs", name:"Program #3", desc:"وصف بسيط", priceNumber: 220, imgLabel:"APP" },
-    { id: 14, type:"programs", name:"Program #4", desc:"وصف بسيط", priceNumber: 60,  imgLabel:"APP" },
+let cart=[], discount=0;
 
-    // Accounts (بدون Epic/Steam/PlayStation حسب طلبك)
-    { id: 101, type:"accounts", name:"PUBG Account #1", desc:"تفاصيل الأكونت", priceNumber: 700, imgLabel:"ACC" },
-    { id: 102, type:"accounts", name:"Free Fire Account #1", desc:"تفاصيل الأكونت", priceNumber: 350, imgLabel:"ACC" },
-    { id: 103, type:"accounts", name:"Roblox Account #1", desc:"تفاصيل الأكونت", priceNumber: 200, imgLabel:"ACC" },
-    { id: 104, type:"accounts", name:"eFootball Account #1", desc:"تفاصيل الأكونت", priceNumber: 450, imgLabel:"ACC" },
-    { id: 105, type:"accounts", name:"EA Sports FC Account #1", desc:"تفاصيل الأكونت", priceNumber: 900, imgLabel:"ACC" },
-  ];
-
-  const grids = {
-    games: document.getElementById("grid-games"),
-    programs: document.getElementById("grid-programs"),
-    accounts: document.getElementById("grid-accounts"),
-  };
-
-  const searchEl = document.getElementById("search");
-  const sortEl = document.getElementById("sort");
-  const pills = document.querySelectorAll("[data-type]");
-  const priceModeEl = document.getElementById("priceMode");
-  const priceValueEl = document.getElementById("priceValue");
-  const countEl = document.getElementById("count");
-
-  let currentType = "all";
-
-  function waLink(p){
-    const msg = encodeURIComponent(`Hello, I want: ${p.name} | Price: EGP ${p.priceNumber}`);
-    return `${WHATSAPP}?text=${msg}`;
-  }
-
-  function cardHTML(p){
-    const priceText = `EGP ${p.priceNumber}`;
-    return `
-      <div class="card" data-type="${p.type}">
-        <div class="thumb"><span>${p.imgLabel}</span></div>
-        <div class="content">
-          <p class="name">${p.name}</p>
-          <p class="meta">${p.desc}</p>
-          <p class="price">${priceText}</p>
-          <div class="actions">
-            <a class="btn buy" target="_blank" href="${waLink(p)}">شراء</a>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  function applyFilters(list){
-    const q = (searchEl.value || "").toLowerCase().trim();
-    const mode = priceModeEl.value;
-    const priceVal = Number(priceValueEl.value);
-
-    let out = list.filter(p => {
-      // type
-      if(currentType !== "all" && p.type !== currentType) return false;
-
-      // search
-      if(q){
-        const hay = (p.name + " " + (p.desc||"")).toLowerCase();
-        if(!hay.includes(q)) return false;
-      }
-
-      // price filter
-      if(mode !== "off" && !Number.isNaN(priceVal)){
-        if(mode === "eq" && p.priceNumber !== priceVal) return false;
-        if(mode === "lte" && p.priceNumber > priceVal) return false;
-        if(mode === "gte" && p.priceNumber < priceVal) return false;
-      }
-      return true;
-    });
-
-    // sort
-    const s = sortEl.value;
-    if(s === "low") out.sort((a,b)=>a.priceNumber-b.priceNumber);
-    else if(s === "high") out.sort((a,b)=>b.priceNumber-a.priceNumber);
-    else out.sort((a,b)=>b.id-a.id); // new
-
-    return out;
-  }
-
-  function render(){
-    grids.games.innerHTML = "";
-    grids.programs.innerHTML = "";
-    grids.accounts.innerHTML = "";
-
-    const filtered = applyFilters(products);
-
-    filtered.forEach(p => {
-      grids[p.type].insertAdjacentHTML("beforeend", cardHTML(p));
-    });
-
-    countEl.textContent = `النتائج: ${filtered.length}`;
-  }
-
-  pills.forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      pills.forEach(b=>b.classList.remove("active"));
-      btn.classList.add("active");
-      currentType = btn.dataset.type;
-      render();
-    });
+/* RENDER */
+function card(p){
+  return `<div class="card">
+    <div class="thumb">${p.type.toUpperCase()}</div>
+    <div class="content">
+      <p class="name">${p.name}</p>
+      <p class="price">EGP ${p.price}</p>
+      <div class="actions"><button class="btn buy" onclick="add(${p.id})">شراء</button></div>
+    </div>
+  </div>`;
+}
+function render(){
+  ['games','programs','accounts'].forEach(t=>{
+    document.getElementById(t).innerHTML='';
   });
+  let list=[...products];
+  const q=document.getElementById('search').value?.toLowerCase()||'';
+  if(q) list=list.filter(p=>p.name.toLowerCase().includes(q));
+  const pm=document.getElementById('priceMode').value;
+  const pv=Number(document.getElementById('priceVal').value);
+  if(pm!=='off' && !Number.isNaN(pv)){
+    if(pm==='eq') list=list.filter(p=>p.price===pv);
+    if(pm==='lte') list=list.filter(p=>p.price<=pv);
+    if(pm==='gte') list=list.filter(p=>p.price>=pv);
+  }
+  const s=document.getElementById('sort').value;
+  if(s==='low') list.sort((a,b)=>a.price-b.price);
+  if(s==='high') list.sort((a,b)=>b.price-a.price);
+  if(s==='old') list.sort((a,b)=>a.id-b.id);
+  if(s==='new') list.sort((a,b)=>b.id-a.id);
 
-  searchEl.addEventListener("input", render);
-  sortEl.addEventListener("change", render);
-  priceModeEl.addEventListener("change", render);
-  priceValueEl.addEventListener("input", render);
+  list.forEach(p=>document.getElementById(p.type).insertAdjacentHTML('beforeend',card(p)));
+}
+render();
 
-  document.getElementById("year").textContent = new Date().getFullYear();
-  render();
+/* CART */
+function add(id){
+  if(!isLogged()) return openLogin();
+  cart.push(products.find(p=>p.id===id));
+  document.getElementById('cartCount').textContent=cart.length;
+  openCart();
+}
+function openCart(){document.getElementById('cart').style.display='block'; drawCart();}
+function drawCart(){
+  const box=document.getElementById('cartItems'); box.innerHTML='';
+  let sum=0; cart.forEach(p=>{sum+=p.price; box.innerHTML+=`<div>${p.name} — ${p.price}</div>`});
+  const total=Math.max(0, Math.round(sum*(1-discount/100)));
+  document.getElementById('total').textContent=`الإجمالي: EGP ${total} (خصم ${discount}%)`;
+}
+function applyCoupon(){
+  const c=document.getElementById('coupon').value.trim().toUpperCase();
+  const k=c.slice(0,2); discount=coupons[k]||0; drawCart();
+}
+
+/* AUTH (FAKE) */
+function openLogin(){document.getElementById('login').style.display='block'}
+function fakeLogin(p){
+  localStorage.setItem('user', JSON.stringify({name:'User',provider:p}));
+  document.getElementById('loginBtn').style.display='none';
+  document.getElementById('userBtn').style.display='inline-block';
+  document.getElementById('userName').textContent=p;
+  closeAll();
+}
+function isLogged(){return !!localStorage.getItem('user')}
+function openUser(){document.getElementById('user').style.display='block'}
+function logout(){localStorage.removeItem('user'); location.reload()}
+
+/* DRAWERS */
+function openMenu(){document.getElementById('menu').style.display='block'}
+function openFilter(){document.getElementById('filter').style.display='block'}
+function closeAll(){
+  document.querySelectorAll('.drawer,.modal').forEach(x=>x.style.display='none');
+}
 </script>
-
 </body>
 </html>
