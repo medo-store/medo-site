@@ -14,6 +14,7 @@
       --text:#ffffff;
       --muted:#b9b9c6;
       --accent:#ff2d2d;
+      --accent2:#00ffd5;
       --border:rgba(255,255,255,.10);
     }
     *{box-sizing:border-box}
@@ -22,55 +23,96 @@
       font-family:"Segoe UI", Tahoma, Arial, sans-serif;
       background:
         radial-gradient(900px 500px at 20% 10%, rgba(255,45,45,.14), transparent 60%),
-        radial-gradient(800px 450px at 80% 0%, rgba(255,45,45,.08), transparent 55%),
+        radial-gradient(800px 450px at 80% 0%, rgba(0,255,213,.09), transparent 55%),
         var(--bg);
       color:var(--text);
       direction:rtl;
     }
     a{color:inherit;text-decoration:none}
-    .container{max-width:1200px;margin:0 auto;padding:12px}
+    .container{max-width:1200px;margin:0 auto;padding:10px 12px}
 
     /* NAV */
     .nav{
       position:sticky;top:0;z-index:10;
-      background:rgba(11,11,15,.8);
+      background:rgba(11,11,15,.82);
       backdrop-filter:blur(10px);
       border-bottom:1px solid var(--border);
     }
     .nav-inner{
       display:flex;align-items:center;justify-content:space-between;
-      gap:12px;flex-wrap:wrap
+      gap:10px;flex-wrap:wrap
     }
     .brand{
       display:flex;align-items:center;gap:8px;
-      font-weight:900;font-size:15px
+      font-weight:900;font-size:15px;white-space:nowrap
     }
-    .dot{
-      width:8px;height:8px;border-radius:50%;
-      background:var(--accent)
-    }
-    .links{
-      display:flex;gap:14px;
-      color:var(--muted);font-weight:700;font-size:13px
-    }
-    .links a:hover{color:#fff}
-
-    /* SEARCH BAR */
-    .topbar{
-      margin-top:12px;
-      background:rgba(18,18,26,.7);
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding:10px;
+    .dot{width:8px;height:8px;border-radius:999px;background:var(--accent)}
+    .nav-left{
+      display:flex;align-items:center;gap:10px;flex:1;min-width:280px;flex-wrap:wrap
     }
     .search{
-      width:100%;
-      padding:10px 12px;
-      border-radius:10px;
+      width:360px;max-width:100%;
+      padding:10px 12px;border-radius:10px;
       border:1px solid var(--border);
       background:rgba(0,0,0,.25);
       color:#fff;outline:none
     }
+
+    /* MENU with subtitle */
+    .menu{display:flex;gap:14px;flex-wrap:wrap}
+    .menu a{
+      display:flex;flex-direction:column;align-items:flex-start;
+      gap:2px;
+      padding:6px 8px;
+      border-radius:10px;
+      color:var(--muted);
+      font-weight:900;
+      font-size:13px;
+      border:1px solid transparent;
+    }
+    .menu a:hover{color:#fff;border-color:var(--border);background:rgba(255,255,255,.03)}
+    .menu .sub{
+      font-size:11px;
+      font-weight:800;
+      color:rgba(185,185,198,.75);
+      line-height:1;
+    }
+
+    /* FILTER BAR */
+    .filters{
+      margin-top:10px;
+      border:1px solid var(--border);
+      background:rgba(18,18,26,.72);
+      border-radius:12px;
+      padding:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .pill{
+      padding:8px 10px;border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+      color:var(--muted);
+      cursor:pointer;
+      font-weight:900;font-size:12px;
+      white-space:nowrap;
+    }
+    .pill.active{background:var(--accent2);color:#000;border-color:transparent}
+
+    .select, .num, .smallselect{
+      padding:9px 10px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.22);
+      color:#fff;
+      outline:none;
+      font-weight:900;
+      font-size:12px;
+    }
+    .num{width:140px}
+    .hint{color:var(--muted);font-size:12px;font-weight:800}
 
     /* SECTIONS */
     .section-title{
@@ -83,7 +125,7 @@
       display:grid;
       grid-template-columns:repeat(4,1fr);
       gap:10px;
-      padding-bottom:18px;
+      padding:8px 0 16px;
     }
 
     .card{
@@ -92,27 +134,35 @@
       border-radius:12px;
       overflow:hidden;
       display:flex;flex-direction:column;
-      min-height:180px;
+      min-height:190px;
     }
     .thumb{
-      height:80px;
-      background:linear-gradient(135deg, rgba(255,45,45,.25), rgba(255,45,45,.10));
+      height:90px;
+      background:linear-gradient(135deg, rgba(255,45,45,.25), rgba(0,255,213,.10));
       display:flex;align-items:center;justify-content:center;
-      font-weight:900;font-size:12px
+      font-weight:900;font-size:12px;letter-spacing:.4px;
+      position:relative;
     }
-    .content{
-      padding:8px;
-      display:flex;flex-direction:column;gap:6px;flex:1
+    .thumb span{
+      padding:5px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18);
     }
+    .content{padding:8px;display:flex;flex-direction:column;gap:6px;flex:1}
     .name{font-size:13px;font-weight:900;margin:0}
-    .meta{font-size:12px;color:var(--muted);margin:0}
+    .meta{font-size:12px;color:var(--muted);margin:0;line-height:1.4}
     .price{font-size:12px;font-weight:900;margin:0}
+    .actions{display:flex;gap:6px;margin-top:auto}
     .btn{
-      margin-top:auto;
+      flex:1;
       padding:8px;border-radius:10px;
-      background:var(--accent);
-      text-align:center;font-weight:900;font-size:12px
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+      font-weight:900;font-size:12px;text-align:center;
     }
+    .btn.buy{background:var(--accent);border-color:transparent}
+    .btn:hover{filter:brightness(1.06)}
 
     .footer{
       border-top:1px solid var(--border);
@@ -124,9 +174,12 @@
     /* RESPONSIVE */
     @media (max-width:1000px){
       .grid{grid-template-columns:repeat(3,1fr)}
+      .search{width:320px}
     }
     @media (max-width:700px){
       .grid{grid-template-columns:repeat(2,1fr)}
+      .search{width:100%}
+      .menu a{align-items:flex-start}
     }
     @media (max-width:450px){
       .grid{grid-template-columns:1fr}
@@ -139,45 +192,90 @@
   <!-- NAV -->
   <div class="nav">
     <div class="container nav-inner">
-      <div class="brand">
-        <span class="dot"></span>
-        <span>Medo Gaming Store</span>
+
+      <div class="nav-left">
+        <div class="brand">
+          <span class="dot"></span>
+          <span>Medo Gaming Store</span>
+        </div>
+
+        <input id="search" class="search" placeholder="🔍 ابحث عن لعبة / برنامج / أكونت" />
       </div>
-      <div class="links">
-        <a href="#games">الألعاب</a>
-        <a href="#programs">البرامج</a>
-        <a href="#accounts">الأكونتات</a>
-        <a href="#contact">التواصل</a>
+
+      <div class="menu">
+        <a href="#all" data-nav="all">
+          <span>الكل</span>
+          <span class="sub">All</span>
+        </a>
+        <a href="#games" data-nav="games">
+          <span>الألعاب</span>
+          <span class="sub">Games</span>
+        </a>
+        <a href="#programs" data-nav="programs">
+          <span>البرامج</span>
+          <span class="sub">Programs</span>
+        </a>
+        <a href="#accounts" data-nav="accounts">
+          <span>الأكونتات</span>
+          <span class="sub">Accounts</span>
+        </a>
+        <a href="#contact">
+          <span>التواصل</span>
+          <span class="sub">Contact</span>
+        </a>
       </div>
+
     </div>
   </div>
 
   <div class="container">
 
-    <!-- SEARCH -->
-    <div class="topbar">
-      <input id="search" class="search" placeholder="🔍 ابحث عن لعبة أو برنامج أو أكونت" />
+    <!-- FILTERS -->
+    <div class="filters" id="all">
+      <button class="pill active" data-type="all">الكل</button>
+      <button class="pill" data-type="games">ألعاب</button>
+      <button class="pill" data-type="programs">برامج</button>
+      <button class="pill" data-type="accounts">أكونتات</button>
+
+      <span class="hint">|</span>
+
+      <label class="hint">الترتيب:</label>
+      <select id="sort" class="select">
+        <option value="new">الأحدث</option>
+        <option value="low">الأرخص → الأغلى</option>
+        <option value="high">الأغلى → الأرخص</option>
+      </select>
+
+      <label class="hint">فلتر السعر:</label>
+      <select id="priceMode" class="smallselect">
+        <option value="off">إيقاف</option>
+        <option value="eq">بالظبط</option>
+        <option value="lte">أقل أو يساوي</option>
+        <option value="gte">أكبر أو يساوي</option>
+      </select>
+      <input id="priceValue" class="num" type="number" placeholder="مثلاً 300" min="0"/>
+
+      <span class="hint" id="count"></span>
     </div>
 
-    <!-- GAMES -->
+    <!-- SECTIONS -->
     <h2 id="games" class="section-title">🎮 الألعاب</h2>
     <div id="grid-games" class="grid"></div>
 
-    <!-- PROGRAMS -->
     <h2 id="programs" class="section-title">💻 البرامج</h2>
     <div id="grid-programs" class="grid"></div>
 
-    <!-- ACCOUNTS -->
     <h2 id="accounts" class="section-title">🧾 الأكونتات</h2>
     <div id="grid-accounts" class="grid"></div>
 
     <!-- CONTACT -->
     <h2 id="contact" class="section-title">📱 التواصل</h2>
-    <div class="topbar">
-      واتساب:
-      <a href="https://wa.me/201006760663" target="_blank">201006760663</a>
-      <br>
-      Email: medorami77@gmail.com
+    <div class="filters" style="justify-content:space-between">
+      <div class="hint">
+        واتساب:
+        <a href="https://wa.me/201006760663" target="_blank" style="color:#fff;font-weight:900">201006760663</a>
+      </div>
+      <div class="hint">Email: <span style="color:#fff;font-weight:900">medorami77@gmail.com</span></div>
     </div>
 
     <div class="footer">
@@ -187,59 +285,129 @@
   </div>
 
 <script>
+  const WHATSAPP = "https://wa.me/201006760663";
+
+  // ⚠️ الأسعار لازم تكون رقم في "priceNumber" عشان الفلترة والترتيب يشتغلوا
+  // تقدر تغيّر المنتجات دي براحتك
   const products = [
-    {type:"games", name:"Game #1", desc:"وصف بسيط", price:"EGP 0"},
-    {type:"games", name:"Game #2", desc:"وصف بسيط", price:"EGP 0"},
-    {type:"games", name:"Game #3", desc:"وصف بسيط", price:"EGP 0"},
-    {type:"games", name:"Game #4", desc:"وصف بسيط", price:"EGP 0"},
+    // Games
+    { id: 1, type:"games", name:"Game #1", desc:"وصف بسيط", priceNumber: 250, imgLabel:"GAME" },
+    { id: 2, type:"games", name:"Game #2", desc:"وصف بسيط", priceNumber: 180, imgLabel:"GAME" },
+    { id: 3, type:"games", name:"Game #3", desc:"وصف بسيط", priceNumber: 300, imgLabel:"GAME" },
+    { id: 4, type:"games", name:"Game #4", desc:"وصف بسيط", priceNumber: 120, imgLabel:"GAME" },
 
-    {type:"programs", name:"Program #1", desc:"وصف بسيط", price:"EGP 0"},
-    {type:"programs", name:"Program #2", desc:"وصف بسيط", price:"EGP 0"},
-    {type:"programs", name:"Program #3", desc:"وصف بسيط", price:"EGP 0"},
-    {type:"programs", name:"Program #4", desc:"وصف بسيط", price:"EGP 0"},
+    // Programs
+    { id: 11, type:"programs", name:"Program #1", desc:"وصف بسيط", priceNumber: 150, imgLabel:"APP" },
+    { id: 12, type:"programs", name:"Program #2", desc:"وصف بسيط", priceNumber: 90,  imgLabel:"APP" },
+    { id: 13, type:"programs", name:"Program #3", desc:"وصف بسيط", priceNumber: 220, imgLabel:"APP" },
+    { id: 14, type:"programs", name:"Program #4", desc:"وصف بسيط", priceNumber: 60,  imgLabel:"APP" },
 
-    {type:"accounts", name:"Account #1", desc:"تفاصيل الأكونت", price:"EGP 0"},
-    {type:"accounts", name:"Account #2", desc:"تفاصيل الأكونت", price:"EGP 0"},
-    {type:"accounts", name:"Account #3", desc:"تفاصيل الأكونت", price:"EGP 0"},
-    {type:"accounts", name:"Account #4", desc:"تفاصيل الأكونت", price:"EGP 0"},
+    // Accounts (بدون Epic/Steam/PlayStation حسب طلبك)
+    { id: 101, type:"accounts", name:"PUBG Account #1", desc:"تفاصيل الأكونت", priceNumber: 700, imgLabel:"ACC" },
+    { id: 102, type:"accounts", name:"Free Fire Account #1", desc:"تفاصيل الأكونت", priceNumber: 350, imgLabel:"ACC" },
+    { id: 103, type:"accounts", name:"Roblox Account #1", desc:"تفاصيل الأكونت", priceNumber: 200, imgLabel:"ACC" },
+    { id: 104, type:"accounts", name:"eFootball Account #1", desc:"تفاصيل الأكونت", priceNumber: 450, imgLabel:"ACC" },
+    { id: 105, type:"accounts", name:"EA Sports FC Account #1", desc:"تفاصيل الأكونت", priceNumber: 900, imgLabel:"ACC" },
   ];
 
   const grids = {
     games: document.getElementById("grid-games"),
     programs: document.getElementById("grid-programs"),
-    accounts: document.getElementById("grid-accounts")
+    accounts: document.getElementById("grid-accounts"),
   };
 
-  const search = document.getElementById("search");
+  const searchEl = document.getElementById("search");
+  const sortEl = document.getElementById("sort");
+  const pills = document.querySelectorAll("[data-type]");
+  const priceModeEl = document.getElementById("priceMode");
+  const priceValueEl = document.getElementById("priceValue");
+  const countEl = document.getElementById("count");
 
-  function card(p){
+  let currentType = "all";
+
+  function waLink(p){
+    const msg = encodeURIComponent(`Hello, I want: ${p.name} | Price: EGP ${p.priceNumber}`);
+    return `${WHATSAPP}?text=${msg}`;
+  }
+
+  function cardHTML(p){
+    const priceText = `EGP ${p.priceNumber}`;
     return `
-      <div class="card">
-        <div class="thumb">${p.type.toUpperCase()}</div>
+      <div class="card" data-type="${p.type}">
+        <div class="thumb"><span>${p.imgLabel}</span></div>
         <div class="content">
           <p class="name">${p.name}</p>
           <p class="meta">${p.desc}</p>
-          <p class="price">${p.price}</p>
-          <div class="btn">شراء</div>
+          <p class="price">${priceText}</p>
+          <div class="actions">
+            <a class="btn buy" target="_blank" href="${waLink(p)}">شراء</a>
+          </div>
         </div>
       </div>
     `;
   }
 
-  function render(){
-    grids.games.innerHTML="";
-    grids.programs.innerHTML="";
-    grids.accounts.innerHTML="";
+  function applyFilters(list){
+    const q = (searchEl.value || "").toLowerCase().trim();
+    const mode = priceModeEl.value;
+    const priceVal = Number(priceValueEl.value);
 
-    const q = search.value.toLowerCase();
+    let out = list.filter(p => {
+      // type
+      if(currentType !== "all" && p.type !== currentType) return false;
 
-    products.forEach(p=>{
-      if(q && !(p.name+p.desc).toLowerCase().includes(q)) return;
-      grids[p.type].insertAdjacentHTML("beforeend", card(p));
+      // search
+      if(q){
+        const hay = (p.name + " " + (p.desc||"")).toLowerCase();
+        if(!hay.includes(q)) return false;
+      }
+
+      // price filter
+      if(mode !== "off" && !Number.isNaN(priceVal)){
+        if(mode === "eq" && p.priceNumber !== priceVal) return false;
+        if(mode === "lte" && p.priceNumber > priceVal) return false;
+        if(mode === "gte" && p.priceNumber < priceVal) return false;
+      }
+      return true;
     });
+
+    // sort
+    const s = sortEl.value;
+    if(s === "low") out.sort((a,b)=>a.priceNumber-b.priceNumber);
+    else if(s === "high") out.sort((a,b)=>b.priceNumber-a.priceNumber);
+    else out.sort((a,b)=>b.id-a.id); // new
+
+    return out;
   }
 
-  search.oninput = render;
+  function render(){
+    grids.games.innerHTML = "";
+    grids.programs.innerHTML = "";
+    grids.accounts.innerHTML = "";
+
+    const filtered = applyFilters(products);
+
+    filtered.forEach(p => {
+      grids[p.type].insertAdjacentHTML("beforeend", cardHTML(p));
+    });
+
+    countEl.textContent = `النتائج: ${filtered.length}`;
+  }
+
+  pills.forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      pills.forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      currentType = btn.dataset.type;
+      render();
+    });
+  });
+
+  searchEl.addEventListener("input", render);
+  sortEl.addEventListener("change", render);
+  priceModeEl.addEventListener("change", render);
+  priceValueEl.addEventListener("input", render);
+
   document.getElementById("year").textContent = new Date().getFullYear();
   render();
 </script>
