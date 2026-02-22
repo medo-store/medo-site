@@ -1,287 +1,1724 @@
 
-<!DOCTYPE html>
-<html lang="ar">
+<!doctype html>
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Medo Gaming Store</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Medo Gaming Store</title>
 
-<style>
-:root{
-  --bg:#0b0b0f; --panel:#12121a; --card:#151523;
-  --text:#fff; --muted:#b9b9c6; --accent:#ff2d2d; --accent2:#00ffd5;
-  --border:rgba(255,255,255,.10);
-}
-*{box-sizing:border-box}
-body{
-  margin:0; font-family:"Segoe UI",Tahoma,Arial,sans-serif; direction:rtl; color:var(--text);
-  background:
-    radial-gradient(900px 500px at 20% 10%, rgba(255,45,45,.14), transparent 60%),
-    radial-gradient(800px 450px at 80% 0%, rgba(0,255,213,.09), transparent 55%),
-    var(--bg);
-}
-a{color:inherit;text-decoration:none}
-.container{max-width:1200px;margin:auto;padding:10px 12px}
+  <style>
+    :root{
+      /* Theme: Dark Navy (Professional) */
+      --bg0:#070A12;
+      --bg1:#0B1230;
+      --panel:#0E183B;
+      --card:#0C1736;
+      --text:#F6F7FF;
+      --muted:#B9C1D9;
+      --border:rgba(255,255,255,.10);
+      --accent:#E11D48;     /* red */
+      --accent2:#38BDF8;    /* cyan */
+      --good:#22C55E;
+      --warn:#F59E0B;
 
-/* HEADER */
-.nav{position:sticky;top:0;z-index:20;background:rgba(11,11,15,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
-.nav-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:8px;font-weight:900;white-space:nowrap}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
-.search{flex:1;min-width:220px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.25);color:#fff}
-.icon-btn{padding:8px 10px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.05);cursor:pointer}
-.right{margin-right:auto;display:flex;gap:6px}
+      --radius:14px;
+      --radius2:12px;
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+    }
 
-/* GRID */
-.section-title{margin:14px 0 6px;font-size:14px;font-weight:900}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-@media(max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:450px){.grid{grid-template-columns:1fr}}
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 15% 8%, rgba(56,189,248,.16), transparent 60%),
+        radial-gradient(900px 600px at 85% 0%, rgba(225,29,72,.14), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:10px 12px}
 
-.card{background:rgba(21,21,35,.75);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
-.thumb{height:90px;display:flex;align-items:center;justify-content:center;font-weight:900;background:linear-gradient(135deg, rgba(255,45,45,.25), rgba(0,255,213,.10))}
-.content{padding:8px;display:flex;flex-direction:column;gap:6px}
-.name{font-size:13px;font-weight:900;margin:0}
-.meta{font-size:12px;color:var(--muted);margin:0}
-.price{font-size:12px;font-weight:900}
-.actions{display:flex;gap:6px}
-.btn{flex:1;padding:8px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.06);font-weight:900;font-size:12px;cursor:pointer}
-.btn.buy{background:var(--accent);border-color:transparent}
+    /* Header */
+    .nav{
+      position:sticky;top:0;z-index:50;
+      background:rgba(7,10,18,.72);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      font-weight:900;
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 0 0 4px rgba(56,189,248,.10);
+    }
+    .searchWrap{flex:1;min-width:220px;display:flex;align-items:center;gap:8px}
+    .search{
+      flex:1;
+      padding:11px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      outline:none;
+    }
+    .iconBtn{
+      display:inline-flex;align-items:center;justify-content:center;
+      gap:8px;
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      cursor:pointer;
+      user-select:none;
+    }
+    .iconBtn:hover{filter:brightness(1.08)}
+    .rightBox{margin-inline-start:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .pillCount{
+      min-width:22px;
+      height:22px;
+      border-radius:999px;
+      display:inline-flex;align-items:center;justify-content:center;
+      background:rgba(56,189,248,.16);
+      border:1px solid rgba(56,189,248,.35);
+      font-weight:900;
+      font-size:12px;
+      padding:0 6px;
+    }
+    .userChip{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:9px 10px;
+      border-radius:999px;
+      border:1px solid rgba(56,189,248,.35);
+      background:rgba(56,189,248,.10);
+      cursor:pointer;
+      white-space:nowrap;
+      font-weight:900;
+      font-size:13px;
+    }
+    .userBadge{
+      width:22px;height:22px;border-radius:7px;
+      display:inline-flex;align-items:center;justify-content:center;
+      background:rgba(255,255,255,.08);
+      border:1px solid var(--border);
+      font-weight:900;
+      font-size:12px;
+    }
 
-/* DRAWERS / MODALS */
-.drawer, .modal{position:fixed;inset:0;display:none;z-index:30}
-.overlay{position:absolute;inset:0;background:rgba(0,0,0,.55)}
-.panel{position:absolute;top:0;bottom:0;width:320px;background:var(--panel);border-left:1px solid var(--border);padding:12px}
-.left{left:0} .rightP{right:0}
-.modal .box{position:absolute;inset:0;margin:auto;width:min(420px,92%);height:auto;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px}
-.h{font-weight:900;margin:6px 0}
+    /* Top categories in main view */
+    .sectionTitle{
+      margin:18px 0 8px;
+      font-size:15px;
+      font-weight:900;
+      display:flex;align-items:center;gap:10px;
+    }
+    .sectionHint{
+      color:var(--muted);
+      font-weight:800;
+      font-size:12px;
+    }
+    .spacer{height:14px}
 
-/* FILTERS */
-.filters{display:flex;gap:8px;flex-wrap:wrap}
-.select,.num{padding:9px 10px;border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.22);color:#fff}
+    /* Grid */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+    }
+    @media (max-width:1050px){ .grid{grid-template-columns:repeat(3,1fr);} }
+    @media (max-width:760px){ .grid{grid-template-columns:repeat(2,1fr);} }
+    @media (max-width:460px){ .grid{grid-template-columns:1fr;} }
 
-/* FOOTER */
-.footer{border-top:1px solid var(--border);margin-top:16px;padding:12px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap}
-.badge{padding:6px 10px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.06);font-weight:900;font-size:12px}
-</style>
+    .card{
+      background:rgba(12,23,54,.72);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      display:flex;flex-direction:column;
+      min-height:210px;
+    }
+    .thumb{
+      height:92px;
+      background:
+        radial-gradient(180px 120px at 25% 30%, rgba(56,189,248,.22), transparent 65%),
+        radial-gradient(180px 120px at 75% 0%, rgba(225,29,72,.18), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;
+      letter-spacing:.6px;
+      font-size:12px;
+      color:rgba(246,247,255,.92);
+      position:relative;
+    }
+    .tag{
+      position:absolute;
+      top:10px;
+      inset-inline-start:10px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:900;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.25);
+      color:var(--muted);
+    }
+    .content{
+      padding:10px 10px 12px;
+      display:flex;flex-direction:column;gap:8px;flex:1;
+    }
+    .name{margin:0;font-size:13px;font-weight:900}
+    .meta{margin:0;font-size:12px;color:var(--muted);line-height:1.4}
+    .priceRow{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .price{margin:0;font-size:12px;font-weight:900}
+    .badge{
+      padding:5px 9px;
+      border-radius:999px;
+      border:1px solid rgba(56,189,248,.35);
+      background:rgba(56,189,248,.10);
+      font-size:11px;
+      font-weight:900;
+      color:rgba(246,247,255,.95);
+      white-space:nowrap;
+    }
+    .actions{display:flex;gap:8px;margin-top:auto}
+    .btn{
+      flex:1;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      padding:10px 10px;
+      font-weight:900;
+      font-size:12px;
+      cursor:pointer;
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    }
+    .btn:hover{filter:brightness(1.08)}
+    .btnRed{
+      background:linear-gradient(135deg, rgba(225,29,72,1), rgba(225,29,72,.82));
+      border-color: transparent;
+    }
+
+    /* Drawer / modal system */
+    .overlay{
+      position:fixed;inset:0;
+      background:rgba(0,0,0,.58);
+      display:none;
+      z-index:80;
+    }
+    .overlay.show{display:block}
+
+    .drawer{
+      position:fixed;top:0;bottom:0;
+      width:min(360px, 92vw);
+      background:rgba(14,24,59,.92);
+      backdrop-filter: blur(10px);
+      border:1px solid var(--border);
+      box-shadow: var(--shadow);
+      z-index:90;
+      transform: translateX(110%);
+      transition: transform .22s ease;
+      display:flex;
+      flex-direction:column;
+    }
+    .drawer.show{transform: translateX(0)}
+    .drawerHeader{
+      padding:12px;
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+    }
+    .drawerTitle{font-weight:900}
+    .drawerBody{padding:12px; overflow:auto}
+    .drawerSection{margin:10px 0 16px}
+    .drawerLabel{font-weight:900;margin:0 0 8px}
+    .drawerList{display:flex;flex-direction:column;gap:8px}
+    .linkRow{
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      cursor:pointer;
+    }
+    .linkRow:hover{filter:brightness(1.08)}
+    .mini{font-size:12px;color:var(--muted);font-weight:800}
+
+    /* Modal */
+    .modal{
+      position:fixed;inset:0;
+      display:none;
+      z-index:95;
+      align-items:center;
+      justify-content:center;
+      padding:14px;
+    }
+    .modal.show{display:flex}
+    .modalBox{
+      width:min(520px, 96vw);
+      background:rgba(14,24,59,.94);
+      border:1px solid var(--border);
+      border-radius:16px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modalHeader{
+      padding:12px 12px;
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+    }
+    .modalTitle{font-weight:900}
+    .modalBody{padding:12px}
+    .stack{display:flex;flex-direction:column;gap:10px}
+
+    .input{
+      width:100%;
+      padding:11px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      outline:none;
+    }
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .row > *{flex:1}
+    .row .tight{flex:0 0 auto}
+
+    .note{
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-weight:800;
+      font-size:12px;
+      line-height:1.5;
+    }
+    .err{
+      color:#fff;
+      background:rgba(225,29,72,.18);
+      border-color:rgba(225,29,72,.45);
+    }
+    .ok{
+      background:rgba(34,197,94,.14);
+      border-color:rgba(34,197,94,.35);
+      color:#fff;
+    }
+
+    /* Filter controls */
+    .select{
+      width:100%;
+      padding:11px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      outline:none;
+      font-weight:900;
+    }
+    .priceModeRow{display:flex;gap:10px}
+    .priceModeRow > *{flex:1}
+
+    /* Cart items */
+    .cartItem{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:10px;
+      display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
+    }
+    .cartName{font-weight:900;font-size:13px;margin:0 0 4px}
+    .cartMeta{margin:0;color:var(--muted);font-size:12px;font-weight:800}
+    .qtyRow{display:flex;gap:8px;align-items:center;margin-top:8px}
+    .qtyBtn{
+      width:34px;height:34px;border-radius:10px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      font-weight:900;
+      cursor:pointer;
+    }
+    .qtyNum{
+      min-width:34px;text-align:center;
+      font-weight:900;
+    }
+    .removeBtn{
+      border:none;
+      background:transparent;
+      color:rgba(246,247,255,.85);
+      font-weight:900;
+      cursor:pointer;
+      padding:6px 8px;
+      border-radius:10px;
+      border:1px solid rgba(225,29,72,.35);
+      background:rgba(225,29,72,.12);
+      white-space:nowrap;
+    }
+    .totalBar{
+      margin-top:10px;
+      border:1px solid rgba(56,189,248,.35);
+      background:rgba(56,189,248,.10);
+      border-radius:14px;
+      padding:10px;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .totalBar strong{font-size:13px}
+    .totalBar span{font-size:12px;color:rgba(246,247,255,.90);font-weight:900}
+
+    /* Payments vertical */
+    .payList{display:flex;flex-direction:column;gap:10px}
+    .payBtn{
+      width:100%;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      padding:12px 12px;
+      font-weight:900;
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+    }
+    .payBtn:hover{filter:brightness(1.08)}
+    .payLeft{display:flex;align-items:center;gap:10px}
+    .payIcon{
+      width:34px;height:34px;border-radius:12px;
+      display:inline-flex;align-items:center;justify-content:center;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      font-weight:900;
+      font-size:12px;
+    }
+
+    /* Footer */
+    .footer{
+      margin-top:18px;
+      border-top:1px solid var(--border);
+      padding:14px 0 22px;
+      color:var(--muted);
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+    }
+    .social{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:9px 10px;border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      font-weight:900;
+      font-size:12px;
+    }
+    .social:hover{filter:brightness(1.08)}
+    .copyBtn{
+      padding:9px 10px;border-radius:12px;border:1px solid var(--border);
+      background:rgba(255,255,255,.04);color:var(--text);font-weight:900;cursor:pointer;
+    }
+  </style>
 </head>
 
 <body>
-<!-- HEADER -->
-<div class="nav">
-  <div class="container nav-inner">
-    <div class="brand"><span class="dot"></span><span>Medo Gaming Store</span></div>
-    <input id="search" class="search" placeholder="🔍 ابحث عن لعبة / برنامج / أكونت"/>
-    <div class="right">
-      <button class="icon-btn" onclick="openFilter()">≡≡</button>
-      <button class="icon-btn" onclick="openCart()">🛒 <span id="cartCount">0</span></button>
-      <button class="icon-btn" id="loginBtn" onclick="openLogin()">👤 تسجيل الدخول</button>
-      <button class="icon-btn" id="userBtn" style="display:none" onclick="openUser()">👤 <span id="userName"></span></button>
-      <button class="icon-btn" onclick="openMenu()">☰</button>
+  <div class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <span class="dot"></span>
+        <span id="brandText">Medo Gaming Store</span>
+      </div>
+
+      <div class="searchWrap">
+        <input id="search" class="search" placeholder="🔍 ابحث..." />
+        <!-- Filter icon (3 lines + top line) -->
+        <button class="iconBtn" id="filterBtn" title="Filter">
+          <span style="display:inline-block;line-height:0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 6h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M7 12h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M10 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M4 3h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".75"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="rightBox">
+        <button class="iconBtn" id="cartBtn" title="Cart">
+          🛒 <span class="pillCount" id="cartCount">0</span>
+        </button>
+
+        <button class="iconBtn" id="loginBtn" title="Login">
+          👤 <span id="loginText">تسجيل الدخول</span>
+        </button>
+
+        <div class="userChip" id="userChip" style="display:none" title="User">
+          <span class="userBadge" id="userProviderBadge">U</span>
+          <span id="userNameText">User</span>
+        </div>
+
+        <!-- Menu (hamburger) -->
+        <button class="iconBtn" id="menuBtn" title="Menu">☰</button>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="container">
-  <h2 class="section-title">🎮 الألعاب</h2>
-  <div id="games" class="grid"></div>
+  <div class="container">
+    <!-- TOP / OFFERS visible outside -->
+    <div class="sectionTitle" id="topTitle">🔥 Top <span class="sectionHint" id="topHint">الأكثر طلبًا</span></div>
+    <div id="gridTop" class="grid"></div>
 
-  <h2 class="section-title">💻 البرامج</h2>
-  <div id="programs" class="grid"></div>
+    <div class="spacer"></div>
 
-  <h2 class="section-title">🧾 الأكونتات</h2>
-  <div id="accounts" class="grid"></div>
+    <div class="sectionTitle" id="offersTitle">🎁 Offers <span class="sectionHint" id="offersHint">عروض</span></div>
+    <div id="gridOffers" class="grid"></div>
 
-  <div class="footer">
-    <a class="badge" href="https://wa.me/201006760663" target="_blank">WhatsApp</a>
-    <a class="badge" href="https://www.instagram.com/medo__rami" target="_blank">Instagram</a>
-    <a class="badge" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank">Facebook</a>
-    <a class="badge" href="mailto:medorami77@gmail.com">Email</a>
-  </div>
-</div>
+    <div class="spacer" style="height:18px"></div>
 
-<!-- MENU DRAWER -->
-<div id="menu" class="drawer">
-  <div class="overlay" onclick="closeAll()"></div>
-  <div class="panel rightP">
-    <div class="h">Top</div>
-    <div class="h">Offers</div>
-    <div class="h">الألعاب</div><div>4 عناصر</div>
-    <div class="h">البرامج</div><div>4 عناصر</div>
-    <div class="h">الأكونتات</div><div>4 عناصر</div>
-  </div>
-</div>
+    <div class="sectionTitle" id="gamesTitle">🎮 الألعاب</div>
+    <div id="gridGames" class="grid"></div>
 
-<!-- FILTER DRAWER -->
-<div id="filter" class="drawer">
-  <div class="overlay" onclick="closeAll()"></div>
-  <div class="panel left">
-    <div class="h">الفلترة</div>
-    <select id="sort" class="select">
-      <option value="new">الأحدث</option>
-      <option value="old">الأقدم</option>
-      <option value="low">الأرخص → الأغلى</option>
-      <option value="high">الأغلى → الأرخص</option>
-    </select>
-    <div class="h">فلتر السعر</div>
-    <select id="priceMode" class="select">
-      <option value="off">إيقاف</option>
-      <option value="eq">بالظبط</option>
-      <option value="lte">أقل أو يساوي</option>
-      <option value="gte">أكبر أو يساوي</option>
-    </select>
-    <input id="priceVal" class="num" type="number" placeholder="مثلاً 300"/>
-    <button class="btn buy" onclick="render()">تطبيق</button>
-  </div>
-</div>
+    <div class="spacer"></div>
 
-<!-- LOGIN MODAL -->
-<div id="login" class="modal">
-  <div class="overlay" onclick="closeAll()"></div>
-  <div class="box">
-    <div class="h">تسجيل الدخول</div>
-    <div class="filters">
-      <button class="btn" onclick="fakeLogin('Google')">Google</button>
-      <button class="btn" onclick="fakeLogin('Facebook')">Facebook</button>
-      <button class="btn" onclick="fakeLogin('Epic')">Epic</button>
-      <button class="btn" onclick="fakeLogin('Steam')">Steam</button>
-      <button class="btn" onclick="fakeLogin('iCloud')">iCloud</button>
-      <button class="btn" onclick="fakeLogin('PlayStation')">PlayStation</button>
-      <button class="btn" onclick="fakeLogin('Microsoft')">Microsoft</button>
+    <div class="sectionTitle" id="programsTitle">💻 البرامج</div>
+    <div id="gridPrograms" class="grid"></div>
+
+    <div class="spacer"></div>
+
+    <div class="sectionTitle" id="accountsTitle">🧾 الأكونتات</div>
+    <div id="gridAccounts" class="grid"></div>
+
+    <div class="footer">
+      <a class="social" href="https://wa.me/201006760663" target="_blank" rel="noreferrer">WhatsApp</a>
+      <a class="social" href="https://www.instagram.com/medo__rami" target="_blank" rel="noreferrer">Instagram</a>
+      <a class="social" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" rel="noreferrer">Facebook</a>
+      <a class="social" href="mailto:medorami77@gmail.com">Email</a>
+      <span style="margin-inline-start:auto;font-weight:900;font-size:12px;color:rgba(185,193,217,.9)">
+        © <span id="year"></span> Medo Gaming
+      </span>
     </div>
   </div>
-</div>
 
-<!-- USER MENU -->
-<div id="user" class="modal">
-  <div class="overlay" onclick="closeAll()"></div>
-  <div class="box">
-    <div class="h">حسابي</div>
-    <button class="btn" onclick="logout()">Logout</button>
-  </div>
-</div>
+  <div class="overlay" id="overlay"></div>
 
-<!-- CART / CHECKOUT -->
-<div id="cart" class="modal">
-  <div class="overlay" onclick="closeAll()"></div>
-  <div class="box">
-    <div class="h">السلة</div>
-    <div id="cartItems"></div>
-    <div class="h">كود خصم</div>
-    <input id="coupon" class="num" placeholder="MG1 / MZ3 ..."/>
-    <button class="btn" onclick="applyCoupon()">تطبيق</button>
-    <div id="total" class="h"></div>
-    <div class="h">طرق الدفع</div>
-    <div class="filters">
-      <a class="btn" href="https://vodafone.com.eg" target="_blank">Vodafone Cash</a>
-      <a class="btn" href="https://orange.eg" target="_blank">Orange</a>
-      <a class="btn" href="https://etisalat.eg" target="_blank">Etisalat</a>
-      <a class="btn" href="https://we.eg" target="_blank">WE</a>
-      <a class="btn" href="https://instapay.eg" target="_blank">Instapay</a>
-      <a class="btn" href="#" target="_blank">Visa</a>
-      <a class="btn" href="#" target="_blank">Bill Pay</a>
-      <a class="btn" href="#" target="_blank">Telda</a>
+  <!-- MENU DRAWER -->
+  <div class="drawer" id="menuDrawer" aria-hidden="true">
+    <div class="drawerHeader">
+      <div class="drawerTitle" id="menuTitle">Menu</div>
+      <button class="iconBtn" id="menuClose">✕</button>
+    </div>
+    <div class="drawerBody">
+      <div class="drawerSection" id="drawerUserBox" style="display:none">
+        <div class="note ok" id="drawerUserNote"></div>
+        <button class="btn" id="logoutBtn" style="margin-top:10px">Logout</button>
+      </div>
+
+      <div class="drawerSection">
+        <p class="drawerLabel" id="drawerQuick">Quick</p>
+        <div class="drawerList">
+          <div class="linkRow" id="goTop"><span id="goTopText">Top</span><span class="mini">→</span></div>
+          <div class="linkRow" id="goOffers"><span id="goOffersText">Offers</span><span class="mini">→</span></div>
+          <div class="linkRow" id="goGames"><span id="goGamesText">Games</span><span class="mini">→</span></div>
+          <div class="linkRow" id="goPrograms"><span id="goProgramsText">Programs</span><span class="mini">→</span></div>
+          <div class="linkRow" id="goAccounts"><span id="goAccountsText">Accounts</span><span class="mini">→</span></div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+
+  <!-- FILTER DRAWER -->
+  <div class="drawer" id="filterDrawer" aria-hidden="true">
+    <div class="drawerHeader">
+      <div class="drawerTitle" id="filterTitle">Filter</div>
+      <button class="iconBtn" id="filterClose">✕</button>
+    </div>
+    <div class="drawerBody">
+      <div class="drawerSection">
+        <p class="drawerLabel" id="filterCategoryLabel">Category</p>
+        <select class="select" id="filterCategory">
+          <option value="all">All</option>
+          <option value="games">Games</option>
+          <option value="programs">Programs</option>
+          <option value="accounts">Accounts</option>
+        </select>
+      </div>
+
+      <div class="drawerSection">
+        <p class="drawerLabel" id="filterSortLabel">Sort</p>
+        <select class="select" id="filterSort">
+          <option value="new">Newest</option>
+          <option value="old">Oldest</option>
+          <option value="low">Lowest price → Highest</option>
+          <option value="high">Highest price → Lowest</option>
+        </select>
+      </div>
+
+      <div class="drawerSection">
+        <p class="drawerLabel" id="filterPriceLabel">Price</p>
+        <div class="priceModeRow">
+          <select class="select" id="priceMode">
+            <option value="off">Off</option>
+            <option value="eq">Equal</option>
+            <option value="lte">≤</option>
+            <option value="gte">≥</option>
+          </select>
+          <input class="input" id="priceValue" type="number" min="0" placeholder="مثلاً 300" />
+        </div>
+      </div>
+
+      <button class="btn btnRed" id="applyFilterBtn">Apply</button>
+      <div class="note" style="margin-top:10px" id="filterNote"></div>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL: choose provider -->
+  <div class="modal" id="loginModal" aria-hidden="true">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="loginModalTitle">Login</div>
+        <button class="iconBtn" id="loginClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack" id="providersStack">
+          <!-- buttons injected -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN FORM MODAL -->
+  <div class="modal" id="loginFormModal" aria-hidden="true">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="loginFormTitle">Login</div>
+        <button class="iconBtn" id="loginFormClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack">
+          <div class="note" id="loginFormNote"></div>
+          <input class="input" id="loginEmail" type="email" placeholder="Email" />
+          <input class="input" id="loginPass" type="password" placeholder="Password" />
+          <button class="btn btnRed" id="loginSubmitBtn">Continue</button>
+          <div class="note err" id="loginError" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART MODAL -->
+  <div class="modal" id="cartModal" aria-hidden="true">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="cartTitle">Cart</div>
+        <button class="iconBtn" id="cartClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack">
+          <div id="cartItems"></div>
+          <div class="totalBar" id="totalBar">
+            <strong id="totalLabel">Total</strong>
+            <span id="totalValue">EGP 0</span>
+          </div>
+          <button class="btn btnRed" id="cartCheckoutBtn">Checkout</button>
+          <div class="note" id="cartNote"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="modal" id="checkoutModal" aria-hidden="true">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="checkoutTitle">Checkout</div>
+        <button class="iconBtn" id="checkoutClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack">
+          <div id="checkoutItems"></div>
+
+          <div class="note" id="checkoutTotals"></div>
+
+          <!-- Coupon ONLY here -->
+          <div class="note" id="couponNote"></div>
+          <div class="row">
+            <input class="input" id="couponInput" placeholder="Coupon (MG1 / MZ3 ...)" />
+            <button class="btn tight" id="applyCouponBtn" style="flex:0 0 auto">Apply</button>
+          </div>
+
+          <div class="drawerSection">
+            <p class="drawerLabel" id="paymentsTitle">Payment Methods</p>
+            <div class="payList" id="payList">
+              <!-- injected -->
+            </div>
+            <div class="note" id="payHelp"></div>
+          </div>
+
+          <button class="btn" id="backToCartBtn">Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <script>
-/* DATA */
-const products=[
-  {id:1,type:'games',name:'Game 1',price:250},
-  {id:2,type:'games',name:'Game 2',price:180},
-  {id:3,type:'games',name:'Game 3',price:300},
-  {id:4,type:'games',name:'Game 4',price:120},
-  {id:11,type:'programs',name:'Program 1',price:150},
-  {id:12,type:'programs',name:'Program 2',price:90},
-  {id:13,type:'programs',name:'Program 3',price:220},
-  {id:14,type:'programs',name:'Program 4',price:60},
-  {id:21,type:'accounts',name:'Account 1',price:700},
-  {id:22,type:'accounts',name:'Account 2',price:350},
-  {id:23,type:'accounts',name:'Account 3',price:200},
-  {id:24,type:'accounts',name:'Account 4',price:450},
+/* ---------------------------
+  Language (auto by device)
+---------------------------- */
+const isArabic = (() => {
+  const lang = (navigator.language || "").toLowerCase();
+  return lang.startsWith("ar");
+})();
+document.documentElement.lang = isArabic ? "ar" : "en";
+document.documentElement.dir = isArabic ? "rtl" : "ltr";
+
+const T = {
+  ar: {
+    search:"🔍 ابحث عن لعبة / برنامج / أكونت",
+    login:"تسجيل الدخول",
+    menu:"القائمة",
+    filter:"الفلترة",
+    category:"القسم",
+    sort:"الترتيب",
+    price:"فلتر السعر",
+    apply:"تطبيق",
+    filterHelp:"اختر قسم + ترتيب + سعر، ثم اضغط تطبيق.",
+    all:"الكل",
+    games:"الألعاب",
+    programs:"البرامج",
+    accounts:"الأكونتات",
+    top:"توب",
+    offers:"أوفرز",
+    topHint:"الأكثر طلبًا",
+    offersHint:"عروض",
+    quick:"اختصارات",
+    cart:"السلة",
+    total:"الإجمالي",
+    checkout:"شراء",
+    back:"رجوع",
+    couponHint:"كود الخصم (اختياري)",
+    payments:"طرق الدفع",
+    mustLogin:"لازم تسجل دخول الأول.",
+    cartHint:"من السلة تقدر تضغط شراء ويدخلك نفس صفحة الدفع.",
+    emptyCart:"السلة فاضية.",
+    emailPlaceholder:"البريد / Email",
+    passPlaceholder:"كلمة السر / Password",
+    continue:"متابعة",
+    fillBoth:"لازم تكتب البريد وكلمة السر.",
+    loggedAs:"مسجل بـ",
+    logout:"تسجيل خروج",
+    addCart:"إضافة للسلة",
+    buy:"شراء",
+    newest:"الأحدث",
+    oldest:"الأقدم",
+    low:"الأرخص → الأغلى",
+    high:"الأغلى → الأرخص",
+    priceOff:"إيقاف",
+    priceEq:"بالظبط",
+    priceLte:"أقل أو يساوي",
+    priceGte:"أكبر أو يساوي",
+    couponApplied:"تم تطبيق الخصم",
+    invalidCoupon:"كود غير صحيح",
+    payHelp:"الدفع يتم خارج الموقع. بعد الدفع ابعتلنا إثبات الدفع على واتساب.",
+    copyNumber:"نسخ الرقم",
+    copied:"تم النسخ ✅",
+    providerLogin:"تسجيل بـ",
+    open:"فتح",
+    items:"المنتجات",
+  },
+  en: {
+    search:"🔍 Search games / programs / accounts",
+    login:"Login",
+    menu:"Menu",
+    filter:"Filter",
+    category:"Category",
+    sort:"Sort",
+    price:"Price filter",
+    apply:"Apply",
+    filterHelp:"Pick category + sort + price, then Apply.",
+    all:"All",
+    games:"Games",
+    programs:"Programs",
+    accounts:"Accounts",
+    top:"Top",
+    offers:"Offers",
+    topHint:"Most ordered",
+    offersHint:"Deals",
+    quick:"Quick",
+    cart:"Cart",
+    total:"Total",
+    checkout:"Checkout",
+    back:"Back",
+    couponHint:"Coupon (optional)",
+    payments:"Payment methods",
+    mustLogin:"Please login first.",
+    cartHint:"From cart, Checkout takes you to the same payment page.",
+    emptyCart:"Your cart is empty.",
+    emailPlaceholder:"Email",
+    passPlaceholder:"Password",
+    continue:"Continue",
+    fillBoth:"Email and password are required.",
+    loggedAs:"Logged via",
+    logout:"Logout",
+    addCart:"Add to cart",
+    buy:"Buy",
+    newest:"Newest",
+    oldest:"Oldest",
+    low:"Lowest → Highest",
+    high:"Highest → Lowest",
+    priceOff:"Off",
+    priceEq:"Equal",
+    priceLte:"Less or equal",
+    priceGte:"Greater or equal",
+    couponApplied:"Discount applied",
+    invalidCoupon:"Invalid coupon",
+    payHelp:"Payments happen outside the site. After paying, message proof on WhatsApp.",
+    copyNumber:"Copy number",
+    copied:"Copied ✅",
+    providerLogin:"Login with",
+    open:"Open",
+    items:"Items",
+  }
+};
+const L = isArabic ? T.ar : T.en;
+
+/* ---------------------------
+  Data (edit freely)
+---------------------------- */
+/* Products:
+   type: games / programs / accounts
+   top: true -> shows in Top
+   offer: true -> shows in Offers
+*/
+const products = [
+  // Games (examples)
+  { id: 1, type: "games", name: "Game #1", desc: isArabic ? "وصف بسيط" : "Short description", price: 250, top:true },
+  { id: 2, type: "games", name: "Game #2", desc: isArabic ? "وصف بسيط" : "Short description", price: 180, offer:true },
+  { id: 3, type: "games", name: "Game #3", desc: isArabic ? "وصف بسيط" : "Short description", price: 300 },
+  { id: 4, type: "games", name: "Game #4", desc: isArabic ? "وصف بسيط" : "Short description", price: 120, offer:true },
+
+  // Programs
+  { id: 11, type: "programs", name: "Program #1", desc: isArabic ? "وصف بسيط" : "Short description", price: 150, top:true },
+  { id: 12, type: "programs", name: "Program #2", desc: isArabic ? "وصف بسيط" : "Short description", price: 90 },
+  { id: 13, type: "programs", name: "Program #3", desc: isArabic ? "وصف بسيط" : "Short description", price: 220, offer:true },
+  { id: 14, type: "programs", name: "Program #4", desc: isArabic ? "وصف بسيط" : "Short description", price: 60 },
+
+  // Accounts
+  { id: 21, type: "accounts", name: "Account #1", desc: isArabic ? "تفاصيل الأكونت" : "Account details", price: 700, top:true },
+  { id: 22, type: "accounts", name: "Account #2", desc: isArabic ? "تفاصيل الأكونت" : "Account details", price: 350, offer:true },
+  { id: 23, type: "accounts", name: "Account #3", desc: isArabic ? "تفاصيل الأكونت" : "Account details", price: 200 },
+  { id: 24, type: "accounts", name: "Account #4", desc: isArabic ? "تفاصيل الأكونت" : "Account details", price: 450 }
 ];
 
-const coupons = {
-  MG:10, MZ:20, MK:30, MC:40, MA:50, MB:60, ME:70, MX:80, MR:90, MI:100
-};
-
-let cart=[], discount=0;
-
-/* RENDER */
-function card(p){
-  return `<div class="card">
-    <div class="thumb">${p.type.toUpperCase()}</div>
-    <div class="content">
-      <p class="name">${p.name}</p>
-      <p class="price">EGP ${p.price}</p>
-      <div class="actions"><button class="btn buy" onclick="add(${p.id})">شراء</button></div>
-    </div>
-  </div>`;
-}
-function render(){
-  ['games','programs','accounts'].forEach(t=>{
-    document.getElementById(t).innerHTML='';
-  });
-  let list=[...products];
-  const q=document.getElementById('search').value?.toLowerCase()||'';
-  if(q) list=list.filter(p=>p.name.toLowerCase().includes(q));
-  const pm=document.getElementById('priceMode').value;
-  const pv=Number(document.getElementById('priceVal').value);
-  if(pm!=='off' && !Number.isNaN(pv)){
-    if(pm==='eq') list=list.filter(p=>p.price===pv);
-    if(pm==='lte') list=list.filter(p=>p.price<=pv);
-    if(pm==='gte') list=list.filter(p=>p.price>=pv);
+/* ---------------------------
+  Coupons (your codes)
+  MG1..MG10 = 10%
+  MZ1..MZ10 = 20%
+  MK1..MK10 = 30%
+  MC1..MC10 = 40%
+  MA1..MA10 = 50%
+  MB1..MB10 = 60%
+  ME1..ME10 = 70%
+  MX1..MX10 = 80%
+  MR1..MR10 = 90%
+  MI1..MI10 = 100%
+---------------------------- */
+function buildCoupons(){
+  const map = {};
+  const groups = [
+    ["MG",10],["MZ",20],["MK",30],["MC",40],["MA",50],
+    ["MB",60],["ME",70],["MX",80],["MR",90],["MI",100]
+  ];
+  for(const [prefix, pct] of groups){
+    for(let i=1;i<=10;i++){
+      map[`${prefix}${i}`] = pct;
+    }
   }
-  const s=document.getElementById('sort').value;
-  if(s==='low') list.sort((a,b)=>a.price-b.price);
-  if(s==='high') list.sort((a,b)=>b.price-a.price);
-  if(s==='old') list.sort((a,b)=>a.id-b.id);
-  if(s==='new') list.sort((a,b)=>b.id-a.id);
+  return map;
+}
+const COUPONS = buildCoupons();
 
-  list.forEach(p=>document.getElementById(p.type).insertAdjacentHTML('beforeend',card(p)));
-}
-render();
+/* ---------------------------
+  Auth (UI-only)
+---------------------------- */
+const LS_USER = "medo_store_user";
+let currentProvider = null;
 
-/* CART */
-function add(id){
-  if(!isLogged()) return openLogin();
-  cart.push(products.find(p=>p.id===id));
-  document.getElementById('cartCount').textContent=cart.length;
-  openCart();
-}
-function openCart(){document.getElementById('cart').style.display='block'; drawCart();}
-function drawCart(){
-  const box=document.getElementById('cartItems'); box.innerHTML='';
-  let sum=0; cart.forEach(p=>{sum+=p.price; box.innerHTML+=`<div>${p.name} — ${p.price}</div>`});
-  const total=Math.max(0, Math.round(sum*(1-discount/100)));
-  document.getElementById('total').textContent=`الإجمالي: EGP ${total} (خصم ${discount}%)`;
-}
-function applyCoupon(){
-  const c=document.getElementById('coupon').value.trim().toUpperCase();
-  const k=c.slice(0,2); discount=coupons[k]||0; drawCart();
-}
+const PROVIDERS = [
+  { key:"google", label:"Google", icon:"G" },
+  { key:"facebook", label:"Facebook", icon:"f" },
+  { key:"epic", label:"Epic", icon:"E" },
+  { key:"steam", label:"Steam", icon:"S" },
+  { key:"icloud", label:"iCloud", icon:"i" },
+  { key:"playstation", label:"PlayStation", icon:"P" },
+  { key:"microsoft", label:"Microsoft", icon:"M" }
+];
 
-/* AUTH (FAKE) */
-function openLogin(){document.getElementById('login').style.display='block'}
-function fakeLogin(p){
-  localStorage.setItem('user', JSON.stringify({name:'User',provider:p}));
-  document.getElementById('loginBtn').style.display='none';
-  document.getElementById('userBtn').style.display='inline-block';
-  document.getElementById('userName').textContent=p;
-  closeAll();
+function getUser(){
+  try { return JSON.parse(localStorage.getItem(LS_USER) || "null"); } catch { return null; }
 }
-function isLogged(){return !!localStorage.getItem('user')}
-function openUser(){document.getElementById('user').style.display='block'}
-function logout(){localStorage.removeItem('user'); location.reload()}
+function setUser(u){ localStorage.setItem(LS_USER, JSON.stringify(u)); }
+function clearUser(){ localStorage.removeItem(LS_USER); }
 
-/* DRAWERS */
-function openMenu(){document.getElementById('menu').style.display='block'}
-function openFilter(){document.getElementById('filter').style.display='block'}
+function userIsLogged(){ return !!getUser(); }
+
+/* ---------------------------
+  Cart
+---------------------------- */
+const LS_CART = "medo_store_cart";
+function loadCart(){
+  try{ return JSON.parse(localStorage.getItem(LS_CART) || "[]"); } catch { return []; }
+}
+function saveCart(items){ localStorage.setItem(LS_CART, JSON.stringify(items)); }
+
+let cart = loadCart(); // [{id, qty}]
+let couponPct = 0;
+let lastCoupon = "";
+
+/* ---------------------------
+  DOM refs
+---------------------------- */
+const overlay = document.getElementById("overlay");
+
+const searchEl = document.getElementById("search");
+
+const filterDrawer = document.getElementById("filterDrawer");
+const menuDrawer = document.getElementById("menuDrawer");
+
+const loginBtn = document.getElementById("loginBtn");
+const userChip = document.getElementById("userChip");
+const userNameText = document.getElementById("userNameText");
+const userProviderBadge = document.getElementById("userProviderBadge");
+
+const cartBtn = document.getElementById("cartBtn");
+const cartCount = document.getElementById("cartCount");
+
+const loginModal = document.getElementById("loginModal");
+const loginFormModal = document.getElementById("loginFormModal");
+const providersStack = document.getElementById("providersStack");
+
+const loginEmail = document.getElementById("loginEmail");
+const loginPass = document.getElementById("loginPass");
+const loginError = document.getElementById("loginError");
+const loginFormNote = document.getElementById("loginFormNote");
+
+const cartModal = document.getElementById("cartModal");
+const cartItemsEl = document.getElementById("cartItems");
+const totalValueEl = document.getElementById("totalValue");
+const cartNote = document.getElementById("cartNote");
+
+const checkoutModal = document.getElementById("checkoutModal");
+const checkoutItemsEl = document.getElementById("checkoutItems");
+const checkoutTotalsEl = document.getElementById("checkoutTotals");
+const couponInput = document.getElementById("couponInput");
+const couponNote = document.getElementById("couponNote");
+const payList = document.getElementById("payList");
+const payHelp = document.getElementById("payHelp");
+
+const filterCategory = document.getElementById("filterCategory");
+const filterSort = document.getElementById("filterSort");
+const priceMode = document.getElementById("priceMode");
+const priceValue = document.getElementById("priceValue");
+const filterNote = document.getElementById("filterNote");
+
+/* ---------------------------
+  UI text (no mixed language)
+---------------------------- */
+function applyLanguage(){
+  document.getElementById("brandText").textContent = "Medo Gaming Store";
+  document.getElementById("loginText").textContent = L.login;
+
+  searchEl.placeholder = L.search;
+
+  // Titles outside
+  document.getElementById("topTitle").childNodes[0].textContent = `🔥 ${L.top} `;
+  document.getElementById("topHint").textContent = L.topHint;
+
+  document.getElementById("offersTitle").childNodes[0].textContent = `🎁 ${L.offers} `;
+  document.getElementById("offersHint").textContent = L.offersHint;
+
+  document.getElementById("gamesTitle").textContent = `🎮 ${L.games}`;
+  document.getElementById("programsTitle").textContent = `💻 ${L.programs}`;
+  document.getElementById("accountsTitle").textContent = `🧾 ${L.accounts}`;
+
+  // Drawer labels
+  document.getElementById("menuTitle").textContent = L.menu;
+  document.getElementById("drawerQuick").textContent = L.quick;
+  document.getElementById("goTopText").textContent = L.top;
+  document.getElementById("goOffersText").textContent = L.offers;
+  document.getElementById("goGamesText").textContent = L.games;
+  document.getElementById("goProgramsText").textContent = L.programs;
+  document.getElementById("goAccountsText").textContent = L.accounts;
+
+  // Filter drawer
+  document.getElementById("filterTitle").textContent = L.filter;
+  document.getElementById("filterCategoryLabel").textContent = L.category;
+  document.getElementById("filterSortLabel").textContent = L.sort;
+  document.getElementById("filterPriceLabel").textContent = L.price;
+  document.getElementById("applyFilterBtn").textContent = L.apply;
+  filterNote.textContent = L.filterHelp;
+
+  filterCategory.options[0].textContent = L.all;
+  filterCategory.options[1].textContent = L.games;
+  filterCategory.options[2].textContent = L.programs;
+  filterCategory.options[3].textContent = L.accounts;
+
+  filterSort.options[0].textContent = L.newest;
+  filterSort.options[1].textContent = L.oldest;
+  filterSort.options[2].textContent = L.low;
+  filterSort.options[3].textContent = L.high;
+
+  priceMode.options[0].textContent = L.priceOff;
+  priceMode.options[1].textContent = L.priceEq;
+  priceMode.options[2].textContent = L.priceLte;
+  priceMode.options[3].textContent = L.priceGte;
+
+  // Modals
+  document.getElementById("loginModalTitle").textContent = L.login;
+  document.getElementById("loginFormTitle").textContent = L.login;
+  document.getElementById("cartTitle").textContent = L.cart;
+  document.getElementById("checkoutTitle").textContent = L.checkout;
+
+  document.getElementById("totalLabel").textContent = L.total;
+  document.getElementById("cartCheckoutBtn").textContent = L.checkout;
+  cartNote.textContent = L.cartHint;
+
+  couponNote.textContent = L.couponHint;
+  document.getElementById("applyCouponBtn").textContent = L.apply;
+  document.getElementById("paymentsTitle").textContent = L.payments;
+  payHelp.textContent = L.payHelp;
+  document.getElementById("backToCartBtn").textContent = L.back;
+
+  // Login form placeholders
+  loginEmail.placeholder = L.emailPlaceholder;
+  loginPass.placeholder = L.passPlaceholder;
+  document.getElementById("loginSubmitBtn").textContent = L.continue;
+
+  // RTL/LTR drawer side
+  // Menu drawer should be on "right" in Arabic, "left" in English (as requested)
+  menuDrawer.style.insetInlineEnd = isArabic ? "0" : "auto";
+  menuDrawer.style.insetInlineStart = isArabic ? "auto" : "0";
+  menuDrawer.style.transform = isArabic ? "translateX(110%)" : "translateX(-110%)";
+
+  // Filter drawer: keep opposite side of menu for balance
+  filterDrawer.style.insetInlineStart = isArabic ? "0" : "auto";
+  filterDrawer.style.insetInlineEnd = isArabic ? "auto" : "0";
+  filterDrawer.style.transform = isArabic ? "translateX(-110%)" : "translateX(110%)";
+}
+applyLanguage();
+
+/* ---------------------------
+  Helpers
+---------------------------- */
+function money(x){ return `EGP ${x}`; }
+
 function closeAll(){
-  document.querySelectorAll('.drawer,.modal').forEach(x=>x.style.display='none');
+  overlay.classList.remove("show");
+  [menuDrawer, filterDrawer].forEach(d=>d.classList.remove("show"));
+  [loginModal, loginFormModal, cartModal, checkoutModal].forEach(m=>m.classList.remove("show"));
 }
+
+function openOverlay(){ overlay.classList.add("show"); }
+overlay.addEventListener("click", closeAll);
+
+function openDrawer(drawer){
+  openOverlay();
+  drawer.classList.add("show");
+}
+function openModal(modal){
+  openOverlay();
+  modal.classList.add("show");
+}
+
+/* ---------------------------
+  Render cards
+---------------------------- */
+const gridTop = document.getElementById("gridTop");
+const gridOffers = document.getElementById("gridOffers");
+const gridGames = document.getElementById("gridGames");
+const gridPrograms = document.getElementById("gridPrograms");
+const gridAccounts = document.getElementById("gridAccounts");
+
+function typeLabel(type){
+  if(type==="games") return L.games;
+  if(type==="programs") return L.programs;
+  return L.accounts;
+}
+
+function cardHTML(p){
+  const tag = typeLabel(p.type);
+  return `
+    <div class="card">
+      <div class="thumb">
+        <span class="tag">${tag}</span>
+        <span>${p.type.toUpperCase()}</span>
+      </div>
+      <div class="content">
+        <p class="name">${p.name}</p>
+        <p class="meta">${p.desc || ""}</p>
+        <div class="priceRow">
+          <p class="price">${money(p.price)}</p>
+          ${p.offer ? `<span class="badge">${L.offers}</span>` : (p.top ? `<span class="badge">${L.top}</span>` : `<span class="badge">${tag}</span>`)}
+        </div>
+        <div class="actions">
+          <button class="btn" data-add="${p.id}">🛒 ${L.addCart}</button>
+          <button class="btn btnRed" data-buy="${p.id}">⚡ ${L.buy}</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function applyFilters(list){
+  const q = (searchEl.value || "").toLowerCase().trim();
+  const cat = filterCategory.value;
+  const sort = filterSort.value;
+  const pm = priceMode.value;
+  const pv = Number(priceValue.value);
+
+  let out = [...list];
+
+  if(q){
+    out = out.filter(p => (p.name + " " + (p.desc||"")).toLowerCase().includes(q));
+  }
+
+  if(cat !== "all"){
+    out = out.filter(p => p.type === cat);
+  }
+
+  if(pm !== "off" && !Number.isNaN(pv)){
+    if(pm === "eq") out = out.filter(p => p.price === pv);
+    if(pm === "lte") out = out.filter(p => p.price <= pv);
+    if(pm === "gte") out = out.filter(p => p.price >= pv);
+  }
+
+  // For new/old, use id as "time order"
+  if(sort === "new") out.sort((a,b)=> b.id - a.id);
+  if(sort === "old") out.sort((a,b)=> a.id - b.id);
+  if(sort === "low") out.sort((a,b)=> a.price - b.price);
+  if(sort === "high") out.sort((a,b)=> b.price - a.price);
+
+  return out;
+}
+
+function renderAll(){
+  // Filtered for main sections only by search/price/sort? user wanted filter apply to chosen category.
+  // We'll apply filters for all sections display, but if category selected, only that section updates (others still render normally).
+  const filtered = applyFilters(products);
+
+  const byType = (arr, type) => arr.filter(x=>x.type===type);
+  const tops = filtered.filter(p=>p.top);
+  const offers = filtered.filter(p=>p.offer);
+
+  gridTop.innerHTML = tops.length ? tops.map(cardHTML).join("") : `<div class="note">${isArabic ? "مفيش عناصر في التوب حالياً." : "No Top items right now."}</div>`;
+  gridOffers.innerHTML = offers.length ? offers.map(cardHTML).join("") : `<div class="note">${isArabic ? "مفيش عروض حالياً." : "No offers right now."}</div>`;
+
+  gridGames.innerHTML = byType(filtered,"games").map(cardHTML).join("");
+  gridPrograms.innerHTML = byType(filtered,"programs").map(cardHTML).join("");
+  gridAccounts.innerHTML = byType(filtered,"accounts").map(cardHTML).join("");
+
+  bindCardButtons();
+}
+function bindCardButtons(){
+  document.querySelectorAll("[data-add]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const id = Number(btn.getAttribute("data-add"));
+      addToCart(id);
+    });
+  });
+  document.querySelectorAll("[data-buy]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const id = Number(btn.getAttribute("data-buy"));
+      buyNow(id);
+    });
+  });
+}
+renderAll();
+
+/* ---------------------------
+  Menu navigation
+---------------------------- */
+function scrollToId(elId){
+  const el = document.getElementById(elId);
+  if(!el) return;
+  closeAll();
+  window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior:"smooth" });
+}
+document.getElementById("goTop").addEventListener("click", ()=>scrollToId("gridTop"));
+document.getElementById("goOffers").addEventListener("click", ()=>scrollToId("gridOffers"));
+document.getElementById("goGames").addEventListener("click", ()=>scrollToId("gridGames"));
+document.getElementById("goPrograms").addEventListener("click", ()=>scrollToId("gridPrograms"));
+document.getElementById("goAccounts").addEventListener("click", ()=>scrollToId("gridAccounts"));
+
+/* ---------------------------
+  Filter UI
+---------------------------- */
+document.getElementById("filterBtn").addEventListener("click", ()=>openDrawer(filterDrawer));
+document.getElementById("filterClose").addEventListener("click", closeAll);
+document.getElementById("applyFilterBtn").addEventListener("click", ()=>{
+  closeAll();
+  renderAll();
+});
+
+/* ---------------------------
+  Menu UI
+---------------------------- */
+document.getElementById("menuBtn").addEventListener("click", ()=>{
+  refreshDrawerUser();
+  openDrawer(menuDrawer);
+});
+document.getElementById("menuClose").addEventListener("click", closeAll);
+
+/* ---------------------------
+  Search
+---------------------------- */
+searchEl.addEventListener("input", ()=>renderAll());
+
+/* ---------------------------
+  Cart logic
+---------------------------- */
+function cartKeyIndex(id){ return cart.findIndex(x=>x.id===id); }
+
+function addToCart(id){
+  const idx = cartKeyIndex(id);
+  if(idx >= 0) cart[idx].qty += 1;
+  else cart.push({id, qty:1});
+  saveCart(cart);
+  refreshCartCount();
+}
+
+function setQty(id, qty){
+  const idx = cartKeyIndex(id);
+  if(idx < 0) return;
+  cart[idx].qty = Math.max(1, qty);
+  saveCart(cart);
+  refreshCartCount();
+  renderCart();
+}
+
+function removeFromCart(id){
+  cart = cart.filter(x=>x.id!==id);
+  saveCart(cart);
+  refreshCartCount();
+  renderCart();
+}
+
+function cartItemsDetailed(){
+  const map = new Map(products.map(p=>[p.id,p]));
+  return cart
+    .map(ci => ({...ci, p: map.get(ci.id)}))
+    .filter(x=>x.p);
+}
+
+function cartSubtotal(){
+  return cartItemsDetailed().reduce((sum, x)=> sum + (x.p.price * x.qty), 0);
+}
+
+function refreshCartCount(){
+  const count = cart.reduce((s,x)=>s + x.qty, 0);
+  cartCount.textContent = String(count);
+}
+refreshCartCount();
+
+/* Cart modal open */
+cartBtn.addEventListener("click", ()=>{
+  renderCart();
+  openModal(cartModal);
+});
+document.getElementById("cartClose").addEventListener("click", closeAll);
+
+function renderCart(){
+  const items = cartItemsDetailed();
+  if(!items.length){
+    cartItemsEl.innerHTML = `<div class="note">${L.emptyCart}</div>`;
+    totalValueEl.textContent = money(0);
+    return;
+  }
+  cartItemsEl.innerHTML = items.map(({id, qty, p})=>`
+    <div class="cartItem">
+      <div style="flex:1">
+        <p class="cartName">${p.name}</p>
+        <p class="cartMeta">${typeLabel(p.type)} • ${money(p.price)}</p>
+        <div class="qtyRow">
+          <button class="qtyBtn" data-dec="${id}">−</button>
+          <div class="qtyNum">${qty}</div>
+          <button class="qtyBtn" data-inc="${id}">+</button>
+          <button class="removeBtn" data-rem="${id}">${isArabic ? "حذف" : "Remove"}</button>
+        </div>
+      </div>
+      <div style="text-align:end;white-space:nowrap;font-weight:900">
+        ${money(p.price * qty)}
+      </div>
+    </div>
+  `).join("");
+
+  const subtotal = cartSubtotal();
+  totalValueEl.textContent = money(subtotal);
+
+  // bind qty actions
+  cartItemsEl.querySelectorAll("[data-inc]").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      const id = Number(b.getAttribute("data-inc"));
+      const idx = cartKeyIndex(id);
+      if(idx>=0) setQty(id, cart[idx].qty + 1);
+    });
+  });
+  cartItemsEl.querySelectorAll("[data-dec]").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      const id = Number(b.getAttribute("data-dec"));
+      const idx = cartKeyIndex(id);
+      if(idx>=0) setQty(id, cart[idx].qty - 1);
+    });
+  });
+  cartItemsEl.querySelectorAll("[data-rem]").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      const id = Number(b.getAttribute("data-rem"));
+      removeFromCart(id);
+    });
+  });
+}
+
+document.getElementById("totalBar").addEventListener("click", ()=>{
+  // same as checkout button
+  document.getElementById("cartCheckoutBtn").click();
+});
+
+document.getElementById("cartCheckoutBtn").addEventListener("click", ()=>{
+  if(!cartItemsDetailed().length){
+    renderCart();
+    return;
+  }
+  startCheckout({ mode:"cart" });
+});
+
+/* Buy now for single product */
+function buyNow(id){
+  if(!userIsLogged()){
+    openLoginFlow(()=> startCheckout({ mode:"single", singleId:id }));
+    return;
+  }
+  startCheckout({ mode:"single", singleId:id });
+}
+
+/* Checkout */
+function checkoutItemsFromState(state){
+  if(state.mode==="single"){
+    const p = products.find(x=>x.id===state.singleId);
+    if(!p) return [];
+    return [{ id:p.id, qty:1, p }];
+  }
+  return cartItemsDetailed();
+}
+
+let checkoutState = { mode:"cart" };
+
+function startCheckout(state){
+  checkoutState = state;
+  // Require login:
+  if(!userIsLogged()){
+    openLoginFlow(()=> startCheckout(state));
+    return;
+  }
+  couponPct = 0;
+  lastCoupon = "";
+  couponInput.value = "";
+  renderCheckout();
+  closeAll();
+  openModal(checkoutModal);
+}
+
+function renderCheckout(){
+  const items = checkoutItemsFromState(checkoutState);
+  checkoutItemsEl.innerHTML = items.map(x=>`
+    <div class="cartItem">
+      <div style="flex:1">
+        <p class="cartName">${x.p.name}</p>
+        <p class="cartMeta">${typeLabel(x.p.type)} • ${money(x.p.price)} × ${x.qty}</p>
+      </div>
+      <div style="text-align:end;white-space:nowrap;font-weight:900">${money(x.p.price * x.qty)}</div>
+    </div>
+  `).join("");
+
+  const subtotal = items.reduce((s,x)=> s + x.p.price * x.qty, 0);
+  const discountValue = Math.round(subtotal * (couponPct/100));
+  const total = Math.max(0, subtotal - discountValue);
+
+  checkoutTotalsEl.textContent =
+    (isArabic
+      ? `المنتجات: ${money(subtotal)} • الخصم: ${couponPct}% (${money(discountValue)}) • الإجمالي: ${money(total)}`
+      : `Items: ${money(subtotal)} • Discount: ${couponPct}% (${money(discountValue)}) • Total: ${money(total)}`
+    );
+
+  renderPayments(total);
+}
+
+function applyCoupon(){
+  const code = (couponInput.value || "").trim().toUpperCase();
+  if(!code){
+    couponPct = 0; lastCoupon = "";
+    couponNote.className = "note";
+    couponNote.textContent = L.couponHint;
+    renderCheckout();
+    return;
+  }
+  const pct = COUPONS[code] ?? 0;
+  if(!pct){
+    couponPct = 0; lastCoupon = "";
+    couponNote.className = "note err";
+    couponNote.textContent = `${L.invalidCoupon}: ${code}`;
+    renderCheckout();
+    return;
+  }
+  couponPct = pct;
+  lastCoupon = code;
+  couponNote.className = "note ok";
+  couponNote.textContent = `${L.couponApplied}: ${code} = ${pct}%`;
+  renderCheckout();
+}
+document.getElementById("applyCouponBtn").addEventListener("click", applyCoupon);
+
+document.getElementById("checkoutClose").addEventListener("click", closeAll);
+document.getElementById("backToCartBtn").addEventListener("click", ()=>{
+  closeAll();
+  openModal(cartModal);
+});
+
+/* Payments (vertical with icons) */
+const SELLER_PHONE = "201006760663";
+function renderPayments(finalTotal){
+  // external pages for info + WhatsApp to send proof
+  const waMsg = encodeURIComponent(
+    isArabic
+      ? `السلام عليكم، أنا عايز أعمل طلب.\nالإجمالي: ${money(finalTotal)}\nكود خصم: ${lastCoupon || "—"}\nطريقة الدفع: (اكتبها هنا)\n`
+      : `Hi, I want to place an order.\nTotal: ${money(finalTotal)}\nCoupon: ${lastCoupon || "—"}\nPayment method: (type here)\n`
+  );
+  const waLink = `https://wa.me/${SELLER_PHONE}?text=${waMsg}`;
+
+  const items = [
+    {
+      key:"vodafone",
+      title: isArabic ? "Vodafone Cash" : "Vodafone Cash",
+      icon:"VC",
+      action: () => window.open(waLink, "_blank"),
+      hint: isArabic ? `ادفع على الرقم: ${SELLER_PHONE} ثم ابعت إثبات الدفع` : `Pay to: ${SELLER_PHONE} then send proof`
+    },
+    {
+      key:"orange",
+      title: "Orange Cash",
+      icon:"OC",
+      action: () => window.open(waLink, "_blank"),
+      hint: isArabic ? `ادفع على الرقم: ${SELLER_PHONE} ثم ابعت إثبات الدفع` : `Pay to: ${SELLER_PHONE} then send proof`
+    },
+    {
+      key:"etisalat",
+      title: "Etisalat Cash",
+      icon:"EC",
+      action: () => window.open(waLink, "_blank"),
+      hint: isArabic ? `ادفع على الرقم: ${SELLER_PHONE} ثم ابعت إثبات الدفع` : `Pay to: ${SELLER_PHONE} then send proof`
+    },
+    {
+      key:"we",
+      title: "WE Pay",
+      icon:"WE",
+      action: () => window.open(waLink, "_blank"),
+      hint: isArabic ? `ادفع على الرقم: ${SELLER_PHONE} ثم ابعت إثبات الدفع` : `Pay to: ${SELLER_PHONE} then send proof`
+    },
+    {
+      key:"instapay",
+      title: "InstaPay",
+      icon:"IP",
+      action: () => window.open("https://www.instapay.eg/", "_blank"),
+      hint: isArabic ? "بعد الدفع ابعت إثبات على واتساب" : "After paying, send proof on WhatsApp"
+    },
+    {
+      key:"visa",
+      title: "Visa / Card",
+      icon:"V",
+      action: () => window.open("https://www.visa.com/", "_blank"),
+      hint: isArabic ? "ده رابط معلوماتي (لو عندك بوابة دفع هنبقى نركّب لينكها هنا)" : "Info link (replace with your payment gateway later)"
+    },
+    {
+      key:"billpay",
+      title: "Bill Pay",
+      icon:"BP",
+      action: () => window.open(waLink, "_blank"),
+      hint: isArabic ? "ابعتلنا على واتساب هنقولك خطوات الدفع" : "Message us on WhatsApp for steps"
+    },
+    {
+      key:"telda",
+      title: "Telda",
+      icon:"T",
+      action: () => window.open("https://telda.app/", "_blank"),
+      hint: isArabic ? "بعد الدفع ابعت إثبات على واتساب" : "After paying, send proof on WhatsApp"
+    }
+  ];
+
+  payList.innerHTML = items.map(x=>`
+    <button class="payBtn" data-pay="${x.key}">
+      <span class="payLeft">
+        <span class="payIcon">${x.icon}</span>
+        <span>${x.title}</span>
+      </span>
+      <span class="mini">${L.open} →</span>
+    </button>
+    <div class="note" style="margin-top:-4px">${x.hint}</div>
+  `).join("");
+
+  payList.querySelectorAll("[data-pay]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const k = btn.getAttribute("data-pay");
+      const it = items.find(x=>x.key===k);
+      if(it) it.action();
+    });
+  });
+
+  payHelp.innerHTML = `
+    <div class="row" style="align-items:center">
+      <button class="copyBtn tight" id="copyPhoneBtn" style="flex:0 0 auto">${L.copyNumber}</button>
+      <div class="note" style="margin:0;flex:1">${isArabic ? "رقم الدفع/التواصل:" : "Payment/Contact number:"} <strong>${SELLER_PHONE}</strong></div>
+    </div>
+  `;
+
+  document.getElementById("copyPhoneBtn").onclick = async ()=>{
+    try{
+      await navigator.clipboard.writeText(SELLER_PHONE);
+      alert(L.copied);
+    }catch{
+      // fallback
+      prompt(isArabic ? "انسخ الرقم:" : "Copy number:", SELLER_PHONE);
+    }
+  };
+}
+
+/* ---------------------------
+  Login flow
+---------------------------- */
+loginBtn.addEventListener("click", ()=>openLoginFlow());
+document.getElementById("loginClose").addEventListener("click", closeAll);
+document.getElementById("loginFormClose").addEventListener("click", closeAll);
+
+function openLoginFlow(after){
+  openModal(loginModal);
+  providersStack.innerHTML = "";
+  PROVIDERS.forEach(p=>{
+    const b = document.createElement("button");
+    b.className = "payBtn";
+    b.innerHTML = `
+      <span class="payLeft">
+        <span class="payIcon">${p.icon}</span>
+        <span>${L.providerLogin} ${p.label}</span>
+      </span>
+      <span class="mini">→</span>
+    `;
+    b.onclick = ()=>{
+      currentProvider = p;
+      openLoginForm(after);
+    };
+    providersStack.appendChild(b);
+  });
+}
+
+function openLoginForm(after){
+  closeAll();
+  openModal(loginFormModal);
+
+  loginError.style.display = "none";
+  loginEmail.value = "";
+  loginPass.value = "";
+
+  loginFormNote.className = "note";
+  loginFormNote.textContent = isArabic
+    ? `هتسجّل دخول بـ ${currentProvider.label}. اكتب بريد وكلمة سر (واجهة فقط).`
+    : `You are logging in via ${currentProvider.label}. Enter email & password (UI only).`;
+
+  document.getElementById("loginSubmitBtn").onclick = ()=>{
+    const email = (loginEmail.value||"").trim();
+    const pass = (loginPass.value||"").trim();
+    if(!email || !pass){
+      loginError.style.display = "block";
+      loginError.className = "note err";
+      loginError.textContent = L.fillBoth;
+      return;
+    }
+    // derive display name from email
+    const name = email.includes("@") ? email.split("@")[0] : email;
+    setUser({ name, provider: currentProvider.key, providerLabel: currentProvider.label, providerIcon: currentProvider.icon });
+
+    refreshAuthUI();
+    closeAll();
+    if(typeof after === "function") after();
+  };
+}
+
+function refreshAuthUI(){
+  const u = getUser();
+  if(!u){
+    loginBtn.style.display = "inline-flex";
+    userChip.style.display = "none";
+    document.getElementById("drawerUserBox").style.display = "none";
+    return;
+  }
+  loginBtn.style.display = "none";
+  userChip.style.display = "inline-flex";
+  userNameText.textContent = u.name;
+  userProviderBadge.textContent = u.providerIcon || "U";
+  refreshDrawerUser();
+}
+refreshAuthUI();
+
+userChip.addEventListener("click", ()=>{
+  // open menu and show user block on top
+  refreshDrawerUser();
+  openDrawer(menuDrawer);
+});
+
+function refreshDrawerUser(){
+  const u = getUser();
+  const box = document.getElementById("drawerUserBox");
+  const note = document.getElementById("drawerUserNote");
+  if(!u){
+    box.style.display = "none";
+    return;
+  }
+  box.style.display = "block";
+  note.textContent = isArabic
+    ? `${L.loggedAs} ${u.providerLabel} • ${isArabic ? "الاسم:" : "Name:"} ${u.name}`
+    : `${L.loggedAs} ${u.providerLabel} • Name: ${u.name}`;
+
+  document.getElementById("logoutBtn").textContent = L.logout;
+  document.getElementById("logoutBtn").onclick = ()=>{
+    clearUser();
+    refreshAuthUI();
+    closeAll();
+  };
+}
+
+/* ---------------------------
+  Require login before checkout (from cart)
+---------------------------- */
+document.getElementById("cartCheckoutBtn").addEventListener("click", ()=>{
+  if(!cartItemsDetailed().length){
+    renderCart();
+    return;
+  }
+  startCheckout({ mode:"cart" });
+});
+
+/* ---------------------------
+  Filter default labels
+---------------------------- */
+filterCategory.value = "all";
+filterSort.value = "new";
+priceMode.value = "off";
+
+/* ---------------------------
+  Hook filter & cart buttons
+---------------------------- */
+document.getElementById("cartNote").textContent = L.cartHint;
+document.getElementById("cartCheckoutBtn").textContent = L.checkout;
+
+/* ---------------------------
+  Year
+---------------------------- */
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* ---------------------------
+  Filter open/close buttons
+---------------------------- */
+document.getElementById("filterClose").addEventListener("click", closeAll);
+
+/* ---------------------------
+  Cart total bar -> checkout
+---------------------------- */
+document.getElementById("totalBar").addEventListener("click", ()=>{
+  document.getElementById("cartCheckoutBtn").click();
+});
+
+/* ---------------------------
+  Cart checkout opens checkout UI
+---------------------------- */
+document.getElementById("cartCheckoutBtn").addEventListener("click", ()=>{
+  if(!cartItemsDetailed().length){
+    renderCart();
+    return;
+  }
+  startCheckout({ mode:"cart" });
+});
+
+/* ---------------------------
+  Ensure cart modal always shows latest
+---------------------------- */
+cartBtn.addEventListener("click", ()=>{
+  renderCart();
+  openModal(cartModal);
+});
+
+/* ---------------------------
+  Close buttons
+---------------------------- */
+document.getElementById("menuClose").addEventListener("click", closeAll);
+document.getElementById("filterClose").addEventListener("click", closeAll);
+document.getElementById("loginClose").addEventListener("click", closeAll);
+document.getElementById("loginFormClose").addEventListener("click", closeAll);
+document.getElementById("cartClose").addEventListener("click", closeAll);
+document.getElementById("checkoutClose").addEventListener("click", closeAll);
+
+/* ---------------------------
+  Menu open
+---------------------------- */
+document.getElementById("menuBtn").addEventListener("click", ()=>{
+  refreshDrawerUser();
+  openDrawer(menuDrawer);
+});
+
+/* ---------------------------
+  Filter apply
+---------------------------- */
+document.getElementById("applyFilterBtn").addEventListener("click", ()=>{
+  closeAll();
+  renderAll();
+});
+
+/* ---------------------------
+  Filter button open
+---------------------------- */
+document.getElementById("filterBtn").addEventListener("click", ()=>openDrawer(filterDrawer));
+
+/* ---------------------------
+  Login required message when trying to add/buy? (buy already)
+  Add to cart doesn't require login by your request (you said "login لازم عند الشراء")
+---------------------------- */
+function requireLoginThen(fn){
+  if(userIsLogged()) return fn();
+  openLoginFlow(fn);
+}
+
+/* Buy from card -> must login */
+function buyNow(id){
+  requireLoginThen(()=> startCheckout({ mode:"single", singleId:id }));
+}
+
+/* Checkout entry from cart -> must login */
+function startCheckout(state){
+  if(!userIsLogged()){
+    openLoginFlow(()=>startCheckout(state));
+    return;
+  }
+  checkoutState = state;
+  couponPct = 0;
+  lastCoupon = "";
+  couponInput.value = "";
+  couponNote.className = "note";
+  couponNote.textContent = L.couponHint;
+
+  renderCheckout();
+  closeAll();
+  openModal(checkoutModal);
+}
+
+/* Done */
 </script>
 </body>
 </html>
