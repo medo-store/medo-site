@@ -130,34 +130,33 @@
     }
     .sectionHint{color:var(--muted);font-weight:800;font-size:12px}
     .spacer{height:18px}
-
-/* Grid – FIXED */
 .grid{
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0, 1fr));
+  gap:12px;
 }
 
-/* لابتوب وكمبيوتر */
-@media (max-width: 1200px){
+/* كمبيوتر ولابتوب */
+@media (max-width:1200px){
   .grid{
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns:repeat(4, minmax(0, 1fr));
   }
 }
 
 /* موبايل */
-@media (max-width: 768px){
+@media (max-width:768px){
   .grid{
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns:repeat(2, minmax(0, 1fr));
   }
 }
 
 /* موبايل صغير */
-@media (max-width: 420px){
+@media (max-width:420px){
   .grid{
-    grid-template-columns: 1fr;
+    grid-template-columns:1fr;
   }
 }
+
     .card{
       background:rgba(12,23,54,.72);
       border:1px solid var(--border);
