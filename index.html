@@ -132,11 +132,34 @@
     .spacer{height:18px}
 
     /* Grid */
-    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    @media (max-width:1050px){ .grid{grid-template-columns:repeat(3,1fr);} }
-    @media (max-width:760px){ .grid{grid-template-columns:repeat(2,1fr);} }
-    @media (max-width:460px){ .grid{grid-template-columns:1fr;} }
+   
+/* Grid – FIXED */
+.grid{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
 
+/* لابتوب وكمبيوتر */
+@media (max-width: 1200px){
+  .grid{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* موبايل */
+@media (max-width: 768px){
+  .grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* موبايل صغير */
+@media (max-width: 420px){
+  .grid{
+    grid-template-columns: 1fr;
+  }
+}
     .card{
       background:rgba(12,23,54,.72);
       border:1px solid var(--border);
