@@ -1,46 +1,258 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Medo Gaming</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Medo Gaming Store</title>
   <style>
-    body {
-      background-color: #0f0f0f;
-      color: white;
-      font-family: Arial;
-      text-align: center;
+    :root{
+      --bg:#0b0b0f;
+      --card:#141421;
+      --text:#ffffff;
+      --muted:#b9b9c6;
+      --accent:#ff2d2d;
+      --accent2:#00ffd5;
+      --border:rgba(255,255,255,.08);
     }
-    h1 {
-      color: #ff0000;
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Arial, Helvetica, sans-serif;
+      background:radial-gradient(900px 500px at 20% 10%, rgba(255,45,45,.18), transparent 60%),
+                 radial-gradient(800px 450px at 80% 0%, rgba(0,255,213,.12), transparent 55%),
+                 var(--bg);
+      color:var(--text);
     }
-    .box {
-      background: #1c1c1c;
-      margin: 20px;
-      padding: 20px;
-      border-radius: 10px;
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1050px; margin:0 auto; padding:18px}
+    .nav{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(10px);
+      background:rgba(11,11,15,.65);
+      border-bottom:1px solid var(--border);
     }
-    a {
-      color: #00ffcc;
-      text-decoration: none;
-      font-weight: bold;
+    .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:14px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px}
+    .dot{width:10px; height:10px; border-radius:999px; background:var(--accent)}
+    .links{display:flex; gap:14px; flex-wrap:wrap; color:var(--muted); font-weight:700; font-size:14px}
+    .links a:hover{color:#fff}
+    .hero{
+      padding:26px 0 10px;
+    }
+    .hero-card{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(20,20,33,.85), rgba(20,20,33,.65));
+      border-radius:18px;
+      padding:18px;
+      display:flex; flex-direction:column; gap:10px;
+    }
+    h1{margin:0; font-size:26px}
+    .sub{color:var(--muted); margin:0; line-height:1.5}
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .search{
+      flex:1;
+      min-width:220px;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.25);
+      color:#fff;
+      outline:none;
+    }
+    .pill{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      cursor:pointer;
+      font-weight:700;
+      font-size:13px;
+    }
+    .pill.active{color:#000; background:var(--accent2); border-color:transparent}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
+      gap:14px;
+      padding:14px 0 30px;
+    }
+    .card{
+      border:1px solid var(--border);
+      background:rgba(20,20,33,.72);
+      border-radius:16px;
+      overflow:hidden;
+      display:flex; flex-direction:column;
+      min-height:210px;
+    }
+    .thumb{
+      height:120px;
+      background:linear-gradient(135deg, rgba(255,45,45,.25), rgba(0,255,213,.18));
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900; letter-spacing:.6px;
+      color:#fff;
+    }
+    .content{padding:12px; display:flex; flex-direction:column; gap:8px; flex:1}
+    .title{font-size:16px; font-weight:900; margin:0}
+    .meta{color:var(--muted); font-size:13px; margin:0; line-height:1.4}
+    .price{font-weight:900}
+    .actions{display:flex; gap:10px; margin-top:auto}
+    .btn{
+      flex:1;
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+      text-align:center;
+      font-weight:900;
+      font-size:13px;
+    }
+    .btn.buy{background:var(--accent); border-color:transparent}
+    .btn:hover{filter:brightness(1.06)}
+    .section-title{margin:22px 0 8px; font-size:18px}
+    .footer{
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      padding:16px 0 26px;
+      font-size:13px;
+    }
+    .badge{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--border);
+      color:var(--muted);
+      font-weight:800;
+      font-size:12px;
     }
   </style>
 </head>
 <body>
 
-<h1>🎮 Medo Gaming Store</h1>
-<p>Welcome to my official website</p>
+  <div class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <span class="dot"></span>
+        <span>Medo Gaming Store</span>
+        <span class="badge">Free Website</span>
+      </div>
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#games">Games</a>
+        <a href="#programs">Programs</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </div>
 
-<div class="box">
-  <h2>Games</h2>
-  <p>Best PC Games</p>
-  <a href="https://wa.me/201006760663">Buy on WhatsApp</a>
-</div>
+  <div id="home" class="container hero">
+    <div class="hero-card">
+      <h1>Store for Games & Programs</h1>
+      <p class="sub">Choose what you need and order مباشرة على واتساب. (هنضيف صور ومنتجات أكتر بعدين)</p>
 
-<div class="box">
-  <h2>Programs</h2>
-  <p>Adobe & Editing Software</p>
-  <a href="https://wa.me/201006760663">Buy on WhatsApp</a>
-</div>
+      <div class="row">
+        <input id="search" class="search" placeholder="Search products..." />
+        <button class="pill active" data-filter="all">All</button>
+        <button class="pill" data-filter="games">Games</button>
+        <button class="pill" data-filter="programs">Programs</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2 id="games" class="section-title">🎮 Games</h2>
+    <div id="grid-games" class="grid"></div>
+
+    <h2 id="programs" class="section-title">💻 Programs</h2>
+    <div id="grid-programs" class="grid"></div>
+
+    <h2 id="contact" class="section-title">📱 Contact</h2>
+    <div class="hero-card">
+      <p class="sub" style="margin:0">
+        WhatsApp: <a class="badge" href="https://wa.me/201006760663" target="_blank">Chat Now</a>
+        &nbsp; | &nbsp;
+        Email: <span class="badge">medorami77@gmail.com</span>
+      </p>
+    </div>
+
+    <div class="footer">
+      © <span id="year"></span> Medo Gaming — Built on GitHub Pages.
+    </div>
+  </div>
+
+<script>
+  const WHATSAPP = "https://wa.me/201006760663";
+
+  // منتجات تجريبية (هنغيرهم بمنتجاتك بعدين)
+  const products = [
+    { id: 1, type: "games", name: "Game Pack 1", desc: "PC game — fast delivery", price: "EGP 250" },
+    { id: 2, type: "games", name: "Game Pack 2", desc: "PC game — support included", price: "EGP 180" },
+    { id: 3, type: "programs", name: "Editing Software", desc: "For video editing needs", price: "EGP 150" },
+    { id: 4, type: "programs", name: "Design Software", desc: "For graphics & design", price: "EGP 120" }
+  ];
+
+  const gridGames = document.getElementById("grid-games");
+  const gridPrograms = document.getElementById("grid-programs");
+  const search = document.getElementById("search");
+  const pills = document.querySelectorAll(".pill");
+
+  function cardHTML(p){
+    const msg = encodeURIComponent(`Hello, I want: ${p.name} (${p.price})`);
+    return `
+      <div class="card" data-type="${p.type}" data-name="${p.name.toLowerCase()}">
+        <div class="thumb">${p.type === "games" ? "GAME" : "APP"}</div>
+        <div class="content">
+          <p class="title">${p.name}</p>
+          <p class="meta">${p.desc}</p>
+          <p class="price">${p.price}</p>
+          <div class="actions">
+            <a class="btn" href="#contact">Details</a>
+            <a class="btn buy" target="_blank" href="${WHATSAPP}?text=${msg}">Buy</a>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function render(){
+    gridGames.innerHTML = "";
+    gridPrograms.innerHTML = "";
+    const q = search.value.trim().toLowerCase();
+
+    products.forEach(p=>{
+      if(q && !p.name.toLowerCase().includes(q) && !p.desc.toLowerCase().includes(q)) return;
+      const html = cardHTML(p);
+      if(p.type === "games") gridGames.insertAdjacentHTML("beforeend", html);
+      else gridPrograms.insertAdjacentHTML("beforeend", html);
+    });
+
+    applyFilter(currentFilter);
+  }
+
+  let currentFilter = "all";
+  function applyFilter(filter){
+    currentFilter = filter;
+    document.querySelectorAll(".card").forEach(card=>{
+      const type = card.getAttribute("data-type");
+      const show = (filter === "all" || type === filter);
+      card.style.display = show ? "" : "none";
+    });
+  }
+
+  pills.forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      pills.forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      applyFilter(btn.dataset.filter);
+    });
+  });
+
+  search.addEventListener("input", render);
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  render();
+</script>
 
 </body>
 </html>
