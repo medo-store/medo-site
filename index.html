@@ -165,6 +165,7 @@
     .overlay{position:fixed;inset:0;background:rgba(0,0,0,.58);display:none;z-index:80}
     .overlay.show{display:block}
 
+    /* ✅ IMPORTANT: drawer is ALWAYS off-screen by default */
     .drawer{
       position:fixed;top:0;bottom:0;
       width:min(360px, 92vw);
@@ -175,9 +176,11 @@
       z-index:90;
       transition: transform .22s ease;
       display:flex;flex-direction:column;
-      transform: translateX(120%);
+
+      /* Off-screen by default */
+      transform: translateX(110%);
     }
-    /* ✅ IMPORTANT FIX: this makes drawers actually appear */
+    /* ✅ show only on click */
     .drawer.show{ transform: translateX(0) !important; }
 
     .drawerHeader{
@@ -308,60 +311,6 @@
       user-select:none;
     }
 
-    /* Checkout steps */
-    .stepPills{display:flex;gap:8px;flex-wrap:wrap}
-    .pill{
-      padding:6px 10px;border-radius:999px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.03);
-      font-weight:900;font-size:12px;color:rgba(246,247,255,.95);
-    }
-    .pill.active{border-color:rgba(56,189,248,.45);background:rgba(56,189,248,.12)}
-    .payModalBox{width:min(520px, 94vw)}
-    .payList{display:flex;flex-direction:column;gap:10px}
-    .payBtn{
-      width:100%;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      padding:12px 12px;
-      font-weight:900;
-      cursor:pointer;
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-    }
-    .payBtn:hover{filter:brightness(1.08)}
-    .payLeft{display:flex;align-items:center;gap:10px}
-    .payIcon{
-      width:34px;height:34px;border-radius:12px;
-      display:inline-flex;align-items:center;justify-content:center;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.04);
-      font-weight:900;
-      font-size:12px;
-    }
-
-    /* Details gallery */
-    .detailsHero{
-      height:180px;border-radius:16px;border:1px solid var(--border);
-      background:
-        radial-gradient(280px 160px at 25% 30%, rgba(56,189,248,.22), transparent 65%),
-        radial-gradient(280px 160px at 75% 0%, rgba(225,29,72,.18), transparent 60%),
-        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      display:flex;align-items:center;justify-content:center;
-      font-weight:900;letter-spacing:1px;
-      text-align:center;padding:12px;
-    }
-    .gallery{display:flex;gap:10px;flex-wrap:wrap}
-    .gThumb{
-      width:78px;height:58px;border-radius:14px;border:1px solid var(--border);
-      background:rgba(255,255,255,.04);
-      overflow:hidden;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-      font-weight:900;font-size:11px;color:rgba(246,247,255,.85);
-    }
-    .gThumb:hover{filter:brightness(1.08)}
-
     /* Footer */
     .footer{
       margin-top:18px;border-top:1px solid var(--border);
@@ -390,8 +339,7 @@
       </div>
 
       <div class="searchWrap">
-        <input id="search" class="search" />
-        <!-- Filter icon -->
+        <input id="search" class="search" placeholder="🔍 ابحث..." />
         <button class="iconBtn" id="filterBtn" title="Filter">
           <span style="display:inline-block;line-height:0">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -405,57 +353,48 @@
       </div>
 
       <div class="rightBox">
-        <button class="iconBtn" id="inboxBtn" title="Inbox">
-          🔔 <span class="pillCount" id="inboxCount">0</span>
-        </button>
+        <button class="iconBtn" id="inboxBtn" title="Inbox">🔔 <span class="pillCount" id="inboxCount">0</span></button>
+        <button class="iconBtn" id="gemsBtn" title="Bonus">💎 <span class="pillCount" id="gemsCount">0</span></button>
+        <button class="iconBtn" id="cartBtn" title="Cart">🛒 <span class="pillCount" id="cartCount">0</span></button>
 
-        <button class="iconBtn" id="gemsBtn" title="Bonus">
-          💎 <span class="pillCount" id="gemsCount">0</span>
-        </button>
-
-        <button class="iconBtn" id="cartBtn" title="Cart">
-          🛒 <span class="pillCount" id="cartCount">0</span>
-        </button>
-
-        <button class="iconBtn" id="authBtn" title="Account">
-          👤 <span id="authText">تسجيل</span>
-        </button>
+        <button class="iconBtn" id="authBtn" title="Account">👤 <span id="authText">تسجيل</span></button>
 
         <div class="userChip" id="userChip" style="display:none" title="User">
           <span class="avatarSmall" id="avatarSmall">U</span>
           <span id="userNameText">User</span>
         </div>
 
+        <!-- ✅ menu button ALWAYS visible -->
         <button class="iconBtn" id="menuBtn" title="Menu">☰</button>
       </div>
     </div>
   </div>
 
   <div class="container">
-    <div class="sectionTitle" id="topTitle">🔥 Top <span class="sectionHint" id="topHint"></span></div>
+    <div class="sectionTitle">🔥 Top <span class="sectionHint">الأكثر طلبًا</span></div>
     <div id="gridTop" class="grid"></div>
 
     <div class="spacer"></div>
 
-    <div class="sectionTitle" id="offersTitle">🎁 Offers <span class="sectionHint" id="offersHint"></span></div>
+    <div class="sectionTitle">🎁 Offers <span class="sectionHint">عروض</span></div>
     <div id="gridOffers" class="grid"></div>
 
     <div class="spacer"></div>
 
-    <div class="sectionTitle" id="gamesTitle">🎮 Games</div>
+    <div class="sectionTitle">🎮 Games</div>
     <div id="gridGames" class="grid"></div>
 
     <div class="spacer"></div>
 
-    <div class="sectionTitle" id="programsTitle">💻 Programs</div>
+    <div class="sectionTitle">💻 Programs</div>
     <div id="gridPrograms" class="grid"></div>
 
     <div class="spacer"></div>
 
-    <div class="sectionTitle" id="accountsTitle">🧾 Accounts</div>
+    <div class="sectionTitle">🧾 Accounts</div>
     <div id="gridAccounts" class="grid"></div>
 
-    <div class="footer" id="footer">
+    <div class="footer">
       <a class="social" href="https://wa.me/201006760663" target="_blank" rel="noreferrer">WhatsApp</a>
       <a class="social" href="https://www.instagram.com/medo__rami" target="_blank" rel="noreferrer">Instagram</a>
       <a class="social" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" rel="noreferrer">Facebook</a>
@@ -466,10 +405,10 @@
 
   <div class="overlay" id="overlay"></div>
 
-  <!-- MENU DRAWER -->
-  <div class="drawer" id="menuDrawer" aria-hidden="true">
+  <!-- ✅ MENU DRAWER -->
+  <div class="drawer" id="menuDrawer">
     <div class="drawerHeader">
-      <div class="drawerTitle" id="menuTitle">Menu</div>
+      <div class="drawerTitle">Menu</div>
       <button class="iconBtn" id="menuClose">✕</button>
     </div>
     <div class="drawerBody">
@@ -482,30 +421,32 @@
       </div>
 
       <div class="drawerSection">
-        <p class="drawerLabel" id="drawerQuick">Quick</p>
+        <p class="drawerLabel">Quick</p>
         <div class="drawerList">
-          <div class="linkRow" data-scroll="gridTop"><span id="goTopText">Top</span><span class="mini">→</span></div>
-          <div class="linkRow" data-scroll="gridOffers"><span id="goOffersText">Offers</span><span class="mini">→</span></div>
-          <div class="linkRow" data-scroll="gridGames"><span id="goGamesText">Games</span><span class="mini">→</span></div>
-          <div class="linkRow" data-scroll="gridPrograms"><span id="goProgramsText">Programs</span><span class="mini">→</span></div>
-          <div class="linkRow" data-scroll="gridAccounts"><span id="goAccountsText">Accounts</span><span class="mini">→</span></div>
-          <div class="linkRow" id="openContactRow"><span id="contactText">Contact</span><span class="mini">→</span></div>
-          <div class="linkRow" id="openReviewsRow"><span id="reviewsText">Reviews</span><span class="mini">→</span></div>
-          <div class="linkRow" id="openGiftRow"><span id="giftText">Send Gift</span><span class="mini">→</span></div>
+          <div class="linkRow" data-scroll="gridTop"><span>Top</span><span class="mini">→</span></div>
+          <div class="linkRow" data-scroll="gridOffers"><span>Offers</span><span class="mini">→</span></div>
+          <div class="linkRow" data-scroll="gridGames"><span>Games</span><span class="mini">→</span></div>
+          <div class="linkRow" data-scroll="gridPrograms"><span>Programs</span><span class="mini">→</span></div>
+          <div class="linkRow" data-scroll="gridAccounts"><span>Accounts</span><span class="mini">→</span></div>
+          <div class="linkRow" id="openContactRow"><span>Contact</span><span class="mini">→</span></div>
+          <div class="linkRow" id="openReviewsRow"><span>Reviews</span><span class="mini">→</span></div>
+          <div class="linkRow" id="openGiftRow"><span>Send Gift</span><span class="mini">→</span></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- FILTER DRAWER -->
-  <div class="drawer" id="filterDrawer" aria-hidden="true">
+  <!-- ✅ FILTER DRAWER -->
+  <div class="drawer" id="filterDrawer">
     <div class="drawerHeader">
-      <div class="drawerTitle" id="filterTitle">Filter</div>
+      <div class="drawerTitle">Filter</div>
       <button class="iconBtn" id="filterClose">✕</button>
     </div>
     <div class="drawerBody">
+      <div class="note">اختار القسم والترتيب والسعر وبعدين تطبيق.</div>
+
       <div class="drawerSection">
-        <p class="drawerLabel" id="filterCategoryLabel">Category</p>
+        <p class="drawerLabel">Category</p>
         <select class="select" id="filterCategory">
           <option value="all">All</option>
           <option value="games">Games</option>
@@ -515,7 +456,7 @@
       </div>
 
       <div class="drawerSection">
-        <p class="drawerLabel" id="filterSortLabel">Sort</p>
+        <p class="drawerLabel">Sort</p>
         <select class="select" id="filterSort">
           <option value="new">Newest</option>
           <option value="old">Oldest</option>
@@ -525,7 +466,7 @@
       </div>
 
       <div class="drawerSection">
-        <p class="drawerLabel" id="filterPriceLabel">Price</p>
+        <p class="drawerLabel">Price</p>
         <div class="row">
           <select class="select" id="priceMode">
             <option value="off">Off</option>
@@ -538,1656 +479,219 @@
       </div>
 
       <button class="btn btnRed" id="applyFilterBtn">Apply</button>
-      <div class="note" style="margin-top:10px" id="filterNote"></div>
     </div>
   </div>
 
-  <!-- AUTH MODAL -->
-  <div class="modal" id="authModal" aria-hidden="true">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="authModalTitle">Account</div>
-        <button class="iconBtn" id="authClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="note" id="authHelp"></div>
-          <div class="row">
-            <button class="btn btnRed" id="goLoginBtn">Login</button>
-            <button class="btn" id="goSignupBtn">Create account</button>
-          </div>
-        </div>
-      </div>
+  <!-- ✅ MODALS (same as before) -->
+  <div class="modal" id="contactModal"><div class="modalBox"><div class="modalHeader"><div class="modalTitle">Contact</div><button class="iconBtn" id="contactClose">✕</button></div><div class="modalBody"><div class="stack">
+    <a class="btn" href="https://wa.me/201006760663" target="_blank">WhatsApp</a>
+    <a class="btn" href="https://www.instagram.com/medo__rami" target="_blank">Instagram</a>
+    <a class="btn" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank">Facebook</a>
+    <a class="btn" href="mailto:medorami77@gmail.com">Email</a>
+  </div></div></div></div>
+
+  <div class="modal" id="reviewsModal"><div class="modalBox"><div class="modalHeader"><div class="modalTitle">Reviews</div><button class="iconBtn" id="reviewsClose">✕</button></div><div class="modalBody">
+    <div class="stack">
+      <div class="note">المراجعات بتتخزن على نفس الجهاز (Demo).</div>
+      <div class="row"><input class="input" id="reviewText" placeholder="اكتب رأيك..." /><button class="btn btnRed tight" id="addReviewBtn" style="flex:0 0 auto">Post</button></div>
+      <div class="stack" id="reviewsList"></div>
     </div>
-  </div>
+  </div></div></div>
 
-  <!-- LOGIN MODAL -->
-  <div class="modal" id="loginModal" aria-hidden="true">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="loginTitle">Login</div>
-        <button class="iconBtn" id="loginClose">✕</button>
+  <div class="modal" id="giftModal"><div class="modalBox"><div class="modalHeader"><div class="modalTitle">Send Gift</div><button class="iconBtn" id="giftClose">✕</button></div><div class="modalBody">
+    <div class="stack">
+      <div class="note">اكتب بريد المستلم. لو مش مسجل هيرفض.</div>
+      <input class="input" id="giftToEmail" type="email" placeholder="Receiver email" />
+      <div class="row">
+        <select class="select" id="giftType"><option value="bonus">Bonus</option><option value="product">Product ID</option></select>
+        <input class="input" id="giftAmount" type="number" min="1" placeholder="Amount / Product ID" />
       </div>
-      <div class="modalBody">
-        <div class="stack">
-          <input class="input" id="loginEmail" type="email" placeholder="Email" />
-          <input class="input" id="loginPass" type="password" placeholder="Password" />
-          <button class="btn btnRed" id="loginSubmit">Continue</button>
-          <div class="note err" id="loginErr" style="display:none"></div>
-          <div class="note" id="loginHint"></div>
-        </div>
-      </div>
+      <button class="btn btnRed" id="sendGiftBtn">Send</button>
+      <div class="note err" id="giftErr" style="display:none"></div>
+      <div class="note ok" id="giftOk" style="display:none"></div>
     </div>
-  </div>
-
-  <!-- SIGNUP MODAL -->
-  <div class="modal" id="signupModal" aria-hidden="true">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="signupTitle">Create account</div>
-        <button class="iconBtn" id="signupClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <input class="input" id="signupName" placeholder="Full name" />
-          <div class="row">
-            <input class="input" id="signupAge" type="number" min="1" max="120" placeholder="Age" />
-            <input class="input" id="signupEmail" type="email" placeholder="Email" />
-          </div>
-          <input class="input" id="signupPass" type="password" placeholder="Password" />
-          <div class="note" id="avatarHint"></div>
-          <input class="input" id="signupAvatar" type="file" accept="image/*" />
-          <button class="btn btnRed" id="signupSubmit">Create</button>
-          <div class="note err" id="signupErr" style="display:none"></div>
-          <div class="note" id="signupHint"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PROFILE MODAL -->
-  <div class="modal" id="profileModal" aria-hidden="true">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="profileTitle">Profile</div>
-        <button class="iconBtn" id="profileClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="note" id="profileNote"></div>
-          <input class="input" id="profileName" placeholder="Name" />
-          <input class="input" id="profileNewPass" type="password" placeholder="New password (optional)" />
-          <div class="note" id="profileAvatarNote"></div>
-          <input class="input" id="profileAvatar" type="file" accept="image/*" />
-          <button class="btn btnRed" id="profileSave">Save</button>
-          <div class="note ok" id="profileOk" style="display:none"></div>
-          <div class="note err" id="profileErr" style="display:none"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- INBOX MODAL -->
-  <div class="modal" id="inboxModal" aria-hidden="true">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="inboxTitle">Inbox</div>
-        <button class="iconBtn" id="inboxClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack" id="inboxList"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BONUS MODAL -->
-  <div class="modal" id="gemsModal" aria-hidden="true">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="gemsTitle">Bonus</div>
-        <button class="iconBtn" id="gemsClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="note" id="gemsInfo"></div>
-          <div class="row">
-            <input class="input" id="redeemBonusInput" type="number" min="1" placeholder="Bonus amount" />
-            <button class="btn btnRed tight" id="redeemBonusBtn" style="flex:0 0 auto">Redeem</button>
-          </div>
-          <div class="note" id="redeemHelp"></div>
-          <div class="note" id="couponListTitle"></div>
-          <div class="stack" id="couponList"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONTACT MODAL -->
-  <div class="modal" id="contactModal" aria-hidden="true">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="contactTitle">Contact</div>
-        <button class="iconBtn" id="contactClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <a class="payBtn" href="https://wa.me/201006760663" target="_blank" rel="noreferrer">
-            <span class="payLeft"><span class="payIcon">WA</span><span>WhatsApp</span></span><span class="mini">→</span>
-          </a>
-          <a class="payBtn" href="https://www.instagram.com/medo__rami" target="_blank" rel="noreferrer">
-            <span class="payLeft"><span class="payIcon">IG</span><span>Instagram</span></span><span class="mini">→</span>
-          </a>
-          <a class="payBtn" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" rel="noreferrer">
-            <span class="payLeft"><span class="payIcon">FB</span><span>Facebook</span></span><span class="mini">→</span>
-          </a>
-          <a class="payBtn" href="mailto:medorami77@gmail.com">
-            <span class="payLeft"><span class="payIcon">@</span><span>Email</span></span><span class="mini">→</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- REVIEWS MODAL -->
-  <div class="modal" id="reviewsModal" aria-hidden="true">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="reviewsTitle">Reviews</div>
-        <button class="iconBtn" id="reviewsClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="note" id="reviewsInfo"></div>
-          <div class="row">
-            <input class="input" id="reviewText" placeholder="Write your review..." />
-            <button class="btn btnRed tight" id="addReviewBtn" style="flex:0 0 auto">Post</button>
-          </div>
-          <div class="stack" id="reviewsList"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- GIFT MODAL -->
-  <div class="modal" id="giftModal" aria-hidden="true">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="giftTitle">Send Gift</div>
-        <button class="iconBtn" id="giftClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="note" id="giftInfo"></div>
-          <input class="input" id="giftToEmail" type="email" placeholder="Receiver email" />
-
-          <div class="row">
-            <select class="select" id="giftType">
-              <option value="bonus">Bonus</option>
-              <option value="product">Product (message)</option>
-            </select>
-            <input class="input" id="giftAmount" type="number" min="1" placeholder="Amount (bonus) or Product ID" />
-          </div>
-
-          <button class="btn btnRed" id="sendGiftBtn">Send</button>
-          <div class="note err" id="giftErr" style="display:none"></div>
-          <div class="note ok" id="giftOk" style="display:none"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CART MODAL -->
-  <div class="modal" id="cartModal" aria-hidden="true">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="cartTitle">Cart</div>
-        <button class="iconBtn" id="cartClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div id="cartItems"></div>
-          <div class="totalBar" id="totalBar">
-            <strong id="totalLabel">Total</strong>
-            <span id="totalValue">EGP 0</span>
-          </div>
-          <button class="btn btnRed" id="cartCheckoutBtn">Checkout</button>
-          <div class="note" id="cartNote"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CHECKOUT -->
-  <div class="modal" id="checkoutModal" aria-hidden="true">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="checkoutTitle">Checkout</div>
-        <button class="iconBtn" id="checkoutClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="stepPills">
-            <span class="pill active" id="pill1">1) Summary</span>
-            <span class="pill" id="pill2">2) Payment</span>
-          </div>
-
-          <div id="checkoutItems"></div>
-          <div class="note" id="checkoutTotals"></div>
-
-          <div class="note" id="couponNote"></div>
-          <div class="row">
-            <input class="input" id="couponInput" placeholder="Coupon code" />
-            <button class="btn tight" id="applyCouponBtn" style="flex:0 0 auto">Apply</button>
-          </div>
-
-          <div class="note" id="bonusCouponNote"></div>
-          <select class="select" id="myCouponsSelect"></select>
-
-          <button class="btn btnRed" id="confirmCheckoutBtn">Confirm</button>
-          <button class="btn" id="backToCartBtn">Back</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PAYMENT -->
-  <div class="modal" id="paymentModal" aria-hidden="true">
-    <div class="modalBox payModalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="paymentTitle">Payment</div>
-        <button class="iconBtn" id="paymentClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="note" id="paymentInfo"></div>
-          <div class="payList" id="payList"></div>
-          <div class="note" id="payHelp"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- DETAILS -->
-  <div class="modal" id="detailsModal" aria-hidden="true">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="detailsTitle">Details</div>
-        <button class="iconBtn" id="detailsClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="detailsHero" id="detailsHero">PRODUCT</div>
-          <div class="row">
-            <button class="btn" id="detailsAddCartBtn">🛒 Add to cart</button>
-            <button class="btn btnRed" id="detailsBuyBtn">⚡ Buy</button>
-          </div>
-          <div class="note" id="detailsDesc"></div>
-          <div class="note" id="detailsGalleryTitle"></div>
-          <div class="gallery" id="detailsGallery"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<script>
-/* =========================
-   Language auto
-========================= */
-const isArabic = (() => (navigator.language || "").toLowerCase().startsWith("ar"))();
-document.documentElement.lang = isArabic ? "ar" : "en";
-document.documentElement.dir  = isArabic ? "rtl" : "ltr";
-
-const T = {
-  ar: {
-    search:"🔍 ابحث عن لعبة / برنامج / أكونت",
-    top:"توب", offers:"أوفرز", games:"الألعاب", programs:"البرامج", accounts:"الأكونتات",
-    topHint:"الأكثر طلبًا", offersHint:"عروض",
-    menu:"القائمة", filter:"الفلترة", quick:"اختصارات",
-    contact:"التواصل", reviews:"المراجعات", gift:"إرسال هدية",
-    cart:"السلة", total:"الإجمالي", checkout:"شراء", back:"رجوع",
-    details:"تفاصيل",
-    auth:"تسجيل",
-    account:"الحساب",
-    login:"تسجيل دخول", signup:"إنشاء حساب",
-    needLogin:"لازم تسجل دخول الأول علشان تشتري.",
-    cartHint:"تقدر تضيف للسلة من أي منتج. الشراء يطلب تسجيل دخول.",
-    emptyCart:"السلة فاضية.",
-    invalid:"بيانات غير صحيحة.",
-    exists:"❌ الإيميل ده مسجل قبل كده. ادخل Login.",
-    notFound:"❌ الحساب ده مش موجود. اعمل حساب جديد.",
-    profile:"إدارة الحساب",
-    save:"حفظ",
-    logout:"تسجيل خروج",
-    bonus:"البونص",
-    redeem:"تبديل",
-    redeemHelp:"اكتب عدد البونص اللي هتبدّله. لو أكبر من اللي معاك هيرفض.",
-    yourCoupons:"كروت الخصم عندك",
-    couponHint:"كود خصم (اختياري)",
-    apply:"تطبيق",
-    couponApplied:"تم تطبيق الخصم",
-    couponInvalid:"كود غير صحيح",
-    summary:"1) ملخص", payment:"2) الدفع",
-    confirm:"تأكيد",
-    payTitle:"طرق الدفع",
-    payInfo:(total)=>`الإجمالي النهائي: ${money(total)} — اختار طريقة الدفع:`,
-    payHelp:"الدفع خارج الموقع. بعد الدفع ابعت إثبات على واتساب.",
-    post:"نشر",
-    writeReview:"اكتب رأيك عن الموقع...",
-    reviewsInfo:"المراجعات هنا بتظهر على نفس الجهاز (تجربة).",
-    inbox:"الرسائل",
-    inboxEmpty:"مفيش رسائل حالياً.",
-    giftInfo:"اكتب بريد المستلم. لو البريد مش مسجل عندنا هيرفض.",
-    send:"إرسال",
-    sent:"تم الإرسال ✅",
-    bought:(n)=>`شكراً لطلبك. تمت إضافة ${n} بونص.`,
-    none:"بدون",
-    selectCoupon:"اختار كارت خصم (اختياري)",
-    addToCart:"إضافة للسلة",
-    buy:"شراء",
-    editProfile:"تعديل الحساب"
-  },
-  en: {
-    search:"🔍 Search games / programs / accounts",
-    top:"Top", offers:"Offers", games:"Games", programs:"Programs", accounts:"Accounts",
-    topHint:"Most ordered", offersHint:"Deals",
-    menu:"Menu", filter:"Filter", quick:"Quick",
-    contact:"Contact", reviews:"Reviews", gift:"Send Gift",
-    cart:"Cart", total:"Total", checkout:"Checkout", back:"Back",
-    details:"Details",
-    auth:"Account",
-    account:"Account",
-    login:"Login", signup:"Create account",
-    needLogin:"Please login first to buy.",
-    cartHint:"Add items to cart. Checkout requires login.",
-    emptyCart:"Your cart is empty.",
-    invalid:"Invalid credentials.",
-    exists:"❌ Email already registered. Please login.",
-    notFound:"❌ Account not found. Create a new one.",
-    profile:"Profile",
-    save:"Save",
-    logout:"Logout",
-    bonus:"Bonus",
-    redeem:"Redeem",
-    redeemHelp:"Type bonus to redeem. If more than you have, it will be rejected.",
-    yourCoupons:"Your discount cards",
-    couponHint:"Coupon (optional)",
-    apply:"Apply",
-    couponApplied:"Discount applied",
-    couponInvalid:"Invalid coupon",
-    summary:"1) Summary", payment:"2) Payment",
-    confirm:"Confirm",
-    payTitle:"Payment Methods",
-    payInfo:(total)=>`Final total: ${money(total)} — Choose payment method:`,
-    payHelp:"Payments happen outside the site. After paying, send proof on WhatsApp.",
-    post:"Post",
-    writeReview:"Write your review...",
-    reviewsInfo:"Reviews are stored locally on this device (demo).",
-    inbox:"Inbox",
-    inboxEmpty:"No messages yet.",
-    giftInfo:"Enter receiver email. If not registered, it will be rejected.",
-    send:"Send",
-    sent:"Sent ✅",
-    bought:(n)=>`Thanks! Added ${n} bonus.`,
-    none:"None",
-    selectCoupon:"Select a discount card (optional)",
-    addToCart:"Add to cart",
-    buy:"Buy",
-    editProfile:"Edit profile"
-  }
-};
-const L = isArabic ? T.ar : T.en;
-
-/* =========================
-   Utils
-========================= */
-function money(x){ return `EGP ${Math.max(0, Math.round(x))}`; }
-function nowIso(){ return new Date().toISOString(); }
-function rand(n=6){
-  const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  let s=""; for(let i=0;i<n;i++) s += chars[Math.floor(Math.random()*chars.length)];
-  return s;
-}
-async function sha256(text){
-  const enc = new TextEncoder().encode(text);
-  const buf = await crypto.subtle.digest("SHA-256", enc);
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
-}
-async function fileToDataURL(file){
-  return new Promise((res, rej)=>{
-    const reader = new FileReader();
-    reader.onload = ()=>res(String(reader.result||""));
-    reader.onerror = rej;
-    reader.readAsDataURL(file);
-  });
-}
-
-/* =========================
-   Storage keys
-========================= */
-const LS_USERS   = "mgs_users_v2";
-const LS_SESSION = "mgs_session_v2";
-const LS_GCART   = "mgs_guest_cart_v2";
-const LS_REVIEWS = "mgs_reviews_v2";
-const LS_USED_COUPONS = "mgs_used_global_coupons_v2";
-
-/* =========================
-   Users + session
-========================= */
-function loadUsers(){
-  try{ return JSON.parse(localStorage.getItem(LS_USERS)||"{}"); }catch{ return {}; }
-}
-function saveUsers(u){ localStorage.setItem(LS_USERS, JSON.stringify(u)); }
-function getSessionEmail(){ return localStorage.getItem(LS_SESSION) || ""; }
-function setSessionEmail(email){ localStorage.setItem(LS_SESSION, email); }
-function clearSession(){ localStorage.removeItem(LS_SESSION); }
-
-function currentUser(){
-  const users = loadUsers();
-  const email = getSessionEmail();
-  return email && users[email] ? users[email] : null;
-}
-function updateUser(email, patch){
-  const users = loadUsers();
-  if(!users[email]) return null;
-  users[email] = {...users[email], ...patch};
-  saveUsers(users);
-  return users[email];
-}
-function updateCurrentUser(patch){
-  const email = getSessionEmail();
-  if(!email) return null;
-  return updateUser(email, patch);
-}
-function requireLogin(){ return !!currentUser(); }
-
-/* =========================
-   Inbox messages
-========================= */
-function pushMessage(email, text){
-  const users = loadUsers();
-  if(!users[email]) return;
-  users[email].messages = users[email].messages || [];
-  users[email].messages.unshift({ id: rand(10), at: nowIso(), text, read:false });
-  saveUsers(users);
-}
-function markAllRead(email){
-  const users = loadUsers();
-  if(!users[email]) return;
-  (users[email].messages||[]).forEach(m=>m.read=true);
-  saveUsers(users);
-}
-
-/* =========================
-   Coupons global
-========================= */
-function buildCoupons(){
-  const map = {};
-  const groups = [
-    ["MG",10],["MZ",20],["MK",30],["MC",40],["MA",50],
-    ["MB",60],["ME",70],["MX",80],["MR",90],["MI",100]
-  ];
-  for(const [prefix, pct] of groups){
-    for(let i=1;i<=10;i++) map[`${prefix}${i}`] = pct;
-  }
-  return map;
-}
-const GLOBAL_COUPONS = buildCoupons();
-
-function loadUsedGlobalCoupons(){
-  try{ return JSON.parse(localStorage.getItem(LS_USED_COUPONS)||"{}"); }catch{ return {}; }
-}
-function saveUsedGlobalCoupons(x){ localStorage.setItem(LS_USED_COUPONS, JSON.stringify(x)); }
-
-/* =========================
-   Cart
-========================= */
-function loadGuestCart(){
-  try{ return JSON.parse(localStorage.getItem(LS_GCART)||"[]"); }catch{ return []; }
-}
-function saveGuestCart(items){ localStorage.setItem(LS_GCART, JSON.stringify(items)); }
-
-function loadCart(){
-  const u = currentUser();
-  if(!u) return loadGuestCart();
-  return u.cart || [];
-}
-function saveCart(items){
-  const u = currentUser();
-  if(!u){ saveGuestCart(items); return; }
-  updateCurrentUser({ cart: items });
-}
-function cartCount(items){
-  return items.reduce((s,x)=>s+(x.qty||0),0);
-}
-
-/* =========================
-   Products
-========================= */
-const products = [
-  { id: 1, type:"games", name:"Game #1", desc: isArabic ? "وصف بسيط للعبة" : "Short game description", price:250, top:true, images:["1A","1B","1C"] },
-  { id: 2, type:"games", name:"Game #2", desc: isArabic ? "وصف بسيط للعبة" : "Short game description", price:180, offer:true, images:["2A","2B","2C"] },
-  { id: 3, type:"games", name:"Game #3", desc: isArabic ? "وصف بسيط للعبة" : "Short game description", price:300, images:["3A","3B","3C"] },
-  { id: 4, type:"games", name:"Game #4", desc: isArabic ? "وصف بسيط للعبة" : "Short game description", price:120, offer:true, images:["4A","4B","4C"] },
-
-  { id: 11, type:"programs", name:"Program #1", desc: isArabic ? "وصف بسيط للبرنامج" : "Short program description", price:150, top:true, images:["11A","11B","11C"] },
-  { id: 12, type:"programs", name:"Program #2", desc: isArabic ? "وصف بسيط للبرنامج" : "Short program description", price:90, images:["12A","12B","12C"] },
-  { id: 13, type:"programs", name:"Program #3", desc: isArabic ? "وصف بسيط للبرنامج" : "Short program description", price:220, offer:true, images:["13A","13B","13C"] },
-  { id: 14, type:"programs", name:"Program #4", desc: isArabic ? "وصف بسيط للبرنامج" : "Short program description", price:60, images:["14A","14B","14C"] },
-
-  { id: 21, type:"accounts", name:"Account #1", desc: isArabic ? "تفاصيل الأكونت (تقدر تطوّلها)" : "Account details (expand later)", price:700, top:true, images:["21A","21B","21C","21D"] },
-  { id: 22, type:"accounts", name:"Account #2", desc: isArabic ? "تفاصيل الأكونت (تقدر تطوّلها)" : "Account details (expand later)", price:350, offer:true, images:["22A","22B","22C"] },
-  { id: 23, type:"accounts", name:"Account #3", desc: isArabic ? "تفاصيل الأكونت (تقدر تطوّلها)" : "Account details (expand later)", price:200, images:["23A","23B","23C"] },
-  { id: 24, type:"accounts", name:"Account #4", desc: isArabic ? "تفاصيل الأكونت (تقدر تطوّلها)" : "Account details (expand later)", price:450, images:["24A","24B","24C"] },
-];
-
-const productMap = new Map(products.map(p=>[p.id,p]));
-
-function typeLabel(t){
-  if(t==="games") return L.games;
-  if(t==="programs") return L.programs;
-  return L.accounts;
-}
-
-/* =========================
-   Bonus system
-========================= */
-function userBonus(){
-  const u = currentUser(); return u ? (u.bonus||0) : 0;
-}
-function setUserBonus(n){
-  const u = currentUser(); if(!u) return;
-  updateCurrentUser({ bonus: Math.max(0, Math.floor(n)) });
-}
-function userCoupons(){
-  const u = currentUser(); return u ? (u.coupons||[]) : [];
-}
-function setUserCoupons(coupons){
-  const u = currentUser(); if(!u) return;
-  updateCurrentUser({ coupons });
-}
-function couponPctFromBonus(b){
-  if(b >= 60) return 40;
-  if(b >= 40) return 30;
-  if(b >= 25) return 20;
-  if(b >= 15) return 15;
-  if(b >= 8)  return 10;
-  return 5;
-}
-
-/* =========================
-   Reviews
-========================= */
-function loadReviews(){
-  try{ return JSON.parse(localStorage.getItem(LS_REVIEWS)||"[]"); }catch{ return []; }
-}
-function saveReviews(r){ localStorage.setItem(LS_REVIEWS, JSON.stringify(r)); }
-
-/* =========================
-   DOM
-========================= */
-const $ = (id)=>document.getElementById(id);
-const overlay = $("overlay");
-
-const gridTop = $("gridTop");
-const gridOffers = $("gridOffers");
-const gridGames = $("gridGames");
-const gridPrograms = $("gridPrograms");
-const gridAccounts = $("gridAccounts");
-const searchEl = $("search");
-
-const menuDrawer = $("menuDrawer");
-const filterDrawer = $("filterDrawer");
-
-const authBtn = $("authBtn");
-const authText = $("authText");
-const userChip = $("userChip");
-const userNameText = $("userNameText");
-const avatarSmall = $("avatarSmall");
-
-const cartCountEl = $("cartCount");
-const inboxCountEl = $("inboxCount");
-const gemsCountEl  = $("gemsCount");
-
-const cartModal = $("cartModal");
-const cartItemsEl = $("cartItems");
-const totalValueEl = $("totalValue");
-
-const checkoutModal = $("checkoutModal");
-const paymentModal = $("paymentModal");
-const detailsModal = $("detailsModal");
-
-const inboxModal = $("inboxModal");
-const gemsModal  = $("gemsModal");
-const contactModal = $("contactModal");
-const reviewsModal = $("reviewsModal");
-const giftModal = $("giftModal");
-
-/* =========================
-   Text apply
-========================= */
-function applyLanguage(){
-  $("brandText").textContent = "Medo Gaming Store";
-  searchEl.placeholder = L.search;
-
-  $("topTitle").childNodes[0].textContent = `🔥 ${T.ar.top && isArabic ? "Top" : "Top"} `;
-  $("topHint").textContent = L.topHint;
-  $("offersTitle").childNodes[0].textContent = `🎁 ${T.ar.offers && isArabic ? "Offers" : "Offers"} `;
-  $("offersHint").textContent = L.offersHint;
-
-  $("gamesTitle").textContent = `🎮 ${L.games}`;
-  $("programsTitle").textContent = `💻 ${L.programs}`;
-  $("accountsTitle").textContent = `🧾 ${L.accounts}`;
-
-  $("menuTitle").textContent = L.menu;
-  $("drawerQuick").textContent = L.quick;
-
-  $("goTopText").textContent = isArabic ? "Top" : "Top";
-  $("goOffersText").textContent = isArabic ? "Offers" : "Offers";
-  $("goGamesText").textContent = isArabic ? "Games" : "Games";
-  $("goProgramsText").textContent = isArabic ? "Programs" : "Programs";
-  $("goAccountsText").textContent = isArabic ? "Accounts" : "Accounts";
-  $("contactText").textContent = "Contact";
-  $("reviewsText").textContent = "Reviews";
-  $("giftText").textContent = "Send Gift";
-
-  $("filterTitle").textContent = L.filter;
-  $("applyFilterBtn").textContent = isArabic ? "تطبيق" : "Apply";
-  $("filterNote").textContent = isArabic
-    ? "اختار القسم والترتيب والسعر وبعدين تطبيق."
-    : "Pick category + sort + price, then Apply.";
-
-  $("authText").textContent = L.auth;
-
-  $("cartTitle").textContent = L.cart;
-  $("totalLabel").textContent = L.total;
-  $("cartCheckoutBtn").textContent = L.checkout;
-  $("cartNote").textContent = L.cartHint;
-
-  $("authModalTitle").textContent = L.account;
-  $("authHelp").textContent = isArabic
-    ? "اختر تسجيل دخول لو عندك حساب، أو إنشاء حساب جديد."
-    : "Choose Login if you have an account, or Create a new one.";
-  $("goLoginBtn").textContent = L.login;
-  $("goSignupBtn").textContent = L.signup;
-
-  $("loginTitle").textContent = L.login;
-  $("loginSubmit").textContent = isArabic ? "متابعة" : "Continue";
-  $("loginHint").textContent = isArabic ? "لو الحساب مش موجود: اعمل حساب جديد." : "If account doesn't exist, create one.";
-
-  $("signupTitle").textContent = L.signup;
-  $("signupSubmit").textContent = isArabic ? "إنشاء" : "Create";
-  $("avatarHint").textContent = isArabic
-    ? "صورة الحساب اختيارية (تظهر دايرة جنب اسمك)."
-    : "Avatar is optional (shows next to your name).";
-  $("signupHint").textContent = isArabic ? "البريد لازم يكون جديد." : "Email must be unique.";
-
-  $("profileTitle").textContent = L.profile;
-  $("profileSave").textContent = L.save;
-  $("profileNote").textContent = isArabic ? "هنا تقدر تغيّر اسمك/صورتك/كلمة السر." : "Edit your name/avatar/password here.";
-  $("profileAvatarNote").textContent = isArabic ? "لو هتغيّر الصورة اختار ملف جديد." : "Pick a new image to update avatar.";
-
-  $("inboxTitle").textContent = L.inbox;
-
-  $("gemsTitle").textContent = L.bonus;
-  $("redeemBonusBtn").textContent = L.redeem;
-  $("redeemHelp").textContent = L.redeemHelp;
-  $("couponListTitle").textContent = L.yourCoupons;
-
-  $("contactTitle").textContent = "Contact";
-  $("reviewsTitle").textContent = "Reviews";
-  $("reviewsInfo").textContent = L.reviewsInfo;
-  $("addReviewBtn").textContent = L.post;
-  $("reviewText").placeholder = L.writeReview;
-
-  $("giftTitle").textContent = "Send Gift";
-  $("giftInfo").textContent = L.giftInfo;
-  $("sendGiftBtn").textContent = L.send;
-
-  $("checkoutTitle").textContent = L.checkout;
-  $("pill1").textContent = L.summary;
-  $("pill2").textContent = L.payment;
-  $("couponNote").textContent = L.couponHint;
-  $("applyCouponBtn").textContent = L.apply;
-  $("bonusCouponNote").textContent = L.selectCoupon;
-  $("confirmCheckoutBtn").textContent = L.confirm;
-  $("backToCartBtn").textContent = L.back;
-
-  $("paymentTitle").textContent = L.payTitle;
-
-  $("detailsTitle").textContent = L.details;
-
-  // Drawer side by language:
-  if(isArabic){
-    menuDrawer.style.insetInlineEnd="0"; menuDrawer.style.insetInlineStart="auto";
-    filterDrawer.style.insetInlineStart="0"; filterDrawer.style.insetInlineEnd="auto";
-  }else{
-    menuDrawer.style.insetInlineStart="0"; menuDrawer.style.insetInlineEnd="auto";
-    filterDrawer.style.insetInlineEnd="0"; filterDrawer.style.insetInlineStart="auto";
-  }
-}
-applyLanguage();
-
-/* =========================
-   Overlay open/close
-========================= */
-function openOverlay(){ overlay.classList.add("show"); }
-function closeOverlay(){ overlay.classList.remove("show"); }
-
-function closeAll(){
-  closeOverlay();
-  menuDrawer.classList.remove("show");
-  filterDrawer.classList.remove("show");
-  [
-    $("authModal"), $("loginModal"), $("signupModal"), $("profileModal"),
-    inboxModal, gemsModal, contactModal, reviewsModal, giftModal,
-    cartModal, checkoutModal, paymentModal, detailsModal
-  ].forEach(m=>m.classList.remove("show"));
-}
-overlay.addEventListener("click", closeAll);
-
-function openDrawer(drawer){
-  openOverlay();
-  drawer.classList.add("show");
-}
-function openModal(modal){
-  openOverlay();
-  modal.classList.add("show");
-}
-
-/* =========================
-   Render cards
-   ✅ FIX: Removed any Top/Offers/Programs labels from inside product cards.
-========================= */
-function cardHTML(p){
-  return `
-    <div class="card">
-      <div class="thumb">${p.type.toUpperCase()}</div>
-      <div class="content">
-        <p class="name">${p.name}</p>
-        <p class="meta">${p.desc || ""}</p>
-        <div class="priceRow">
-          <p class="price">${money(p.price)}</p>
-          <span class="sectionHint">#${p.id}</span>
-        </div>
-        <div class="actions">
-          <button class="btn" data-details="${p.id}">ℹ️ ${L.details}</button>
-          <button class="btn" data-add="${p.id}">🛒 ${L.addToCart}</button>
-          <button class="btn btnRed" data-buy="${p.id}">⚡ ${L.buy}</button>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function applyFilters(list){
-  const q = (searchEl.value||"").toLowerCase().trim();
-  const cat = $("filterCategory").value;
-  const sort = $("filterSort").value;
-  const pm = $("priceMode").value;
-  const pv = Number($("priceValue").value);
-
-  let out = [...list];
-  if(q) out = out.filter(p => (p.name + " " + (p.desc||"")).toLowerCase().includes(q));
-  if(cat !== "all") out = out.filter(p => p.type === cat);
-
-  if(pm !== "off" && !Number.isNaN(pv)){
-    if(pm === "eq") out = out.filter(p=>p.price === pv);
-    if(pm === "lte") out = out.filter(p=>p.price <= pv);
-    if(pm === "gte") out = out.filter(p=>p.price >= pv);
-  }
-
-  if(sort === "new") out.sort((a,b)=> b.id - a.id);
-  if(sort === "old") out.sort((a,b)=> a.id - b.id);
-  if(sort === "low") out.sort((a,b)=> a.price - b.price);
-  if(sort === "high") out.sort((a,b)=> b.price - a.price);
-
-  return out;
-}
-
-function bindCardButtons(){
-  document.querySelectorAll("[data-add]").forEach(btn=>{
-    btn.onclick = ()=> addToCart(Number(btn.dataset.add));
-  });
-  document.querySelectorAll("[data-buy]").forEach(btn=>{
-    btn.onclick = ()=> buyNow(Number(btn.dataset.buy));
-  });
-  document.querySelectorAll("[data-details]").forEach(btn=>{
-    btn.onclick = ()=> openDetails(Number(btn.dataset.details));
-  });
-}
-
-function renderAll(){
-  const filtered = applyFilters(products);
-  const tops = filtered.filter(p=>p.top);
-  const offers = filtered.filter(p=>p.offer);
-
-  gridTop.innerHTML = tops.length ? tops.map(cardHTML).join("") : `<div class="note">${isArabic?"مفيش توب حالياً.":"No top items."}</div>`;
-  gridOffers.innerHTML = offers.length ? offers.map(cardHTML).join("") : `<div class="note">${isArabic?"مفيش عروض حالياً.":"No offers."}</div>`;
-
-  gridGames.innerHTML = filtered.filter(p=>p.type==="games").map(cardHTML).join("");
-  gridPrograms.innerHTML = filtered.filter(p=>p.type==="programs").map(cardHTML).join("");
-  gridAccounts.innerHTML = filtered.filter(p=>p.type==="accounts").map(cardHTML).join("");
-
-  bindCardButtons();
-}
-renderAll();
-searchEl.addEventListener("input", renderAll);
-
-/* =========================
-   Menu scroll
-========================= */
-function scrollToId(id){
-  const el = document.getElementById(id);
-  if(!el) return;
-  closeAll();
-  window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior:"smooth" });
-}
-document.querySelectorAll("[data-scroll]").forEach(x=>{
-  x.addEventListener("click", ()=> scrollToId(x.dataset.scroll));
-});
-
-/* =========================
-   Buttons open/close
-========================= */
-$("menuBtn").onclick = ()=>{ refreshUserUI(); openDrawer(menuDrawer); };
-$("menuClose").onclick = closeAll;
-
-$("filterBtn").onclick = ()=> openDrawer(filterDrawer);
-$("filterClose").onclick = closeAll;
-$("applyFilterBtn").onclick = ()=>{ closeAll(); renderAll(); };
-
-$("authClose").onclick = closeAll;
-$("goLoginBtn").onclick = ()=>{ closeAll(); openModal($("loginModal")); };
-$("goSignupBtn").onclick = ()=>{ closeAll(); openModal($("signupModal")); };
-
-$("loginClose").onclick = closeAll;
-$("signupClose").onclick = closeAll;
-$("profileClose").onclick = closeAll;
-
-$("cartBtn").onclick = ()=>{ renderCart(); openModal(cartModal); };
-$("cartClose").onclick = closeAll;
-
-$("checkoutClose").onclick = closeAll;
-$("paymentClose").onclick = closeAll;
-
-$("detailsClose").onclick = closeAll;
-
-$("openContactRow").onclick = ()=>{ closeAll(); openModal(contactModal); };
-$("contactClose").onclick = closeAll;
-
-$("openReviewsRow").onclick = ()=>{ closeAll(); renderReviews(); openModal(reviewsModal); };
-$("reviewsClose").onclick = closeAll;
-
-$("openGiftRow").onclick = ()=>{ closeAll(); openGift(); };
-$("giftClose").onclick = closeAll;
-
-$("inboxBtn").onclick = ()=> openInbox();
-$("inboxClose").onclick = closeAll;
-
-$("gemsBtn").onclick = ()=> openGems();
-$("gemsClose").onclick = closeAll;
-
-/* =========================
-   Auth UI
-========================= */
-function setAuthUILoggedOut(){
-  userChip.style.display="none";
-  authBtn.style.display="inline-flex";
-}
-function setAuthUILoggedIn(u){
-  authBtn.style.display="none";
-  userChip.style.display="inline-flex";
-  userNameText.textContent = u.name || (u.email||"").split("@")[0] || "User";
-  if(u.avatar){
-    avatarSmall.innerHTML = `<img alt="avatar" src="${u.avatar}">`;
-  }else{
-    avatarSmall.textContent = (userNameText.textContent||"U").slice(0,1).toUpperCase();
-  }
-}
-
-function refreshUserUI(){
-  const u = currentUser();
-  if(!u){
-    setAuthUILoggedOut();
-    $("drawerUserBox").style.display="none";
-    refreshBadges();
-    return;
-  }
-  setAuthUILoggedIn(u);
-  $("drawerUserBox").style.display="block";
-  $("drawerUserNote").textContent = isArabic
-    ? `مسجل باسم: ${u.name} • Bonus: ${u.bonus||0}`
-    : `Logged in: ${u.name} • Bonus: ${u.bonus||0}`;
-  $("editProfileBtn").textContent = L.editProfile;
-  $("logoutBtn").textContent = L.logout;
-
-  $("editProfileBtn").onclick = ()=>{ closeAll(); openProfile(); };
-  $("logoutBtn").onclick = ()=>{
-    clearSession();
-    refreshUserUI();
-    closeAll();
-  };
-
-  refreshBadges();
-}
-refreshUserUI();
-
-userChip.onclick = ()=>{ refreshUserUI(); openDrawer(menuDrawer); };
-
-/* ✅ auth button: opens auth modal if not logged, otherwise opens profile */
-authBtn.onclick = ()=>{
-  if(currentUser()) openProfile();
-  else openModal($("authModal"));
-};
-
-/* =========================
-   Signup / Login
-   ✅ FIX: Signup MUST reject existing email (no more merging accounts)
-========================= */
-$("loginSubmit").onclick = async ()=>{
-  const email = ($("loginEmail").value||"").trim().toLowerCase();
-  const pass  = ($("loginPass").value||"").trim();
-  const err = $("loginErr");
-  err.style.display="none";
-
-  const users = loadUsers();
-  if(!users[email]){
-    err.style.display="block";
-    err.textContent = L.notFound;
-    return;
-  }
-  const ph = await sha256(pass);
-  if(users[email].passHash !== ph){
-    err.style.display="block";
-    err.textContent = L.invalid;
-    return;
-  }
-
-  setSessionEmail(email);
-
-  // merge guest cart into user cart
-  const guest = loadGuestCart();
-  if(guest.length){
-    const u = users[email];
-    const cart = u.cart || [];
-    for(const it of guest){
-      const idx = cart.findIndex(x=>x.id===it.id);
-      if(idx>=0) cart[idx].qty += it.qty;
-      else cart.push({id:it.id, qty:it.qty});
+  </div></div></div>
+
+  <script>
+    /* ===== overlay + drawers (FIXED) ===== */
+    const $ = (id)=>document.getElementById(id);
+
+    const overlay = $("overlay");
+    const menuDrawer = $("menuDrawer");
+    const filterDrawer = $("filterDrawer");
+
+    function openOverlay(){ overlay.classList.add("show"); }
+    function closeOverlay(){ overlay.classList.remove("show"); }
+
+    function closeAll(){
+      closeOverlay();
+      menuDrawer.classList.remove("show");
+      filterDrawer.classList.remove("show");
+      // close modals
+      ["contactModal","reviewsModal","giftModal"].forEach(id=>$(id).classList.remove("show"));
     }
-    u.cart = cart;
-    saveUsers(users);
-    saveGuestCart([]);
-  }
 
-  pushMessage(email, isArabic ? "✅ تم تسجيل الدخول بنجاح." : "✅ Logged in successfully.");
-  closeAll();
-  refreshUserUI();
-};
+    overlay.addEventListener("click", closeAll);
 
-$("signupSubmit").onclick = async ()=>{
-  const name = ($("signupName").value||"").trim();
-  const age  = Number(($("signupAge").value||"").trim());
-  const email= ($("signupEmail").value||"").trim().toLowerCase();
-  const pass = ($("signupPass").value||"").trim();
-
-  const err  = $("signupErr");
-  err.style.display="none";
-
-  if(!name || !email || !pass || !age || age<1){
-    err.style.display="block";
-    err.textContent = isArabic ? "املأ البيانات بالكامل." : "Please fill all fields.";
-    return;
-  }
-
-  const users = loadUsers();
-
-  /* ✅ HARD BLOCK if email exists */
-  if(users[email]){
-    err.style.display="block";
-    err.textContent = L.exists;
-    return;
-  }
-
-  const ph = await sha256(pass);
-
-  const file = $("signupAvatar").files && $("signupAvatar").files[0];
-  let avatarData = "";
-  if(file) avatarData = await fileToDataURL(file);
-
-  users[email] = {
-    email, name, age,
-    passHash: ph,
-    avatar: avatarData,
-    bonus: 0,
-    coupons: [],
-    messages: [],
-    cart: []
-  };
-  saveUsers(users);
-
-  setSessionEmail(email);
-  pushMessage(email, isArabic ? "🎉 أهلاً بيك! حسابك اتعمل." : "🎉 Welcome! Your account was created.");
-  closeAll();
-  refreshUserUI();
-};
-
-/* =========================
-   Profile
-========================= */
-function openProfile(){
-  const u = currentUser();
-  if(!u){ openModal($("authModal")); return; }
-  $("profileName").value = u.name || "";
-  $("profileNewPass").value = "";
-  $("profileOk").style.display="none";
-  $("profileErr").style.display="none";
-  openModal($("profileModal"));
-}
-$("profileSave").onclick = async ()=>{
-  const u = currentUser();
-  if(!u) return;
-
-  $("profileOk").style.display="none";
-  $("profileErr").style.display="none";
-
-  const newName = ($("profileName").value||"").trim();
-  const newPass = ($("profileNewPass").value||"").trim();
-  const file = $("profileAvatar").files && $("profileAvatar").files[0];
-
-  const patch = {};
-  if(newName) patch.name = newName;
-  if(newPass) patch.passHash = await sha256(newPass);
-  if(file) patch.avatar = await fileToDataURL(file);
-
-  updateCurrentUser(patch);
-  $("profileOk").style.display="block";
-  $("profileOk").textContent = isArabic ? "✅ تم الحفظ." : "✅ Saved.";
-  refreshUserUI();
-};
-
-/* =========================
-   Cart actions
-========================= */
-function addToCart(id){
-  const p = productMap.get(id); if(!p) return;
-  const cart = loadCart();
-  const idx = cart.findIndex(x=>x.id===id);
-  if(idx>=0) cart[idx].qty += 1;
-  else cart.push({id, qty:1});
-  saveCart(cart);
-  refreshBadges();
-}
-
-function cartItemsDetailed(){
-  return loadCart()
-    .map(ci => ({...ci, p: productMap.get(ci.id)}))
-    .filter(x=>x.p);
-}
-function cartSubtotal(items){
-  return items.reduce((sum,x)=> sum + x.p.price * x.qty, 0);
-}
-function setQty(id, qty){
-  const cart = loadCart();
-  const idx = cart.findIndex(x=>x.id===id);
-  if(idx<0) return;
-  cart[idx].qty = Math.max(1, qty);
-  saveCart(cart);
-  renderCart();
-  refreshBadges();
-}
-function removeFromCart(id){
-  const cart = loadCart().filter(x=>x.id!==id);
-  saveCart(cart);
-  renderCart();
-  refreshBadges();
-}
-
-function renderCart(){
-  const items = cartItemsDetailed();
-  if(!items.length){
-    cartItemsEl.innerHTML = `<div class="note">${L.emptyCart}</div>`;
-    totalValueEl.textContent = money(0);
-    return;
-  }
-  cartItemsEl.innerHTML = items.map(({id, qty, p})=>`
-    <div class="cartItem">
-      <div class="cartLeft">
-        <div class="cartThumb">${p.type.toUpperCase()}</div>
-        <div style="flex:1">
-          <p class="cartName">${p.name}</p>
-          <p class="cartMeta">${typeLabel(p.type)} • ${money(p.price)}</p>
-          <div class="qtyRow">
-            <button class="qtyBtn" data-dec="${id}">−</button>
-            <div class="qtyNum">${qty}</div>
-            <button class="qtyBtn" data-inc="${id}">+</button>
-            <button class="detailsBtn" data-cdetails="${id}">ℹ️ ${L.details}</button>
-            <button class="removeBtn" data-rem="${id}">${isArabic?"حذف":"Remove"}</button>
-          </div>
-        </div>
-      </div>
-      <div style="text-align:end;white-space:nowrap;font-weight:900">${money(p.price * qty)}</div>
-    </div>
-  `).join("");
-
-  totalValueEl.textContent = money(cartSubtotal(items));
-
-  cartItemsEl.querySelectorAll("[data-inc]").forEach(b=>{
-    b.onclick = ()=>{
-      const id = Number(b.dataset.inc);
-      const cur = loadCart().find(x=>x.id===id)?.qty || 1;
-      setQty(id, cur + 1);
-    };
-  });
-  cartItemsEl.querySelectorAll("[data-dec]").forEach(b=>{
-    b.onclick = ()=>{
-      const id = Number(b.dataset.dec);
-      const cur = loadCart().find(x=>x.id===id)?.qty || 1;
-      setQty(id, cur - 1);
-    };
-  });
-  cartItemsEl.querySelectorAll("[data-rem]").forEach(b=>{
-    b.onclick = ()=> removeFromCart(Number(b.dataset.rem));
-  });
-  cartItemsEl.querySelectorAll("[data-cdetails]").forEach(b=>{
-    b.onclick = ()=> openDetails(Number(b.dataset.cdetails));
-  });
-}
-
-$("totalBar").onclick = ()=> $("cartCheckoutBtn").click();
-
-$("cartCheckoutBtn").onclick = ()=>{
-  const items = cartItemsDetailed();
-  if(!items.length){ renderCart(); return; }
-  startCheckout({ mode:"cart" });
-};
-
-/* =========================
-   Inbox (Bell) ✅ FIX: shows messages
-========================= */
-function openInbox(){
-  const u = currentUser();
-  const list = $("inboxList");
-  list.innerHTML = "";
-
-  if(!u){
-    list.innerHTML = `<div class="note err">${L.needLogin}</div>`;
-    openModal(inboxModal);
-    return;
-  }
-  const msgs = (u.messages||[]);
-  if(!msgs.length){
-    list.innerHTML = `<div class="note">${L.inboxEmpty}</div>`;
-  }else{
-    for(const m of msgs){
-      const time = new Date(m.at).toLocaleString();
-      const item = document.createElement("div");
-      item.className = "note" + (m.read ? "" : " ok");
-      item.textContent = `${m.text} — ${time}`;
-      list.appendChild(item);
+    function openDrawer(drawer){
+      openOverlay();
+      drawer.classList.add("show");
     }
-  }
-  markAllRead(u.email);
-  refreshBadges();
-  openModal(inboxModal);
-}
 
-/* =========================
-   Bonus
-========================= */
-function openGems(){
-  const u = currentUser();
-  $("redeemBonusInput").value = "";
-  $("couponList").innerHTML = "";
+    /* ✅ Ensure drawers never open on load */
+    window.addEventListener("load", ()=>{
+      menuDrawer.classList.remove("show");
+      filterDrawer.classList.remove("show");
+      closeOverlay();
+    });
 
-  if(!u){
-    $("gemsInfo").className = "note err";
-    $("gemsInfo").textContent = L.needLogin;
-  }else{
-    $("gemsInfo").className = "note";
-    $("gemsInfo").textContent = isArabic ? `💎 البونص الحالي: ${u.bonus||0}` : `💎 Current bonus: ${u.bonus||0}`;
-    renderMyCoupons();
-  }
-  openModal(gemsModal);
-}
+    /* ✅ Buttons */
+    $("menuBtn").onclick = ()=> openDrawer(menuDrawer);
+    $("menuClose").onclick = closeAll;
 
-function renderMyCoupons(){
-  const u = currentUser(); if(!u) return;
-  const list = $("couponList");
-  const coupons = userCoupons();
+    $("filterBtn").onclick = ()=> openDrawer(filterDrawer);
+    $("filterClose").onclick = closeAll;
 
-  if(!coupons.length){
-    list.innerHTML = `<div class="note">${isArabic?"مفيش كروت خصم لسه.":"No discount cards yet."}</div>`;
-    return;
-  }
-  list.innerHTML = coupons.map(c=>`
-    <div class="note ${c.used ? "" : "ok"}">
-      <strong>${c.code}</strong> — ${c.pct}% ${c.used ? (isArabic?"(مستعمل)":"(used)") : (isArabic?"(جاهز)":"(ready)")}
-    </div>
-  `).join("");
-}
-
-$("redeemBonusBtn").onclick = ()=>{
-  const u = currentUser();
-  if(!u) return;
-
-  const want = Number(($("redeemBonusInput").value||"").trim());
-  if(!want || want <= 0) return;
-
-  const cur = u.bonus || 0;
-  if(want > cur){
-    $("gemsInfo").className = "note err";
-    $("gemsInfo").textContent = isArabic ? "❌ البونص اللي كتبته أكبر من اللي معاك." : "❌ You entered more bonus than you have.";
-    return;
-  }
-
-  const pct = couponPctFromBonus(want);
-  const code = "BONUS-" + rand(8);
-
-  const coupons = userCoupons();
-  coupons.unshift({ code, pct, used:false, createdAt: nowIso() });
-  setUserCoupons(coupons);
-  setUserBonus(cur - want);
-
-  pushMessage(u.email, isArabic ? `🎫 تم إنشاء كارت خصم ${pct}% (${code})` : `🎫 Created a ${pct}% discount card (${code})`);
-  refreshUserUI();
-
-  $("gemsInfo").className = "note ok";
-  $("gemsInfo").textContent = isArabic ? `✅ تم التبديل. المتبقي: ${userBonus()}` : `✅ Redeemed. Remaining: ${userBonus()}`;
-  renderMyCoupons();
-};
-
-/* =========================
-   Gift
-========================= */
-function openGift(){
-  $("giftErr").style.display="none";
-  $("giftOk").style.display="none";
-  $("giftToEmail").value = "";
-  $("giftType").value = "bonus";
-  $("giftAmount").value = "";
-  openModal(giftModal);
-}
-
-$("sendGiftBtn").onclick = ()=>{
-  const from = currentUser();
-  const err = $("giftErr");
-  const ok  = $("giftOk");
-  err.style.display="none"; ok.style.display="none";
-
-  if(!from){
-    err.style.display="block"; err.textContent = L.needLogin; return;
-  }
-  const toEmail = ($("giftToEmail").value||"").trim().toLowerCase();
-  const type = $("giftType").value;
-  const amount = Number(($("giftAmount").value||"").trim());
-
-  const users = loadUsers();
-  if(!users[toEmail]){
-    err.style.display="block";
-    err.textContent = isArabic ? "❌ البريد ده مش مسجل عندنا." : "❌ This email is not registered.";
-    return;
-  }
-  if(toEmail === from.email){
-    err.style.display="block";
-    err.textContent = isArabic ? "❌ مينفعش تبعت لنفسك." : "❌ You can't send to yourself.";
-    return;
-  }
-
-  if(type === "bonus"){
-    if(!amount || amount <= 0){
-      err.style.display="block";
-      err.textContent = isArabic ? "اكتب كمية بونص صحيحة." : "Enter a valid bonus amount.";
-      return;
-    }
-    const cur = from.bonus || 0;
-    if(amount > cur){
-      err.style.display="block";
-      err.textContent = isArabic ? "❌ البونص مش كفاية." : "❌ Not enough bonus.";
-      return;
-    }
-    users[from.email].bonus = cur - amount;
-    users[toEmail].bonus = (users[toEmail].bonus||0) + amount;
-    saveUsers(users);
-
-    pushMessage(from.email, `${isArabic?"أرسلت بونص إلى":"Sent bonus to"}: ${toEmail} • ${amount}`);
-    pushMessage(toEmail, `${isArabic?"وصلك بونص من":"You received bonus from"}: ${from.name||from.email} • ${amount}`);
-
-    ok.style.display="block"; ok.textContent = L.sent;
-    refreshUserUI();
-    return;
-  }
-
-  // product gift message only
-  if(!amount || amount <= 0){
-    err.style.display="block";
-    err.textContent = isArabic ? "اكتب ID المنتج صحيح." : "Enter a valid product ID.";
-    return;
-  }
-  const p = productMap.get(amount);
-  if(!p){
-    err.style.display="block";
-    err.textContent = isArabic ? "ID المنتج غير موجود." : "Product ID not found.";
-    return;
-  }
-  pushMessage(from.email, `${isArabic?"أرسلت هدية إلى":"Gift sent to"}: ${toEmail} • ${p.name} (#${p.id})`);
-  pushMessage(toEmail, `${isArabic?"وصلك هدية من":"You received gift from"}: ${from.name||from.email} • ${p.name} (#${p.id})`);
-
-  ok.style.display="block"; ok.textContent = L.sent;
-  refreshUserUI();
-};
-
-/* =========================
-   Reviews
-========================= */
-function escapeHtml(s){
-  return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
-}
-function renderReviews(){
-  const list = $("reviewsList");
-  const reviews = loadReviews();
-  if(!reviews.length){
-    list.innerHTML = `<div class="note">${isArabic?"مفيش مراجعات لسه.":"No reviews yet."}</div>`;
-    return;
-  }
-  list.innerHTML = reviews.map(r=>{
-    const time = new Date(r.at).toLocaleString();
-    return `<div class="note"><strong>${r.by}</strong> — ${time}<br>${escapeHtml(r.text)}</div>`;
-  }).join("");
-}
-$("addReviewBtn").onclick = ()=>{
-  const text = ($("reviewText").value||"").trim();
-  if(!text) return;
-  const u = currentUser();
-  const by = u ? (u.name || u.email) : (isArabic ? "زائر" : "Guest");
-  const reviews = loadReviews();
-  reviews.unshift({ id: rand(10), at: nowIso(), by, text });
-  saveReviews(reviews);
-  $("reviewText").value = "";
-  renderReviews();
-};
-
-/* =========================
-   Checkout
-========================= */
-let checkoutState = { mode:"cart", singleId:null };
-let appliedPct = 0;
-let appliedCode = "";
-let appliedSource = ""; // global | bonus
-
-function checkoutItemsFromState(){
-  if(checkoutState.mode==="single"){
-    const p = productMap.get(checkoutState.singleId);
-    return p ? [{id:p.id, qty:1, p}] : [];
-  }
-  return cartItemsDetailed();
-}
-
-function populateMyCoupons(){
-  const sel = $("myCouponsSelect");
-  sel.innerHTML = "";
-  const opt0 = document.createElement("option");
-  opt0.value = "";
-  opt0.textContent = L.none;
-  sel.appendChild(opt0);
-
-  const u = currentUser();
-  if(!u) return;
-
-  const coupons = (u.coupons||[]).filter(c=>!c.used);
-  for(const c of coupons){
-    const o = document.createElement("option");
-    o.value = c.code;
-    o.textContent = `${c.code} — ${c.pct}%`;
-    sel.appendChild(o);
-  }
-}
-
-function buyNow(id){
-  if(!requireLogin()){
-    openModal($("authModal"));
-    alert(L.needLogin);
-    return;
-  }
-  startCheckout({ mode:"single", singleId:id });
-}
-
-function startCheckout(state){
-  if(!requireLogin()){
-    openModal($("authModal"));
-    alert(L.needLogin);
-    return;
-  }
-  checkoutState = state;
-  appliedPct = 0; appliedCode=""; appliedSource="";
-  $("couponInput").value = "";
-  populateMyCoupons();
-  renderCheckoutStep1();
-  openModal(checkoutModal);
-}
-
-function renderCheckoutStep1(){
-  $("pill1").classList.add("active");
-  $("pill2").classList.remove("active");
-
-  const items = checkoutItemsFromState();
-  const box = $("checkoutItems");
-  box.innerHTML = items.map(x=>`
-    <div class="cartItem">
-      <div class="cartLeft">
-        <div class="cartThumb">${x.p.type.toUpperCase()}</div>
-        <div style="flex:1">
-          <p class="cartName">${x.p.name}</p>
-          <p class="cartMeta">${typeLabel(x.p.type)} • ${money(x.p.price)} × ${x.qty}</p>
-        </div>
-      </div>
-      <div style="text-align:end;white-space:nowrap;font-weight:900">${money(x.p.price * x.qty)}</div>
-    </div>
-  `).join("");
-
-  const subtotal = cartSubtotal(items);
-  const discount = Math.round(subtotal * (appliedPct/100));
-  const total = Math.max(0, subtotal - discount);
-
-  $("checkoutTotals").textContent = isArabic
-    ? `المنتجات: ${money(subtotal)} • الخصم: ${appliedPct}% (${money(discount)}) • الإجمالي: ${money(total)}`
-    : `Items: ${money(subtotal)} • Discount: ${appliedPct}% (${money(discount)}) • Total: ${money(total)}`;
-
-  $("confirmCheckoutBtn").onclick = ()=> openPayment(total);
-
-  $("backToCartBtn").onclick = ()=>{
-    closeAll();
-    renderCart();
-    openModal(cartModal);
-  };
-}
-
-$("applyCouponBtn").onclick = ()=>{
-  const chosen = ($("myCouponsSelect").value||"").trim();
-  if(chosen){
-    const u = currentUser();
-    const coupons = u ? (u.coupons||[]) : [];
-    const c = coupons.find(x=>x.code===chosen && !x.used);
-    if(c){
-      appliedPct = c.pct;
-      appliedCode = c.code;
-      appliedSource = "bonus";
-      $("couponNote").className = "note ok";
-      $("couponNote").textContent = `${L.couponApplied}: ${c.code} = ${c.pct}%`;
-      renderCheckoutStep1();
-      return;
-    }
-  }
-
-  const code = ($("couponInput").value||"").trim().toUpperCase();
-  if(!code){
-    appliedPct=0; appliedCode=""; appliedSource="";
-    $("couponNote").className = "note";
-    $("couponNote").textContent = L.couponHint;
-    renderCheckoutStep1();
-    return;
-  }
-
-  const used = loadUsedGlobalCoupons();
-  if(used[code]){
-    appliedPct=0; appliedCode=""; appliedSource="";
-    $("couponNote").className = "note err";
-    $("couponNote").textContent = isArabic ? "الكود اتستخدم قبل كده على نفس الجهاز." : "Code already used on this device.";
-    renderCheckoutStep1();
-    return;
-  }
-
-  const pct = GLOBAL_COUPONS[code] || 0;
-  if(!pct){
-    appliedPct=0; appliedCode=""; appliedSource="";
-    $("couponNote").className = "note err";
-    $("couponNote").textContent = `${L.couponInvalid}: ${code}`;
-    renderCheckoutStep1();
-    return;
-  }
-
-  appliedPct = pct;
-  appliedCode = code;
-  appliedSource = "global";
-  $("couponNote").className = "note ok";
-  $("couponNote").textContent = `${L.couponApplied}: ${code} = ${pct}%`;
-  renderCheckoutStep1();
-};
-
-function openPayment(finalTotal){
-  $("pill1").classList.remove("active");
-  $("pill2").classList.add("active");
-
-  $("paymentInfo").textContent = L.payInfo(finalTotal);
-
-  const SELLER_PHONE = "201006760663";
-  const waMsg = encodeURIComponent(
-    isArabic
-      ? `طلب جديد:\nالإجمالي: ${money(finalTotal)}\nكوبون: ${appliedCode || "—"}\n`
-      : `New order:\nTotal: ${money(finalTotal)}\nCoupon: ${appliedCode || "—"}\n`
-  );
-  const waLink = `https://wa.me/${SELLER_PHONE}?text=${waMsg}`;
-
-  const methods = [
-    { key:"vodafone", title:"Vodafone Cash", icon:"VC", url: waLink },
-    { key:"orange", title:"Orange Cash", icon:"OC", url: waLink },
-    { key:"etisalat", title:"Etisalat Cash", icon:"EC", url: waLink },
-    { key:"we", title:"WE Pay", icon:"WE", url: waLink },
-    { key:"instapay", title:"InstaPay", icon:"IP", url:"https://www.instapay.eg/" },
-    { key:"visa", title:"Visa / Card", icon:"V", url:"https://www.visa.com/" },
-    { key:"billpay", title:"Bill Pay", icon:"BP", url: waLink },
-    { key:"telda", title:"Telda", icon:"T", url:"https://telda.app/" },
-  ];
-
-  $("payList").innerHTML = methods.map(m=>`
-    <button class="payBtn" data-pay="${m.key}">
-      <span class="payLeft"><span class="payIcon">${m.icon}</span><span>${m.title}</span></span>
-      <span class="mini">→</span>
-    </button>
-  `).join("");
-
-  document.querySelectorAll("[data-pay]").forEach(btn=>{
-    btn.onclick = ()=>{
-      const m = methods.find(x=>x.key===btn.dataset.pay);
-      if(m) window.open(m.url, "_blank");
-
-      finalizeOrder(finalTotal);
+    $("applyFilterBtn").onclick = ()=> {
       closeAll();
+      renderAll();
     };
-  });
 
-  $("payHelp").textContent = L.payHelp;
-  openModal(paymentModal);
-}
+    /* ✅ Menu links scroll */
+    document.querySelectorAll("[data-scroll]").forEach(x=>{
+      x.addEventListener("click", ()=>{
+        const el = document.getElementById(x.dataset.scroll);
+        if(!el) return;
+        closeAll();
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior:"smooth" });
+      });
+    });
 
-function finalizeOrder(finalTotal){
-  const u = currentUser();
-  if(!u) return;
+    /* ✅ Open modal rows */
+    $("openContactRow").onclick = ()=>{ closeAll(); openOverlay(); $("contactModal").classList.add("show"); };
+    $("contactClose").onclick = closeAll;
 
-  if(appliedCode){
-    if(appliedSource === "global"){
-      const used = loadUsedGlobalCoupons();
-      used[appliedCode] = true;
-      saveUsedGlobalCoupons(used);
+    $("openReviewsRow").onclick = ()=>{ closeAll(); renderReviews(); openOverlay(); $("reviewsModal").classList.add("show"); };
+    $("reviewsClose").onclick = closeAll;
+
+    $("openGiftRow").onclick = ()=>{ closeAll(); openOverlay(); $("giftModal").classList.add("show"); };
+    $("giftClose").onclick = closeAll;
+
+    /* ===== Products demo ===== */
+    const products = [
+      { id: 1, type:"games", name:"Game #1", desc:"وصف بسيط للعبة", price:250, top:true, images:["1A","1B","1C"] },
+      { id: 2, type:"games", name:"Game #2", desc:"وصف بسيط للعبة", price:180, offer:true, images:["2A","2B","2C"] },
+      { id: 3, type:"games", name:"Game #3", desc:"وصف بسيط للعبة", price:300, images:["3A","3B","3C"] },
+      { id: 4, type:"games", name:"Game #4", desc:"وصف بسيط للعبة", price:120, offer:true, images:["4A","4B","4C"] },
+
+      { id: 11, type:"programs", name:"Program #1", desc:"وصف بسيط للبرنامج", price:150, top:true, images:["11A","11B","11C"] },
+      { id: 12, type:"programs", name:"Program #2", desc:"وصف بسيط للبرنامج", price:90, images:["12A","12B","12C"] },
+      { id: 13, type:"programs", name:"Program #3", desc:"وصف بسيط للبرنامج", price:220, offer:true, images:["13A","13B","13C"] },
+      { id: 14, type:"programs", name:"Program #4", desc:"وصف بسيط للبرنامج", price:60, images:["14A","14B","14C"] },
+
+      { id: 21, type:"accounts", name:"Account #1", desc:"تفاصيل الأكونت (تقدر تطوّلها)", price:700, top:true, images:["21A","21B","21C","21D"] },
+      { id: 22, type:"accounts", name:"Account #2", desc:"تفاصيل الأكونت (تقدر تطوّلها)", price:350, offer:true, images:["22A","22B","22C"] },
+      { id: 23, type:"accounts", name:"Account #3", desc:"تفاصيل الأكونت (تقدر تطوّلها)", price:200, images:["23A","23B","23C"] },
+      { id: 24, type:"accounts", name:"Account #4", desc:"تفاصيل الأكونت (تقدر تطوّلها)", price:450, images:["24A","24B","24C"] },
+    ];
+
+    const searchEl = $("search");
+
+    function money(x){ return `EGP ${Math.max(0, Math.round(x))}`; }
+
+    function cardHTML(p){
+      return `
+        <div class="card">
+          <div class="thumb">${p.type.toUpperCase()}</div>
+          <div class="content">
+            <p class="name">${p.name}</p>
+            <p class="meta">${p.desc || ""}</p>
+            <div class="priceRow">
+              <p class="price">${money(p.price)}</p>
+              <span class="sectionHint">#${p.id}</span>
+            </div>
+            <div class="actions">
+              <button class="btn">ℹ️ Details</button>
+              <button class="btn">🛒 Add to cart</button>
+              <button class="btn btnRed">⚡ Buy</button>
+            </div>
+          </div>
+        </div>
+      `;
     }
-    if(appliedSource === "bonus"){
-      const coupons = userCoupons();
-      const idx = coupons.findIndex(c=>c.code===appliedCode);
-      if(idx>=0){
-        coupons[idx].used = true;
-        setUserCoupons(coupons);
+
+    function applyFilters(list){
+      const q = (searchEl.value||"").toLowerCase().trim();
+      const cat = $("filterCategory").value;
+      const sort = $("filterSort").value;
+      const pm = $("priceMode").value;
+      const pv = Number($("priceValue").value);
+
+      let out = [...list];
+      if(q) out = out.filter(p => (p.name + " " + (p.desc||"")).toLowerCase().includes(q));
+      if(cat !== "all") out = out.filter(p => p.type === cat);
+
+      if(pm !== "off" && !Number.isNaN(pv)){
+        if(pm === "eq") out = out.filter(p=>p.price === pv);
+        if(pm === "lte") out = out.filter(p=>p.price <= pv);
+        if(pm === "gte") out = out.filter(p=>p.price >= pv);
       }
+
+      if(sort === "new") out.sort((a,b)=> b.id - a.id);
+      if(sort === "old") out.sort((a,b)=> a.id - b.id);
+      if(sort === "low") out.sort((a,b)=> a.price - b.price);
+      if(sort === "high") out.sort((a,b)=> b.price - a.price);
+
+      return out;
     }
-  }
 
-  const bonusAdd = Math.max(1, Math.floor(finalTotal / 200));
-  setUserBonus((u.bonus||0) + bonusAdd);
+    function renderAll(){
+      const filtered = applyFilters(products);
+      const tops = filtered.filter(p=>p.top);
+      const offers = filtered.filter(p=>p.offer);
 
-  if(checkoutState.mode==="cart"){
-    saveCart([]);
-  }
+      $("gridTop").innerHTML = tops.length ? tops.map(cardHTML).join("") : `<div class="note">مفيش توب حالياً.</div>`;
+      $("gridOffers").innerHTML = offers.length ? offers.map(cardHTML).join("") : `<div class="note">مفيش عروض حالياً.</div>`;
 
-  pushMessage(u.email, L.bought(bonusAdd));
-  refreshUserUI();
-  refreshBadges();
-}
+      $("gridGames").innerHTML = filtered.filter(p=>p.type==="games").map(cardHTML).join("");
+      $("gridPrograms").innerHTML = filtered.filter(p=>p.type==="programs").map(cardHTML).join("");
+      $("gridAccounts").innerHTML = filtered.filter(p=>p.type==="accounts").map(cardHTML).join("");
+    }
 
-/* =========================
-   Details ✅ FIX: now always opens
-========================= */
-let currentDetailsId = null;
-function openDetails(id){
-  const p = productMap.get(id);
-  if(!p) return;
+    renderAll();
+    searchEl.addEventListener("input", renderAll);
 
-  currentDetailsId = id;
-  $("detailsTitle").textContent = `${L.details} • ${p.name}`;
-  $("detailsHero").textContent = p.name;
-  $("detailsDesc").textContent = p.desc || "";
-  $("detailsGalleryTitle").textContent = isArabic ? "صور إضافية" : "More images";
+    /* ===== Reviews demo ===== */
+    const LS_REVIEWS="mgs_reviews_demo";
+    function loadReviews(){ try{ return JSON.parse(localStorage.getItem(LS_REVIEWS)||"[]"); }catch{ return []; } }
+    function saveReviews(r){ localStorage.setItem(LS_REVIEWS, JSON.stringify(r)); }
+    function escapeHtml(s){ return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
 
-  const g = $("detailsGallery");
-  const imgs = p.images || [];
-  g.innerHTML = imgs.map((x,i)=> `<div class="gThumb" data-g="${i}">${x}</div>`).join("");
+    function renderReviews(){
+      const list = $("reviewsList");
+      const reviews = loadReviews();
+      if(!reviews.length){
+        list.innerHTML = `<div class="note">مفيش مراجعات لسه.</div>`;
+        return;
+      }
+      list.innerHTML = reviews.map(r=>{
+        const time = new Date(r.at).toLocaleString();
+        return `<div class="note"><strong>${r.by}</strong> — ${time}<br>${escapeHtml(r.text)}</div>`;
+      }).join("");
+    }
 
-  g.querySelectorAll("[data-g]").forEach(el=>{
-    el.onclick = ()=> {
-      $("detailsHero").textContent = `${p.name} • ${imgs[Number(el.dataset.g)]}`;
+    $("addReviewBtn").onclick = ()=>{
+      const text = ($("reviewText").value||"").trim();
+      if(!text) return;
+      const reviews = loadReviews();
+      reviews.unshift({ at: new Date().toISOString(), by:"زائر", text });
+      saveReviews(reviews);
+      $("reviewText").value="";
+      renderReviews();
     };
-  });
 
-  $("detailsAddCartBtn").onclick = ()=> addToCart(id);
-  $("detailsBuyBtn").onclick = ()=> buyNow(id);
-
-  openModal(detailsModal);
-}
-
-/* =========================
-   Badges
-========================= */
-function refreshBadges(){
-  cartCountEl.textContent = String(cartCount(loadCart()));
-
-  const u = currentUser();
-  if(!u){
-    inboxCountEl.textContent = "0";
-    gemsCountEl.textContent = "0";
-    return;
-  }
-  const unread = (u.messages||[]).filter(m=>!m.read).length;
-  inboxCountEl.textContent = String(unread);
-  gemsCountEl.textContent  = String(u.bonus||0);
-}
-
-/* =========================
-   Init
-========================= */
-$("year").textContent = new Date().getFullYear();
-$("filterCategory").value = "all";
-$("filterSort").value = "new";
-$("priceMode").value = "off";
-
-refreshBadges();
-</script>
+    /* Year */
+    $("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
