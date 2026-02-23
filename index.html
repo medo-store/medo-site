@@ -1,6 +1,5 @@
-
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -8,13 +7,14 @@
 
   <style>
     :root{
-      --bg0:#070A12;
-      --bg1:#0B1230;
-      --panel:#0E183B;
-      --card:#0C1736;
+      --bg0:#060814;
+      --bg1:#0A1030;
+      --panel:#0C173A;
+      --card:rgba(12,23,54,.78);
       --text:#F6F7FF;
       --muted:#B9C1D9;
       --border:rgba(255,255,255,.10);
+
       --accent:#E11D48;
       --accent2:#38BDF8;
       --good:#22C55E;
@@ -25,23 +25,47 @@
     }
 
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family:"Segoe UI", Tahoma, Arial, sans-serif;
+      font-family:system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
       color:var(--text);
       background:
         radial-gradient(900px 500px at 15% 8%, rgba(56,189,248,.16), transparent 60%),
         radial-gradient(900px 600px at 85% 0%, rgba(225,29,72,.14), transparent 55%),
         linear-gradient(180deg, var(--bg1), var(--bg0));
       min-height:100vh;
+      overflow-x:hidden;
     }
-    a{color:inherit;text-decoration:none}
-    .container{max-width:1500px;margin:0 auto;padding:10px 16px}
 
-    /* Sticky header */
+    /* subtle side decor (no external images) */
+    body:before, body:after{
+      content:"";
+      position:fixed;
+      top:140px;
+      width:320px;height:520px;
+      pointer-events:none;
+      opacity:.20;
+      filter: blur(.2px);
+      z-index:0;
+      background:
+        radial-gradient(120px 120px at 35% 25%, rgba(56,189,248,.35), transparent 60%),
+        radial-gradient(150px 150px at 70% 35%, rgba(225,29,72,.28), transparent 62%),
+        radial-gradient(110px 110px at 40% 70%, rgba(245,158,11,.22), transparent 62%),
+        radial-gradient(160px 160px at 70% 78%, rgba(34,197,94,.20), transparent 62%);
+      border-radius:26px;
+      border:1px solid rgba(255,255,255,.06);
+    }
+    body:before{left:-220px}
+    body:after{right:-220px}
+
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:10px 12px; position:relative; z-index:1;}
+
+    /* Header */
     .nav{
-      position:sticky;top:0;z-index:60;
-      background:rgba(7,10,18,.72);
+      position:sticky; top:0; z-index:60;
+      background:rgba(6,8,20,.72);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--border);
     }
@@ -77,6 +101,7 @@
     }
     .iconBtn:hover{filter:brightness(1.08)}
     .rightBox{margin-inline-start:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
     .pillCount{
       min-width:22px;height:22px;border-radius:999px;
       display:inline-flex;align-items:center;justify-content:center;
@@ -100,8 +125,15 @@
       display:inline-flex;align-items:center;justify-content:center;
       overflow:hidden;
       font-size:11px;
+      flex:0 0 auto;
     }
     .avatarSmall img{width:100%;height:100%;object-fit:cover}
+
+    /* Filter button - looks like app */
+    .filterIcon{
+      width:18px;height:18px;display:inline-block;line-height:0;
+    }
+    .filterIcon svg{display:block}
 
     /* Sections */
     .sectionTitle{
@@ -113,24 +145,27 @@
     .sectionHint{color:var(--muted);font-weight:800;font-size:12px}
     .spacer{height:18px}
 
-    /* ✅ GRID: ALWAYS 4 (no media) */
+    /* Grid: desktop = 4, tablet = 3, mobile = 2, small = 1 */
     .grid{
       display:grid;
       grid-template-columns:repeat(4, minmax(0,1fr));
-      gap:12px;
+      gap:16px; /* requested: more space */
     }
+    @media (max-width:1050px){ .grid{grid-template-columns:repeat(3, minmax(0,1fr));} }
+    @media (max-width:760px){ .grid{grid-template-columns:repeat(2, minmax(0,1fr));} }
+    @media (max-width:460px){ .grid{grid-template-columns:1fr;} }
 
     .card{
-      background:rgba(12,23,54,.72);
+      background:var(--card);
       border:1px solid var(--border);
       border-radius:var(--radius);
       overflow:hidden;
       box-shadow: var(--shadow);
       display:flex;flex-direction:column;
-      min-height:250px;
+      min-height:246px;
     }
     .thumb{
-      height:96px;
+      height:110px;
       background:
         radial-gradient(180px 120px at 25% 30%, rgba(56,189,248,.22), transparent 65%),
         radial-gradient(180px 120px at 75% 0%, rgba(225,29,72,.18), transparent 60%),
@@ -139,8 +174,8 @@
       display:flex;align-items:center;justify-content:center;
       font-weight:900;letter-spacing:.7px;font-size:12px;
       position:relative;
+      cursor:pointer;
     }
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
     .badge{
       position:absolute;top:8px;inset-inline-start:8px;
       padding:6px 8px;border-radius:999px;
@@ -152,9 +187,18 @@
     .badge.top{border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.12)}
     .badge.offer{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.12)}
 
-    .content{padding:10px 10px 12px;display:flex;flex-direction:column;gap:8px;flex:1}
+    .content{padding:12px 12px 12px;display:flex;flex-direction:column;gap:8px;flex:1}
     .name{margin:0;font-size:13px;font-weight:900}
     .meta{margin:0;font-size:12px;color:var(--muted);line-height:1.4}
+    .stars{display:flex;gap:2px;align-items:center;font-size:14px;letter-spacing:1px; opacity:.95}
+    .stars button{
+      background:transparent;border:none;color:rgba(246,247,255,.88);
+      cursor:pointer;padding:0;line-height:1;
+      font-size:16px;
+    }
+    .stars .mutedStar{opacity:.45}
+    .ratingInfo{font-size:11px;color:var(--muted);font-weight:800}
+
     .priceRow{display:flex;align-items:center;justify-content:space-between;gap:8px}
     .price{margin:0;font-size:12px;font-weight:900}
 
@@ -169,30 +213,32 @@
       font-weight:900;font-size:12px;
       cursor:pointer;
       display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      min-width:0; /* مهم عشان مايكبرش الكارت */
+      min-width:120px;
     }
     .btn:hover{filter:brightness(1.08)}
     .btnRed{background:linear-gradient(135deg, rgba(225,29,72,1), rgba(225,29,72,.82));border-color:transparent}
     .btnBlue{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.35)}
+    .btnWarn{background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.35)}
 
-    /* Overlay / drawer / modal */
+    /* Overlay / Drawer / Modal */
     .overlay{position:fixed;inset:0;background:rgba(0,0,0,.58);display:none;z-index:80}
     .overlay.show{display:block}
 
-    /* Drawer (hidden by default) */
     .drawer{
       position:fixed;top:0;bottom:0;
       width:min(360px, 92vw);
-      background:rgba(14,24,59,.92);
+      background:rgba(12,23,58,.92);
       backdrop-filter: blur(10px);
       border:1px solid var(--border);
       box-shadow: var(--shadow);
       z-index:90;
+      transition: transform .22s ease;
       display:flex;flex-direction:column;
-      right:-420px; /* hidden */
-      transition:right .22s ease;
+      transform: translateX(110%); /* hidden by default */
     }
-    .drawer.show{ right:0; }
+    html[dir="rtl"] .drawer{ right:0; transform: translateX(110%); }
+    html[dir="ltr"] .drawer{ left:auto; right:0; transform: translateX(110%); }
+    .drawer.show{ transform: translateX(0); }
 
     .drawerHeader{
       padding:12px;border-bottom:1px solid var(--border);
@@ -225,19 +271,25 @@
     .modal{position:fixed;inset:0;display:none;z-index:95;align-items:center;justify-content:center;padding:14px}
     .modal.show{display:flex}
     .modalBox{
-      width:min(760px, 96vw);
-      background:rgba(14,24,59,.94);
+      width:min(820px, 96vw);
+      max-height:min(86vh, 760px);
+      overflow:auto;
+      background:rgba(12,23,58,.94);
       border:1px solid var(--border);
       border-radius:16px;
       box-shadow: var(--shadow);
-      overflow:hidden;
+      overflow-x:hidden;
     }
     .modalHeader{
+      position:sticky;top:0;
+      background:rgba(12,23,58,.94);
       padding:12px;border-bottom:1px solid var(--border);
       display:flex;align-items:center;justify-content:space-between;gap:10px;
+      z-index:2;
     }
     .modalTitle{font-weight:900}
     .modalBody{padding:12px}
+
     .stack{display:flex;flex-direction:column;gap:10px}
     .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
     .row > *{flex:1}
@@ -283,8 +335,8 @@
       flex:0 0 auto;
       display:flex;align-items:center;justify-content:center;
       font-weight:900;font-size:11px;opacity:.9;
+      cursor:pointer;
     }
-    .cartThumb img{width:100%;height:100%;object-fit:cover}
     .cartName{font-weight:900;font-size:13px;margin:0 0 4px}
     .cartMeta{margin:0;color:var(--muted);font-size:12px;font-weight:800}
     .qtyRow{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
@@ -305,1448 +357,7 @@
       padding:8px 10px;border-radius:10px;
       white-space:nowrap;
     }
-    .detailsBtn{
-      border:1px solid rgba(56,189,248,.35);
-      background:rgba(56,189,248,.10);
-      color:rgba(246,247,255,.95);
-      font-weight:900;cursor:pointer;
-      padding:8px 10px;border-radius:10px;
-      white-space:nowrap;
-    }
     .totalBar{
       margin-top:10px;
       border:1px solid rgba(56,189,248,.35);
       background:rgba(56,189,248,.10);
-      border-radius:14px;
-      padding:10px;
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      cursor:pointer;
-      user-select:none;
-    }
-
-    /* Footer */
-    .footer{
-      margin-top:18px;border-top:1px solid var(--border);
-      padding:14px 0 22px;
-      color:var(--muted);
-      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
-    }
-    .social{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:9px 10px;border-radius:999px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.03);
-      font-weight:900;font-size:12px;
-    }
-    .social:hover{filter:brightness(1.08)}
-    .mutedRight{margin-inline-start:auto;font-weight:900;font-size:12px;color:rgba(185,193,217,.9)}
-
-    /* Small helper: Ramadan vibe (خفيف ومش مزعج) */
-    .ramadanBar{
-      margin:10px 0 0;
-      padding:10px 12px;
-      border:1px solid rgba(245,158,11,.28);
-      background:rgba(245,158,11,.08);
-      border-radius:14px;
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      font-weight:900;
-    }
-    .ramadanBar .miniTxt{color:rgba(246,247,255,.9);font-weight:800;font-size:12px}
-  </style>
-</head>
-
-<body>
-  <div class="nav">
-    <div class="container nav-inner">
-      <div class="brand">
-        <span class="dot"></span>
-        <span id="brandText">Medo Gaming Store</span>
-      </div>
-
-      <div class="searchWrap">
-        <input id="search" class="search" placeholder="🔍 ابحث..." />
-        <button class="iconBtn" id="filterBtn" title="Filter">
-          <span style="display:inline-block;line-height:0">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M4 6h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M7 12h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M10 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M4 3h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".75"/>
-            </svg>
-          </span>
-        </button>
-      </div>
-
-      <div class="rightBox">
-        <button class="iconBtn" id="inboxBtn" title="Inbox">🔔 <span class="pillCount" id="inboxCount">0</span></button>
-        <button class="iconBtn" id="gemsBtn" title="Bonus">💎 <span class="pillCount" id="gemsCount">0</span></button>
-        <button class="iconBtn" id="cartBtn" title="Cart">🛒 <span class="pillCount" id="cartCount">0</span></button>
-
-        <button class="iconBtn" id="authBtn" title="Account">👤 <span id="authText">تسجيل</span></button>
-
-        <div class="userChip" id="userChip" style="display:none" title="User">
-          <span class="avatarSmall" id="avatarSmall">U</span>
-          <span id="userNameText">User</span>
-        </div>
-
-        <button class="iconBtn" id="menuBtn" title="Menu">☰</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="ramadanBar" id="ramadanBar" style="display:none">
-      <div>🌙 <span id="ramadanTitle">رمضان كريم</span></div>
-      <div class="miniTxt" id="ramadanSub">عروض وبونصات على الطلبات</div>
-    </div>
-
-    <div class="sectionTitle" id="titleTop">🔥 Top <span class="sectionHint" id="hintTop">الأكثر طلبًا</span></div>
-    <div id="gridTop" class="grid"></div>
-
-    <div class="spacer"></div>
-
-    <div class="sectionTitle" id="titleOffers">🎁 Offers <span class="sectionHint" id="hintOffers">عروض</span></div>
-    <div id="gridOffers" class="grid"></div>
-
-    <div class="spacer"></div>
-
-    <div class="sectionTitle" id="titleGames">🎮 Games</div>
-    <div id="gridGames" class="grid"></div>
-
-    <div class="spacer"></div>
-
-    <div class="sectionTitle" id="titlePrograms">💻 Programs</div>
-    <div id="gridPrograms" class="grid"></div>
-
-    <div class="spacer"></div>
-
-    <div class="sectionTitle" id="titleAccounts">🧾 Accounts</div>
-    <div id="gridAccounts" class="grid"></div>
-
-    <div class="footer">
-      <a class="social" href="https://wa.me/201006760663" target="_blank" rel="noreferrer" id="socWhats">WhatsApp</a>
-      <a class="social" href="https://www.instagram.com/medo__rami" target="_blank" rel="noreferrer" id="socInst">Instagram</a>
-      <a class="social" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" rel="noreferrer" id="socFb">Facebook</a>
-      <a class="social" href="mailto:medorami77@gmail.com" id="socMail">Email</a>
-      <span class="mutedRight">© <span id="year"></span> Medo Gaming</span>
-    </div>
-  </div>
-
-  <div class="overlay" id="overlay"></div>
-
-  <!-- MENU DRAWER -->
-  <div class="drawer" id="menuDrawer" aria-hidden="true">
-    <div class="drawerHeader">
-      <div class="drawerTitle" id="menuTitle">Menu</div>
-      <button class="iconBtn" id="menuClose">✕</button>
-    </div>
-    <div class="drawerBody">
-      <div class="drawerSection" id="drawerUserBox" style="display:none">
-        <div class="note ok" id="drawerUserNote"></div>
-        <div class="row">
-          <button class="btn" id="editProfileBtn">Edit profile</button>
-          <button class="btn" id="logoutBtn">Logout</button>
-        </div>
-      </div>
-
-      <div class="drawerSection">
-        <p class="drawerLabel" id="quickTitle">Quick</p>
-        <div class="drawerList">
-          <div class="linkRow" data-scroll="gridTop"><span id="mTop">Top</span><span class="mini">→</span></div>
-          <div class="linkRow" data-scroll="gridOffers"><span id="mOffers">Offers</span><span class="mini">→</span></div>
-          <div class="linkRow" data-scroll="gridGames"><span id="mGames">Games</span><span class="mini">→</span></div>
-          <div class="linkRow" data-scroll="gridPrograms"><span id="mPrograms">Programs</span><span class="mini">→</span></div>
-          <div class="linkRow" data-scroll="gridAccounts"><span id="mAccounts">Accounts</span><span class="mini">→</span></div>
-
-          <div class="linkRow" id="openContactRow"><span id="mContact">Contact</span><span class="mini">→</span></div>
-          <div class="linkRow" id="openReviewsRow"><span id="mReviews">Reviews</span><span class="mini">→</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FILTER DRAWER -->
-  <div class="drawer" id="filterDrawer" aria-hidden="true">
-    <div class="drawerHeader">
-      <div class="drawerTitle" id="filterTitle">Filter</div>
-      <button class="iconBtn" id="filterClose">✕</button>
-    </div>
-    <div class="drawerBody">
-      <div class="note" id="filterNote">اختار القسم والترتيب والسعر وبعدين تطبيق.</div>
-
-      <div class="drawerSection">
-        <p class="drawerLabel" id="catTitle">Category</p>
-        <select class="select" id="filterCategory">
-          <option value="all">All</option>
-          <option value="top">Top</option>
-          <option value="offers">Offers</option>
-          <option value="games">Games</option>
-          <option value="programs">Programs</option>
-          <option value="accounts">Accounts</option>
-        </select>
-      </div>
-
-      <div class="drawerSection">
-        <p class="drawerLabel" id="sortTitle">Sort</p>
-        <select class="select" id="filterSort">
-          <option value="new">Newest</option>
-          <option value="old">Oldest</option>
-          <option value="low">Low → High</option>
-          <option value="high">High → Low</option>
-        </select>
-      </div>
-
-      <div class="drawerSection">
-        <p class="drawerLabel" id="priceTitle">Price</p>
-        <div class="row">
-          <select class="select" id="priceMode">
-            <option value="off">Off</option>
-            <option value="eq">Equal</option>
-            <option value="lte">≤</option>
-            <option value="gte">≥</option>
-          </select>
-          <input class="input" id="priceValue" type="number" min="0" placeholder="مثلاً 300" />
-        </div>
-      </div>
-
-      <button class="btn btnRed" id="applyFilterBtn">Apply</button>
-    </div>
-  </div>
-
-  <!-- CONTACT MODAL -->
-  <div class="modal" id="contactModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="contactTitle">Contact</div>
-        <button class="iconBtn" id="contactClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <a class="btn" href="https://wa.me/201006760663" target="_blank" id="cWhats">WhatsApp</a>
-          <a class="btn" href="https://www.instagram.com/medo__rami" target="_blank" id="cInst">Instagram</a>
-          <a class="btn" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" id="cFb">Facebook</a>
-          <a class="btn" href="mailto:medorami77@gmail.com" id="cMail">Email</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- REVIEWS MODAL -->
-  <div class="modal" id="reviewsModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="reviewsTitle">Reviews</div>
-        <button class="iconBtn" id="reviewsClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="row">
-            <input class="input" id="reviewText" placeholder="اكتب رأيك..." />
-            <button class="btn btnRed tight" id="addReviewBtn" style="flex:0 0 auto">Post</button>
-          </div>
-          <div class="stack" id="reviewsList"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AUTH MODAL -->
-  <div class="modal" id="authModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="authTitle">Account</div>
-        <button class="iconBtn" id="authClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack" id="authStep1">
-          <div class="note" id="authNote1">Create account or login.</div>
-          <input class="input" id="firstName" placeholder="First name" />
-          <input class="input" id="lastName" placeholder="Last name" />
-          <input class="input" id="email" type="email" placeholder="Email" />
-          <div class="row">
-            <input class="input" id="password" type="password" placeholder="Password" />
-            <button class="btn tight" id="togglePassBtn" style="flex:0 0 auto">👁</button>
-          </div>
-          <div class="row">
-            <select class="select" id="gender">
-              <option value="">Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-            <input class="input" id="age" type="number" min="1" max="99" placeholder="Age" />
-          </div>
-
-          <div class="note" id="avatarHint">Upload profile image (optional)</div>
-          <input class="input" id="avatar" type="file" accept="image/*" />
-
-          <div class="row">
-            <button class="btn btnRed" id="createBtn">Create</button>
-            <button class="btn" id="loginBtn">Login</button>
-          </div>
-          <div class="note err" id="authErr" style="display:none"></div>
-          <div class="note ok" id="authOk" style="display:none"></div>
-        </div>
-
-        <div class="stack" id="authStep2" style="display:none">
-          <div class="note ok" id="profileNote"></div>
-          <div class="row">
-            <input class="input" id="editName" placeholder="Display name" />
-            <button class="btn btnBlue tight" id="saveNameBtn" style="flex:0 0 auto">Save</button>
-          </div>
-
-          <div class="row">
-            <input class="input" id="newPass" type="password" placeholder="New password" />
-            <button class="btn btnBlue tight" id="changePassBtn" style="flex:0 0 auto">Change</button>
-          </div>
-
-          <button class="btn btnRed" id="logoutBtn2">Logout</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- DETAILS MODAL -->
-  <div class="modal" id="detailsModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="detailsTitle">Details</div>
-        <button class="iconBtn" id="detailsClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="thumb" style="height:220px;border-radius:14px;overflow:hidden" id="detailsThumb"></div>
-          <h3 class="name" id="detailsName" style="font-size:16px"></h3>
-          <p class="meta" id="detailsDesc"></p>
-          <div class="priceRow">
-            <p class="price" id="detailsPrice"></p>
-            <div class="row" style="gap:8px;flex-wrap:nowrap">
-              <button class="btn btnBlue tight" id="detailsAddCart" style="flex:0 0 auto">Add to cart</button>
-              <button class="btn btnRed tight" id="detailsBuyNow" style="flex:0 0 auto">Buy</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CART MODAL -->
-  <div class="modal" id="cartModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="cartTitle">Cart</div>
-        <button class="iconBtn" id="cartClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack" id="cartList"></div>
-
-        <div class="totalBar" id="totalBar" style="display:none">
-          <span id="totalText">Total</span>
-          <strong id="totalValue">0</strong>
-        </div>
-
-        <button class="btn btnRed" id="checkoutBtn" style="display:none">Checkout</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- CHECKOUT MODAL (coupon then payment) -->
-  <div class="modal" id="checkoutModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="checkoutTitle">Checkout</div>
-        <button class="iconBtn" id="checkoutClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack" id="checkoutStepA">
-          <div class="note" id="checkoutInfo"></div>
-          <div class="row">
-            <input class="input" id="couponInput" placeholder="Coupon code (optional)" />
-            <button class="btn btnBlue tight" id="applyCouponBtn" style="flex:0 0 auto">Apply</button>
-          </div>
-          <div class="note ok" id="couponOk" style="display:none"></div>
-          <div class="note err" id="couponErr" style="display:none"></div>
-          <button class="btn btnRed" id="confirmToPayBtn">Confirm</button>
-        </div>
-
-        <div class="stack" id="checkoutStepB" style="display:none">
-          <div class="note" id="payNote"></div>
-          <button class="btn" id="payVod">Vodafone Cash</button>
-          <button class="btn" id="payEt">Etisalat Cash</button>
-          <button class="btn" id="payWe">WE Pay</button>
-          <button class="btn" id="payOr">Orange Cash</button>
-          <button class="btn" id="payVisa">Visa</button>
-          <button class="btn" id="payInsta">InstaPay</button>
-          <button class="btn" id="payBill">Bill Pay</button>
-          <button class="btn" id="payTelda">Telda</button>
-
-          <div class="note warn" id="payWarn"></div>
-          <button class="btn btnRed" id="finishOrderBtn">Finish</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    /* =========================
-       i18n (Arabic/English)
-       ========================= */
-    const isArabic = (navigator.language || "").toLowerCase().startsWith("ar");
-    document.documentElement.lang = isArabic ? "ar" : "en";
-    document.documentElement.dir  = isArabic ? "rtl" : "ltr";
-
-    const T = {
-      ar: {
-        search:"🔍 ابحث...",
-        top:"🔥 توب",
-        topHint:"الأكثر طلبًا",
-        offers:"🎁 أوفرز",
-        offersHint:"عروض",
-        games:"🎮 الألعاب",
-        programs:"💻 البرامج",
-        accounts:"🧾 الأكونتات",
-        menu:"القائمة",
-        quick:"اختصارات",
-        contact:"التواصل",
-        reviews:"المراجعات",
-        filter:"فلترة",
-        filterNote:"اختار القسم والترتيب والسعر وبعدين تطبيق.",
-        category:"القسم",
-        sort:"الترتيب",
-        price:"السعر",
-        apply:"تطبيق",
-        all:"الكل",
-        newest:"الأحدث",
-        oldest:"الأقدم",
-        lowHigh:"الأرخص → الأغلى",
-        highLow:"الأغلى → الأرخص",
-        cart:"السلة",
-        total:"الإجمالي",
-        checkout:"إتمام الشراء",
-        account:"تسجيل",
-        details:"تفاصيل",
-        addCart:"إضافة للسلة",
-        buy:"شراء",
-        ramadanTitle:"رمضان كريم",
-        ramadanSub:"عروض وبونصات على الطلبات",
-        reviewPH:"اكتب رأيك...",
-        post:"نشر",
-        authNote:"اعمل حساب أو سجل دخول.",
-        first:"الاسم الأول",
-        last:"الاسم الثاني",
-        email:"البريد",
-        pass:"كلمة السر",
-        gender:"النوع",
-        male:"ذكر",
-        female:"أنثى",
-        age:"العمر",
-        upload:"ارفع صورة (اختياري)",
-        create:"إنشاء",
-        login:"دخول",
-        saved:"تم بنجاح",
-        wrong:"بيانات غير صحيحة",
-        exists:"البريد ده مسجل قبل كده",
-        notFound:"الحساب غير موجود",
-        profile:"حسابك",
-        displayName:"اسم العرض",
-        save:"حفظ",
-        newPass:"كلمة سر جديدة",
-        change:"تغيير",
-        logout:"تسجيل خروج",
-        emptyCart:"السلة فاضية",
-        mustLogin:"لازم تسجل الأول",
-        checkoutInfo:(sum)=>`هتشتري منتجات بإجمالي: ${sum} جنيه`,
-        couponPH:"كود خصم (اختياري)",
-        applyC:"تفعيل",
-        confirm:"تأكيد",
-        payNote:"اختار طريقة الدفع:",
-        payWarn:"ملاحظة: الدفع بيتم خارج الموقع. بعد ما تدفع اضغط Finish.",
-        finish:"Finish",
-        okCoupon:(p)=>`تم تطبيق خصم ${p}%`,
-        badCoupon:"الكود غير صحيح أو مستخدم قبل كده"
-      },
-      en: {
-        search:"🔍 Search...",
-        top:"🔥 Top",
-        topHint:"Most wanted",
-        offers:"🎁 Offers",
-        offersHint:"Deals",
-        games:"🎮 Games",
-        programs:"💻 Programs",
-        accounts:"🧾 Accounts",
-        menu:"Menu",
-        quick:"Quick",
-        contact:"Contact",
-        reviews:"Reviews",
-        filter:"Filter",
-        filterNote:"Choose category, sort, and price then apply.",
-        category:"Category",
-        sort:"Sort",
-        price:"Price",
-        apply:"Apply",
-        all:"All",
-        newest:"Newest",
-        oldest:"Oldest",
-        lowHigh:"Low → High",
-        highLow:"High → Low",
-        cart:"Cart",
-        total:"Total",
-        checkout:"Checkout",
-        account:"Login",
-        details:"Details",
-        addCart:"Add to cart",
-        buy:"Buy",
-        ramadanTitle:"Ramadan Kareem",
-        ramadanSub:"Offers & bonuses on orders",
-        reviewPH:"Write your review...",
-        post:"Post",
-        authNote:"Create account or login.",
-        first:"First name",
-        last:"Last name",
-        email:"Email",
-        pass:"Password",
-        gender:"Gender",
-        male:"Male",
-        female:"Female",
-        age:"Age",
-        upload:"Upload image (optional)",
-        create:"Create",
-        login:"Login",
-        saved:"Saved successfully",
-        wrong:"Wrong credentials",
-        exists:"Email already exists",
-        notFound:"Account not found",
-        profile:"Your account",
-        displayName:"Display name",
-        save:"Save",
-        newPass:"New password",
-        change:"Change",
-        logout:"Logout",
-        emptyCart:"Cart is empty",
-        mustLogin:"Please login first",
-        checkoutInfo:(sum)=>`Your total: ${sum} EGP`,
-        couponPH:"Coupon code (optional)",
-        applyC:"Apply",
-        confirm:"Confirm",
-        payNote:"Choose payment method:",
-        payWarn:"Note: Payment is external. After paying, press Finish.",
-        finish:"Finish",
-        okCoupon:(p)=>`Discount applied: ${p}%`,
-        badCoupon:"Invalid or already used coupon"
-      }
-    };
-    const tr = isArabic ? T.ar : T.en;
-
-    /* =========================
-       Helpers / Storage
-       ========================= */
-    const $ = (id)=>document.getElementById(id);
-    const LS = {
-      get(k, d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d; }catch(e){ return d; } },
-      set(k, v){ localStorage.setItem(k, JSON.stringify(v)); }
-    };
-
-    const overlay = $("overlay");
-    const menuDrawer = $("menuDrawer");
-    const filterDrawer = $("filterDrawer");
-
-    function openOverlay(){ overlay.classList.add("show"); }
-    function closeOverlay(){ overlay.classList.remove("show"); }
-    function closeAll(){
-      closeOverlay();
-      menuDrawer.classList.remove("show");
-      filterDrawer.classList.remove("show");
-      $("contactModal").classList.remove("show");
-      $("reviewsModal").classList.remove("show");
-      $("authModal").classList.remove("show");
-      $("cartModal").classList.remove("show");
-      $("detailsModal").classList.remove("show");
-      $("checkoutModal").classList.remove("show");
-    }
-
-    overlay.addEventListener("click", closeAll);
-
-    /* =========================
-       UI Text
-       ========================= */
-    $("year").textContent = new Date().getFullYear();
-    $("search").placeholder = tr.search;
-    $("titleTop").childNodes[0].textContent = tr.top + " ";
-    $("hintTop").textContent = tr.topHint;
-    $("titleOffers").childNodes[0].textContent = tr.offers + " ";
-    $("hintOffers").textContent = tr.offersHint;
-    $("titleGames").textContent = tr.games;
-    $("titlePrograms").textContent = tr.programs;
-    $("titleAccounts").textContent = tr.accounts;
-
-    $("menuTitle").textContent = tr.menu;
-    $("quickTitle").textContent = tr.quick;
-    $("mTop").textContent = tr.top;
-    $("mOffers").textContent = tr.offers;
-    $("mGames").textContent = tr.games;
-    $("mPrograms").textContent = tr.programs;
-    $("mAccounts").textContent = tr.accounts;
-    $("mContact").textContent = tr.contact;
-    $("mReviews").textContent = tr.reviews;
-
-    $("filterTitle").textContent = tr.filter;
-    $("filterNote").textContent = tr.filterNote;
-    $("catTitle").textContent = tr.category;
-    $("sortTitle").textContent = tr.sort;
-    $("priceTitle").textContent = tr.price;
-    $("applyFilterBtn").textContent = tr.apply;
-
-    // Filter options
-    const cat = $("filterCategory");
-    cat.innerHTML = `
-      <option value="all">${tr.all}</option>
-      <option value="top">${tr.top}</option>
-      <option value="offers">${tr.offers}</option>
-      <option value="games">${tr.games}</option>
-      <option value="programs">${tr.programs}</option>
-      <option value="accounts">${tr.accounts}</option>
-    `;
-    const sort = $("filterSort");
-    sort.innerHTML = `
-      <option value="new">${tr.newest}</option>
-      <option value="old">${tr.oldest}</option>
-      <option value="low">${tr.lowHigh}</option>
-      <option value="high">${tr.highLow}</option>
-    `;
-
-    $("cartTitle").textContent = tr.cart;
-    $("totalText").textContent = tr.total;
-    $("checkoutBtn").textContent = tr.checkout;
-    $("authText").textContent = tr.account;
-    $("authTitle").textContent = tr.account;
-    $("detailsTitle").textContent = tr.details;
-    $("checkoutTitle").textContent = tr.checkout;
-
-    $("reviewText").placeholder = tr.reviewPH;
-    $("addReviewBtn").textContent = tr.post;
-
-    $("authNote1").textContent = tr.authNote;
-    $("firstName").placeholder = tr.first;
-    $("lastName").placeholder = tr.last;
-    $("email").placeholder = tr.email;
-    $("password").placeholder = tr.pass;
-    $("gender").innerHTML = `
-      <option value="">${tr.gender}</option>
-      <option value="male">${tr.male}</option>
-      <option value="female">${tr.female}</option>
-    `;
-    $("age").placeholder = tr.age;
-    $("avatarHint").textContent = tr.upload;
-    $("createBtn").textContent = tr.create;
-    $("loginBtn").textContent = tr.login;
-
-    $("editProfileBtn").textContent = isArabic ? "تعديل الحساب" : "Edit profile";
-    $("logoutBtn").textContent = tr.logout;
-    $("logoutBtn2").textContent = tr.logout;
-    $("saveNameBtn").textContent = tr.save;
-    $("changePassBtn").textContent = tr.change;
-    $("editName").placeholder = tr.displayName;
-    $("newPass").placeholder = tr.newPass;
-
-    $("detailsAddCart").textContent = tr.addCart;
-    $("detailsBuyNow").textContent = tr.buy;
-
-    $("couponInput").placeholder = tr.couponPH;
-    $("applyCouponBtn").textContent = tr.applyC;
-    $("confirmToPayBtn").textContent = tr.confirm;
-    $("payNote").textContent = tr.payNote;
-    $("payWarn").textContent = tr.payWarn;
-    $("finishOrderBtn").textContent = tr.finish;
-
-    // Ramadan bar (اختياري)
-    const ramadanBar = $("ramadanBar");
-    ramadanBar.style.display = "flex";
-    $("ramadanTitle").textContent = tr.ramadanTitle;
-    $("ramadanSub").textContent = tr.ramadanSub;
-
-    /* =========================
-       Products (نماذج – انت هتغير الصور/الأسماء)
-       ========================= */
-    const products = [
-      // Top
-      {id:"top1", section:"top", name: isArabic?"باقة ألعاب مميزة":"Featured Games Bundle", desc:isArabic?"أفضل اختيار للمستخدمين":"Top pick for users", price:350, top:true, offer:false, img:""},
-      {id:"top2", section:"top", name: isArabic?"أكونت مميز":"Premium Account", desc:isArabic?"مناسب للمهتمين":"Perfect for gamers", price:500, top:true, offer:false, img:""},
-      {id:"top3", section:"top", name: isArabic?"برنامج احترافي":"Pro Software", desc:isArabic?"نسخة احترافية":"Professional version", price:450, top:true, offer:false, img:""},
-      {id:"top4", section:"top", name: isArabic?"عرض وقت محدود":"Limited Deal", desc:isArabic?"خصم لفترة":"Limited time deal", price:299, top:true, offer:true, img:""},
-
-      // Offers
-      {id:"off1", section:"offers", name:isArabic?"عرض 1":"Offer 1", desc:isArabic?"خصم قوي":"Big discount", price:199, top:false, offer:true, img:""},
-      {id:"off2", section:"offers", name:isArabic?"عرض 2":"Offer 2", desc:isArabic?"سعر ممتاز":"Great price", price:249, top:false, offer:true, img:""},
-      {id:"off3", section:"offers", name:isArabic?"عرض 3":"Offer 3", desc:isArabic?"أوفر جامد":"Hot offer", price:149, top:false, offer:true, img:""},
-      {id:"off4", section:"offers", name:isArabic?"عرض 4":"Offer 4", desc:isArabic?"لفترة محدودة":"Limited time", price:99, top:false, offer:true, img:""},
-
-      // Games
-      {id:"g1", section:"games", name:isArabic?"لعبة 1":"Game 1", desc:isArabic?"وصف قصير":"Short description", price:120, top:false, offer:false, img:""},
-      {id:"g2", section:"games", name:isArabic?"لعبة 2":"Game 2", desc:isArabic?"وصف قصير":"Short description", price:180, top:false, offer:false, img:""},
-      {id:"g3", section:"games", name:isArabic?"لعبة 3":"Game 3", desc:isArabic?"وصف قصير":"Short description", price:210, top:false, offer:false, img:""},
-      {id:"g4", section:"games", name:isArabic?"لعبة 4":"Game 4", desc:isArabic?"وصف قصير":"Short description", price:160, top:false, offer:false, img:""},
-
-      // Programs
-      {id:"p1", section:"programs", name:isArabic?"برنامج 1":"Program 1", desc:isArabic?"وصف قصير":"Short description", price:300, top:false, offer:false, img:""},
-      {id:"p2", section:"programs", name:isArabic?"برنامج 2":"Program 2", desc:isArabic?"وصف قصير":"Short description", price:420, top:false, offer:false, img:""},
-      {id:"p3", section:"programs", name:isArabic?"برنامج 3":"Program 3", desc:isArabic?"وصف قصير":"Short description", price:250, top:false, offer:false, img:""},
-      {id:"p4", section:"programs", name:isArabic?"برنامج 4":"Program 4", desc:isArabic?"وصف قصير":"Short description", price:380, top:false, offer:false, img:""},
-
-      // Accounts
-      {id:"a1", section:"accounts", name:isArabic?"أكونت 1":"Account 1", desc:isArabic?"تفاصيل الأكونت":"Account details", price:600, top:false, offer:false, img:""},
-      {id:"a2", section:"accounts", name:isArabic?"أكونت 2":"Account 2", desc:isArabic?"تفاصيل الأكونت":"Account details", price:750, top:false, offer:false, img:""},
-      {id:"a3", section:"accounts", name:isArabic?"أكونت 3":"Account 3", desc:isArabic?"تفاصيل الأكونت":"Account details", price:900, top:false, offer:false, img:""},
-      {id:"a4", section:"accounts", name:isArabic?"أكونت 4":"Account 4", desc:isArabic?"تفاصيل الأكونت":"Account details", price:500, top:false, offer:false, img:""},
-    ];
-
-    /* =========================
-       Coupons (MG / MZ / MK ... إلخ)
-       One-time per user
-       ========================= */
-    function buildCodes(prefix, percent){
-      const arr = [];
-      for(let i=1;i<=10;i++) arr.push({code:`${prefix}${i}`, percent});
-      return arr;
-    }
-    const couponPool = [
-      ...buildCodes("MG",10),
-      ...buildCodes("MZ",20),
-      ...buildCodes("MK",30),
-      ...buildCodes("MC",40),
-      ...buildCodes("MA",50),
-      ...buildCodes("MB",60),
-      ...buildCodes("ME",70),
-      ...buildCodes("MX",80),
-      ...buildCodes("MR",90),
-      ...buildCodes("MI",100),
-    ];
-
-    /* =========================
-       Render
-       ========================= */
-    function formatPrice(n){ return isArabic ? `${n} جنيه` : `${n} EGP`; }
-
-    function cardHTML(p){
-      const badge = p.top ? `<div class="badge top">${isArabic?"توب":"Top"}</div>`
-                 : p.offer ? `<div class="badge offer">${isArabic?"أوفر":"Offer"}</div>` : "";
-      const img = p.img ? `<img src="${p.img}" alt="">` : `<div style="opacity:.9">${isArabic?"صورة":"IMAGE"}</div>`;
-      return `
-        <div class="card">
-          <div class="thumb">${badge}${img}</div>
-          <div class="content">
-            <p class="name">${p.name}</p>
-            <p class="meta">${p.desc}</p>
-            <div class="priceRow">
-              <p class="price">${formatPrice(p.price)}</p>
-            </div>
-            <div class="actions">
-              <button class="btn btnBlue" data-details="${p.id}">${tr.details}</button>
-              <button class="btn btnRed" data-buy="${p.id}">${tr.buy}</button>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderAll(list){
-      const top = list.filter(x=>x.section==="top");
-      const offers = list.filter(x=>x.section==="offers");
-      const games = list.filter(x=>x.section==="games");
-      const programs = list.filter(x=>x.section==="programs");
-      const accounts = list.filter(x=>x.section==="accounts");
-
-      $("gridTop").innerHTML = top.map(cardHTML).join("");
-      $("gridOffers").innerHTML = offers.map(cardHTML).join("");
-      $("gridGames").innerHTML = games.map(cardHTML).join("");
-      $("gridPrograms").innerHTML = programs.map(cardHTML).join("");
-      $("gridAccounts").innerHTML = accounts.map(cardHTML).join("");
-    }
-
-    /* =========================
-       Search + Filter
-       ========================= */
-    let activeList = [...products];
-    function applyFilters(){
-      const q = $("search").value.trim().toLowerCase();
-      const cat = $("filterCategory").value;
-      const sort = $("filterSort").value;
-      const mode = $("priceMode").value;
-      const price = Number($("priceValue").value || 0);
-
-      let list = [...products];
-
-      if(cat !== "all") list = list.filter(x=>x.section===cat);
-
-      if(q){
-        list = list.filter(x =>
-          (x.name||"").toLowerCase().includes(q) ||
-          (x.desc||"").toLowerCase().includes(q)
-        );
-      }
-
-      if(mode !== "off"){
-        list = list.filter(x=>{
-          if(mode==="eq") return x.price===price;
-          if(mode==="lte") return x.price<=price;
-          if(mode==="gte") return x.price>=price;
-          return true;
-        });
-      }
-
-      if(sort==="new") list.sort((a,b)=> (a.id>b.id?-1:1));
-      if(sort==="old") list.sort((a,b)=> (a.id<b.id?-1:1));
-      if(sort==="low") list.sort((a,b)=> a.price-b.price);
-      if(sort==="high") list.sort((a,b)=> b.price-a.price);
-
-      activeList = list;
-      renderAll(activeList);
-      hookCards();
-    }
-
-    $("search").addEventListener("input", applyFilters);
-
-    /* =========================
-       Auth (local only)
-       ========================= */
-    const DB_KEY = "medo_users_v1";
-    const SES_KEY = "medo_session_v1";
-
-    function getUsers(){ return LS.get(DB_KEY, []); }
-    function setUsers(u){ LS.set(DB_KEY, u); }
-    function getSession(){ return LS.get(SES_KEY, null); }
-    function setSession(s){ LS.set(SES_KEY, s); }
-
-    function showAuthMsg(type, msg){
-      const err = $("authErr"), ok = $("authOk");
-      err.style.display="none"; ok.style.display="none";
-      if(type==="err"){ err.textContent = msg; err.style.display="block"; }
-      else { ok.textContent = msg; ok.style.display="block"; }
-    }
-
-    function fileToDataUrl(file){
-      return new Promise((resolve)=>{
-        if(!file) return resolve("");
-        const r = new FileReader();
-        r.onload = ()=>resolve(String(r.result||""));
-        r.readAsDataURL(file);
-      });
-    }
-
-    async function createAccount(){
-      const fn = $("firstName").value.trim();
-      const ln = $("lastName").value.trim();
-      const email = $("email").value.trim().toLowerCase();
-      const pass = $("password").value;
-      const gender = $("gender").value;
-      const age = Number($("age").value || 0);
-
-      if(!fn || !ln || !email || !pass){
-        return showAuthMsg("err", isArabic ? "املأ البيانات المطلوبة" : "Fill required fields");
-      }
-
-      const users = getUsers();
-      if(users.some(u=>u.email===email)){
-        return showAuthMsg("err", tr.exists);
-      }
-
-      const avatarData = await fileToDataUrl($("avatar").files[0]);
-
-      const user = {
-        email,
-        pass,              // تنبيه: ده Local فقط
-        firstName: fn,
-        lastName: ln,
-        gender,
-        age,
-        avatar: avatarData,
-        displayName: `${fn} ${ln}`,
-        gems: 0,
-        inbox: [],
-        usedCoupons: []
-      };
-
-      users.push(user);
-      setUsers(users);
-      setSession({email});
-      showAuthMsg("ok", tr.saved);
-      refreshUserUI();
-      openProfileView();
-    }
-
-    function loginAccount(){
-      const email = $("email").value.trim().toLowerCase();
-      const pass = $("password").value;
-      const users = getUsers();
-      const u = users.find(x=>x.email===email && x.pass===pass);
-      if(!u) return showAuthMsg("err", tr.wrong);
-      setSession({email});
-      showAuthMsg("ok", tr.saved);
-      refreshUserUI();
-      openProfileView();
-    }
-
-    function currentUser(){
-      const s = getSession();
-      if(!s?.email) return null;
-      return getUsers().find(u=>u.email===s.email) || null;
-    }
-
-    function updateUser(patch){
-      const s = getSession();
-      if(!s?.email) return;
-      const users = getUsers();
-      const idx = users.findIndex(u=>u.email===s.email);
-      if(idx<0) return;
-      users[idx] = {...users[idx], ...patch};
-      setUsers(users);
-      refreshUserUI();
-    }
-
-    function logout(){
-      setSession(null);
-      refreshUserUI();
-      closeAll();
-    }
-
-    function refreshUserUI(){
-      const u = currentUser();
-
-      $("drawerUserBox").style.display = u ? "block" : "none";
-      if(u){
-        $("drawerUserNote").textContent = isArabic ? `مرحبًا ${u.displayName}` : `Hi ${u.displayName}`;
-      }
-
-      if(!u){
-        $("authBtn").style.display="inline-flex";
-        $("userChip").style.display="none";
-        $("inboxCount").textContent = "0";
-        $("gemsCount").textContent = "0";
-      }else{
-        $("authBtn").style.display="none";
-        $("userChip").style.display="inline-flex";
-        $("userNameText").textContent = u.displayName;
-        if(u.avatar){
-          $("avatarSmall").innerHTML = `<img src="${u.avatar}" alt="">`;
-        }else{
-          $("avatarSmall").textContent = (u.displayName||"U").slice(0,1).toUpperCase();
-        }
-        $("inboxCount").textContent = String((u.inbox||[]).length);
-        $("gemsCount").textContent = String(u.gems||0);
-      }
-    }
-
-    function openProfileView(){
-      const u = currentUser();
-      if(!u) return;
-      $("authStep1").style.display="none";
-      $("authStep2").style.display="flex";
-      $("profileNote").textContent = tr.profile + ": " + u.email;
-      $("editName").value = u.displayName || "";
-    }
-
-    function openAuthForm(){
-      $("authStep1").style.display="flex";
-      $("authStep2").style.display="none";
-      $("authErr").style.display="none";
-      $("authOk").style.display="none";
-    }
-
-    $("togglePassBtn").addEventListener("click", ()=>{
-      const p = $("password");
-      p.type = p.type==="password" ? "text" : "password";
-    });
-
-    $("createBtn").addEventListener("click", createAccount);
-    $("loginBtn").addEventListener("click", loginAccount);
-    $("logoutBtn").addEventListener("click", logout);
-    $("logoutBtn2").addEventListener("click", logout);
-
-    $("saveNameBtn").addEventListener("click", ()=>{
-      const v = $("editName").value.trim();
-      if(!v) return;
-      updateUser({displayName:v});
-      $("profileNote").textContent = tr.saved;
-      setTimeout(()=>openProfileView(), 600);
-    });
-
-    $("changePassBtn").addEventListener("click", ()=>{
-      const np = $("newPass").value;
-      if(!np) return;
-      updateUser({pass:np});
-      $("profileNote").textContent = tr.saved;
-      $("newPass").value="";
-      setTimeout(()=>openProfileView(), 600);
-    });
-
-    /* =========================
-       Cart
-       ========================= */
-    const CART_KEY = "medo_cart_v1";
-    function getCart(){ return LS.get(CART_KEY, []); }
-    function setCart(c){ LS.set(CART_KEY, c); $("cartCount").textContent=String(c.reduce((a,x)=>a+x.qty,0)); }
-    function addToCart(id){
-      const p = products.find(x=>x.id===id);
-      if(!p) return;
-      const c = getCart();
-      const idx = c.findIndex(x=>x.id===id);
-      if(idx>=0) c[idx].qty += 1;
-      else c.push({id, qty:1});
-      setCart(c);
-    }
-    function cartTotal(){
-      const c = getCart();
-      let sum = 0;
-      for(const item of c){
-        const p = products.find(x=>x.id===item.id);
-        if(p) sum += p.price * item.qty;
-      }
-      return sum;
-    }
-
-    function renderCart(){
-      const c = getCart();
-      const list = $("cartList");
-      list.innerHTML = "";
-
-      if(!c.length){
-        list.innerHTML = `<div class="note">${tr.emptyCart}</div>`;
-        $("totalBar").style.display="none";
-        $("checkoutBtn").style.display="none";
-        return;
-      }
-
-      for(const item of c){
-        const p = products.find(x=>x.id===item.id);
-        if(!p) continue;
-        const img = p.img ? `<img src="${p.img}" alt="">` : `${isArabic?"صورة":"IMG"}`;
-        const el = document.createElement("div");
-        el.className="cartItem";
-        el.innerHTML = `
-          <div class="cartLeft">
-            <div class="cartThumb">${img}</div>
-            <div style="flex:1">
-              <p class="cartName">${p.name}</p>
-              <p class="cartMeta">${formatPrice(p.price)} • ${isArabic?"الكمية":"Qty"}: ${item.qty}</p>
-              <div class="qtyRow">
-                <button class="qtyBtn" data-minus="${p.id}">-</button>
-                <span class="qtyNum">${item.qty}</span>
-                <button class="qtyBtn" data-plus="${p.id}">+</button>
-                <button class="detailsBtn" data-details="${p.id}">${tr.details}</button>
-              </div>
-            </div>
-          </div>
-          <button class="removeBtn" data-remove="${p.id}">${isArabic?"حذف":"Remove"}</button>
-        `;
-        list.appendChild(el);
-      }
-
-      $("totalBar").style.display="flex";
-      $("totalValue").textContent = formatPrice(cartTotal());
-      $("checkoutBtn").style.display="inline-flex";
-    }
-
-    function cartHooks(){
-      $("cartList").addEventListener("click", (e)=>{
-        const t = e.target;
-        const id = t.getAttribute?.("data-plus") || t.getAttribute?.("data-minus") || t.getAttribute?.("data-remove") || t.getAttribute?.("data-details");
-        if(!id) return;
-        const c = getCart();
-        const idx = c.findIndex(x=>x.id===id);
-        if(idx<0 && !t.getAttribute("data-details")) return;
-
-        if(t.getAttribute("data-plus")){
-          c[idx].qty += 1;
-          setCart(c);
-          renderCart();
-          return;
-        }
-        if(t.getAttribute("data-minus")){
-          c[idx].qty -= 1;
-          if(c[idx].qty<=0) c.splice(idx,1);
-          setCart(c);
-          renderCart();
-          return;
-        }
-        if(t.getAttribute("data-remove")){
-          c.splice(idx,1);
-          setCart(c);
-          renderCart();
-          return;
-        }
-        if(t.getAttribute("data-details")){
-          openDetails(id);
-          return;
-        }
-      });
-    }
-
-    /* =========================
-       Details
-       ========================= */
-    let currentDetailsId = null;
-    function openDetails(id){
-      const p = products.find(x=>x.id===id);
-      if(!p) return;
-      currentDetailsId = id;
-
-      $("detailsName").textContent = p.name;
-      $("detailsDesc").textContent = p.desc;
-      $("detailsPrice").textContent = formatPrice(p.price);
-
-      const box = $("detailsThumb");
-      if(p.img) box.innerHTML = `<img src="${p.img}" alt="" style="width:100%;height:100%;object-fit:cover">`;
-      else box.innerHTML = `<div style="opacity:.9">${isArabic?"صورة كبيرة":"BIG IMAGE"}</div>`;
-
-      openModal("detailsModal");
-    }
-
-    $("detailsAddCart").addEventListener("click", ()=>{
-      if(!currentDetailsId) return;
-      addToCart(currentDetailsId);
-    });
-    $("detailsBuyNow").addEventListener("click", ()=>{
-      if(!currentDetailsId) return;
-      addToCart(currentDetailsId);
-      openCart();
-    });
-
-    /* =========================
-       Reviews
-       ========================= */
-    const REV_KEY = "medo_reviews_v1";
-    function getReviews(){ return LS.get(REV_KEY, []); }
-    function setReviews(r){ LS.set(REV_KEY, r); }
-
-    function renderReviews(){
-      const r = getReviews();
-      const list = $("reviewsList");
-      list.innerHTML = "";
-      r.slice().reverse().forEach(x=>{
-        const div = document.createElement("div");
-        div.className = "note";
-        div.textContent = x;
-        list.appendChild(div);
-      });
-    }
-
-    $("addReviewBtn").addEventListener("click", ()=>{
-      const txt = $("reviewText").value.trim();
-      if(!txt) return;
-      const r = getReviews();
-      const u = currentUser();
-      const name = u ? u.displayName : (isArabic?"زائر":"Guest");
-      r.push(`${name}: ${txt}`);
-      setReviews(r);
-      $("reviewText").value = "";
-      renderReviews();
-    });
-
-    /* =========================
-       Checkout + Coupons + Bonus
-       ========================= */
-    let checkoutDiscountPercent = 0;
-
-    function resetCouponUI(){
-      $("couponOk").style.display="none";
-      $("couponErr").style.display="none";
-      checkoutDiscountPercent = 0;
-    }
-
-    function userHasUsed(code){
-      const u = currentUser();
-      if(!u) return false;
-      return (u.usedCoupons||[]).includes(code);
-    }
-
-    function markUsed(code){
-      const u = currentUser();
-      if(!u) return;
-      const used = new Set(u.usedCoupons||[]);
-      used.add(code);
-      updateUser({usedCoupons:[...used]});
-    }
-
-    function applyCoupon(){
-      resetCouponUI();
-      const code = ($("couponInput").value||"").trim().toUpperCase();
-      if(!code) return;
-
-      const u = currentUser();
-      if(!u){
-        $("couponErr").textContent = tr.mustLogin;
-        $("couponErr").style.display="block";
-        return;
-      }
-      if(userHasUsed(code)){
-        $("couponErr").textContent = tr.badCoupon;
-        $("couponErr").style.display="block";
-        return;
-      }
-
-      const found = couponPool.find(x=>x.code===code);
-      if(!found){
-        $("couponErr").textContent = tr.badCoupon;
-        $("couponErr").style.display="block";
-        return;
-      }
-
-      checkoutDiscountPercent = found.percent;
-      $("couponOk").textContent = tr.okCoupon(found.percent);
-      $("couponOk").style.display="block";
-    }
-
-    $("applyCouponBtn").addEventListener("click", applyCoupon);
-
-    function openCheckout(){
-      const u = currentUser();
-      if(!u){
-        // لو مش مسجل: افتح التسجيل
-        openModal("authModal");
-        openAuthForm();
-        showAuthMsg("err", tr.mustLogin);
-        return;
-      }
-
-      const sum = cartTotal();
-      $("checkoutInfo").textContent = tr.checkoutInfo(sum);
-      $("couponInput").value = "";
-      resetCouponUI();
-
-      $("checkoutStepA").style.display="flex";
-      $("checkoutStepB").style.display="none";
-      openModal("checkoutModal");
-    }
-
-    $("confirmToPayBtn").addEventListener("click", ()=>{
-      // لو فيه كود واتفعل: اعتبره مستخدم مرة واحدة بعد التأكيد
-      const code = ($("couponInput").value||"").trim().toUpperCase();
-      if(code && checkoutDiscountPercent>0 && !userHasUsed(code)){
-        markUsed(code);
-      }
-
-      $("checkoutStepA").style.display="none";
-      $("checkoutStepB").style.display="flex";
-
-      const sum = cartTotal();
-      const discount = Math.round(sum * (checkoutDiscountPercent/100));
-      const final = Math.max(0, sum - discount);
-      $("payNote").textContent = isArabic
-        ? `الإجمالي: ${formatPrice(sum)} • الخصم: ${formatPrice(discount)} • النهائي: ${formatPrice(final)}`
-        : `Total: ${formatPrice(sum)} • Discount: ${formatPrice(discount)} • Final: ${formatPrice(final)}`;
-    });
-
-    function addInbox(msg){
-      const u = currentUser();
-      if(!u) return;
-      const inbox = Array.isArray(u.inbox) ? u.inbox.slice() : [];
-      inbox.push(msg);
-      updateUser({inbox});
-    }
-
-    function addGemsFromOrder(finalAmount){
-      // نظام بسيط: كل 200 جنيه = 1 جوهرة
-      const u = currentUser();
-      if(!u) return;
-      const add = Math.floor(finalAmount / 200);
-      if(add<=0) return;
-      updateUser({gems:(u.gems||0)+add});
-      addInbox(isArabic ? `تم إضافة ${add} جوهرة لحسابك.` : `Added ${add} gems to your account.`);
-    }
-
-    $("finishOrderBtn").addEventListener("click", ()=>{
-      const sum = cartTotal();
-      const discount = Math.round(sum * (checkoutDiscountPercent/100));
-      const final = Math.max(0, sum - discount);
-
-      // سجل إشعار + بونص
-      addInbox(isArabic ? `تم إنشاء طلب جديد بقيمة ${formatPrice(final)}.` : `New order created: ${formatPrice(final)}.`);
-      addGemsFromOrder(final);
-
-      // فضّي السلة
-      setCart([]);
-      renderCart();
-      closeAll();
-    });
-
-    /* =========================
-       Inbox + Bonus (gems)
-       ========================= */
-    function openInbox(){
-      const u = currentUser();
-      if(!u){
-        openModal("authModal");
-        openAuthForm();
-        showAuthMsg("err", tr.mustLogin);
-        return;
-      }
-      // نعرض الإشعارات في Reviews modal عشان منبوظش التصميم
-      openModal("reviewsModal");
-      $("reviewsTitle").textContent = isArabic ? "الإشعارات" : "Inbox";
-      const list = $("reviewsList");
-      list.innerHTML = "";
-      (u.inbox||[]).slice().reverse().forEach(x=>{
-        const div = document.createElement("div");
-        div.className = "note ok";
-        div.textContent = x;
-        list.appendChild(div);
-      });
-      $("reviewText").style.display="none";
-      $("addReviewBtn").style.display="none";
-    }
-
-    function openReviews(){
-      openModal("reviewsModal");
-      $("reviewsTitle").textContent = tr.reviews;
-      $("reviewText").style.display="block";
-      $("addReviewBtn").style.display="inline-flex";
-      renderReviews();
-    }
-
-    function openBonus(){
-      const u = currentUser();
-      if(!u){
-        openModal("authModal");
-        openAuthForm();
-        showAuthMsg("err", tr.mustLogin);
-        return;
-      }
-      openModal("reviewsModal");
-      $("reviewsTitle").textContent = isArabic ? "الجواهر" : "Gems";
-      $("reviewText").style.display="none";
-      $("addReviewBtn").style.display="none";
-      const list = $("reviewsList");
-      list.innerHTML = `
-        <div class="note ok">${isArabic ? "جواهرك الحالية:" : "Your gems:"} <strong>${u.gems||0}</strong></div>
-        <div class="note">${isArabic ? "هتزيد الجواهر بعد كل طلب." : "Gems increase after orders."}</div>
-      `;
-    }
-
-    /* =========================
-       Open/Close Modals & Drawers
-       ========================= */
-    function openModal(id){
-      closeOverlay();
-      openOverlay();
-      $(id).classList.add("show");
-    }
-
-    function openMenu(){
-      closeOverlay(); openOverlay();
-      filterDrawer.classList.remove("show");
-      menuDrawer.classList.add("show");
-    }
-    function openFilter(){
-      closeOverlay(); openOverlay();
-      menuDrawer.classList.remove("show");
-      filterDrawer.classList.add("show");
-    }
-
-    $("menuBtn").addEventListener("click", openMenu);
-    $("menuClose").addEventListener("click", closeAll);
-
-    $("filterBtn").addEventListener("click", openFilter);
-    $("filterClose").addEventListener("click", closeAll);
-
-    $("contactClose").addEventListener("click", closeAll);
-    $("reviewsClose").addEventListener("click", closeAll);
-    $("authClose").addEventListener("click", closeAll);
-    $("cartClose").addEventListener("click", closeAll);
-    $("detailsClose").addEventListener("click", closeAll);
-    $("checkoutClose").addEventListener("click", closeAll);
-
-    $("openContactRow").addEventListener("click", ()=>openModal("contactModal"));
-    $("openReviewsRow").addEventListener("click", openReviews);
-
-    // Drawer scroll links
-    document.querySelectorAll(".linkRow[data-scroll]").forEach(el=>{
-      el.addEventListener("click", ()=>{
-        const id = el.getAttribute("data-scroll");
-        closeAll();
-        setTimeout(()=>document.getElementById(id).scrollIntoView({behavior:"smooth"}), 80);
-      });
-    });
-
-    // Apply Filter button
-    $("applyFilterBtn").addEventListener("click", ()=>{
-      applyFilters();
-      closeAll();
-    });
-
-    /* =========================
-       Card clicks (Details/Buy)
-       ========================= */
-    function hookCards(){
-      document.body.querySelectorAll("[data-details]").forEach(btn=>{
-        btn.addEventListener("click", ()=>openDetails(btn.getAttribute("data-details")));
-      });
-      document.body.querySelectorAll("[data-buy]").forEach(btn=>{
-        btn.addEventListener("click", ()=>{
-          const id = btn.getAttribute("data-buy");
-          addToCart(id);
-          openCart();
-        });
-      });
-    }
-
-    function openCart(){
-      renderCart();
-      openModal("cartModal");
-    }
-
-    $("cartBtn").addEventListener("click", openCart);
-
-    $("checkoutBtn").addEventListener("click", ()=>{
-      closeAll();
-      openCheckout();
-    });
-
-    $("authBtn").addEventListener("click", ()=>{
-      openModal("authModal");
-      openAuthForm();
-    });
-
-    $("userChip").addEventListener("click", ()=>{
-      openModal("authModal");
-      openProfileView();
-    });
-
-    $("editProfileBtn").addEventListener("click", ()=>{
-      openModal("authModal");
-      openProfileView();
-    });
-
-    $("inboxBtn").addEventListener("click", openInbox);
-    $("gemsBtn").addEventListener("click", openBonus);
-
-    /* Payment buttons (روابط خارجية مثال) */
-    function openPay(url){ window.open(url, "_blank"); }
-    $("payVod").addEventListener("click", ()=>openPay("https://www.vodafone.com.eg/"));
-    $("payEt").addEventListener("click", ()=>openPay("https://www.etisalat.eg/"));
-    $("payWe").addEventListener("click", ()=>openPay("https://te.eg/"));
-    $("payOr").addEventListener("click", ()=>openPay("https://www.orange.eg/"));
-    $("payVisa").addEventListener("click", ()=>openPay("https://www.visa.com/"));
-    $("payInsta").addEventListener("click", ()=>openPay("https://instapay.com.eg/"));
-    $("payBill").addEventListener("click", ()=>openPay("https://www.fawry.com/"));
-    $("payTelda").addEventListener("click", ()=>openPay("https://www.telda.app/"));
-
-    /* =========================
-       Init
-       ========================= */
-    function init(){
-      // Set ramadan bar always visible (خفيف)
-      // Render products
-      renderAll(products);
-      hookCards();
-
-      // Cart count init
-      setCart(getCart());
-
-      // Reviews init
-      renderReviews();
-
-      // Auth UI init
-      refreshUserUI();
-    }
-    init();
-  </script>
-</body>
-</html>
