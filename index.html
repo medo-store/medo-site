@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -7,14 +7,13 @@
 
   <style>
     :root{
-      --bg0:#060814;
-      --bg1:#0A1030;
-      --panel:#0C173A;
-      --card:rgba(12,23,54,.78);
+      --bg0:#070A12;
+      --bg1:#0B1230;
+      --panel:#0E183B;
+      --card:#0C1736;
       --text:#F6F7FF;
       --muted:#B9C1D9;
       --border:rgba(255,255,255,.10);
-
       --accent:#E11D48;
       --accent2:#38BDF8;
       --good:#22C55E;
@@ -25,47 +24,23 @@
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
     body{
       margin:0;
-      font-family:system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+      font-family:"Segoe UI", Tahoma, Arial, sans-serif;
       color:var(--text);
       background:
         radial-gradient(900px 500px at 15% 8%, rgba(56,189,248,.16), transparent 60%),
         radial-gradient(900px 600px at 85% 0%, rgba(225,29,72,.14), transparent 55%),
         linear-gradient(180deg, var(--bg1), var(--bg0));
       min-height:100vh;
-      overflow-x:hidden;
     }
-
-    /* subtle side decor (no external images) */
-    body:before, body:after{
-      content:"";
-      position:fixed;
-      top:140px;
-      width:320px;height:520px;
-      pointer-events:none;
-      opacity:.20;
-      filter: blur(.2px);
-      z-index:0;
-      background:
-        radial-gradient(120px 120px at 35% 25%, rgba(56,189,248,.35), transparent 60%),
-        radial-gradient(150px 150px at 70% 35%, rgba(225,29,72,.28), transparent 62%),
-        radial-gradient(110px 110px at 40% 70%, rgba(245,158,11,.22), transparent 62%),
-        radial-gradient(160px 160px at 70% 78%, rgba(34,197,94,.20), transparent 62%);
-      border-radius:26px;
-      border:1px solid rgba(255,255,255,.06);
-    }
-    body:before{left:-220px}
-    body:after{right:-220px}
-
     a{color:inherit;text-decoration:none}
-    .container{max-width:1200px;margin:0 auto;padding:10px 12px; position:relative; z-index:1;}
+    .container{max-width:1500px;margin:0 auto;padding:10px 16px}
 
-    /* Header */
+    /* Sticky header */
     .nav{
-      position:sticky; top:0; z-index:60;
-      background:rgba(6,8,20,.72);
+      position:sticky;top:0;z-index:60;
+      background:rgba(7,10,18,.72);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--border);
     }
@@ -101,7 +76,6 @@
     }
     .iconBtn:hover{filter:brightness(1.08)}
     .rightBox{margin-inline-start:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-
     .pillCount{
       min-width:22px;height:22px;border-radius:999px;
       display:inline-flex;align-items:center;justify-content:center;
@@ -125,15 +99,8 @@
       display:inline-flex;align-items:center;justify-content:center;
       overflow:hidden;
       font-size:11px;
-      flex:0 0 auto;
     }
     .avatarSmall img{width:100%;height:100%;object-fit:cover}
-
-    /* Filter button - looks like app */
-    .filterIcon{
-      width:18px;height:18px;display:inline-block;line-height:0;
-    }
-    .filterIcon svg{display:block}
 
     /* Sections */
     .sectionTitle{
@@ -145,27 +112,24 @@
     .sectionHint{color:var(--muted);font-weight:800;font-size:12px}
     .spacer{height:18px}
 
-    /* Grid: desktop = 4, tablet = 3, mobile = 2, small = 1 */
+    /* ✅ GRID: ALWAYS 4 (no media) */
     .grid{
       display:grid;
       grid-template-columns:repeat(4, minmax(0,1fr));
-      gap:16px; /* requested: more space */
+      gap:12px;
     }
-    @media (max-width:1050px){ .grid{grid-template-columns:repeat(3, minmax(0,1fr));} }
-    @media (max-width:760px){ .grid{grid-template-columns:repeat(2, minmax(0,1fr));} }
-    @media (max-width:460px){ .grid{grid-template-columns:1fr;} }
 
     .card{
-      background:var(--card);
+      background:rgba(12,23,54,.72);
       border:1px solid var(--border);
       border-radius:var(--radius);
       overflow:hidden;
       box-shadow: var(--shadow);
       display:flex;flex-direction:column;
-      min-height:246px;
+      min-height:250px;
     }
     .thumb{
-      height:110px;
+      height:96px;
       background:
         radial-gradient(180px 120px at 25% 30%, rgba(56,189,248,.22), transparent 65%),
         radial-gradient(180px 120px at 75% 0%, rgba(225,29,72,.18), transparent 60%),
@@ -174,8 +138,8 @@
       display:flex;align-items:center;justify-content:center;
       font-weight:900;letter-spacing:.7px;font-size:12px;
       position:relative;
-      cursor:pointer;
     }
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
     .badge{
       position:absolute;top:8px;inset-inline-start:8px;
       padding:6px 8px;border-radius:999px;
@@ -187,18 +151,9 @@
     .badge.top{border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.12)}
     .badge.offer{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.12)}
 
-    .content{padding:12px 12px 12px;display:flex;flex-direction:column;gap:8px;flex:1}
+    .content{padding:10px 10px 12px;display:flex;flex-direction:column;gap:8px;flex:1}
     .name{margin:0;font-size:13px;font-weight:900}
     .meta{margin:0;font-size:12px;color:var(--muted);line-height:1.4}
-    .stars{display:flex;gap:2px;align-items:center;font-size:14px;letter-spacing:1px; opacity:.95}
-    .stars button{
-      background:transparent;border:none;color:rgba(246,247,255,.88);
-      cursor:pointer;padding:0;line-height:1;
-      font-size:16px;
-    }
-    .stars .mutedStar{opacity:.45}
-    .ratingInfo{font-size:11px;color:var(--muted);font-weight:800}
-
     .priceRow{display:flex;align-items:center;justify-content:space-between;gap:8px}
     .price{margin:0;font-size:12px;font-weight:900}
 
@@ -213,32 +168,30 @@
       font-weight:900;font-size:12px;
       cursor:pointer;
       display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      min-width:120px;
+      min-width:0; /* مهم عشان مايكبرش الكارت */
     }
     .btn:hover{filter:brightness(1.08)}
     .btnRed{background:linear-gradient(135deg, rgba(225,29,72,1), rgba(225,29,72,.82));border-color:transparent}
     .btnBlue{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.35)}
-    .btnWarn{background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.35)}
 
-    /* Overlay / Drawer / Modal */
+    /* Overlay / drawer / modal */
     .overlay{position:fixed;inset:0;background:rgba(0,0,0,.58);display:none;z-index:80}
     .overlay.show{display:block}
 
+    /* Drawer (hidden by default) */
     .drawer{
       position:fixed;top:0;bottom:0;
       width:min(360px, 92vw);
-      background:rgba(12,23,58,.92);
+      background:rgba(14,24,59,.92);
       backdrop-filter: blur(10px);
       border:1px solid var(--border);
       box-shadow: var(--shadow);
       z-index:90;
-      transition: transform .22s ease;
       display:flex;flex-direction:column;
-      transform: translateX(110%); /* hidden by default */
+      right:-420px; /* hidden */
+      transition:right .22s ease;
     }
-    html[dir="rtl"] .drawer{ right:0; transform: translateX(110%); }
-    html[dir="ltr"] .drawer{ left:auto; right:0; transform: translateX(110%); }
-    .drawer.show{ transform: translateX(0); }
+    .drawer.show{ right:0; }
 
     .drawerHeader{
       padding:12px;border-bottom:1px solid var(--border);
@@ -271,25 +224,19 @@
     .modal{position:fixed;inset:0;display:none;z-index:95;align-items:center;justify-content:center;padding:14px}
     .modal.show{display:flex}
     .modalBox{
-      width:min(820px, 96vw);
-      max-height:min(86vh, 760px);
-      overflow:auto;
-      background:rgba(12,23,58,.94);
+      width:min(760px, 96vw);
+      background:rgba(14,24,59,.94);
       border:1px solid var(--border);
       border-radius:16px;
       box-shadow: var(--shadow);
-      overflow-x:hidden;
+      overflow:hidden;
     }
     .modalHeader{
-      position:sticky;top:0;
-      background:rgba(12,23,58,.94);
       padding:12px;border-bottom:1px solid var(--border);
       display:flex;align-items:center;justify-content:space-between;gap:10px;
-      z-index:2;
     }
     .modalTitle{font-weight:900}
     .modalBody{padding:12px}
-
     .stack{display:flex;flex-direction:column;gap:10px}
     .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
     .row > *{flex:1}
@@ -335,8 +282,8 @@
       flex:0 0 auto;
       display:flex;align-items:center;justify-content:center;
       font-weight:900;font-size:11px;opacity:.9;
-      cursor:pointer;
     }
+    .cartThumb img{width:100%;height:100%;object-fit:cover}
     .cartName{font-weight:900;font-size:13px;margin:0 0 4px}
     .cartMeta{margin:0;color:var(--muted);font-size:12px;font-weight:800}
     .qtyRow{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
@@ -357,6 +304,14 @@
       padding:8px 10px;border-radius:10px;
       white-space:nowrap;
     }
+    .detailsBtn{
+      border:1px solid rgba(56,189,248,.35);
+      background:rgba(56,189,248,.10);
+      color:rgba(246,247,255,.95);
+      font-weight:900;cursor:pointer;
+      padding:8px 10px;border-radius:10px;
+      white-space:nowrap;
+    }
     .totalBar{
       margin-top:10px;
       border:1px solid rgba(56,189,248,.35);
@@ -364,39 +319,9 @@
       border-radius:14px;
       padding:10px;
       display:flex;align-items:center;justify-content:space-between;gap:10px;
+      cursor:pointer;
       user-select:none;
     }
-
-    /* Gallery */
-    .galleryBig{
-      width:100%;
-      height:240px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background:
-        radial-gradient(280px 160px at 25% 30%, rgba(56,189,248,.22), transparent 65%),
-        radial-gradient(280px 160px at 75% 0%, rgba(225,29,72,.18), transparent 60%),
-        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      display:flex;align-items:center;justify-content:center;
-      font-weight:900;letter-spacing:.7px;
-      overflow:hidden;
-      position:relative;
-    }
-    .galleryBig img{
-      width:100%;height:100%;object-fit:cover;
-      opacity:.95;
-    }
-    .galleryRow{display:flex;gap:10px;flex-wrap:wrap}
-    .gThumb{
-      width:78px;height:56px;border-radius:12px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.04);
-      display:flex;align-items:center;justify-content:center;
-      cursor:pointer;font-weight:900;font-size:11px;color:rgba(246,247,255,.9);
-      overflow:hidden;
-    }
-    .gThumb img{width:100%;height:100%;object-fit:cover}
-    .gThumb.active{border-color:rgba(56,189,248,.55);background:rgba(56,189,248,.10)}
 
     /* Footer */
     .footer{
@@ -414,6 +339,18 @@
     }
     .social:hover{filter:brightness(1.08)}
     .mutedRight{margin-inline-start:auto;font-weight:900;font-size:12px;color:rgba(185,193,217,.9)}
+
+    /* Small helper: Ramadan vibe (خفيف ومش مزعج) */
+    .ramadanBar{
+      margin:10px 0 0;
+      padding:10px 12px;
+      border:1px solid rgba(245,158,11,.28);
+      background:rgba(245,158,11,.08);
+      border-radius:14px;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      font-weight:900;
+    }
+    .ramadanBar .miniTxt{color:rgba(246,247,255,.9);font-weight:800;font-size:12px}
   </style>
 </head>
 
@@ -426,17 +363,14 @@
       </div>
 
       <div class="searchWrap">
-        <input id="search" class="search" placeholder="🔍 Search..." />
+        <input id="search" class="search" placeholder="🔍 ابحث..." />
         <button class="iconBtn" id="filterBtn" title="Filter">
-          <span class="filterIcon" aria-hidden="true">
-            <!-- nicer filter icon -->
-            <svg viewBox="0 0 24 24" fill="none">
+          <span style="display:inline-block;line-height:0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M4 6h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M7 12h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <circle cx="7" cy="12" r="2" fill="currentColor" opacity=".25"/>
-              <circle cx="10" cy="18" r="2" fill="currentColor" opacity=".18"/>
-              <circle cx="12" cy="6" r="2" fill="currentColor" opacity=".18"/>
+              <path d="M7 12h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M10 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M4 3h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".75"/>
             </svg>
           </span>
         </button>
@@ -447,7 +381,7 @@
         <button class="iconBtn" id="gemsBtn" title="Bonus">💎 <span class="pillCount" id="gemsCount">0</span></button>
         <button class="iconBtn" id="cartBtn" title="Cart">🛒 <span class="pillCount" id="cartCount">0</span></button>
 
-        <button class="iconBtn" id="authBtn" title="Account">👤 <span id="authText">Sign in</span></button>
+        <button class="iconBtn" id="authBtn" title="Account">👤 <span id="authText">تسجيل</span></button>
 
         <div class="userChip" id="userChip" style="display:none" title="User">
           <span class="avatarSmall" id="avatarSmall">U</span>
@@ -460,12 +394,17 @@
   </div>
 
   <div class="container">
-    <div class="sectionTitle" id="titleTop">🔥 Top <span class="sectionHint" id="hintTop">Most wanted</span></div>
+    <div class="ramadanBar" id="ramadanBar" style="display:none">
+      <div>🌙 <span id="ramadanTitle">رمضان كريم</span></div>
+      <div class="miniTxt" id="ramadanSub">عروض وبونصات على الطلبات</div>
+    </div>
+
+    <div class="sectionTitle" id="titleTop">🔥 Top <span class="sectionHint" id="hintTop">الأكثر طلبًا</span></div>
     <div id="gridTop" class="grid"></div>
 
     <div class="spacer"></div>
 
-    <div class="sectionTitle" id="titleOffers">🎁 Offers <span class="sectionHint" id="hintOffers">Deals</span></div>
+    <div class="sectionTitle" id="titleOffers">🎁 Offers <span class="sectionHint" id="hintOffers">عروض</span></div>
     <div id="gridOffers" class="grid"></div>
 
     <div class="spacer"></div>
@@ -483,16 +422,11 @@
     <div class="sectionTitle" id="titleAccounts">🧾 Accounts</div>
     <div id="gridAccounts" class="grid"></div>
 
-    <div class="spacer"></div>
-
-    <div class="sectionTitle" id="titleCharging">⚡ Charging</div>
-    <div id="gridCharging" class="grid"></div>
-
     <div class="footer">
-      <a class="social" href="https://wa.me/201006760663" target="_blank" rel="noreferrer">WhatsApp</a>
-      <a class="social" href="https://www.instagram.com/medo__rami" target="_blank" rel="noreferrer">Instagram</a>
-      <a class="social" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" rel="noreferrer">Facebook</a>
-      <a class="social" href="mailto:medorami77@gmail.com">Email</a>
+      <a class="social" href="https://wa.me/201006760663" target="_blank" rel="noreferrer" id="socWhats">WhatsApp</a>
+      <a class="social" href="https://www.instagram.com/medo__rami" target="_blank" rel="noreferrer" id="socInst">Instagram</a>
+      <a class="social" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" rel="noreferrer" id="socFb">Facebook</a>
+      <a class="social" href="mailto:medorami77@gmail.com" id="socMail">Email</a>
       <span class="mutedRight">© <span id="year"></span> Medo Gaming</span>
     </div>
   </div>
@@ -515,20 +449,16 @@
       </div>
 
       <div class="drawerSection">
-        <p class="drawerLabel" id="quickLabel">Quick</p>
+        <p class="drawerLabel" id="quickTitle">Quick</p>
         <div class="drawerList">
           <div class="linkRow" data-scroll="gridTop"><span id="mTop">Top</span><span class="mini">→</span></div>
           <div class="linkRow" data-scroll="gridOffers"><span id="mOffers">Offers</span><span class="mini">→</span></div>
           <div class="linkRow" data-scroll="gridGames"><span id="mGames">Games</span><span class="mini">→</span></div>
           <div class="linkRow" data-scroll="gridPrograms"><span id="mPrograms">Programs</span><span class="mini">→</span></div>
           <div class="linkRow" data-scroll="gridAccounts"><span id="mAccounts">Accounts</span><span class="mini">→</span></div>
-          <div class="linkRow" data-scroll="gridCharging"><span id="mCharging">Charging</span><span class="mini">→</span></div>
 
           <div class="linkRow" id="openContactRow"><span id="mContact">Contact</span><span class="mini">→</span></div>
           <div class="linkRow" id="openReviewsRow"><span id="mReviews">Reviews</span><span class="mini">→</span></div>
-          <div class="linkRow" id="openGiftRow"><span id="mGift">Send Gift</span><span class="mini">→</span></div>
-          <div class="linkRow" id="openInboxRow"><span id="mInbox">Inbox</span><span class="mini">→</span></div>
-          <div class="linkRow" id="openBonusRow"><span id="mBonus">Bonus (Gems)</span><span class="mini">→</span></div>
         </div>
       </div>
     </div>
@@ -541,23 +471,22 @@
       <button class="iconBtn" id="filterClose">✕</button>
     </div>
     <div class="drawerBody">
-      <div class="note" id="filterNote">Choose category, sort and price then apply.</div>
+      <div class="note" id="filterNote">اختار القسم والترتيب والسعر وبعدين تطبيق.</div>
 
       <div class="drawerSection">
-        <p class="drawerLabel" id="filterCatLabel">Category</p>
+        <p class="drawerLabel" id="catTitle">Category</p>
         <select class="select" id="filterCategory">
           <option value="all">All</option>
+          <option value="top">Top</option>
+          <option value="offers">Offers</option>
           <option value="games">Games</option>
           <option value="programs">Programs</option>
           <option value="accounts">Accounts</option>
-          <option value="charging">Charging</option>
-          <option value="offers">Offers</option>
-          <option value="top">Top</option>
         </select>
       </div>
 
       <div class="drawerSection">
-        <p class="drawerLabel" id="filterSortLabel">Sort</p>
+        <p class="drawerLabel" id="sortTitle">Sort</p>
         <select class="select" id="filterSort">
           <option value="new">Newest</option>
           <option value="old">Oldest</option>
@@ -567,7 +496,7 @@
       </div>
 
       <div class="drawerSection">
-        <p class="drawerLabel" id="filterPriceLabel">Price</p>
+        <p class="drawerLabel" id="priceTitle">Price</p>
         <div class="row">
           <select class="select" id="priceMode">
             <option value="off">Off</option>
@@ -575,173 +504,11 @@
             <option value="lte">≤</option>
             <option value="gte">≥</option>
           </select>
-          <input class="input" id="priceValue" type="number" min="0" placeholder="e.g. 300" />
+          <input class="input" id="priceValue" type="number" min="0" placeholder="مثلاً 300" />
         </div>
       </div>
 
-      <div class="row">
-        <button class="btn btnRed" id="applyFilterBtn">Apply</button>
-        <button class="btn" id="clearFilterBtn">Clear</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- PRODUCT DETAILS MODAL -->
-  <div class="modal" id="detailsModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="detailsTitle">Product</div>
-        <button class="iconBtn" id="detailsClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="galleryBig" id="galleryBig"></div>
-          <div class="galleryRow" id="galleryRow"></div>
-
-          <div class="row">
-            <div>
-              <div style="font-weight:900" id="detailsName">Name</div>
-              <div class="note" id="detailsDesc"></div>
-            </div>
-            <div class="note ok" style="text-align:center">
-              <div id="detailsPrice" style="font-weight:900"></div>
-              <div id="detailsStock" style="font-size:12px"></div>
-            </div>
-          </div>
-
-          <div class="row">
-            <button class="btn btnBlue" id="detailsAddCartBtn">🛒 Add to Cart</button>
-            <button class="btn btnRed" id="detailsBuyBtn">Buy</button>
-          </div>
-
-          <div class="note" id="detailsMsg" style="display:none"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- IMAGE ZOOM MODAL -->
-  <div class="modal" id="zoomModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="zoomTitle">Image</div>
-        <button class="iconBtn" id="zoomClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="galleryBig" id="zoomBig"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CART MODAL -->
-  <div class="modal" id="cartModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="cartTitle">Cart</div>
-        <button class="iconBtn" id="cartClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack" id="cartList"></div>
-        <div class="totalBar">
-          <div style="font-weight:900" id="cartTotalLabel">Total</div>
-          <div style="font-weight:900" id="cartTotal">0</div>
-        </div>
-        <div class="row">
-          <button class="btn btnRed" id="cartCheckoutBtn">Checkout</button>
-          <button class="btn" id="cartClearBtn">Clear</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CHECKOUT MODAL (coupon then confirm, then payment methods) -->
-  <div class="modal" id="checkoutModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="checkoutTitle">Checkout</div>
-        <button class="iconBtn" id="checkoutClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="note" id="checkoutSummary"></div>
-
-          <div class="row">
-            <input class="input" id="couponInput" placeholder="Discount code" />
-            <button class="btn btnBlue tight" id="applyCouponBtn" style="flex:0 0 auto">Apply</button>
-          </div>
-
-          <div class="note" id="couponMsg" style="display:none"></div>
-
-          <div class="row">
-            <button class="btn btnRed" id="confirmCheckoutBtn">Confirm</button>
-          </div>
-
-          <div id="paymentBlock" style="display:none">
-            <div class="note ok" id="paymentTitle">Payment Methods</div>
-            <div class="stack">
-              <button class="btn" data-pay="vodafone">Vodafone Cash</button>
-              <button class="btn" data-pay="etisalat">Etisalat Cash</button>
-              <button class="btn" data-pay="orange">Orange Cash</button>
-              <button class="btn" data-pay="we">WE Pay</button>
-              <button class="btn" data-pay="instapay">InstaPay</button>
-              <button class="btn" data-pay="card">Visa / Card</button>
-              <button class="btn" data-pay="bill">Bill Pay</button>
-              <button class="btn" data-pay="telda">Telda</button>
-            </div>
-            <div class="note warn" id="payNote" style="margin-top:10px">After paying, you can contact the store to complete the order.</div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- INBOX MODAL -->
-  <div class="modal" id="inboxModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="inboxTitle">Inbox</div>
-        <button class="iconBtn" id="inboxClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack" id="inboxList"></div>
-        <div class="row">
-          <button class="btn" id="clearInboxBtn">Clear</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- GEMS MODAL -->
-  <div class="modal" id="gemsModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="gemsTitle">Bonus (Gems)</div>
-        <button class="iconBtn" id="gemsClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="note ok" id="gemsInfo">Your gems: 0</div>
-
-          <div class="note" id="redeemHint">Redeem gems to get a real discount code.</div>
-
-          <div class="row">
-            <select class="select" id="redeemSelect">
-              <option value="10">10% (10 gems)</option>
-              <option value="20">20% (20 gems)</option>
-              <option value="30">30% (30 gems)</option>
-              <option value="40">40% (40 gems)</option>
-              <option value="50">50% (50 gems)</option>
-            </select>
-            <button class="btn btnRed tight" id="redeemBtn" style="flex:0 0 auto">Redeem</button>
-          </div>
-
-          <div class="note" id="redeemMsg" style="display:none"></div>
-
-          <div class="note" id="walletTitle" style="font-weight:900">Your codes</div>
-          <div class="stack" id="walletList"></div>
-        </div>
-      </div>
+      <button class="btn btnRed" id="applyFilterBtn">Apply</button>
     </div>
   </div>
 
@@ -754,10 +521,10 @@
       </div>
       <div class="modalBody">
         <div class="stack">
-          <a class="btn" href="https://wa.me/201006760663" target="_blank">WhatsApp</a>
-          <a class="btn" href="https://www.instagram.com/medo__rami" target="_blank">Instagram</a>
-          <a class="btn" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank">Facebook</a>
-          <a class="btn" href="mailto:medorami77@gmail.com">Email</a>
+          <a class="btn" href="https://wa.me/201006760663" target="_blank" id="cWhats">WhatsApp</a>
+          <a class="btn" href="https://www.instagram.com/medo__rami" target="_blank" id="cInst">Instagram</a>
+          <a class="btn" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" id="cFb">Facebook</a>
+          <a class="btn" href="mailto:medorami77@gmail.com" id="cMail">Email</a>
         </div>
       </div>
     </div>
@@ -773,7 +540,7 @@
       <div class="modalBody">
         <div class="stack">
           <div class="row">
-            <input class="input" id="reviewText" placeholder="Write your review..." />
+            <input class="input" id="reviewText" placeholder="اكتب رأيك..." />
             <button class="btn btnRed tight" id="addReviewBtn" style="flex:0 0 auto">Post</button>
           </div>
           <div class="stack" id="reviewsList"></div>
@@ -782,33 +549,7 @@
     </div>
   </div>
 
-  <!-- GIFT MODAL -->
-  <div class="modal" id="giftModal">
-    <div class="modalBox">
-      <div class="modalHeader">
-        <div class="modalTitle" id="giftTitle">Send Gift</div>
-        <button class="iconBtn" id="giftClose">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="stack">
-          <div class="note" id="giftHint">Receiver must have an account.</div>
-          <input class="input" id="giftToEmail" type="email" placeholder="Receiver email" />
-          <div class="row">
-            <select class="select" id="giftType">
-              <option value="gems">Gems</option>
-              <option value="product">Product ID</option>
-            </select>
-            <input class="input" id="giftAmount" type="text" placeholder="Amount / Product ID" />
-          </div>
-          <button class="btn btnRed" id="sendGiftBtn">Send</button>
-          <div class="note err" id="giftErr" style="display:none"></div>
-          <div class="note ok" id="giftOk" style="display:none"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AUTH MODAL (Stepper) -->
+  <!-- AUTH MODAL -->
   <div class="modal" id="authModal">
     <div class="modalBox">
       <div class="modalHeader">
@@ -816,95 +557,129 @@
         <button class="iconBtn" id="authClose">✕</button>
       </div>
       <div class="modalBody">
-        <div class="stack">
+        <div class="stack" id="authStep1">
+          <div class="note" id="authNote1">Create account or login.</div>
+          <input class="input" id="firstName" placeholder="First name" />
+          <input class="input" id="lastName" placeholder="Last name" />
+          <input class="input" id="email" type="email" placeholder="Email" />
           <div class="row">
-            <button class="btn btnBlue" id="tabLogin">Login</button>
-            <button class="btn" id="tabRegister">Create account</button>
+            <input class="input" id="password" type="password" placeholder="Password" />
+            <button class="btn tight" id="togglePassBtn" style="flex:0 0 auto">👁</button>
+          </div>
+          <div class="row">
+            <select class="select" id="gender">
+              <option value="">Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            <input class="input" id="age" type="number" min="1" max="99" placeholder="Age" />
           </div>
 
-          <!-- LOGIN -->
-          <div id="loginBox" class="stack">
-            <input class="input" id="loginEmail" type="email" placeholder="Email" />
-            <div class="row">
-              <input class="input" id="loginPass" type="password" placeholder="Password" />
-              <button class="btn tight" id="toggleLoginPass" style="flex:0 0 auto; min-width:auto">👁</button>
-            </div>
-            <button class="btn btnRed" id="loginBtn">Login</button>
-            <div class="note err" id="loginErr" style="display:none"></div>
+          <div class="note" id="avatarHint">Upload profile image (optional)</div>
+          <input class="input" id="avatar" type="file" accept="image/*" />
+
+          <div class="row">
+            <button class="btn btnRed" id="createBtn">Create</button>
+            <button class="btn" id="loginBtn">Login</button>
+          </div>
+          <div class="note err" id="authErr" style="display:none"></div>
+          <div class="note ok" id="authOk" style="display:none"></div>
+        </div>
+
+        <div class="stack" id="authStep2" style="display:none">
+          <div class="note ok" id="profileNote"></div>
+          <div class="row">
+            <input class="input" id="editName" placeholder="Display name" />
+            <button class="btn btnBlue tight" id="saveNameBtn" style="flex:0 0 auto">Save</button>
           </div>
 
-          <!-- REGISTER (Steps) -->
-          <div id="registerBox" class="stack" style="display:none">
-            <div class="note" id="regStepTitle">Step 1/4</div>
-
-            <div id="regStep1" class="stack">
-              <div class="row">
-                <input class="input" id="firstName" placeholder="First name" />
-                <input class="input" id="lastName" placeholder="Last name" />
-              </div>
-              <button class="btn btnRed" id="regNext1">Next</button>
-            </div>
-
-            <div id="regStep2" class="stack" style="display:none">
-              <input class="input" id="regEmail" type="email" placeholder="Email" />
-              <div class="row">
-                <input class="input" id="regPass" type="password" placeholder="Password" />
-                <button class="btn tight" id="toggleRegPass" style="flex:0 0 auto; min-width:auto">👁</button>
-              </div>
-              <button class="btn btnRed" id="regNext2">Next</button>
-              <button class="btn" id="regBack2">Back</button>
-              <div class="note err" id="regErr2" style="display:none"></div>
-            </div>
-
-            <div id="regStep3" class="stack" style="display:none">
-              <div class="row">
-                <select class="select" id="regGender">
-                  <option value="">Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-                <input class="input" id="regAge" type="number" min="1" max="120" placeholder="Age" />
-              </div>
-              <button class="btn btnRed" id="regNext3">Next</button>
-              <button class="btn" id="regBack3">Back</button>
-              <div class="note err" id="regErr3" style="display:none"></div>
-            </div>
-
-            <div id="regStep4" class="stack" style="display:none">
-              <div class="note" id="avatarHint">Upload avatar (optional)</div>
-              <input class="input" id="regAvatar" type="file" accept="image/*" />
-              <button class="btn btnRed" id="createAccountBtn">Create</button>
-              <button class="btn" id="regBack4">Back</button>
-              <div class="note err" id="regErr4" style="display:none"></div>
-            </div>
+          <div class="row">
+            <input class="input" id="newPass" type="password" placeholder="New password" />
+            <button class="btn btnBlue tight" id="changePassBtn" style="flex:0 0 auto">Change</button>
           </div>
 
+          <button class="btn btnRed" id="logoutBtn2">Logout</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- PROFILE MODAL -->
-  <div class="modal" id="profileModal">
+  <!-- DETAILS MODAL -->
+  <div class="modal" id="detailsModal">
     <div class="modalBox">
       <div class="modalHeader">
-        <div class="modalTitle" id="profileTitle">Profile</div>
-        <button class="iconBtn" id="profileClose">✕</button>
+        <div class="modalTitle" id="detailsTitle">Details</div>
+        <button class="iconBtn" id="detailsClose">✕</button>
       </div>
       <div class="modalBody">
         <div class="stack">
-          <div class="row">
-            <input class="input" id="profileName" placeholder="Display name" />
-            <button class="btn btnBlue tight" id="saveProfileName" style="flex:0 0 auto">Save</button>
+          <div class="thumb" style="height:220px;border-radius:14px;overflow:hidden" id="detailsThumb"></div>
+          <h3 class="name" id="detailsName" style="font-size:16px"></h3>
+          <p class="meta" id="detailsDesc"></p>
+          <div class="priceRow">
+            <p class="price" id="detailsPrice"></p>
+            <div class="row" style="gap:8px;flex-wrap:nowrap">
+              <button class="btn btnBlue tight" id="detailsAddCart" style="flex:0 0 auto">Add to cart</button>
+              <button class="btn btnRed tight" id="detailsBuyNow" style="flex:0 0 auto">Buy</button>
+            </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- CART MODAL -->
+  <div class="modal" id="cartModal">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="cartTitle">Cart</div>
+        <button class="iconBtn" id="cartClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack" id="cartList"></div>
+
+        <div class="totalBar" id="totalBar" style="display:none">
+          <span id="totalText">Total</span>
+          <strong id="totalValue">0</strong>
+        </div>
+
+        <button class="btn btnRed" id="checkoutBtn" style="display:none">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL (coupon then payment) -->
+  <div class="modal" id="checkoutModal">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="checkoutTitle">Checkout</div>
+        <button class="iconBtn" id="checkoutClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack" id="checkoutStepA">
+          <div class="note" id="checkoutInfo"></div>
           <div class="row">
-            <input class="input" id="newPass" type="password" placeholder="New password" />
-            <button class="btn tight" id="toggleNewPass" style="flex:0 0 auto; min-width:auto">👁</button>
+            <input class="input" id="couponInput" placeholder="Coupon code (optional)" />
+            <button class="btn btnBlue tight" id="applyCouponBtn" style="flex:0 0 auto">Apply</button>
           </div>
-          <button class="btn btnRed" id="saveNewPass">Change password</button>
+          <div class="note ok" id="couponOk" style="display:none"></div>
+          <div class="note err" id="couponErr" style="display:none"></div>
+          <button class="btn btnRed" id="confirmToPayBtn">Confirm</button>
+        </div>
 
-          <div class="note" id="profileMsg" style="display:none"></div>
+        <div class="stack" id="checkoutStepB" style="display:none">
+          <div class="note" id="payNote"></div>
+          <button class="btn" id="payVod">Vodafone Cash</button>
+          <button class="btn" id="payEt">Etisalat Cash</button>
+          <button class="btn" id="payWe">WE Pay</button>
+          <button class="btn" id="payOr">Orange Cash</button>
+          <button class="btn" id="payVisa">Visa</button>
+          <button class="btn" id="payInsta">InstaPay</button>
+          <button class="btn" id="payBill">Bill Pay</button>
+          <button class="btn" id="payTelda">Telda</button>
+
+          <div class="note warn" id="payWarn"></div>
+          <button class="btn btnRed" id="finishOrderBtn">Finish</button>
         </div>
       </div>
     </div>
@@ -912,1628 +687,1065 @@
 
   <script>
     /* =========================
-       Helpers
-    ========================== */
-    const $ = (id)=>document.getElementById(id);
-    const nowYear = new Date().getFullYear();
-    $("year").textContent = nowYear;
-
-    function safeJsonParse(v, fallback){
-      try{ return JSON.parse(v); }catch{ return fallback; }
-    }
-
-    function uid(len=6){
-      const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-      let out="";
-      for(let i=0;i<len;i++) out += chars[Math.floor(Math.random()*chars.length)];
-      return out;
-    }
-
-    /* =========================
-       i18n (auto by device language)
-    ========================== */
+       i18n (Arabic/English)
+       ========================= */
     const isArabic = (navigator.language || "").toLowerCase().startsWith("ar");
     document.documentElement.lang = isArabic ? "ar" : "en";
     document.documentElement.dir  = isArabic ? "rtl" : "ltr";
 
     const T = {
-      en:{
-        search:"🔍 Search...",
-        top:"Top", topHint:"Most wanted",
-        offers:"Offers", offersHint:"Deals",
-        games:"Games",
-        programs:"Programs",
-        accounts:"Accounts",
-        charging:"Charging",
-        menu:"Menu",
-        quick:"Quick",
-        contact:"Contact",
-        reviews:"Reviews",
-        gift:"Send Gift",
-        inbox:"Inbox",
-        bonus:"Bonus (Gems)",
-        filter:"Filter",
-        filterNote:"Choose category, sort and price then apply.",
-        cat:"Category", sort:"Sort", price:"Price",
-        apply:"Apply", clear:"Clear",
-        signin:"Sign in",
-        cart:"Cart",
-        total:"Total",
-        checkout:"Checkout",
-        confirm:"Confirm",
-        payment:"Payment Methods",
-        coupon:"Discount code",
-        addCart:"🛒 Add to Cart",
-        buy:"Buy",
-        details:"Product",
-        stock:"Available",
-        soldout:"Sold out",
-        login:"Login",
-        create:"Create account",
-        step:"Step",
-        next:"Next",
-        back:"Back",
-        first:"First name",
-        last:"Last name",
-        email:"Email",
-        pass:"Password",
-        gender:"Gender",
-        age:"Age",
-        male:"Male",
-        female:"Female",
-        upload:"Upload avatar (optional)",
-        profile:"Profile",
-        displayName:"Display name",
-        save:"Save",
-        newPass:"New password",
-        changePass:"Change password",
-        posted:"Posted",
-        writeReview:"Write your review...",
-        receiver:"Receiver email",
-        amount:"Amount / Product ID",
-        sent:"Sent",
-        mustLogin:"Please login first."
-      },
-      ar:{
+      ar: {
         search:"🔍 ابحث...",
-        top:"توب", topHint:"الأكثر طلبًا",
-        offers:"عروض", offersHint:"خصومات",
-        games:"الألعاب",
-        programs:"البرامج",
-        accounts:"الأكونتات",
-        charging:"الشحن",
+        top:"🔥 توب",
+        topHint:"الأكثر طلبًا",
+        offers:"🎁 أوفرز",
+        offersHint:"عروض",
+        games:"🎮 الألعاب",
+        programs:"💻 البرامج",
+        accounts:"🧾 الأكونتات",
         menu:"القائمة",
         quick:"اختصارات",
         contact:"التواصل",
         reviews:"المراجعات",
-        gift:"إرسال هدية",
-        inbox:"الرسائل",
-        bonus:"الجواهر",
         filter:"فلترة",
         filterNote:"اختار القسم والترتيب والسعر وبعدين تطبيق.",
-        cat:"القسم", sort:"الترتيب", price:"السعر",
-        apply:"تطبيق", clear:"مسح",
-        signin:"تسجيل",
+        category:"القسم",
+        sort:"الترتيب",
+        price:"السعر",
+        apply:"تطبيق",
+        all:"الكل",
+        newest:"الأحدث",
+        oldest:"الأقدم",
+        lowHigh:"الأرخص → الأغلى",
+        highLow:"الأغلى → الأرخص",
         cart:"السلة",
         total:"الإجمالي",
         checkout:"إتمام الشراء",
-        confirm:"تأكيد",
-        payment:"طرق الدفع",
-        coupon:"كود الخصم",
-        addCart:"🛒 إضافة للسلة",
+        account:"تسجيل",
+        details:"تفاصيل",
+        addCart:"إضافة للسلة",
         buy:"شراء",
-        details:"تفاصيل المنتج",
-        stock:"متاح",
-        soldout:"غير متاح",
-        login:"تسجيل دخول",
-        create:"إنشاء حساب",
-        step:"خطوة",
-        next:"التالي",
-        back:"رجوع",
+        ramadanTitle:"رمضان كريم",
+        ramadanSub:"عروض وبونصات على الطلبات",
+        reviewPH:"اكتب رأيك...",
+        post:"نشر",
+        authNote:"اعمل حساب أو سجل دخول.",
         first:"الاسم الأول",
         last:"الاسم الثاني",
         email:"البريد",
         pass:"كلمة السر",
         gender:"النوع",
-        age:"العمر",
         male:"ذكر",
         female:"أنثى",
-        upload:"رفع صورة (اختياري)",
-        profile:"الملف الشخصي",
+        age:"العمر",
+        upload:"ارفع صورة (اختياري)",
+        create:"إنشاء",
+        login:"دخول",
+        saved:"تم بنجاح",
+        wrong:"بيانات غير صحيحة",
+        exists:"البريد ده مسجل قبل كده",
+        notFound:"الحساب غير موجود",
+        profile:"حسابك",
         displayName:"اسم العرض",
         save:"حفظ",
         newPass:"كلمة سر جديدة",
-        changePass:"تغيير كلمة السر",
-        posted:"تم النشر",
-        writeReview:"اكتب رأيك...",
-        receiver:"بريد المستلم",
-        amount:"الكمية / رقم المنتج",
-        sent:"تم الإرسال",
-        mustLogin:"لازم تسجل الأول."
+        change:"تغيير",
+        logout:"تسجيل خروج",
+        emptyCart:"السلة فاضية",
+        mustLogin:"لازم تسجل الأول",
+        checkoutInfo:(sum)=>`هتشتري منتجات بإجمالي: ${sum} جنيه`,
+        couponPH:"كود خصم (اختياري)",
+        applyC:"تفعيل",
+        confirm:"تأكيد",
+        payNote:"اختار طريقة الدفع:",
+        payWarn:"ملاحظة: الدفع بيتم خارج الموقع. بعد ما تدفع اضغط Finish.",
+        finish:"Finish",
+        okCoupon:(p)=>`تم تطبيق خصم ${p}%`,
+        badCoupon:"الكود غير صحيح أو مستخدم قبل كده"
+      },
+      en: {
+        search:"🔍 Search...",
+        top:"🔥 Top",
+        topHint:"Most wanted",
+        offers:"🎁 Offers",
+        offersHint:"Deals",
+        games:"🎮 Games",
+        programs:"💻 Programs",
+        accounts:"🧾 Accounts",
+        menu:"Menu",
+        quick:"Quick",
+        contact:"Contact",
+        reviews:"Reviews",
+        filter:"Filter",
+        filterNote:"Choose category, sort, and price then apply.",
+        category:"Category",
+        sort:"Sort",
+        price:"Price",
+        apply:"Apply",
+        all:"All",
+        newest:"Newest",
+        oldest:"Oldest",
+        lowHigh:"Low → High",
+        highLow:"High → Low",
+        cart:"Cart",
+        total:"Total",
+        checkout:"Checkout",
+        account:"Login",
+        details:"Details",
+        addCart:"Add to cart",
+        buy:"Buy",
+        ramadanTitle:"Ramadan Kareem",
+        ramadanSub:"Offers & bonuses on orders",
+        reviewPH:"Write your review...",
+        post:"Post",
+        authNote:"Create account or login.",
+        first:"First name",
+        last:"Last name",
+        email:"Email",
+        pass:"Password",
+        gender:"Gender",
+        male:"Male",
+        female:"Female",
+        age:"Age",
+        upload:"Upload image (optional)",
+        create:"Create",
+        login:"Login",
+        saved:"Saved successfully",
+        wrong:"Wrong credentials",
+        exists:"Email already exists",
+        notFound:"Account not found",
+        profile:"Your account",
+        displayName:"Display name",
+        save:"Save",
+        newPass:"New password",
+        change:"Change",
+        logout:"Logout",
+        emptyCart:"Cart is empty",
+        mustLogin:"Please login first",
+        checkoutInfo:(sum)=>`Your total: ${sum} EGP`,
+        couponPH:"Coupon code (optional)",
+        applyC:"Apply",
+        confirm:"Confirm",
+        payNote:"Choose payment method:",
+        payWarn:"Note: Payment is external. After paying, press Finish.",
+        finish:"Finish",
+        okCoupon:(p)=>`Discount applied: ${p}%`,
+        badCoupon:"Invalid or already used coupon"
       }
-    }[isArabic ? "ar" : "en"];
-
-    // apply texts
-    $("search").placeholder = T.search;
-    $("titleTop").childNodes[1].textContent = " " + T.top + " ";
-    $("hintTop").textContent = T.topHint;
-    $("titleOffers").childNodes[1].textContent = " " + T.offers + " ";
-    $("hintOffers").textContent = T.offersHint;
-    $("titleGames").textContent = "🎮 " + T.games;
-    $("titlePrograms").textContent = "💻 " + T.programs;
-    $("titleAccounts").textContent = "🧾 " + T.accounts;
-    $("titleCharging").textContent = "⚡ " + T.charging;
-
-    $("menuTitle").textContent = T.menu;
-    $("quickLabel").textContent = T.quick;
-
-    $("mTop").textContent = T.top;
-    $("mOffers").textContent = T.offers;
-    $("mGames").textContent = T.games;
-    $("mPrograms").textContent = T.programs;
-    $("mAccounts").textContent = T.accounts;
-    $("mCharging").textContent = T.charging;
-
-    $("mContact").textContent = T.contact;
-    $("mReviews").textContent = T.reviews;
-    $("mGift").textContent = T.gift;
-    $("mInbox").textContent = T.inbox;
-    $("mBonus").textContent = T.bonus;
-
-    $("filterTitle").textContent = T.filter;
-    $("filterNote").textContent = T.filterNote;
-    $("filterCatLabel").textContent = T.cat;
-    $("filterSortLabel").textContent = T.sort;
-    $("filterPriceLabel").textContent = T.price;
-    $("applyFilterBtn").textContent = T.apply;
-    $("clearFilterBtn").textContent = T.clear;
-
-    $("authText").textContent = T.signin;
-    $("cartTitle").textContent = T.cart;
-    $("cartTotalLabel").textContent = T.total;
-    $("cartCheckoutBtn").textContent = T.checkout;
-
-    $("checkoutTitle").textContent = T.checkout;
-    $("couponInput").placeholder = T.coupon;
-    $("confirmCheckoutBtn").textContent = T.confirm;
-    $("paymentTitle").textContent = T.payment;
-
-    $("inboxTitle").textContent = T.inbox;
-    $("gemsTitle").textContent = T.bonus;
-    $("redeemHint").textContent = isArabic ? "بدّل الجواهر لكود خصم حقيقي." : "Redeem gems to get a real discount code.";
-    $("contactTitle").textContent = T.contact;
-    $("reviewsTitle").textContent = T.reviews;
-    $("reviewText").placeholder = T.writeReview;
-    $("giftTitle").textContent = T.gift;
-    $("giftToEmail").placeholder = T.receiver;
-    $("giftAmount").placeholder = T.amount;
-
-    $("authTitle").textContent = T.signin;
-    $("tabLogin").textContent = T.login;
-    $("tabRegister").textContent = T.create;
-    $("loginBtn").textContent = T.login;
-    $("loginEmail").placeholder = T.email;
-    $("loginPass").placeholder = T.pass;
-
-    $("regStepTitle").textContent = `${T.step} 1/4`;
-    $("firstName").placeholder = T.first;
-    $("lastName").placeholder = T.last;
-    $("regEmail").placeholder = T.email;
-    $("regPass").placeholder = T.pass;
-    $("regGender").options[0].textContent = T.gender;
-    $("regGender").options[1].textContent = T.male;
-    $("regGender").options[2].textContent = T.female;
-    $("regAge").placeholder = T.age;
-    $("avatarHint").textContent = T.upload;
-
-    $("regNext1").textContent = T.next;
-    $("regNext2").textContent = T.next;
-    $("regNext3").textContent = T.next;
-    $("createAccountBtn").textContent = T.create;
-    $("regBack2").textContent = T.back;
-    $("regBack3").textContent = T.back;
-    $("regBack4").textContent = T.back;
-
-    $("profileTitle").textContent = T.profile;
-    $("profileName").placeholder = T.displayName;
-    $("saveProfileName").textContent = T.save;
-    $("newPass").placeholder = T.newPass;
-    $("saveNewPass").textContent = T.changePass;
+    };
+    const tr = isArabic ? T.ar : T.en;
 
     /* =========================
-       Storage Keys
-    ========================== */
-    const K = {
-      accounts: "mg_accounts_v1",        // email -> account
-      session:  "mg_session_v1",         // current email
-      cart:     "mg_cart_v1",            // cart array
-      inbox:    "mg_inbox_v1",           // per email inbox
-      gems:     "mg_gems_v1",            // per email gems
-      usedCoupons: "mg_used_coupons_v1", // coupon usage map
-      wallet:   "mg_wallet_v1",          // per email generated coupons
-      reviews:  "mg_reviews_v1",         // reviews array
-      ratings:  "mg_ratings_v1",         // productId -> {sum,count,userMap}
-      filter:   "mg_filter_v1"           // current filter
+       Helpers / Storage
+       ========================= */
+    const $ = (id)=>document.getElementById(id);
+    const LS = {
+      get(k, d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d; }catch(e){ return d; } },
+      set(k, v){ localStorage.setItem(k, JSON.stringify(v)); }
     };
 
-    function getAccounts(){ return safeJsonParse(localStorage.getItem(K.accounts), {}); }
-    function setAccounts(v){ localStorage.setItem(K.accounts, JSON.stringify(v)); }
-    function getSession(){ return localStorage.getItem(K.session) || ""; }
-    function setSession(email){ localStorage.setItem(K.session, email || ""); }
-
-    function getCart(){ return safeJsonParse(localStorage.getItem(K.cart), []); }
-    function setCart(v){ localStorage.setItem(K.cart, JSON.stringify(v)); }
-
-    function getInbox(){ return safeJsonParse(localStorage.getItem(K.inbox), {}); }
-    function setInbox(v){ localStorage.setItem(K.inbox, JSON.stringify(v)); }
-
-    function getGems(){ return safeJsonParse(localStorage.getItem(K.gems), {}); }
-    function setGems(v){ localStorage.setItem(K.gems, JSON.stringify(v)); }
-
-    function getWallet(){ return safeJsonParse(localStorage.getItem(K.wallet), {}); }
-    function setWallet(v){ localStorage.setItem(K.wallet, JSON.stringify(v)); }
-
-    function getUsedCoupons(){ return safeJsonParse(localStorage.getItem(K.usedCoupons), {}); }
-    function setUsedCoupons(v){ localStorage.setItem(K.usedCoupons, JSON.stringify(v)); }
-
-    function getReviews(){ return safeJsonParse(localStorage.getItem(K.reviews), []); }
-    function setReviews(v){ localStorage.setItem(K.reviews, JSON.stringify(v)); }
-
-    function getRatings(){ return safeJsonParse(localStorage.getItem(K.ratings), {}); }
-    function setRatings(v){ localStorage.setItem(K.ratings, JSON.stringify(v)); }
-
-    function getFilter(){ return safeJsonParse(localStorage.getItem(K.filter), {q:"",cat:"all",sort:"new",mode:"off",price:0}); }
-    function setFilter(v){ localStorage.setItem(K.filter, JSON.stringify(v)); }
-
-    /* =========================
-       UI Overlay/Drawers/Modals
-    ========================== */
     const overlay = $("overlay");
     const menuDrawer = $("menuDrawer");
     const filterDrawer = $("filterDrawer");
 
     function openOverlay(){ overlay.classList.add("show"); }
     function closeOverlay(){ overlay.classList.remove("show"); }
-    function closeDrawers(){
+    function closeAll(){
+      closeOverlay();
       menuDrawer.classList.remove("show");
       filterDrawer.classList.remove("show");
-      menuDrawer.setAttribute("aria-hidden","true");
-      filterDrawer.setAttribute("aria-hidden","true");
-    }
-    function closeAllPopups(){
-      closeDrawers();
-      closeOverlay();
-      hideModal("contactModal");
-      hideModal("reviewsModal");
-      hideModal("giftModal");
-      hideModal("inboxModal");
-      hideModal("gemsModal");
-      hideModal("detailsModal");
-      hideModal("cartModal");
-      hideModal("checkoutModal");
-      hideModal("authModal");
-      hideModal("profileModal");
-      hideModal("zoomModal");
+      $("contactModal").classList.remove("show");
+      $("reviewsModal").classList.remove("show");
+      $("authModal").classList.remove("show");
+      $("cartModal").classList.remove("show");
+      $("detailsModal").classList.remove("show");
+      $("checkoutModal").classList.remove("show");
     }
 
-    function showDrawer(drawer){
-      openOverlay();
-      drawer.classList.add("show");
-      drawer.setAttribute("aria-hidden","false");
-    }
-    function hideDrawer(drawer){
-      drawer.classList.remove("show");
-      drawer.setAttribute("aria-hidden","true");
-      closeOverlay();
-    }
-
-    function showModal(id){
-      openOverlay();
-      $(id).classList.add("show");
-    }
-    function hideModal(id){
-      $(id).classList.remove("show");
-    }
-
-    overlay.addEventListener("click", ()=> closeAllPopups());
-
-    $("menuBtn").addEventListener("click", ()=>{
-      showDrawer(menuDrawer);
-    });
-    $("menuClose").addEventListener("click", ()=> hideDrawer(menuDrawer));
-
-    $("filterBtn").addEventListener("click", ()=>{
-      showDrawer(filterDrawer);
-    });
-    $("filterClose").addEventListener("click", ()=> hideDrawer(filterDrawer));
-
-    // drawer links
-    document.querySelectorAll(".linkRow[data-scroll]").forEach(el=>{
-      el.addEventListener("click", ()=>{
-        const target = el.getAttribute("data-scroll");
-        hideDrawer(menuDrawer);
-        const node = $(target);
-        if(node) node.scrollIntoView({behavior:"smooth", block:"start"});
-      });
-    });
-
-    $("openContactRow").addEventListener("click", ()=>{ hideDrawer(menuDrawer); showModal("contactModal"); });
-    $("openReviewsRow").addEventListener("click", ()=>{ hideDrawer(menuDrawer); showModal("reviewsModal"); renderReviews(); });
-    $("openGiftRow").addEventListener("click", ()=>{ hideDrawer(menuDrawer); showModal("giftModal"); });
-    $("openInboxRow").addEventListener("click", ()=>{ hideDrawer(menuDrawer); showModal("inboxModal"); renderInbox(); });
-    $("openBonusRow").addEventListener("click", ()=>{ hideDrawer(menuDrawer); showModal("gemsModal"); renderGems(); });
-
-    // modal close buttons
-    $("contactClose").onclick = ()=>{ hideModal("contactModal"); closeOverlay(); };
-    $("reviewsClose").onclick = ()=>{ hideModal("reviewsModal"); closeOverlay(); };
-    $("giftClose").onclick = ()=>{ hideModal("giftModal"); closeOverlay(); };
-    $("inboxClose").onclick = ()=>{ hideModal("inboxModal"); closeOverlay(); };
-    $("gemsClose").onclick = ()=>{ hideModal("gemsModal"); closeOverlay(); };
-    $("detailsClose").onclick = ()=>{ hideModal("detailsModal"); closeOverlay(); };
-    $("zoomClose").onclick = ()=>{ hideModal("zoomModal"); closeOverlay(); };
-    $("cartClose").onclick = ()=>{ hideModal("cartModal"); closeOverlay(); };
-    $("checkoutClose").onclick = ()=>{ hideModal("checkoutModal"); closeOverlay(); };
-    $("authClose").onclick = ()=>{ hideModal("authModal"); closeOverlay(); };
-    $("profileClose").onclick = ()=>{ hideModal("profileModal"); closeOverlay(); };
-
-    // header buttons
-    $("cartBtn").onclick = ()=>{ showModal("cartModal"); renderCart(); };
-    $("inboxBtn").onclick = ()=>{ showModal("inboxModal"); renderInbox(); };
-    $("gemsBtn").onclick = ()=>{ showModal("gemsModal"); renderGems(); };
+    overlay.addEventListener("click", closeAll);
 
     /* =========================
-       Products data (4 per section)
-       - Clicking image opens details (no Details button)
-       - Add to cart button exists on card
-       - Buy exists only inside details/checkout and does NOT auto-add to cart
-    ========================== */
+       UI Text
+       ========================= */
+    $("year").textContent = new Date().getFullYear();
+    $("search").placeholder = tr.search;
+    $("titleTop").childNodes[0].textContent = tr.top + " ";
+    $("hintTop").textContent = tr.topHint;
+    $("titleOffers").childNodes[0].textContent = tr.offers + " ";
+    $("hintOffers").textContent = tr.offersHint;
+    $("titleGames").textContent = tr.games;
+    $("titlePrograms").textContent = tr.programs;
+    $("titleAccounts").textContent = tr.accounts;
+
+    $("menuTitle").textContent = tr.menu;
+    $("quickTitle").textContent = tr.quick;
+    $("mTop").textContent = tr.top;
+    $("mOffers").textContent = tr.offers;
+    $("mGames").textContent = tr.games;
+    $("mPrograms").textContent = tr.programs;
+    $("mAccounts").textContent = tr.accounts;
+    $("mContact").textContent = tr.contact;
+    $("mReviews").textContent = tr.reviews;
+
+    $("filterTitle").textContent = tr.filter;
+    $("filterNote").textContent = tr.filterNote;
+    $("catTitle").textContent = tr.category;
+    $("sortTitle").textContent = tr.sort;
+    $("priceTitle").textContent = tr.price;
+    $("applyFilterBtn").textContent = tr.apply;
+
+    // Filter options
+    const cat = $("filterCategory");
+    cat.innerHTML = `
+      <option value="all">${tr.all}</option>
+      <option value="top">${tr.top}</option>
+      <option value="offers">${tr.offers}</option>
+      <option value="games">${tr.games}</option>
+      <option value="programs">${tr.programs}</option>
+      <option value="accounts">${tr.accounts}</option>
+    `;
+    const sort = $("filterSort");
+    sort.innerHTML = `
+      <option value="new">${tr.newest}</option>
+      <option value="old">${tr.oldest}</option>
+      <option value="low">${tr.lowHigh}</option>
+      <option value="high">${tr.highLow}</option>
+    `;
+
+    $("cartTitle").textContent = tr.cart;
+    $("totalText").textContent = tr.total;
+    $("checkoutBtn").textContent = tr.checkout;
+    $("authText").textContent = tr.account;
+    $("authTitle").textContent = tr.account;
+    $("detailsTitle").textContent = tr.details;
+    $("checkoutTitle").textContent = tr.checkout;
+
+    $("reviewText").placeholder = tr.reviewPH;
+    $("addReviewBtn").textContent = tr.post;
+
+    $("authNote1").textContent = tr.authNote;
+    $("firstName").placeholder = tr.first;
+    $("lastName").placeholder = tr.last;
+    $("email").placeholder = tr.email;
+    $("password").placeholder = tr.pass;
+    $("gender").innerHTML = `
+      <option value="">${tr.gender}</option>
+      <option value="male">${tr.male}</option>
+      <option value="female">${tr.female}</option>
+    `;
+    $("age").placeholder = tr.age;
+    $("avatarHint").textContent = tr.upload;
+    $("createBtn").textContent = tr.create;
+    $("loginBtn").textContent = tr.login;
+
+    $("editProfileBtn").textContent = isArabic ? "تعديل الحساب" : "Edit profile";
+    $("logoutBtn").textContent = tr.logout;
+    $("logoutBtn2").textContent = tr.logout;
+    $("saveNameBtn").textContent = tr.save;
+    $("changePassBtn").textContent = tr.change;
+    $("editName").placeholder = tr.displayName;
+    $("newPass").placeholder = tr.newPass;
+
+    $("detailsAddCart").textContent = tr.addCart;
+    $("detailsBuyNow").textContent = tr.buy;
+
+    $("couponInput").placeholder = tr.couponPH;
+    $("applyCouponBtn").textContent = tr.applyC;
+    $("confirmToPayBtn").textContent = tr.confirm;
+    $("payNote").textContent = tr.payNote;
+    $("payWarn").textContent = tr.payWarn;
+    $("finishOrderBtn").textContent = tr.finish;
+
+    // Ramadan bar (اختياري)
+    const ramadanBar = $("ramadanBar");
+    ramadanBar.style.display = "flex";
+    $("ramadanTitle").textContent = tr.ramadanTitle;
+    $("ramadanSub").textContent = tr.ramadanSub;
+
+    /* =========================
+       Products (نماذج – انت هتغير الصور/الأسماء)
+       ========================= */
     const products = [
-      // TOP (4)
-      {id:"TOP-1", section:"top", category:"accounts", name:"PUBG Account (Premium)", desc:"High level + skins. Add your real info in gallery images.", price:550, stock:7, badge:"top",
-        images: demoImages("PUBG", 5)},
-      {id:"TOP-2", section:"top", category:"games", name:"Action Game Key", desc:"Instant delivery after confirmation.", price:250, stock:12, badge:"top",
-        images: demoImages("ACTION", 5)},
-      {id:"TOP-3", section:"top", category:"programs", name:"Video Editing Pack", desc:"Tools bundle for editing.", price:180, stock:20, badge:"top",
-        images: demoImages("EDIT", 5)},
-      {id:"TOP-4", section:"top", category:"charging", name:"Robux (Top up)", desc:"Robux charging service.", price:120, stock:30, badge:"top",
-        images: demoImages("ROBUX", 5)},
+      // Top
+      {id:"top1", section:"top", name: isArabic?"باقة ألعاب مميزة":"Featured Games Bundle", desc:isArabic?"أفضل اختيار للمستخدمين":"Top pick for users", price:350, top:true, offer:false, img:""},
+      {id:"top2", section:"top", name: isArabic?"أكونت مميز":"Premium Account", desc:isArabic?"مناسب للمهتمين":"Perfect for gamers", price:500, top:true, offer:false, img:""},
+      {id:"top3", section:"top", name: isArabic?"برنامج احترافي":"Pro Software", desc:isArabic?"نسخة احترافية":"Professional version", price:450, top:true, offer:false, img:""},
+      {id:"top4", section:"top", name: isArabic?"عرض وقت محدود":"Limited Deal", desc:isArabic?"خصم لفترة":"Limited time deal", price:299, top:true, offer:true, img:""},
 
-      // OFFERS (4)
-      {id:"OFF-1", section:"offers", category:"games", name:"Game Bundle (Offer)", desc:"Limited-time offer bundle.", price:199, stock:9, badge:"offer",
-        images: demoImages("BUNDLE", 5)},
-      {id:"OFF-2", section:"offers", category:"accounts", name:"Steam Account (Offer)", desc:"Ready-to-use account.", price:299, stock:5, badge:"offer",
-        images: demoImages("STEAM", 5)},
-      {id:"OFF-3", section:"offers", category:"programs", name:"Designer Pack (Offer)", desc:"Creative tools pack.", price:149, stock:15, badge:"offer",
-        images: demoImages("DESIGN", 5)},
-      {id:"OFF-4", section:"offers", category:"charging", name:"Free Fire Diamonds (Offer)", desc:"Diamonds top up.", price:99, stock:25, badge:"offer",
-        images: demoImages("FF", 5)},
+      // Offers
+      {id:"off1", section:"offers", name:isArabic?"عرض 1":"Offer 1", desc:isArabic?"خصم قوي":"Big discount", price:199, top:false, offer:true, img:""},
+      {id:"off2", section:"offers", name:isArabic?"عرض 2":"Offer 2", desc:isArabic?"سعر ممتاز":"Great price", price:249, top:false, offer:true, img:""},
+      {id:"off3", section:"offers", name:isArabic?"عرض 3":"Offer 3", desc:isArabic?"أوفر جامد":"Hot offer", price:149, top:false, offer:true, img:""},
+      {id:"off4", section:"offers", name:isArabic?"عرض 4":"Offer 4", desc:isArabic?"لفترة محدودة":"Limited time", price:99, top:false, offer:true, img:""},
 
-      // GAMES (4)
-      {id:"G-1", section:"games", category:"games", name:"Story Game Key", desc:"Cinematic story experience.", price:220, stock:14, badge:"",
-        images: demoImages("STORY", 5)},
-      {id:"G-2", section:"games", category:"games", name:"Racing Game Key", desc:"Fast racing action.", price:210, stock:10, badge:"",
-        images: demoImages("RACE", 5)},
-      {id:"G-3", section:"games", category:"games", name:"Sports Game Key", desc:"Competitive matches.", price:230, stock:11, badge:"",
-        images: demoImages("SPORT", 5)},
-      {id:"G-4", section:"games", category:"games", name:"Indie Game Key", desc:"Fun indie title.", price:120, stock:22, badge:"",
-        images: demoImages("INDIE", 5)},
+      // Games
+      {id:"g1", section:"games", name:isArabic?"لعبة 1":"Game 1", desc:isArabic?"وصف قصير":"Short description", price:120, top:false, offer:false, img:""},
+      {id:"g2", section:"games", name:isArabic?"لعبة 2":"Game 2", desc:isArabic?"وصف قصير":"Short description", price:180, top:false, offer:false, img:""},
+      {id:"g3", section:"games", name:isArabic?"لعبة 3":"Game 3", desc:isArabic?"وصف قصير":"Short description", price:210, top:false, offer:false, img:""},
+      {id:"g4", section:"games", name:isArabic?"لعبة 4":"Game 4", desc:isArabic?"وصف قصير":"Short description", price:160, top:false, offer:false, img:""},
 
-      // PROGRAMS (4)
-      {id:"P-1", section:"programs", category:"programs", name:"Editing Software", desc:"Smooth editing workflow.", price:170, stock:25, badge:"",
-        images: demoImages("PROG", 5)},
-      {id:"P-2", section:"programs", category:"programs", name:"Graphics Toolkit", desc:"Design assets & tools.", price:150, stock:18, badge:"",
-        images: demoImages("GFX", 5)},
-      {id:"P-3", section:"programs", category:"programs", name:"Utilities Pack", desc:"Helpful utilities pack.", price:90, stock:40, badge:"",
-        images: demoImages("UTIL", 5)},
-      {id:"P-4", section:"programs", category:"programs", name:"Office Pack", desc:"Documents & productivity.", price:110, stock:28, badge:"",
-        images: demoImages("OFFICE", 5)},
+      // Programs
+      {id:"p1", section:"programs", name:isArabic?"برنامج 1":"Program 1", desc:isArabic?"وصف قصير":"Short description", price:300, top:false, offer:false, img:""},
+      {id:"p2", section:"programs", name:isArabic?"برنامج 2":"Program 2", desc:isArabic?"وصف قصير":"Short description", price:420, top:false, offer:false, img:""},
+      {id:"p3", section:"programs", name:isArabic?"برنامج 3":"Program 3", desc:isArabic?"وصف قصير":"Short description", price:250, top:false, offer:false, img:""},
+      {id:"p4", section:"programs", name:isArabic?"برنامج 4":"Program 4", desc:isArabic?"وصف قصير":"Short description", price:380, top:false, offer:false, img:""},
 
-      // ACCOUNTS (4)
-      {id:"A-1", section:"accounts", category:"accounts", name:"Epic Account", desc:"Game library account.", price:260, stock:6, badge:"",
-        images: demoImages("EPIC", 5)},
-      {id:"A-2", section:"accounts", category:"accounts", name:"Steam Account", desc:"Account with games.", price:320, stock:4, badge:"",
-        images: demoImages("STEAM", 5)},
-      {id:"A-3", section:"accounts", category:"accounts", name:"Roblox Account", desc:"Ready account with items.", price:140, stock:8, badge:"",
-        images: demoImages("RBLX", 5)},
-      {id:"A-4", section:"accounts", category:"accounts", name:"Free Fire Account", desc:"Ranked account.", price:200, stock:7, badge:"",
-        images: demoImages("FFACC", 5)},
-
-      // CHARGING (4)
-      {id:"C-1", section:"charging", category:"charging", name:"PUBG UC", desc:"UC top up service.", price:75, stock:50, badge:"",
-        images: demoImages("UC", 5)},
-      {id:"C-2", section:"charging", category:"charging", name:"Robux", desc:"Robux charging.", price:120, stock:50, badge:"",
-        images: demoImages("ROBUX", 5)},
-      {id:"C-3", section:"charging", category:"charging", name:"Free Fire Diamonds", desc:"Diamonds charging.", price:90, stock:50, badge:"",
-        images: demoImages("FFD", 5)},
-      {id:"C-4", section:"charging", category:"charging", name:"eFootball Coins", desc:"Coins charging.", price:80, stock:50, badge:"",
-        images: demoImages("EFB", 5)}
+      // Accounts
+      {id:"a1", section:"accounts", name:isArabic?"أكونت 1":"Account 1", desc:isArabic?"تفاصيل الأكونت":"Account details", price:600, top:false, offer:false, img:""},
+      {id:"a2", section:"accounts", name:isArabic?"أكونت 2":"Account 2", desc:isArabic?"تفاصيل الأكونت":"Account details", price:750, top:false, offer:false, img:""},
+      {id:"a3", section:"accounts", name:isArabic?"أكونت 3":"Account 3", desc:isArabic?"تفاصيل الأكونت":"Account details", price:900, top:false, offer:false, img:""},
+      {id:"a4", section:"accounts", name:isArabic?"أكونت 4":"Account 4", desc:isArabic?"تفاصيل الأكونت":"Account details", price:500, top:false, offer:false, img:""},
     ];
 
-    // demo images using inline svg data-uri (no external links)
-    function demoImages(label, count){
-      const out=[];
-      for(let i=1;i<=count;i++){
-        const svg = `
-          <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700">
-            <defs>
-              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#0ea5e9" stop-opacity="0.35"/>
-                <stop offset="0.55" stop-color="#e11d48" stop-opacity="0.28"/>
-                <stop offset="1" stop-color="#ffffff" stop-opacity="0.06"/>
-              </linearGradient>
-            </defs>
-            <rect width="100%" height="100%" fill="#0b1230"/>
-            <rect x="40" y="40" width="1120" height="620" rx="34" fill="url(#g)" stroke="rgba(255,255,255,0.12)"/>
-            <text x="80" y="160" fill="rgba(246,247,255,0.95)" font-size="72" font-weight="800" font-family="Segoe UI, Arial">${label}</text>
-            <text x="80" y="250" fill="rgba(185,193,217,0.95)" font-size="42" font-weight="700" font-family="Segoe UI, Arial">Image ${i}</text>
-            <text x="80" y="330" fill="rgba(185,193,217,0.9)" font-size="30" font-weight="700" font-family="Segoe UI, Arial">Replace these with your real screenshots</text>
-            <circle cx="1040" cy="200" r="62" fill="rgba(34,197,94,0.16)" stroke="rgba(34,197,94,0.35)" />
-            <circle cx="1100" cy="300" r="56" fill="rgba(245,158,11,0.14)" stroke="rgba(245,158,11,0.35)" />
-            <circle cx="1020" cy="420" r="70" fill="rgba(56,189,248,0.14)" stroke="rgba(56,189,248,0.35)" />
-          </svg>
-        `.trim();
-        out.push("data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg));
-      }
-      return out;
+    /* =========================
+       Coupons (MG / MZ / MK ... إلخ)
+       One-time per user
+       ========================= */
+    function buildCodes(prefix, percent){
+      const arr = [];
+      for(let i=1;i<=10;i++) arr.push({code:`${prefix}${i}`, percent});
+      return arr;
     }
+    const couponPool = [
+      ...buildCodes("MG",10),
+      ...buildCodes("MZ",20),
+      ...buildCodes("MK",30),
+      ...buildCodes("MC",40),
+      ...buildCodes("MA",50),
+      ...buildCodes("MB",60),
+      ...buildCodes("ME",70),
+      ...buildCodes("MX",80),
+      ...buildCodes("MR",90),
+      ...buildCodes("MI",100),
+    ];
 
     /* =========================
-       Ratings (5 stars per product)
-       - requires login
-    ========================== */
-    function getCurrentUserEmail(){ return getSession(); }
-    function requireLogin(){
-      if(!getCurrentUserEmail()){
-        showModal("authModal");
-        $("loginErr").style.display="none";
-        return false;
-      }
-      return true;
-    }
-
-    function productRatingInfo(pid){
-      const ratings = getRatings();
-      const r = ratings[pid] || {sum:0,count:0,byUser:{}};
-      const avg = r.count ? (r.sum / r.count) : 0;
-      return {avg, count:r.count, byUser:r.byUser};
-    }
-
-    function setRating(pid, stars){
-      if(!requireLogin()) return;
-
-      const email = getCurrentUserEmail();
-      const ratings = getRatings();
-      const r = ratings[pid] || {sum:0,count:0,byUser:{}};
-
-      // if user rated before, remove old from sum
-      const old = r.byUser[email];
-      if(old){
-        r.sum -= old;
-        r.count -= 1;
-      }
-      r.byUser[email] = stars;
-      r.sum += stars;
-      r.count += 1;
-
-      ratings[pid] = r;
-      setRatings(ratings);
-
-      renderAll(); // refresh stars
-    }
-
-    function renderStars(pid){
-      const info = productRatingInfo(pid);
-      const rounded = Math.round(info.avg || 0);
-      let html = `<div class="stars" aria-label="rating">`;
-      for(let i=1;i<=5;i++){
-        const muted = i<=rounded ? "" : "mutedStar";
-        html += `<button class="${muted}" title="${i}" onclick="setRating('${pid}',${i})">★</button>`;
-      }
-      html += `</div><div class="ratingInfo">${info.count ? `${info.avg.toFixed(1)} (${info.count})` : (isArabic ? "0 تقييم" : "No ratings")}</div>`;
-      return html;
-    }
-
-    /* =========================
-       Cart
-       - MUST work: + / - / remove
-       - Persist in localStorage
-    ========================== */
-    function cartCount(){
-      const cart = getCart();
-      return cart.reduce((a,it)=>a+it.qty,0);
-    }
-
-    function updateHeaderCounts(){
-      $("cartCount").textContent = cartCount();
-
-      const email = getCurrentUserEmail();
-      const inbox = getInbox();
-      const msgs = email ? (inbox[email] || []) : [];
-      $("inboxCount").textContent = msgs.length;
-
-      const gems = getGems();
-      const g = email ? (gems[email] || 0) : 0;
-      $("gemsCount").textContent = g;
-    }
-
-    function addToCart(pid){
-      const p = products.find(x=>x.id===pid);
-      if(!p || p.stock<=0) return;
-
-      const cart = getCart();
-      const found = cart.find(x=>x.id===pid);
-      if(found){
-        found.qty += 1;
-      }else{
-        cart.push({id:pid, qty:1});
-      }
-      setCart(cart);
-      updateHeaderCounts();
-      // notify
-      pushInbox(getCurrentUserEmail(), `${isArabic ? "تمت إضافة منتج للسلة:" : "Added to cart:"} ${p.name}`);
-    }
-
-    function minusQty(pid){
-      const cart = getCart();
-      const item = cart.find(x=>x.id===pid);
-      if(!item) return;
-      item.qty -= 1;
-      let next = cart.filter(x=>x.qty>0);
-      setCart(next);
-      renderCart();
-      updateHeaderCounts();
-    }
-
-    function plusQty(pid){
-      const cart = getCart();
-      const item = cart.find(x=>x.id===pid);
-      if(!item) return;
-      item.qty += 1;
-      setCart(cart);
-      renderCart();
-      updateHeaderCounts();
-    }
-
-    function removeFromCart(pid){
-      const cart = getCart().filter(x=>x.id!==pid);
-      setCart(cart);
-      renderCart();
-      updateHeaderCounts();
-    }
-
-    function clearCart(){
-      setCart([]);
-      renderCart();
-      updateHeaderCounts();
-    }
-
-    function cartTotalRaw(){
-      const cart = getCart();
-      let sum = 0;
-      for(const it of cart){
-        const p = products.find(x=>x.id===it.id);
-        if(p) sum += p.price * it.qty;
-      }
-      return sum;
-    }
-
-    function money(v){
-      // simple EGP format
-      return (isArabic ? `${v} جنيه` : `${v} EGP`);
-    }
-
-    function renderCart(){
-      const list = $("cartList");
-      list.innerHTML = "";
-      const cart = getCart();
-
-      if(cart.length===0){
-        list.innerHTML = `<div class="note">${isArabic ? "السلة فاضية." : "Your cart is empty."}</div>`;
-      }else{
-        for(const it of cart){
-          const p = products.find(x=>x.id===it.id);
-          if(!p) continue;
-
-          const node = document.createElement("div");
-          node.className = "cartItem";
-          node.innerHTML = `
-            <div class="cartLeft">
-              <div class="cartThumb" title="${isArabic ? "افتح التفاصيل" : "Open details"}"></div>
-              <div style="flex:1">
-                <div class="cartName">${p.name}</div>
-                <div class="cartMeta">${money(p.price)} • ${isArabic ? "كمية" : "Qty"}: <b>${it.qty}</b></div>
-                <div class="qtyRow">
-                  <button class="qtyBtn" title="-" aria-label="minus">−</button>
-                  <div class="qtyNum">${it.qty}</div>
-                  <button class="qtyBtn" title="+" aria-label="plus">+</button>
-                  <button class="removeBtn" title="remove">${isArabic ? "حذف" : "Remove"}</button>
-                </div>
-              </div>
-            </div>
-          `;
-
-          // handlers
-          node.querySelector(".cartThumb").onclick = ()=> openDetails(p.id);
-          const btns = node.querySelectorAll(".qtyBtn");
-          btns[0].onclick = ()=> minusQty(p.id);
-          btns[1].onclick = ()=> plusQty(p.id);
-          node.querySelector(".removeBtn").onclick = ()=> removeFromCart(p.id);
-
-          list.appendChild(node);
-        }
-      }
-
-      $("cartTotal").textContent = money(cartTotalRaw());
-    }
-
-    $("cartClearBtn").onclick = ()=> clearCart();
-    $("cartCheckoutBtn").onclick = ()=> openCheckoutFromCart();
-
-    /* =========================
-       Inbox
-    ========================== */
-    function pushInbox(email, text){
-      if(!email) return; // keep quiet if not logged in
-      const inbox = getInbox();
-      inbox[email] = inbox[email] || [];
-      inbox[email].unshift({text, at: Date.now()});
-      setInbox(inbox);
-      updateHeaderCounts();
-    }
-
-    function renderInbox(){
-      const list = $("inboxList");
-      list.innerHTML = "";
-      const email = getCurrentUserEmail();
-      if(!email){
-        list.innerHTML = `<div class="note warn">${T.mustLogin}</div>`;
-        updateHeaderCounts();
-        return;
-      }
-      const inbox = getInbox();
-      const msgs = inbox[email] || [];
-      if(msgs.length===0){
-        list.innerHTML = `<div class="note">${isArabic ? "مفيش رسائل." : "No messages."}</div>`;
-      }else{
-        for(const m of msgs.slice(0,50)){
-          const dt = new Date(m.at);
-          const time = dt.toLocaleString();
-          const item = document.createElement("div");
-          item.className = "note";
-          item.innerHTML = `<div style="font-weight:900">${time}</div><div>${escapeHtml(m.text)}</div>`;
-          list.appendChild(item);
-        }
-      }
-      updateHeaderCounts();
-    }
-
-    $("clearInboxBtn").onclick = ()=>{
-      const email = getCurrentUserEmail();
-      if(!email) return;
-      const inbox = getInbox();
-      inbox[email] = [];
-      setInbox(inbox);
-      renderInbox();
-      updateHeaderCounts();
-    };
-
-    /* =========================
-       Coupons
-       - preset codes MG1-10, MZ1-10, ... MI1-10
-       - one-time use per code (device)
-       - no codes shown publicly
-    ========================== */
-    const presetCoupons = (()=>{
-      const map = {};
-      const groups = [
-        ["MG",10],["MZ",20],["MK",30],["MC",40],["MA",50],["MB",60],["ME",70],["MX",80],["MR",90],["MI",100]
-      ];
-      for(const [prefix,percent] of groups){
-        for(let i=1;i<=10;i++){
-          map[`${prefix}${i}`] = percent;
-        }
-      }
-      return map;
-    })();
-
-    function getCouponPercent(code){
-      if(!code) return 0;
-      const c = code.trim().toUpperCase();
-      // generated codes in wallet
-      const wallet = getWallet();
-      const email = getCurrentUserEmail();
-      const userWallet = email ? (wallet[email] || []) : [];
-      const found = userWallet.find(x=>x.code===c);
-      if(found) return found.percent;
-
-      return presetCoupons[c] || 0;
-    }
-
-    function couponIsUsed(code){
-      const used = getUsedCoupons();
-      return !!used[code.trim().toUpperCase()];
-    }
-
-    function markCouponUsed(code){
-      const used = getUsedCoupons();
-      used[code.trim().toUpperCase()] = true;
-      setUsedCoupons(used);
-    }
-
-    /* =========================
-       Gems
-       - redeem to generate a REAL working code for the user
-    ========================== */
-    function getUserGems(email){
-      const gems = getGems();
-      return gems[email] || 0;
-    }
-    function setUserGems(email, amount){
-      const gems = getGems();
-      gems[email] = Math.max(0, amount|0);
-      setGems(gems);
-      updateHeaderCounts();
-    }
-
-    function addUserGems(email, amount){
-      setUserGems(email, getUserGems(email) + (amount|0));
-    }
-
-    function addToWallet(email, code, percent){
-      const wallet = getWallet();
-      wallet[email] = wallet[email] || [];
-      wallet[email].unshift({code, percent, at: Date.now()});
-      setWallet(wallet);
-    }
-
-    function renderWallet(){
-      const email = getCurrentUserEmail();
-      const list = $("walletList");
-      list.innerHTML = "";
-      if(!email){
-        list.innerHTML = `<div class="note warn">${T.mustLogin}</div>`;
-        return;
-      }
-      const wallet = getWallet();
-      const items = wallet[email] || [];
-      if(items.length===0){
-        list.innerHTML = `<div class="note">${isArabic ? "مفيش أكواد عندك." : "No codes yet."}</div>`;
-        return;
-      }
-      for(const it of items.slice(0,25)){
-        const used = couponIsUsed(it.code);
-        const row = document.createElement("div");
-        row.className = used ? "note warn" : "note ok";
-        row.innerHTML = `<div style="font-weight:900">${it.code} — ${it.percent}%</div><div>${used ? (isArabic ? "مستخدم" : "Used") : (isArabic ? "جاهز للاستخدام" : "Ready")}</div>`;
-        list.appendChild(row);
-      }
-    }
-
-    function renderGems(){
-      const email = getCurrentUserEmail();
-      if(!email){
-        $("gemsInfo").textContent = (isArabic ? "لازم تسجل الأول." : "Please login first.");
-        $("gemsInfo").className = "note warn";
-        renderWallet();
-        updateHeaderCounts();
-        return;
-      }
-      $("gemsInfo").className = "note ok";
-      $("gemsInfo").textContent = (isArabic ? `جواهرك: ${getUserGems(email)}` : `Your gems: ${getUserGems(email)}`);
-      $("redeemMsg").style.display = "none";
-      renderWallet();
-      updateHeaderCounts();
-    }
-
-    $("redeemBtn").onclick = ()=>{
-      const email = getCurrentUserEmail();
-      if(!requireLogin()) return;
-
-      const percent = parseInt($("redeemSelect").value,10);
-      const cost = percent; // 10% costs 10 gems etc
-      const g = getUserGems(email);
-
-      const msg = $("redeemMsg");
-      if(g < cost){
-        msg.className = "note err";
-        msg.textContent = isArabic ? "جواهر مش كفاية." : "Not enough gems.";
-        msg.style.display = "block";
-        return;
-      }
-
-      // create a real code and store in wallet
-      const code = `GEM${percent}-${uid(6)}`; // real usable code
-      addToWallet(email, code, percent);
-      setUserGems(email, g - cost);
-
-      msg.className = "note ok";
-      msg.textContent = isArabic ? `اتعملك كود: ${code} (خصم ${percent}%)` : `Your code: ${code} (${percent}% off)`;
-      msg.style.display = "block";
-
-      pushInbox(email, isArabic ? `تم تحويل الجواهر لكود خصم ${percent}%` : `Converted gems to ${percent}% discount code.`);
-      renderGems();
-    };
-
-    /* =========================
-       Checkout flow
-       - From cart OR from single product (buy direct)
-       - Buy does NOT add to cart
-       - First: summary + coupon
-       - Confirm -> show payment methods
-    ========================== */
-    let checkoutMode = {type:"cart", pid:null, discountCode:"", discountPercent:0, finalTotal:0};
-
-    function openCheckoutFromCart(){
-      const cart = getCart();
-      if(cart.length===0){
-        showModal("cartModal");
-        renderCart();
-        return;
-      }
-      checkoutMode = {type:"cart", pid:null, discountCode:"", discountPercent:0, finalTotal:0};
-      $("couponInput").value = "";
-      $("couponMsg").style.display = "none";
-      $("paymentBlock").style.display = "none";
-      updateCheckoutSummary();
-      showModal("checkoutModal");
-    }
-
-    function openCheckoutForSingle(pid){
-      // buy direct (no add to cart)
-      checkoutMode = {type:"single", pid, discountCode:"", discountPercent:0, finalTotal:0};
-      $("couponInput").value = "";
-      $("couponMsg").style.display = "none";
-      $("paymentBlock").style.display = "none";
-      updateCheckoutSummary();
-      showModal("checkoutModal");
-    }
-
-    function updateCheckoutSummary(){
-      let total = 0;
-      let lines = [];
-      if(checkoutMode.type==="cart"){
-        const cart = getCart();
-        for(const it of cart){
-          const p = products.find(x=>x.id===it.id);
-          if(!p) continue;
-          const line = `${p.name} × ${it.qty} = ${money(p.price*it.qty)}`;
-          lines.push(line);
-          total += p.price*it.qty;
-        }
-      }else{
-        const p = products.find(x=>x.id===checkoutMode.pid);
-        if(p){
-          lines.push(`${p.name} = ${money(p.price)}`);
-          total = p.price;
-        }
-      }
-
-      const disc = checkoutMode.discountPercent || 0;
-      const after = Math.max(0, Math.round(total * (100 - disc)/100));
-      checkoutMode.finalTotal = after;
-
-      const summary = `
-        <div style="font-weight:900">${isArabic ? "المحتويات:" : "Items:"}</div>
-        <div style="margin-top:6px">${lines.map(x=>`• ${escapeHtml(x)}`).join("<br/>")}</div>
-        <div style="margin-top:10px; font-weight:900">${isArabic ? "الإجمالي:" : "Total:"} ${money(total)}</div>
-        <div style="margin-top:6px; font-weight:900">${isArabic ? "الخصم:" : "Discount:"} ${disc}%</div>
-        <div style="margin-top:6px; font-weight:900">${isArabic ? "النهائي:" : "Final:"} ${money(after)}</div>
-      `;
-      $("checkoutSummary").innerHTML = summary;
-    }
-
-    $("applyCouponBtn").onclick = ()=>{
-      const code = $("couponInput").value.trim().toUpperCase();
-      const msg = $("couponMsg");
-      if(!code){
-        msg.style.display="none";
-        checkoutMode.discountCode="";
-        checkoutMode.discountPercent=0;
-        updateCheckoutSummary();
-        return;
-      }
-
-      if(couponIsUsed(code)){
-        msg.className="note err";
-        msg.textContent = isArabic ? "الكود ده مستخدم قبل كده." : "This code is already used.";
-        msg.style.display="block";
-        return;
-      }
-
-      const percent = getCouponPercent(code);
-      if(!percent){
-        msg.className="note err";
-        msg.textContent = isArabic ? "كود غير صحيح." : "Invalid code.";
-        msg.style.display="block";
-        return;
-      }
-
-      checkoutMode.discountCode = code;
-      checkoutMode.discountPercent = percent;
-
-      msg.className="note ok";
-      msg.textContent = isArabic ? `تم تطبيق خصم ${percent}%` : `Applied ${percent}% discount`;
-      msg.style.display="block";
-      updateCheckoutSummary();
-    };
-
-    $("confirmCheckoutBtn").onclick = ()=>{
-      // confirm -> show payment methods
-      $("paymentBlock").style.display = "block";
-      // consume coupon upon confirm
-      if(checkoutMode.discountCode){
-        markCouponUsed(checkoutMode.discountCode);
-      }
-      // grant gems for purchase (simple rule)
-      const email = getCurrentUserEmail();
-      if(email){
-        const gained = Math.max(1, Math.floor(checkoutMode.finalTotal / 100)); // 1 gem per 100 EGP
-        addUserGems(email, gained);
-        pushInbox(email, isArabic ? `تم تأكيد طلبك. حصلت على ${gained} جواهر.` : `Order confirmed. You earned ${gained} gems.`);
-      }
-      updateHeaderCounts();
-    };
-
-    // payment click -> create order log message (private inbox)
-    document.querySelectorAll("#paymentBlock [data-pay]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const method = btn.getAttribute("data-pay");
-        const email = getCurrentUserEmail();
-        if(email){
-          pushInbox(email, (isArabic ? "تم اختيار طريقة الدفع: " : "Payment method selected: ") + method.toUpperCase());
-        }
-        // do NOT auto add anything to cart
-        if(checkoutMode.type==="single"){
-          // nothing to clear
-        }else{
-          // keep cart as is until user clears (as requested: user can remove)
-          // you can decide to clear after successful payment later manually
-        }
-        // close checkout after choose
-        hideModal("checkoutModal"); closeOverlay();
-      });
-    });
-
-    /* =========================
-       Details Modal (open via image click)
-       - 4-5 images gallery
-       - Add to Cart
-       - Buy (direct)
-    ========================== */
-    let activeDetailsPid = null;
-    let activeImageIndex = 0;
-
-    function openDetails(pid){
-      const p = products.find(x=>x.id===pid);
-      if(!p) return;
-
-      activeDetailsPid = pid;
-      activeImageIndex = 0;
-
-      $("detailsTitle").textContent = T.details;
-      $("detailsName").textContent = p.name;
-      $("detailsDesc").textContent = p.desc;
-      $("detailsPrice").textContent = money(p.price);
-      $("detailsStock").textContent = p.stock>0 ? T.stock : T.soldout;
-
-      // big image
-      renderGallery(p);
-
-      $("detailsAddCartBtn").textContent = T.addCart;
-      $("detailsBuyBtn").textContent = T.buy;
-
-      $("detailsMsg").style.display="none";
-
-      $("detailsAddCartBtn").onclick = ()=>{
-        addToCart(pid);
-        const msg = $("detailsMsg");
-        msg.className = "note ok";
-        msg.textContent = isArabic ? "اتضاف للسلة ✅" : "Added to cart ✅";
-        msg.style.display="block";
-        updateHeaderCounts();
-      };
-
-      $("detailsBuyBtn").onclick = ()=>{
-        // buy direct: do not add to cart
-        openCheckoutForSingle(pid);
-      };
-
-      showModal("detailsModal");
-    }
-
-    function renderGallery(p){
-      const big = $("galleryBig");
-      const row = $("galleryRow");
-      big.innerHTML = "";
-      row.innerHTML = "";
-
-      const src = p.images[activeImageIndex] || p.images[0];
-      big.innerHTML = `<img src="${src}" alt="image" />`;
-      big.onclick = ()=> openZoom(src);
-
-      p.images.slice(0,5).forEach((img, idx)=>{
-        const t = document.createElement("div");
-        t.className = "gThumb" + (idx===activeImageIndex ? " active" : "");
-        t.innerHTML = `<img src="${img}" alt="thumb"/>`;
-        t.onclick = ()=>{
-          activeImageIndex = idx;
-          renderGallery(p);
-        };
-        row.appendChild(t);
-      });
-    }
-
-    function openZoom(src){
-      $("zoomBig").innerHTML = `<img src="${src}" alt="zoom" />`;
-      showModal("zoomModal");
-    }
-
-    /* =========================
-       Rendering cards
-       - IMPORTANT: no extra text above Buy
-       - Add-to-cart is outside details (exists on card)
-       - image click opens details
-    ========================== */
-    function cardTemplate(p){
-      const badgeHtml = p.badge==="top"
-        ? `<div class="badge top">🔥 ${T.top}</div>`
-        : p.badge==="offer"
-          ? `<div class="badge offer">🎁 ${T.offers}</div>`
-          : "";
-
+       Render
+       ========================= */
+    function formatPrice(n){ return isArabic ? `${n} جنيه` : `${n} EGP`; }
+
+    function cardHTML(p){
+      const badge = p.top ? `<div class="badge top">${isArabic?"توب":"Top"}</div>`
+                 : p.offer ? `<div class="badge offer">${isArabic?"أوفر":"Offer"}</div>` : "";
+      const img = p.img ? `<img src="${p.img}" alt="">` : `<div style="opacity:.9">${isArabic?"صورة":"IMAGE"}</div>`;
       return `
         <div class="card">
-          <div class="thumb" data-open="${p.id}">
-            ${badgeHtml}
-            <span>${p.id}</span>
-          </div>
+          <div class="thumb">${badge}${img}</div>
           <div class="content">
-            <p class="name">${escapeHtml(p.name)}</p>
-            <p class="meta">${escapeHtml(p.desc)}</p>
-
-            ${renderStars(p.id)}
-
+            <p class="name">${p.name}</p>
+            <p class="meta">${p.desc}</p>
             <div class="priceRow">
-              <p class="price">${money(p.price)}</p>
-              <span class="pillCount">${p.stock}</span>
+              <p class="price">${formatPrice(p.price)}</p>
             </div>
-
             <div class="actions">
-              <button class="btn btnBlue" data-cart="${p.id}">🛒</button>
-              <button class="btn btnRed" data-buy="${p.id}">${T.buy}</button>
+              <button class="btn btnBlue" data-details="${p.id}">${tr.details}</button>
+              <button class="btn btnRed" data-buy="${p.id}">${tr.buy}</button>
             </div>
           </div>
         </div>
       `;
     }
 
-    function renderSection(sectionId, list){
-      const grid = $(sectionId);
-      grid.innerHTML = list.map(cardTemplate).join("");
+    function renderAll(list){
+      const top = list.filter(x=>x.section==="top");
+      const offers = list.filter(x=>x.section==="offers");
+      const games = list.filter(x=>x.section==="games");
+      const programs = list.filter(x=>x.section==="programs");
+      const accounts = list.filter(x=>x.section==="accounts");
 
-      // image open details
-      grid.querySelectorAll("[data-open]").forEach(el=>{
-        el.addEventListener("click", ()=>{
-          const pid = el.getAttribute("data-open");
-          openDetails(pid);
-        });
-      });
-
-      // add to cart buttons
-      grid.querySelectorAll("[data-cart]").forEach(btn=>{
-        btn.addEventListener("click", (e)=>{
-          e.stopPropagation();
-          const pid = btn.getAttribute("data-cart");
-          addToCart(pid);
-          updateHeaderCounts();
-        });
-      });
-
-      // buy buttons (direct, do not add cart)
-      grid.querySelectorAll("[data-buy]").forEach(btn=>{
-        btn.addEventListener("click", (e)=>{
-          e.stopPropagation();
-          const pid = btn.getAttribute("data-buy");
-          openCheckoutForSingle(pid);
-        });
-      });
+      $("gridTop").innerHTML = top.map(cardHTML).join("");
+      $("gridOffers").innerHTML = offers.map(cardHTML).join("");
+      $("gridGames").innerHTML = games.map(cardHTML).join("");
+      $("gridPrograms").innerHTML = programs.map(cardHTML).join("");
+      $("gridAccounts").innerHTML = accounts.map(cardHTML).join("");
     }
 
-    function applyFilters(list){
-      const f = getFilter();
-      const q = (f.q || "").toLowerCase().trim();
+    /* =========================
+       Search + Filter
+       ========================= */
+    let activeList = [...products];
+    function applyFilters(){
+      const q = $("search").value.trim().toLowerCase();
+      const cat = $("filterCategory").value;
+      const sort = $("filterSort").value;
+      const mode = $("priceMode").value;
+      const price = Number($("priceValue").value || 0);
 
-      let out = list.slice();
+      let list = [...products];
 
-      // search
+      if(cat !== "all") list = list.filter(x=>x.section===cat);
+
       if(q){
-        out = out.filter(p=>{
-          return (p.name||"").toLowerCase().includes(q) || (p.desc||"").toLowerCase().includes(q) || (p.id||"").toLowerCase().includes(q);
+        list = list.filter(x =>
+          (x.name||"").toLowerCase().includes(q) ||
+          (x.desc||"").toLowerCase().includes(q)
+        );
+      }
+
+      if(mode !== "off"){
+        list = list.filter(x=>{
+          if(mode==="eq") return x.price===price;
+          if(mode==="lte") return x.price<=price;
+          if(mode==="gte") return x.price>=price;
+          return true;
         });
       }
 
-      // category filter (by section or category)
-      if(f.cat && f.cat !== "all"){
-        out = out.filter(p=>{
-          if(f.cat==="top") return p.section==="top";
-          if(f.cat==="offers") return p.section==="offers";
-          return p.category===f.cat;
-        });
-      }
+      if(sort==="new") list.sort((a,b)=> (a.id>b.id?-1:1));
+      if(sort==="old") list.sort((a,b)=> (a.id<b.id?-1:1));
+      if(sort==="low") list.sort((a,b)=> a.price-b.price);
+      if(sort==="high") list.sort((a,b)=> b.price-a.price);
 
-      // price filter
-      const priceVal = Number(f.price||0);
-      if(f.mode && f.mode!=="off" && priceVal>=0){
-        if(f.mode==="eq") out = out.filter(p=>p.price===priceVal);
-        if(f.mode==="lte") out = out.filter(p=>p.price<=priceVal);
-        if(f.mode==="gte") out = out.filter(p=>p.price>=priceVal);
-      }
-
-      // sort
-      if(f.sort==="low") out.sort((a,b)=>a.price-b.price);
-      if(f.sort==="high") out.sort((a,b)=>b.price-a.price);
-      if(f.sort==="old") out.sort((a,b)=>a.id.localeCompare(b.id));
-      if(f.sort==="new") out.sort((a,b)=>b.id.localeCompare(a.id));
-
-      return out;
+      activeList = list;
+      renderAll(activeList);
+      hookCards();
     }
 
-    function renderAll(){
-      const filtered = applyFilters(products);
+    $("search").addEventListener("input", applyFilters);
 
-      // keep each section 4 visible normally, but with filters it may show less (that is expected)
-      renderSection("gridTop", filtered.filter(p=>p.section==="top"));
-      renderSection("gridOffers", filtered.filter(p=>p.section==="offers"));
-      renderSection("gridGames", filtered.filter(p=>p.section==="games"));
-      renderSection("gridPrograms", filtered.filter(p=>p.section==="programs"));
-      renderSection("gridAccounts", filtered.filter(p=>p.section==="accounts"));
-      renderSection("gridCharging", filtered.filter(p=>p.section==="charging"));
+    /* =========================
+       Auth (local only)
+       ========================= */
+    const DB_KEY = "medo_users_v1";
+    const SES_KEY = "medo_session_v1";
 
-      updateHeaderCounts();
+    function getUsers(){ return LS.get(DB_KEY, []); }
+    function setUsers(u){ LS.set(DB_KEY, u); }
+    function getSession(){ return LS.get(SES_KEY, null); }
+    function setSession(s){ LS.set(SES_KEY, s); }
+
+    function showAuthMsg(type, msg){
+      const err = $("authErr"), ok = $("authOk");
+      err.style.display="none"; ok.style.display="none";
+      if(type==="err"){ err.textContent = msg; err.style.display="block"; }
+      else { ok.textContent = msg; ok.style.display="block"; }
     }
 
-    /* Search + filter controls */
-    $("search").addEventListener("input", ()=>{
-      const f = getFilter();
-      f.q = $("search").value || "";
-      setFilter(f);
-      renderAll();
+    function fileToDataUrl(file){
+      return new Promise((resolve)=>{
+        if(!file) return resolve("");
+        const r = new FileReader();
+        r.onload = ()=>resolve(String(r.result||""));
+        r.readAsDataURL(file);
+      });
+    }
+
+    async function createAccount(){
+      const fn = $("firstName").value.trim();
+      const ln = $("lastName").value.trim();
+      const email = $("email").value.trim().toLowerCase();
+      const pass = $("password").value;
+      const gender = $("gender").value;
+      const age = Number($("age").value || 0);
+
+      if(!fn || !ln || !email || !pass){
+        return showAuthMsg("err", isArabic ? "املأ البيانات المطلوبة" : "Fill required fields");
+      }
+
+      const users = getUsers();
+      if(users.some(u=>u.email===email)){
+        return showAuthMsg("err", tr.exists);
+      }
+
+      const avatarData = await fileToDataUrl($("avatar").files[0]);
+
+      const user = {
+        email,
+        pass,              // تنبيه: ده Local فقط
+        firstName: fn,
+        lastName: ln,
+        gender,
+        age,
+        avatar: avatarData,
+        displayName: `${fn} ${ln}`,
+        gems: 0,
+        inbox: [],
+        usedCoupons: []
+      };
+
+      users.push(user);
+      setUsers(users);
+      setSession({email});
+      showAuthMsg("ok", tr.saved);
+      refreshUserUI();
+      openProfileView();
+    }
+
+    function loginAccount(){
+      const email = $("email").value.trim().toLowerCase();
+      const pass = $("password").value;
+      const users = getUsers();
+      const u = users.find(x=>x.email===email && x.pass===pass);
+      if(!u) return showAuthMsg("err", tr.wrong);
+      setSession({email});
+      showAuthMsg("ok", tr.saved);
+      refreshUserUI();
+      openProfileView();
+    }
+
+    function currentUser(){
+      const s = getSession();
+      if(!s?.email) return null;
+      return getUsers().find(u=>u.email===s.email) || null;
+    }
+
+    function updateUser(patch){
+      const s = getSession();
+      if(!s?.email) return;
+      const users = getUsers();
+      const idx = users.findIndex(u=>u.email===s.email);
+      if(idx<0) return;
+      users[idx] = {...users[idx], ...patch};
+      setUsers(users);
+      refreshUserUI();
+    }
+
+    function logout(){
+      setSession(null);
+      refreshUserUI();
+      closeAll();
+    }
+
+    function refreshUserUI(){
+      const u = currentUser();
+
+      $("drawerUserBox").style.display = u ? "block" : "none";
+      if(u){
+        $("drawerUserNote").textContent = isArabic ? `مرحبًا ${u.displayName}` : `Hi ${u.displayName}`;
+      }
+
+      if(!u){
+        $("authBtn").style.display="inline-flex";
+        $("userChip").style.display="none";
+        $("inboxCount").textContent = "0";
+        $("gemsCount").textContent = "0";
+      }else{
+        $("authBtn").style.display="none";
+        $("userChip").style.display="inline-flex";
+        $("userNameText").textContent = u.displayName;
+        if(u.avatar){
+          $("avatarSmall").innerHTML = `<img src="${u.avatar}" alt="">`;
+        }else{
+          $("avatarSmall").textContent = (u.displayName||"U").slice(0,1).toUpperCase();
+        }
+        $("inboxCount").textContent = String((u.inbox||[]).length);
+        $("gemsCount").textContent = String(u.gems||0);
+      }
+    }
+
+    function openProfileView(){
+      const u = currentUser();
+      if(!u) return;
+      $("authStep1").style.display="none";
+      $("authStep2").style.display="flex";
+      $("profileNote").textContent = tr.profile + ": " + u.email;
+      $("editName").value = u.displayName || "";
+    }
+
+    function openAuthForm(){
+      $("authStep1").style.display="flex";
+      $("authStep2").style.display="none";
+      $("authErr").style.display="none";
+      $("authOk").style.display="none";
+    }
+
+    $("togglePassBtn").addEventListener("click", ()=>{
+      const p = $("password");
+      p.type = p.type==="password" ? "text" : "password";
     });
 
-    $("applyFilterBtn").onclick = ()=>{
-      const f = getFilter();
-      f.cat = $("filterCategory").value;
-      f.sort = $("filterSort").value;
-      f.mode = $("priceMode").value;
-      f.price = Number($("priceValue").value || 0);
-      setFilter(f);
-      hideDrawer(filterDrawer);
-      renderAll();
-    };
+    $("createBtn").addEventListener("click", createAccount);
+    $("loginBtn").addEventListener("click", loginAccount);
+    $("logoutBtn").addEventListener("click", logout);
+    $("logoutBtn2").addEventListener("click", logout);
 
-    $("clearFilterBtn").onclick = ()=>{
-      const f = {q:$("search").value || "", cat:"all", sort:"new", mode:"off", price:0};
-      setFilter(f);
-      $("filterCategory").value="all";
-      $("filterSort").value="new";
-      $("priceMode").value="off";
-      $("priceValue").value="";
-      hideDrawer(filterDrawer);
-      renderAll();
-    };
+    $("saveNameBtn").addEventListener("click", ()=>{
+      const v = $("editName").value.trim();
+      if(!v) return;
+      updateUser({displayName:v});
+      $("profileNote").textContent = tr.saved;
+      setTimeout(()=>openProfileView(), 600);
+    });
+
+    $("changePassBtn").addEventListener("click", ()=>{
+      const np = $("newPass").value;
+      if(!np) return;
+      updateUser({pass:np});
+      $("profileNote").textContent = tr.saved;
+      $("newPass").value="";
+      setTimeout(()=>openProfileView(), 600);
+    });
+
+    /* =========================
+       Cart
+       ========================= */
+    const CART_KEY = "medo_cart_v1";
+    function getCart(){ return LS.get(CART_KEY, []); }
+    function setCart(c){ LS.set(CART_KEY, c); $("cartCount").textContent=String(c.reduce((a,x)=>a+x.qty,0)); }
+    function addToCart(id){
+      const p = products.find(x=>x.id===id);
+      if(!p) return;
+      const c = getCart();
+      const idx = c.findIndex(x=>x.id===id);
+      if(idx>=0) c[idx].qty += 1;
+      else c.push({id, qty:1});
+      setCart(c);
+    }
+    function cartTotal(){
+      const c = getCart();
+      let sum = 0;
+      for(const item of c){
+        const p = products.find(x=>x.id===item.id);
+        if(p) sum += p.price * item.qty;
+      }
+      return sum;
+    }
+
+    function renderCart(){
+      const c = getCart();
+      const list = $("cartList");
+      list.innerHTML = "";
+
+      if(!c.length){
+        list.innerHTML = `<div class="note">${tr.emptyCart}</div>`;
+        $("totalBar").style.display="none";
+        $("checkoutBtn").style.display="none";
+        return;
+      }
+
+      for(const item of c){
+        const p = products.find(x=>x.id===item.id);
+        if(!p) continue;
+        const img = p.img ? `<img src="${p.img}" alt="">` : `${isArabic?"صورة":"IMG"}`;
+        const el = document.createElement("div");
+        el.className="cartItem";
+        el.innerHTML = `
+          <div class="cartLeft">
+            <div class="cartThumb">${img}</div>
+            <div style="flex:1">
+              <p class="cartName">${p.name}</p>
+              <p class="cartMeta">${formatPrice(p.price)} • ${isArabic?"الكمية":"Qty"}: ${item.qty}</p>
+              <div class="qtyRow">
+                <button class="qtyBtn" data-minus="${p.id}">-</button>
+                <span class="qtyNum">${item.qty}</span>
+                <button class="qtyBtn" data-plus="${p.id}">+</button>
+                <button class="detailsBtn" data-details="${p.id}">${tr.details}</button>
+              </div>
+            </div>
+          </div>
+          <button class="removeBtn" data-remove="${p.id}">${isArabic?"حذف":"Remove"}</button>
+        `;
+        list.appendChild(el);
+      }
+
+      $("totalBar").style.display="flex";
+      $("totalValue").textContent = formatPrice(cartTotal());
+      $("checkoutBtn").style.display="inline-flex";
+    }
+
+    function cartHooks(){
+      $("cartList").addEventListener("click", (e)=>{
+        const t = e.target;
+        const id = t.getAttribute?.("data-plus") || t.getAttribute?.("data-minus") || t.getAttribute?.("data-remove") || t.getAttribute?.("data-details");
+        if(!id) return;
+        const c = getCart();
+        const idx = c.findIndex(x=>x.id===id);
+        if(idx<0 && !t.getAttribute("data-details")) return;
+
+        if(t.getAttribute("data-plus")){
+          c[idx].qty += 1;
+          setCart(c);
+          renderCart();
+          return;
+        }
+        if(t.getAttribute("data-minus")){
+          c[idx].qty -= 1;
+          if(c[idx].qty<=0) c.splice(idx,1);
+          setCart(c);
+          renderCart();
+          return;
+        }
+        if(t.getAttribute("data-remove")){
+          c.splice(idx,1);
+          setCart(c);
+          renderCart();
+          return;
+        }
+        if(t.getAttribute("data-details")){
+          openDetails(id);
+          return;
+        }
+      });
+    }
+
+    /* =========================
+       Details
+       ========================= */
+    let currentDetailsId = null;
+    function openDetails(id){
+      const p = products.find(x=>x.id===id);
+      if(!p) return;
+      currentDetailsId = id;
+
+      $("detailsName").textContent = p.name;
+      $("detailsDesc").textContent = p.desc;
+      $("detailsPrice").textContent = formatPrice(p.price);
+
+      const box = $("detailsThumb");
+      if(p.img) box.innerHTML = `<img src="${p.img}" alt="" style="width:100%;height:100%;object-fit:cover">`;
+      else box.innerHTML = `<div style="opacity:.9">${isArabic?"صورة كبيرة":"BIG IMAGE"}</div>`;
+
+      openModal("detailsModal");
+    }
+
+    $("detailsAddCart").addEventListener("click", ()=>{
+      if(!currentDetailsId) return;
+      addToCart(currentDetailsId);
+    });
+    $("detailsBuyNow").addEventListener("click", ()=>{
+      if(!currentDetailsId) return;
+      addToCart(currentDetailsId);
+      openCart();
+    });
 
     /* =========================
        Reviews
-    ========================== */
+       ========================= */
+    const REV_KEY = "medo_reviews_v1";
+    function getReviews(){ return LS.get(REV_KEY, []); }
+    function setReviews(r){ LS.set(REV_KEY, r); }
+
     function renderReviews(){
+      const r = getReviews();
       const list = $("reviewsList");
       list.innerHTML = "";
-      const items = getReviews();
-      if(items.length===0){
-        list.innerHTML = `<div class="note">${isArabic ? "مفيش مراجعات لسه." : "No reviews yet."}</div>`;
-        return;
-      }
-      for(const r of items.slice(0,50)){
-        const item = document.createElement("div");
-        item.className = "note";
-        item.innerHTML = `<div style="font-weight:900">${escapeHtml(r.name||"User")}</div><div>${escapeHtml(r.text||"")}</div>`;
-        list.appendChild(item);
-      }
-    }
-
-    $("addReviewBtn").onclick = ()=>{
-      const txt = $("reviewText").value.trim();
-      if(!txt) return;
-      const email = getCurrentUserEmail();
-      const name = email ? getDisplayName(email) : "User";
-      const items = getReviews();
-      items.unshift({name, text: txt, at:Date.now()});
-      setReviews(items);
-      $("reviewText").value="";
-      renderReviews();
-    };
-
-    /* =========================
-       Gifts (requires account exists)
-       - gems transfer OR product ID message
-    ========================== */
-    function getDisplayName(email){
-      const accounts = getAccounts();
-      const acc = accounts[email];
-      return (acc && acc.displayName) ? acc.displayName : (acc ? `${acc.firstName||""} ${acc.lastName||""}`.trim() : "User");
-    }
-
-    $("sendGiftBtn").onclick = ()=>{
-      const to = $("giftToEmail").value.trim().toLowerCase();
-      const type = $("giftType").value;
-      const amount = $("giftAmount").value.trim();
-
-      $("giftErr").style.display="none";
-      $("giftOk").style.display="none";
-
-      if(!requireLogin()) return;
-
-      const from = getCurrentUserEmail();
-      const accounts = getAccounts();
-      if(!accounts[to]){
-        $("giftErr").textContent = isArabic ? "المستلم مش عامل حساب." : "Receiver has no account.";
-        $("giftErr").style.display="block";
-        return;
-      }
-
-      if(type==="gems"){
-        const n = parseInt(amount,10);
-        if(!n || n<=0){
-          $("giftErr").textContent = isArabic ? "اكتب رقم صحيح." : "Enter a valid number.";
-          $("giftErr").style.display="block";
-          return;
-        }
-        const g = getUserGems(from);
-        if(g < n){
-          $("giftErr").textContent = isArabic ? "جواهر مش كفاية." : "Not enough gems.";
-          $("giftErr").style.display="block";
-          return;
-        }
-        setUserGems(from, g-n);
-        addUserGems(to, n);
-        pushInbox(from, isArabic ? `أرسلت ${n} جواهر إلى ${to}` : `Sent ${n} gems to ${to}`);
-        pushInbox(to, isArabic ? `استلمت ${n} جواهر من ${getDisplayName(from)}` : `You received ${n} gems from ${getDisplayName(from)}`);
-        $("giftOk").textContent = T.sent;
-        $("giftOk").style.display="block";
-        updateHeaderCounts();
-        return;
-      }
-
-      // product
-      const pid = amount.toUpperCase();
-      const p = products.find(x=>x.id===pid);
-      if(!p){
-        $("giftErr").textContent = isArabic ? "رقم المنتج غير صحيح." : "Invalid product ID.";
-        $("giftErr").style.display="block";
-        return;
-      }
-      pushInbox(from, isArabic ? `أرسلت هدية: ${p.name} إلى ${to}` : `Gift sent: ${p.name} to ${to}`);
-      pushInbox(to, isArabic ? `جالك هدية: ${p.name} من ${getDisplayName(from)}` : `You received a gift: ${p.name} from ${getDisplayName(from)}`);
-      $("giftOk").textContent = T.sent;
-      $("giftOk").style.display="block";
-      updateHeaderCounts();
-    };
-
-    /* =========================
-       Auth: Login + Register + Profile
-       - Email uniqueness
-       - Basic profile data
-       - Password show/hide eye
-    ========================== */
-    function setAuthUI(){
-      const email = getCurrentUserEmail();
-      if(!email){
-        $("authBtn").style.display = "inline-flex";
-        $("userChip").style.display = "none";
-        $("drawerUserBox").style.display = "none";
-        updateHeaderCounts();
-        return;
-      }
-
-      $("authBtn").style.display = "none";
-      $("userChip").style.display = "inline-flex";
-      $("userNameText").textContent = getDisplayName(email) || "User";
-
-      // avatar
-      const accounts = getAccounts();
-      const acc = accounts[email];
-      const av = $("avatarSmall");
-      av.innerHTML = "";
-      if(acc && acc.avatar){
-        const img = document.createElement("img");
-        img.src = acc.avatar;
-        av.appendChild(img);
-      }else{
-        av.textContent = (getDisplayName(email)||"U").slice(0,1).toUpperCase();
-      }
-
-      // drawer user box
-      $("drawerUserBox").style.display = "block";
-      $("drawerUserNote").textContent = (isArabic ? "مسجل كـ: " : "Signed in as: ") + getDisplayName(email);
-      updateHeaderCounts();
-    }
-
-    $("authBtn").onclick = ()=>{ showModal("authModal"); switchAuthTab("login"); };
-    $("userChip").onclick = ()=>{ showModal("profileModal"); loadProfile(); };
-
-    $("editProfileBtn").onclick = ()=>{ showModal("profileModal"); loadProfile(); };
-    $("logoutBtn").onclick = ()=> logout();
-
-    function logout(){
-      setSession("");
-      setAuthUI();
-      updateHeaderCounts();
-      hideDrawer(menuDrawer);
-      closeOverlay();
-    }
-
-    function switchAuthTab(tab){
-      if(tab==="login"){
-        $("loginBox").style.display="flex";
-        $("loginBox").className="stack";
-        $("registerBox").style.display="none";
-        $("tabLogin").className="btn btnBlue";
-        $("tabRegister").className="btn";
-      }else{
-        $("loginBox").style.display="none";
-        $("registerBox").style.display="flex";
-        $("registerBox").className="stack";
-        $("tabLogin").className="btn";
-        $("tabRegister").className="btn btnBlue";
-      }
-    }
-
-    $("tabLogin").onclick = ()=> switchAuthTab("login");
-    $("tabRegister").onclick = ()=> switchAuthTab("register");
-
-    $("toggleLoginPass").onclick = ()=>{
-      $("loginPass").type = $("loginPass").type==="password" ? "text" : "password";
-    };
-    $("toggleRegPass").onclick = ()=>{
-      $("regPass").type = $("regPass").type==="password" ? "text" : "password";
-    };
-    $("toggleNewPass").onclick = ()=>{
-      $("newPass").type = $("newPass").type==="password" ? "text" : "password";
-    };
-
-    $("loginBtn").onclick = ()=>{
-      const email = $("loginEmail").value.trim().toLowerCase();
-      const pass = $("loginPass").value;
-      const accounts = getAccounts();
-      const err = $("loginErr");
-
-      err.style.display="none";
-      if(!email || !pass){
-        err.textContent = isArabic ? "املأ البيانات." : "Fill the fields.";
-        err.style.display="block";
-        return;
-      }
-      const acc = accounts[email];
-      if(!acc || acc.pass !== pass){
-        err.textContent = isArabic ? "بيانات غير صحيحة." : "Invalid credentials.";
-        err.style.display="block";
-        return;
-      }
-      setSession(email);
-      setAuthUI();
-      hideModal("authModal"); closeOverlay();
-      pushInbox(email, isArabic ? "تم تسجيل الدخول." : "Logged in.");
-    };
-
-    // Register steps
-    let regData = {first:"", last:"", email:"", pass:"", gender:"", age:"", avatar:""};
-
-    function showRegStep(n){
-      $("regStep1").style.display = (n===1) ? "flex" : "none";
-      $("regStep2").style.display = (n===2) ? "flex" : "none";
-      $("regStep3").style.display = (n===3) ? "flex" : "none";
-      $("regStep4").style.display = (n===4) ? "flex" : "none";
-      $("regStepTitle").textContent = `${T.step} ${n}/4`;
-    }
-
-    $("regNext1").onclick = ()=>{
-      const f = $("firstName").value.trim();
-      const l = $("lastName").value.trim();
-      if(!f || !l) return;
-      regData.first=f; regData.last=l;
-      showRegStep(2);
-    };
-
-    $("regBack2").onclick = ()=> showRegStep(1);
-    $("regBack3").onclick = ()=> showRegStep(2);
-    $("regBack4").onclick = ()=> showRegStep(3);
-
-    $("regNext2").onclick = ()=>{
-      const email = $("regEmail").value.trim().toLowerCase();
-      const pass = $("regPass").value;
-      const err = $("regErr2");
-      err.style.display="none";
-
-      if(!email || !pass){
-        err.textContent = isArabic ? "املأ البريد وكلمة السر." : "Enter email and password.";
-        err.style.display="block";
-        return;
-      }
-      const accounts = getAccounts();
-      if(accounts[email]){
-        err.textContent = isArabic ? "البريد مستخدم قبل كده." : "Email already used.";
-        err.style.display="block";
-        return;
-      }
-      regData.email=email; regData.pass=pass;
-      showRegStep(3);
-    };
-
-    $("regNext3").onclick = ()=>{
-      const g = $("regGender").value;
-      const a = parseInt($("regAge").value,10);
-      const err = $("regErr3");
-      err.style.display="none";
-
-      if(!g || !a || a<=0){
-        err.textContent = isArabic ? "اختار النوع واكتب عمر صحيح." : "Choose gender and valid age.";
-        err.style.display="block";
-        return;
-      }
-      regData.gender=g; regData.age=a;
-      showRegStep(4);
-    };
-
-    $("createAccountBtn").onclick = async ()=>{
-      const err = $("regErr4");
-      err.style.display="none";
-
-      // avatar
-      const file = $("regAvatar").files[0];
-      if(file){
-        const dataUrl = await fileToDataURL(file);
-        regData.avatar = dataUrl;
-      }
-
-      const accounts = getAccounts();
-      accounts[regData.email] = {
-        firstName: regData.first,
-        lastName: regData.last,
-        email: regData.email,
-        pass: regData.pass,
-        gender: regData.gender,
-        age: regData.age,
-        avatar: regData.avatar || "",
-        displayName: (regData.first + " " + regData.last).trim()
-      };
-      setAccounts(accounts);
-
-      // init inbox + gems
-      const inbox = getInbox();
-      inbox[regData.email] = inbox[regData.email] || [];
-      setInbox(inbox);
-      const gems = getGems();
-      if(gems[regData.email] == null) gems[regData.email] = 0;
-      setGems(gems);
-
-      setSession(regData.email);
-      setAuthUI();
-      hideModal("authModal"); closeOverlay();
-      pushInbox(regData.email, isArabic ? "تم إنشاء الحساب." : "Account created.");
-      showRegStep(1);
-    };
-
-    function fileToDataURL(file){
-      return new Promise((res, rej)=>{
-        const fr = new FileReader();
-        fr.onload = ()=>res(fr.result);
-        fr.onerror = rej;
-        fr.readAsDataURL(file);
+      r.slice().reverse().forEach(x=>{
+        const div = document.createElement("div");
+        div.className = "note";
+        div.textContent = x;
+        list.appendChild(div);
       });
     }
 
-    function loadProfile(){
-      const email = getCurrentUserEmail();
-      if(!email) return;
-      const accounts = getAccounts();
-      const acc = accounts[email];
-      $("profileMsg").style.display="none";
-      $("profileName").value = (acc && acc.displayName) ? acc.displayName : getDisplayName(email);
-    }
-
-    $("saveProfileName").onclick = ()=>{
-      const email = getCurrentUserEmail();
-      if(!email) return;
-      const accounts = getAccounts();
-      const acc = accounts[email];
-      const name = $("profileName").value.trim();
-      if(!name) return;
-      acc.displayName = name;
-      accounts[email] = acc;
-      setAccounts(accounts);
-      setAuthUI();
-
-      const msg = $("profileMsg");
-      msg.className="note ok";
-      msg.textContent = isArabic ? "تم حفظ الاسم." : "Name saved.";
-      msg.style.display="block";
-    };
-
-    $("saveNewPass").onclick = ()=>{
-      const email = getCurrentUserEmail();
-      if(!email) return;
-      const newPass = $("newPass").value;
-      if(!newPass) return;
-
-      const accounts = getAccounts();
-      const acc = accounts[email];
-      acc.pass = newPass;
-      accounts[email] = acc;
-      setAccounts(accounts);
-
-      const msg = $("profileMsg");
-      msg.className="note ok";
-      msg.textContent = isArabic ? "تم تغيير كلمة السر." : "Password updated.";
-      msg.style.display="block";
-    };
-
-    /* =========================
-       Buttons in header / auth
-    ========================== */
-    // clicking auth chip is profile already
-    // auth modal default
-    function initAuth(){
-      showRegStep(1);
-      switchAuthTab("login");
-    }
-
-    /* =========================
-       Filter init values from storage
-    ========================== */
-    function initFilterUI(){
-      const f = getFilter();
-      $("search").value = f.q || "";
-      $("filterCategory").value = f.cat || "all";
-      $("filterSort").value = f.sort || "new";
-      $("priceMode").value = f.mode || "off";
-      $("priceValue").value = (f.price && f.mode!=="off") ? f.price : "";
-    }
-
-    /* =========================
-       Security note: never store/show passwords publicly in UI
-       (We keep passwords in local storage for demo-like behavior)
-    ========================== */
-
-    /* =========================
-       Utilities
-    ========================== */
-    function escapeHtml(s){
-      return String(s)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
-    /* =========================
-       Start
-    ========================== */
-    initAuth();
-    initFilterUI();
-    setAuthUI();
-    renderAll();
-    renderCart();
-    updateHeaderCounts();
-
-    // Initial seed: if user already logged, ensure counts
-    window.addEventListener("storage", ()=>{
-      // if multiple tabs
-      setAuthUI();
-      renderAll();
-      renderCart();
-      updateHeaderCounts();
+    $("addReviewBtn").addEventListener("click", ()=>{
+      const txt = $("reviewText").value.trim();
+      if(!txt) return;
+      const r = getReviews();
+      const u = currentUser();
+      const name = u ? u.displayName : (isArabic?"زائر":"Guest");
+      r.push(`${name}: ${txt}`);
+      setReviews(r);
+      $("reviewText").value = "";
+      renderReviews();
     });
+
+    /* =========================
+       Checkout + Coupons + Bonus
+       ========================= */
+    let checkoutDiscountPercent = 0;
+
+    function resetCouponUI(){
+      $("couponOk").style.display="none";
+      $("couponErr").style.display="none";
+      checkoutDiscountPercent = 0;
+    }
+
+    function userHasUsed(code){
+      const u = currentUser();
+      if(!u) return false;
+      return (u.usedCoupons||[]).includes(code);
+    }
+
+    function markUsed(code){
+      const u = currentUser();
+      if(!u) return;
+      const used = new Set(u.usedCoupons||[]);
+      used.add(code);
+      updateUser({usedCoupons:[...used]});
+    }
+
+    function applyCoupon(){
+      resetCouponUI();
+      const code = ($("couponInput").value||"").trim().toUpperCase();
+      if(!code) return;
+
+      const u = currentUser();
+      if(!u){
+        $("couponErr").textContent = tr.mustLogin;
+        $("couponErr").style.display="block";
+        return;
+      }
+      if(userHasUsed(code)){
+        $("couponErr").textContent = tr.badCoupon;
+        $("couponErr").style.display="block";
+        return;
+      }
+
+      const found = couponPool.find(x=>x.code===code);
+      if(!found){
+        $("couponErr").textContent = tr.badCoupon;
+        $("couponErr").style.display="block";
+        return;
+      }
+
+      checkoutDiscountPercent = found.percent;
+      $("couponOk").textContent = tr.okCoupon(found.percent);
+      $("couponOk").style.display="block";
+    }
+
+    $("applyCouponBtn").addEventListener("click", applyCoupon);
+
+    function openCheckout(){
+      const u = currentUser();
+      if(!u){
+        // لو مش مسجل: افتح التسجيل
+        openModal("authModal");
+        openAuthForm();
+        showAuthMsg("err", tr.mustLogin);
+        return;
+      }
+
+      const sum = cartTotal();
+      $("checkoutInfo").textContent = tr.checkoutInfo(sum);
+      $("couponInput").value = "";
+      resetCouponUI();
+
+      $("checkoutStepA").style.display="flex";
+      $("checkoutStepB").style.display="none";
+      openModal("checkoutModal");
+    }
+
+    $("confirmToPayBtn").addEventListener("click", ()=>{
+      // لو فيه كود واتفعل: اعتبره مستخدم مرة واحدة بعد التأكيد
+      const code = ($("couponInput").value||"").trim().toUpperCase();
+      if(code && checkoutDiscountPercent>0 && !userHasUsed(code)){
+        markUsed(code);
+      }
+
+      $("checkoutStepA").style.display="none";
+      $("checkoutStepB").style.display="flex";
+
+      const sum = cartTotal();
+      const discount = Math.round(sum * (checkoutDiscountPercent/100));
+      const final = Math.max(0, sum - discount);
+      $("payNote").textContent = isArabic
+        ? `الإجمالي: ${formatPrice(sum)} • الخصم: ${formatPrice(discount)} • النهائي: ${formatPrice(final)}`
+        : `Total: ${formatPrice(sum)} • Discount: ${formatPrice(discount)} • Final: ${formatPrice(final)}`;
+    });
+
+    function addInbox(msg){
+      const u = currentUser();
+      if(!u) return;
+      const inbox = Array.isArray(u.inbox) ? u.inbox.slice() : [];
+      inbox.push(msg);
+      updateUser({inbox});
+    }
+
+    function addGemsFromOrder(finalAmount){
+      // نظام بسيط: كل 200 جنيه = 1 جوهرة
+      const u = currentUser();
+      if(!u) return;
+      const add = Math.floor(finalAmount / 200);
+      if(add<=0) return;
+      updateUser({gems:(u.gems||0)+add});
+      addInbox(isArabic ? `تم إضافة ${add} جوهرة لحسابك.` : `Added ${add} gems to your account.`);
+    }
+
+    $("finishOrderBtn").addEventListener("click", ()=>{
+      const sum = cartTotal();
+      const discount = Math.round(sum * (checkoutDiscountPercent/100));
+      const final = Math.max(0, sum - discount);
+
+      // سجل إشعار + بونص
+      addInbox(isArabic ? `تم إنشاء طلب جديد بقيمة ${formatPrice(final)}.` : `New order created: ${formatPrice(final)}.`);
+      addGemsFromOrder(final);
+
+      // فضّي السلة
+      setCart([]);
+      renderCart();
+      closeAll();
+    });
+
+    /* =========================
+       Inbox + Bonus (gems)
+       ========================= */
+    function openInbox(){
+      const u = currentUser();
+      if(!u){
+        openModal("authModal");
+        openAuthForm();
+        showAuthMsg("err", tr.mustLogin);
+        return;
+      }
+      // نعرض الإشعارات في Reviews modal عشان منبوظش التصميم
+      openModal("reviewsModal");
+      $("reviewsTitle").textContent = isArabic ? "الإشعارات" : "Inbox";
+      const list = $("reviewsList");
+      list.innerHTML = "";
+      (u.inbox||[]).slice().reverse().forEach(x=>{
+        const div = document.createElement("div");
+        div.className = "note ok";
+        div.textContent = x;
+        list.appendChild(div);
+      });
+      $("reviewText").style.display="none";
+      $("addReviewBtn").style.display="none";
+    }
+
+    function openReviews(){
+      openModal("reviewsModal");
+      $("reviewsTitle").textContent = tr.reviews;
+      $("reviewText").style.display="block";
+      $("addReviewBtn").style.display="inline-flex";
+      renderReviews();
+    }
+
+    function openBonus(){
+      const u = currentUser();
+      if(!u){
+        openModal("authModal");
+        openAuthForm();
+        showAuthMsg("err", tr.mustLogin);
+        return;
+      }
+      openModal("reviewsModal");
+      $("reviewsTitle").textContent = isArabic ? "الجواهر" : "Gems";
+      $("reviewText").style.display="none";
+      $("addReviewBtn").style.display="none";
+      const list = $("reviewsList");
+      list.innerHTML = `
+        <div class="note ok">${isArabic ? "جواهرك الحالية:" : "Your gems:"} <strong>${u.gems||0}</strong></div>
+        <div class="note">${isArabic ? "هتزيد الجواهر بعد كل طلب." : "Gems increase after orders."}</div>
+      `;
+    }
+
+    /* =========================
+       Open/Close Modals & Drawers
+       ========================= */
+    function openModal(id){
+      closeOverlay();
+      openOverlay();
+      $(id).classList.add("show");
+    }
+
+    function openMenu(){
+      closeOverlay(); openOverlay();
+      filterDrawer.classList.remove("show");
+      menuDrawer.classList.add("show");
+    }
+    function openFilter(){
+      closeOverlay(); openOverlay();
+      menuDrawer.classList.remove("show");
+      filterDrawer.classList.add("show");
+    }
+
+    $("menuBtn").addEventListener("click", openMenu);
+    $("menuClose").addEventListener("click", closeAll);
+
+    $("filterBtn").addEventListener("click", openFilter);
+    $("filterClose").addEventListener("click", closeAll);
+
+    $("contactClose").addEventListener("click", closeAll);
+    $("reviewsClose").addEventListener("click", closeAll);
+    $("authClose").addEventListener("click", closeAll);
+    $("cartClose").addEventListener("click", closeAll);
+    $("detailsClose").addEventListener("click", closeAll);
+    $("checkoutClose").addEventListener("click", closeAll);
+
+    $("openContactRow").addEventListener("click", ()=>openModal("contactModal"));
+    $("openReviewsRow").addEventListener("click", openReviews);
+
+    // Drawer scroll links
+    document.querySelectorAll(".linkRow[data-scroll]").forEach(el=>{
+      el.addEventListener("click", ()=>{
+        const id = el.getAttribute("data-scroll");
+        closeAll();
+        setTimeout(()=>document.getElementById(id).scrollIntoView({behavior:"smooth"}), 80);
+      });
+    });
+
+    // Apply Filter button
+    $("applyFilterBtn").addEventListener("click", ()=>{
+      applyFilters();
+      closeAll();
+    });
+
+    /* =========================
+       Card clicks (Details/Buy)
+       ========================= */
+    function hookCards(){
+      document.body.querySelectorAll("[data-details]").forEach(btn=>{
+        btn.addEventListener("click", ()=>openDetails(btn.getAttribute("data-details")));
+      });
+      document.body.querySelectorAll("[data-buy]").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          const id = btn.getAttribute("data-buy");
+          addToCart(id);
+          openCart();
+        });
+      });
+    }
+
+    function openCart(){
+      renderCart();
+      openModal("cartModal");
+    }
+
+    $("cartBtn").addEventListener("click", openCart);
+
+    $("checkoutBtn").addEventListener("click", ()=>{
+      closeAll();
+      openCheckout();
+    });
+
+    $("authBtn").addEventListener("click", ()=>{
+      openModal("authModal");
+      openAuthForm();
+    });
+
+    $("userChip").addEventListener("click", ()=>{
+      openModal("authModal");
+      openProfileView();
+    });
+
+    $("editProfileBtn").addEventListener("click", ()=>{
+      openModal("authModal");
+      openProfileView();
+    });
+
+    $("inboxBtn").addEventListener("click", openInbox);
+    $("gemsBtn").addEventListener("click", openBonus);
+
+    /* Payment buttons (روابط خارجية مثال) */
+    function openPay(url){ window.open(url, "_blank"); }
+    $("payVod").addEventListener("click", ()=>openPay("https://www.vodafone.com.eg/"));
+    $("payEt").addEventListener("click", ()=>openPay("https://www.etisalat.eg/"));
+    $("payWe").addEventListener("click", ()=>openPay("https://te.eg/"));
+    $("payOr").addEventListener("click", ()=>openPay("https://www.orange.eg/"));
+    $("payVisa").addEventListener("click", ()=>openPay("https://www.visa.com/"));
+    $("payInsta").addEventListener("click", ()=>openPay("https://instapay.com.eg/"));
+    $("payBill").addEventListener("click", ()=>openPay("https://www.fawry.com/"));
+    $("payTelda").addEventListener("click", ()=>openPay("https://www.telda.app/"));
+
+    /* =========================
+       Init
+       ========================= */
+    function init(){
+      // Set ramadan bar always visible (خفيف)
+      // Render products
+      renderAll(products);
+      hookCards();
+
+      // Cart count init
+      setCart(getCart());
+
+      // Reviews init
+      renderReviews();
+
+      // Auth UI init
+      refreshUserUI();
+    }
+    init();
   </script>
 </body>
 </html>
