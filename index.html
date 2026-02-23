@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -9,8 +10,8 @@
     :root{
       --bg0:#070A12;
       --bg1:#0B1230;
-      --panel:#0E183B;
-      --card:#0C1736;
+      --panel: rgba(14,24,59,.92);
+      --card: rgba(12,23,54,.72);
       --text:#F6F7FF;
       --muted:#B9C1D9;
       --border:rgba(255,255,255,.10);
@@ -28,19 +29,48 @@
       margin:0;
       font-family:"Segoe UI", Tahoma, Arial, sans-serif;
       color:var(--text);
+      min-height:100vh;
+
       background:
         radial-gradient(900px 500px at 15% 8%, rgba(56,189,248,.16), transparent 60%),
         radial-gradient(900px 600px at 85% 0%, rgba(225,29,72,.14), transparent 55%),
         linear-gradient(180deg, var(--bg1), var(--bg0));
-      min-height:100vh;
+      overflow-x:hidden;
     }
     a{color:inherit;text-decoration:none}
-    .container{max-width:1500px;margin:0 auto;padding:10px 16px}
+    button,input,select{font-family:inherit}
+    .container{max-width:1220px;margin:0 auto;padding:10px 12px;position:relative}
+
+    /* decorative icons on sides */
+    .decor{
+      position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.10;
+      filter: blur(.2px);
+    }
+    .decor::before, .decor::after{
+      content:"";
+      position:absolute; top:120px; bottom:0; width:280px;
+      background-repeat:no-repeat; background-size: 180px auto;
+      opacity:.85;
+    }
+    .decor::before{
+      left:-40px;
+      background-image:
+        radial-gradient(circle at 60px 80px, rgba(56,189,248,.65), transparent 60%),
+        radial-gradient(circle at 120px 200px, rgba(225,29,72,.6), transparent 60%),
+        radial-gradient(circle at 80px 320px, rgba(245,158,11,.6), transparent 60%);
+    }
+    .decor::after{
+      right:-40px;
+      background-image:
+        radial-gradient(circle at 160px 90px, rgba(225,29,72,.6), transparent 60%),
+        radial-gradient(circle at 120px 230px, rgba(56,189,248,.65), transparent 60%),
+        radial-gradient(circle at 160px 360px, rgba(34,197,94,.55), transparent 60%);
+    }
 
     /* Sticky header */
     .nav{
       position:sticky;top:0;z-index:60;
-      background:rgba(7,10,18,.72);
+      background:rgba(7,10,18,.74);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--border);
     }
@@ -108,19 +138,20 @@
       font-size:15px;
       font-weight:900;
       display:flex;align-items:center;gap:10px;
+      position:relative;
+      z-index:1;
     }
     .sectionHint{color:var(--muted);font-weight:800;font-size:12px}
     .spacer{height:18px}
 
-    /* ✅ GRID: ALWAYS 4 (no media) */
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(4, minmax(0,1fr));
-      gap:12px;
-    }
+    /* Grid: ALWAYS 4 on desktop */
+    .grid{display:grid;grid-template-columns:repeat(4, minmax(0,1fr));gap:14px;position:relative;z-index:1}
+    @media (max-width:1050px){ .grid{grid-template-columns:repeat(3, minmax(0,1fr));} }
+    @media (max-width:760px){ .grid{grid-template-columns:repeat(2, minmax(0,1fr));} }
+    @media (max-width:460px){ .grid{grid-template-columns:1fr;} }
 
     .card{
-      background:rgba(12,23,54,.72);
+      background:var(--card);
       border:1px solid var(--border);
       border-radius:var(--radius);
       overflow:hidden;
@@ -129,7 +160,7 @@
       min-height:250px;
     }
     .thumb{
-      height:96px;
+      height:104px;
       background:
         radial-gradient(180px 120px at 25% 30%, rgba(56,189,248,.22), transparent 65%),
         radial-gradient(180px 120px at 75% 0%, rgba(225,29,72,.18), transparent 60%),
@@ -138,8 +169,8 @@
       display:flex;align-items:center;justify-content:center;
       font-weight:900;letter-spacing:.7px;font-size:12px;
       position:relative;
+      cursor:pointer;
     }
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
     .badge{
       position:absolute;top:8px;inset-inline-start:8px;
       padding:6px 8px;border-radius:999px;
@@ -150,13 +181,31 @@
     }
     .badge.top{border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.12)}
     .badge.offer{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.12)}
-
     .content{padding:10px 10px 12px;display:flex;flex-direction:column;gap:8px;flex:1}
     .name{margin:0;font-size:13px;font-weight:900}
     .meta{margin:0;font-size:12px;color:var(--muted);line-height:1.4}
     .priceRow{display:flex;align-items:center;justify-content:space-between;gap:8px}
     .price{margin:0;font-size:12px;font-weight:900}
 
+    /* Rating */
+    .ratingRow{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .stars{display:inline-flex;gap:3px;align-items:center}
+    .starBtn{
+      width:18px;height:18px;border-radius:6px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      cursor:pointer;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-size:12px; line-height:0;
+      user-select:none;
+    }
+    .starBtn.filled{
+      border-color:rgba(245,158,11,.55);
+      background:rgba(245,158,11,.16);
+    }
+    .ratingMeta{font-size:11px;color:var(--muted);font-weight:800;white-space:nowrap}
+
+    /* Actions */
     .actions{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
     .btn{
       flex:1;
@@ -168,31 +217,29 @@
       font-weight:900;font-size:12px;
       cursor:pointer;
       display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      min-width:0; /* مهم عشان مايكبرش الكارت */
+      min-width:120px;
     }
     .btn:hover{filter:brightness(1.08)}
     .btnRed{background:linear-gradient(135deg, rgba(225,29,72,1), rgba(225,29,72,.82));border-color:transparent}
     .btnBlue{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.35)}
 
-    /* Overlay / drawer / modal */
+    /* Overlay / drawers / modals */
     .overlay{position:fixed;inset:0;background:rgba(0,0,0,.58);display:none;z-index:80}
     .overlay.show{display:block}
 
-    /* Drawer (hidden by default) */
     .drawer{
       position:fixed;top:0;bottom:0;
       width:min(360px, 92vw);
-      background:rgba(14,24,59,.92);
+      background:var(--panel);
       backdrop-filter: blur(10px);
       border:1px solid var(--border);
       box-shadow: var(--shadow);
       z-index:90;
+      transition: right .22s ease;
       display:flex;flex-direction:column;
       right:-420px; /* hidden */
-      transition:right .22s ease;
     }
     .drawer.show{ right:0; }
-
     .drawerHeader{
       padding:12px;border-bottom:1px solid var(--border);
       display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -262,6 +309,20 @@
       font-weight:900;
     }
 
+    /* password eye */
+    .pwWrap{position:relative}
+    .pwEye{
+      position:absolute; top:50%; transform:translateY(-50%);
+      inset-inline-end:10px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      padding:6px 8px;
+      cursor:pointer;
+      font-weight:900;
+      user-select:none;
+    }
+
     /* Cart */
     .cartItem{
       border:1px solid var(--border);
@@ -283,7 +344,6 @@
       display:flex;align-items:center;justify-content:center;
       font-weight:900;font-size:11px;opacity:.9;
     }
-    .cartThumb img{width:100%;height:100%;object-fit:cover}
     .cartName{font-weight:900;font-size:13px;margin:0 0 4px}
     .cartMeta{margin:0;color:var(--muted);font-size:12px;font-weight:800}
     .qtyRow{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
@@ -323,12 +383,41 @@
       user-select:none;
     }
 
+    /* Details gallery */
+    .galleryBig{
+      width:100%;
+      height:230px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:
+        radial-gradient(280px 160px at 25% 30%, rgba(56,189,248,.22), transparent 65%),
+        radial-gradient(280px 160px at 75% 0%, rgba(225,29,72,.18), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;letter-spacing:.7px;
+      overflow:hidden;
+    }
+    .galleryBig img{width:100%;height:100%;object-fit:cover}
+    .galleryRow{display:flex;gap:10px;flex-wrap:wrap}
+    .gThumb{
+      width:78px;height:56px;border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;font-weight:900;font-size:11px;color:rgba(246,247,255,.9);
+      overflow:hidden;
+    }
+    .gThumb img{width:100%;height:100%;object-fit:cover}
+    .gThumb.active{border-color:rgba(56,189,248,.55);background:rgba(56,189,248,.10)}
+
     /* Footer */
     .footer{
       margin-top:18px;border-top:1px solid var(--border);
       padding:14px 0 22px;
       color:var(--muted);
       display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+      position:relative;
+      z-index:1;
     }
     .social{
       display:inline-flex;align-items:center;gap:8px;
@@ -339,22 +428,12 @@
     }
     .social:hover{filter:brightness(1.08)}
     .mutedRight{margin-inline-start:auto;font-weight:900;font-size:12px;color:rgba(185,193,217,.9)}
-
-    /* Small helper: Ramadan vibe (خفيف ومش مزعج) */
-    .ramadanBar{
-      margin:10px 0 0;
-      padding:10px 12px;
-      border:1px solid rgba(245,158,11,.28);
-      background:rgba(245,158,11,.08);
-      border-radius:14px;
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      font-weight:900;
-    }
-    .ramadanBar .miniTxt{color:rgba(246,247,255,.9);font-weight:800;font-size:12px}
   </style>
 </head>
 
 <body>
+  <div class="decor"></div>
+
   <div class="nav">
     <div class="container nav-inner">
       <div class="brand">
@@ -364,13 +443,16 @@
 
       <div class="searchWrap">
         <input id="search" class="search" placeholder="🔍 ابحث..." />
+        <!-- Filter icon (different style than menu) -->
         <button class="iconBtn" id="filterBtn" title="Filter">
           <span style="display:inline-block;line-height:0">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M4 6h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               <path d="M7 12h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               <path d="M10 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M4 3h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".75"/>
+              <circle cx="6" cy="6" r="2" fill="currentColor" opacity=".35"/>
+              <circle cx="9" cy="12" r="2" fill="currentColor" opacity=".35"/>
+              <circle cx="12" cy="18" r="2" fill="currentColor" opacity=".35"/>
             </svg>
           </span>
         </button>
@@ -394,11 +476,6 @@
   </div>
 
   <div class="container">
-    <div class="ramadanBar" id="ramadanBar" style="display:none">
-      <div>🌙 <span id="ramadanTitle">رمضان كريم</span></div>
-      <div class="miniTxt" id="ramadanSub">عروض وبونصات على الطلبات</div>
-    </div>
-
     <div class="sectionTitle" id="titleTop">🔥 Top <span class="sectionHint" id="hintTop">الأكثر طلبًا</span></div>
     <div id="gridTop" class="grid"></div>
 
@@ -422,11 +499,16 @@
     <div class="sectionTitle" id="titleAccounts">🧾 Accounts</div>
     <div id="gridAccounts" class="grid"></div>
 
+    <div class="spacer"></div>
+
+    <div class="sectionTitle" id="titleRecharge">⚡ Recharge</div>
+    <div id="gridRecharge" class="grid"></div>
+
     <div class="footer">
-      <a class="social" href="https://wa.me/201006760663" target="_blank" rel="noreferrer" id="socWhats">WhatsApp</a>
-      <a class="social" href="https://www.instagram.com/medo__rami" target="_blank" rel="noreferrer" id="socInst">Instagram</a>
-      <a class="social" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" rel="noreferrer" id="socFb">Facebook</a>
-      <a class="social" href="mailto:medorami77@gmail.com" id="socMail">Email</a>
+      <a class="social" href="https://wa.me/201006760663" target="_blank" rel="noreferrer" id="footerWa">WhatsApp</a>
+      <a class="social" href="https://www.instagram.com/medo__rami" target="_blank" rel="noreferrer" id="footerIg">Instagram</a>
+      <a class="social" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" rel="noreferrer" id="footerFb">Facebook</a>
+      <a class="social" href="mailto:medorami77@gmail.com" id="footerMail">Email</a>
       <span class="mutedRight">© <span id="year"></span> Medo Gaming</span>
     </div>
   </div>
@@ -449,16 +531,18 @@
       </div>
 
       <div class="drawerSection">
-        <p class="drawerLabel" id="quickTitle">Quick</p>
+        <p class="drawerLabel" id="quickLabel">Quick</p>
         <div class="drawerList">
           <div class="linkRow" data-scroll="gridTop"><span id="mTop">Top</span><span class="mini">→</span></div>
           <div class="linkRow" data-scroll="gridOffers"><span id="mOffers">Offers</span><span class="mini">→</span></div>
           <div class="linkRow" data-scroll="gridGames"><span id="mGames">Games</span><span class="mini">→</span></div>
           <div class="linkRow" data-scroll="gridPrograms"><span id="mPrograms">Programs</span><span class="mini">→</span></div>
           <div class="linkRow" data-scroll="gridAccounts"><span id="mAccounts">Accounts</span><span class="mini">→</span></div>
-
+          <div class="linkRow" data-scroll="gridRecharge"><span id="mRecharge">Recharge</span><span class="mini">→</span></div>
           <div class="linkRow" id="openContactRow"><span id="mContact">Contact</span><span class="mini">→</span></div>
           <div class="linkRow" id="openReviewsRow"><span id="mReviews">Reviews</span><span class="mini">→</span></div>
+          <div class="linkRow" id="openInboxRow"><span id="mInbox">Inbox</span><span class="mini">→</span></div>
+          <div class="linkRow" id="openBonusRow"><span id="mBonus">Bonus (Gems)</span><span class="mini">→</span></div>
         </div>
       </div>
     </div>
@@ -474,7 +558,7 @@
       <div class="note" id="filterNote">اختار القسم والترتيب والسعر وبعدين تطبيق.</div>
 
       <div class="drawerSection">
-        <p class="drawerLabel" id="catTitle">Category</p>
+        <p class="drawerLabel" id="filterCatLabel">Category</p>
         <select class="select" id="filterCategory">
           <option value="all">All</option>
           <option value="top">Top</option>
@@ -482,11 +566,12 @@
           <option value="games">Games</option>
           <option value="programs">Programs</option>
           <option value="accounts">Accounts</option>
+          <option value="recharge">Recharge</option>
         </select>
       </div>
 
       <div class="drawerSection">
-        <p class="drawerLabel" id="sortTitle">Sort</p>
+        <p class="drawerLabel" id="filterSortLabel">Sort</p>
         <select class="select" id="filterSort">
           <option value="new">Newest</option>
           <option value="old">Oldest</option>
@@ -496,7 +581,7 @@
       </div>
 
       <div class="drawerSection">
-        <p class="drawerLabel" id="priceTitle">Price</p>
+        <p class="drawerLabel" id="filterPriceLabel">Price</p>
         <div class="row">
           <select class="select" id="priceMode">
             <option value="off">Off</option>
@@ -521,10 +606,10 @@
       </div>
       <div class="modalBody">
         <div class="stack">
-          <a class="btn" href="https://wa.me/201006760663" target="_blank" id="cWhats">WhatsApp</a>
-          <a class="btn" href="https://www.instagram.com/medo__rami" target="_blank" id="cInst">Instagram</a>
-          <a class="btn" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" id="cFb">Facebook</a>
-          <a class="btn" href="mailto:medorami77@gmail.com" id="cMail">Email</a>
+          <a class="btn" href="https://wa.me/201006760663" target="_blank" id="contactWa">WhatsApp</a>
+          <a class="btn" href="https://www.instagram.com/medo__rami" target="_blank" id="contactIg">Instagram</a>
+          <a class="btn" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" id="contactFb">Facebook</a>
+          <a class="btn" href="mailto:medorami77@gmail.com" id="contactMail">Email</a>
         </div>
       </div>
     </div>
@@ -549,7 +634,54 @@
     </div>
   </div>
 
-  <!-- AUTH MODAL -->
+  <!-- INBOX MODAL -->
+  <div class="modal" id="inboxModal">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="inboxTitle">Inbox</div>
+        <button class="iconBtn" id="inboxClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack" id="inboxList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BONUS / GEMS MODAL -->
+  <div class="modal" id="bonusModal">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="bonusTitle">Bonus (Gems)</div>
+        <button class="iconBtn" id="bonusClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack">
+          <div class="note" id="bonusNote"></div>
+
+          <div class="row">
+            <select class="select" id="convertTier">
+              <option value="10">10% (MG*)</option>
+              <option value="20">20% (MZ*)</option>
+              <option value="30">30% (MK*)</option>
+              <option value="40">40% (MC*)</option>
+              <option value="50">50% (MA*)</option>
+              <option value="60">60% (MB*)</option>
+              <option value="70">70% (ME*)</option>
+              <option value="80">80% (MX*)</option>
+              <option value="90">90% (MR*)</option>
+              <option value="100">100% (MI*)</option>
+            </select>
+            <button class="btn btnRed tight" id="convertBtn" style="flex:0 0 auto">Convert</button>
+          </div>
+
+          <div class="note ok" id="convertOk" style="display:none"></div>
+          <div class="note err" id="convertErr" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTH MODAL (wizard) -->
   <div class="modal" id="authModal">
     <div class="modalBox">
       <div class="modalHeader">
@@ -557,49 +689,100 @@
         <button class="iconBtn" id="authClose">✕</button>
       </div>
       <div class="modalBody">
-        <div class="stack" id="authStep1">
-          <div class="note" id="authNote1">Create account or login.</div>
-          <input class="input" id="firstName" placeholder="First name" />
-          <input class="input" id="lastName" placeholder="Last name" />
-          <input class="input" id="email" type="email" placeholder="Email" />
+        <div class="stack" id="authHome">
+          <button class="btn btnRed" id="openLoginBtn">Login</button>
+          <button class="btn" id="openRegisterBtn">Create Account</button>
+          <div class="note err" id="authErr" style="display:none"></div>
+        </div>
+
+        <div class="stack" id="loginBox" style="display:none">
           <div class="row">
-            <input class="input" id="password" type="password" placeholder="Password" />
-            <button class="btn tight" id="togglePassBtn" style="flex:0 0 auto">👁</button>
+            <input class="input" id="loginEmail" type="email" placeholder="Email" />
           </div>
-          <div class="row">
-            <select class="select" id="gender">
+          <div class="pwWrap">
+            <input class="input" id="loginPass" type="password" placeholder="Password" />
+            <span class="pwEye" data-eye="loginPass">👁</span>
+          </div>
+          <button class="btn btnRed" id="doLoginBtn">Login</button>
+          <button class="btn" id="backAuth1">Back</button>
+          <div class="note err" id="loginErr" style="display:none"></div>
+        </div>
+
+        <div class="stack" id="regBox" style="display:none">
+          <!-- step 1: names -->
+          <div class="stack" id="regStep1">
+            <div class="row">
+              <input class="input" id="regFirst" placeholder="First name" />
+              <input class="input" id="regLast" placeholder="Last name" />
+            </div>
+            <button class="btn btnRed" id="regNext1">Next</button>
+            <button class="btn" id="backAuth2">Back</button>
+            <div class="note err" id="regErr1" style="display:none"></div>
+          </div>
+
+          <!-- step 2: email + pass -->
+          <div class="stack" id="regStep2" style="display:none">
+            <input class="input" id="regEmail" type="email" placeholder="Email" />
+            <div class="pwWrap">
+              <input class="input" id="regPass" type="password" placeholder="Password" />
+              <span class="pwEye" data-eye="regPass">👁</span>
+            </div>
+            <button class="btn btnRed" id="regNext2">Next</button>
+            <button class="btn" id="regBack2">Back</button>
+            <div class="note err" id="regErr2" style="display:none"></div>
+          </div>
+
+          <!-- step 3: gender + age -->
+          <div class="stack" id="regStep3" style="display:none">
+            <select class="select" id="regGender">
               <option value="">Gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
-            <input class="input" id="age" type="number" min="1" max="99" placeholder="Age" />
+            <input class="input" id="regAge" type="number" min="8" max="80" placeholder="Age" />
+            <button class="btn btnRed" id="regNext3">Next</button>
+            <button class="btn" id="regBack3">Back</button>
+            <div class="note err" id="regErr3" style="display:none"></div>
           </div>
 
-          <div class="note" id="avatarHint">Upload profile image (optional)</div>
-          <input class="input" id="avatar" type="file" accept="image/*" />
-
-          <div class="row">
-            <button class="btn btnRed" id="createBtn">Create</button>
-            <button class="btn" id="loginBtn">Login</button>
+          <!-- step 4: avatar -->
+          <div class="stack" id="regStep4" style="display:none">
+            <div class="note" id="avatarNote">Upload profile picture (optional)</div>
+            <input class="input" id="regAvatar" type="file" accept="image/*" />
+            <button class="btn btnRed" id="regFinish">Save</button>
+            <button class="btn" id="regBack4">Back</button>
+            <div class="note err" id="regErr4" style="display:none"></div>
           </div>
-          <div class="note err" id="authErr" style="display:none"></div>
-          <div class="note ok" id="authOk" style="display:none"></div>
         </div>
 
-        <div class="stack" id="authStep2" style="display:none">
-          <div class="note ok" id="profileNote"></div>
-          <div class="row">
-            <input class="input" id="editName" placeholder="Display name" />
-            <button class="btn btnBlue tight" id="saveNameBtn" style="flex:0 0 auto">Save</button>
-          </div>
+        <!-- profile modal inside -->
+        <div class="stack" id="profileBox" style="display:none">
+          <div class="note ok" id="profileHello"></div>
 
           <div class="row">
-            <input class="input" id="newPass" type="password" placeholder="New password" />
-            <button class="btn btnBlue tight" id="changePassBtn" style="flex:0 0 auto">Change</button>
+            <input class="input" id="profileName" placeholder="Display name" />
+            <input class="input" id="profileAge" type="number" min="8" max="80" placeholder="Age" />
+          </div>
+          <div class="row">
+            <select class="select" id="profileGender">
+              <option value="">Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            <input class="input" id="profileAvatar" type="file" accept="image/*" />
           </div>
 
-          <button class="btn btnRed" id="logoutBtn2">Logout</button>
+          <div class="pwWrap">
+            <input class="input" id="profileNewPass" type="password" placeholder="New password" />
+            <span class="pwEye" data-eye="profileNewPass">👁</span>
+          </div>
+
+          <button class="btn btnRed" id="saveProfileBtn">Save</button>
+          <button class="btn" id="closeProfileBtn">Close</button>
+          <div class="note err" id="profileErr" style="display:none"></div>
+          <div class="note ok" id="profileOk" style="display:none"></div>
         </div>
+
       </div>
     </div>
   </div>
@@ -613,15 +796,20 @@
       </div>
       <div class="modalBody">
         <div class="stack">
-          <div class="thumb" style="height:220px;border-radius:14px;overflow:hidden" id="detailsThumb"></div>
-          <h3 class="name" id="detailsName" style="font-size:16px"></h3>
-          <p class="meta" id="detailsDesc"></p>
-          <div class="priceRow">
-            <p class="price" id="detailsPrice"></p>
-            <div class="row" style="gap:8px;flex-wrap:nowrap">
-              <button class="btn btnBlue tight" id="detailsAddCart" style="flex:0 0 auto">Add to cart</button>
-              <button class="btn btnRed tight" id="detailsBuyNow" style="flex:0 0 auto">Buy</button>
+          <div class="galleryBig" id="bigPreview"></div>
+          <div class="galleryRow" id="thumbRow"></div>
+
+          <div class="row">
+            <div>
+              <div style="font-weight:900" id="detailsName"></div>
+              <div style="color:var(--muted);font-weight:800;font-size:12px" id="detailsDesc"></div>
             </div>
+            <div class="note ok" style="text-align:center" id="detailsPrice"></div>
+          </div>
+
+          <div class="row">
+            <button class="btn btnBlue" id="detailsAddCart">🛒 Add to Cart</button>
+            <button class="btn btnRed" id="detailsBuy">Buy</button>
           </div>
         </div>
       </div>
@@ -637,18 +825,16 @@
       </div>
       <div class="modalBody">
         <div class="stack" id="cartList"></div>
-
-        <div class="totalBar" id="totalBar" style="display:none">
-          <span id="totalText">Total</span>
-          <strong id="totalValue">0</strong>
+        <div class="totalBar" id="cartTotalBar">
+          <span id="cartTotalText">Total</span>
+          <strong id="cartTotalValue">0</strong>
         </div>
-
-        <button class="btn btnRed" id="checkoutBtn" style="display:none">Checkout</button>
+        <button class="btn btnRed" id="cartCheckoutBtn">Checkout</button>
       </div>
     </div>
   </div>
 
-  <!-- CHECKOUT MODAL (coupon then payment) -->
+  <!-- CHECKOUT MODAL (2 steps) -->
   <div class="modal" id="checkoutModal">
     <div class="modalBox">
       <div class="modalHeader">
@@ -656,80 +842,80 @@
         <button class="iconBtn" id="checkoutClose">✕</button>
       </div>
       <div class="modalBody">
-        <div class="stack" id="checkoutStepA">
-          <div class="note" id="checkoutInfo"></div>
+        <div class="stack" id="checkoutStep1">
+          <div class="note" id="checkoutSummary"></div>
+
           <div class="row">
-            <input class="input" id="couponInput" placeholder="Coupon code (optional)" />
+            <input class="input" id="couponInput" placeholder="Coupon code" />
             <button class="btn btnBlue tight" id="applyCouponBtn" style="flex:0 0 auto">Apply</button>
           </div>
+
           <div class="note ok" id="couponOk" style="display:none"></div>
           <div class="note err" id="couponErr" style="display:none"></div>
-          <button class="btn btnRed" id="confirmToPayBtn">Confirm</button>
+
+          <button class="btn btnRed" id="checkoutConfirmBtn">Confirm</button>
         </div>
 
-        <div class="stack" id="checkoutStepB" style="display:none">
-          <div class="note" id="payNote"></div>
-          <button class="btn" id="payVod">Vodafone Cash</button>
-          <button class="btn" id="payEt">Etisalat Cash</button>
-          <button class="btn" id="payWe">WE Pay</button>
-          <button class="btn" id="payOr">Orange Cash</button>
-          <button class="btn" id="payVisa">Visa</button>
-          <button class="btn" id="payInsta">InstaPay</button>
-          <button class="btn" id="payBill">Bill Pay</button>
-          <button class="btn" id="payTelda">Telda</button>
+        <div class="stack" id="checkoutStep2" style="display:none">
+          <div class="note ok" id="payTitleNote"></div>
 
-          <div class="note warn" id="payWarn"></div>
-          <button class="btn btnRed" id="finishOrderBtn">Finish</button>
+          <div class="stack">
+            <button class="btn" id="payVodafone">Vodafone Cash</button>
+            <button class="btn" id="payEtisalat">Etisalat Cash</button>
+            <button class="btn" id="payOrange">Orange Cash</button>
+            <button class="btn" id="payWe">WE Pay</button>
+            <button class="btn" id="payInsta">InstaPay</button>
+            <button class="btn" id="payVisa">Visa</button>
+            <button class="btn" id="payBill">Bill Pay</button>
+            <button class="btn" id="payTelda">Telda</button>
+          </div>
+
+          <div class="row">
+            <button class="btn btnRed" id="finishPaymentBtn">I Paid</button>
+            <button class="btn" id="backPaymentBtn">Back</button>
+          </div>
+
+          <div class="note err" id="payErr" style="display:none"></div>
         </div>
+
       </div>
     </div>
   </div>
 
   <script>
-    /* =========================
-       i18n (Arabic/English)
-       ========================= */
-    const isArabic = (navigator.language || "").toLowerCase().startsWith("ar");
-    document.documentElement.lang = isArabic ? "ar" : "en";
-    document.documentElement.dir  = isArabic ? "rtl" : "ltr";
+    /* ===================== helpers ===================== */
+    const $ = (id)=>document.getElementById(id);
+    const nowYear = new Date().getFullYear();
+    $("year").textContent = nowYear;
 
-    const T = {
+    const isArabic = (navigator.language || "").toLowerCase().startsWith("ar");
+    const LANG = isArabic ? "ar" : "en";
+    document.documentElement.lang = LANG;
+    document.documentElement.dir = isArabic ? "rtl" : "ltr";
+
+    const t = {
       ar: {
         search:"🔍 ابحث...",
-        top:"🔥 توب",
-        topHint:"الأكثر طلبًا",
-        offers:"🎁 أوفرز",
-        offersHint:"عروض",
-        games:"🎮 الألعاب",
-        programs:"💻 البرامج",
-        accounts:"🧾 الأكونتات",
-        menu:"القائمة",
-        quick:"اختصارات",
-        contact:"التواصل",
-        reviews:"المراجعات",
-        filter:"فلترة",
-        filterNote:"اختار القسم والترتيب والسعر وبعدين تطبيق.",
-        category:"القسم",
-        sort:"الترتيب",
-        price:"السعر",
-        apply:"تطبيق",
-        all:"الكل",
-        newest:"الأحدث",
-        oldest:"الأقدم",
-        lowHigh:"الأرخص → الأغلى",
-        highLow:"الأغلى → الأرخص",
-        cart:"السلة",
-        total:"الإجمالي",
-        checkout:"إتمام الشراء",
-        account:"تسجيل",
-        details:"تفاصيل",
-        addCart:"إضافة للسلة",
-        buy:"شراء",
-        ramadanTitle:"رمضان كريم",
-        ramadanSub:"عروض وبونصات على الطلبات",
-        reviewPH:"اكتب رأيك...",
-        post:"نشر",
-        authNote:"اعمل حساب أو سجل دخول.",
+        top:"Top", offers:"Offers", games:"Games", programs:"Programs", accounts:"Accounts", recharge:"Recharge",
+        most:"الأكثر طلبًا", deals:"عروض",
+        menu:"القائمة", quick:"روابط سريعة", contact:"التواصل", reviews:"المراجعات", inbox:"الرسائل", bonus:"الجواهر",
+        filter:"فلترة", filterNote:"اختار القسم والترتيب والسعر وبعدين تطبيق.",
+        category:"القسم", sort:"الترتيب", price:"السعر", apply:"تطبيق",
+        all:"الكل", newest:"الأحدث", oldest:"الأقدم", low:"الأرخص → الأغلى", high:"الأغلى → الأرخص",
+        register:"تسجيل", cart:"السلة", details:"تفاصيل", addCart:"إضافة للسلة", buy:"شراء",
+        ratingNeed:"لازم تسجل دخول علشان تقيّم.",
+        cartTitle:"السلة", total:"الإجمالي", checkout:"شراء",
+        checkoutTitle:"شراء", confirm:"تأكيد", paid:"تم الدفع", back:"رجوع",
+        couponOk:"✅ تم تطبيق الخصم.",
+        couponBad:"❌ الكود غير صحيح أو مستخدم قبل كده.",
+        needLogin:"لازم تسجل دخول الأول.",
+        inboxEmpty:"مفيش رسائل دلوقتي.",
+        bonusNote:(g)=>`💎 جواهرك الحالية: ${g} — تقدر تحولهم لكوبون خصم.`,
+        converted:(code)=>`✅ اتعمل كوبون: ${code}`,
+        noCodes:"❌ مفيش أكواد متاحة للدرجة دي دلوقتي.",
+        authTitle:"الحساب",
+        login:"تسجيل دخول",
+        create:"إنشاء حساب",
         first:"الاسم الأول",
         last:"الاسم الثاني",
         email:"البريد",
@@ -738,67 +924,44 @@
         male:"ذكر",
         female:"أنثى",
         age:"العمر",
-        upload:"ارفع صورة (اختياري)",
-        create:"إنشاء",
-        login:"دخول",
-        saved:"تم بنجاح",
-        wrong:"بيانات غير صحيحة",
-        exists:"البريد ده مسجل قبل كده",
-        notFound:"الحساب غير موجود",
-        profile:"حسابك",
-        displayName:"اسم العرض",
+        next:"التالي",
         save:"حفظ",
-        newPass:"كلمة سر جديدة",
-        change:"تغيير",
+        editProfile:"تعديل الحساب",
         logout:"تسجيل خروج",
-        emptyCart:"السلة فاضية",
-        mustLogin:"لازم تسجل الأول",
-        checkoutInfo:(sum)=>`هتشتري منتجات بإجمالي: ${sum} جنيه`,
-        couponPH:"كود خصم (اختياري)",
-        applyC:"تفعيل",
-        confirm:"تأكيد",
-        payNote:"اختار طريقة الدفع:",
-        payWarn:"ملاحظة: الدفع بيتم خارج الموقع. بعد ما تدفع اضغط Finish.",
-        finish:"Finish",
-        okCoupon:(p)=>`تم تطبيق خصم ${p}%`,
-        badCoupon:"الكود غير صحيح أو مستخدم قبل كده"
+        saveOk:"✅ تم الحفظ.",
+        saveErr:"❌ راجع البيانات.",
+        payMethodsTitle:(amount)=>`المبلغ النهائي: ${amount} جنيه — اختار طريقة الدفع`,
+        payNeedConfirm:"❌ اضغط Confirm الأول.",
+        detailsTitle:"تفاصيل المنتج",
+        rechargeNames:{
+          robux:"Robux",
+          freefire:"Free Fire Diamonds",
+          pubguc:"PUBG UC",
+          efootball:"eFootball Coins"
+        }
       },
       en: {
         search:"🔍 Search...",
-        top:"🔥 Top",
-        topHint:"Most wanted",
-        offers:"🎁 Offers",
-        offersHint:"Deals",
-        games:"🎮 Games",
-        programs:"💻 Programs",
-        accounts:"🧾 Accounts",
-        menu:"Menu",
-        quick:"Quick",
-        contact:"Contact",
-        reviews:"Reviews",
-        filter:"Filter",
-        filterNote:"Choose category, sort, and price then apply.",
-        category:"Category",
-        sort:"Sort",
-        price:"Price",
-        apply:"Apply",
-        all:"All",
-        newest:"Newest",
-        oldest:"Oldest",
-        lowHigh:"Low → High",
-        highLow:"High → Low",
-        cart:"Cart",
-        total:"Total",
-        checkout:"Checkout",
-        account:"Login",
-        details:"Details",
-        addCart:"Add to cart",
-        buy:"Buy",
-        ramadanTitle:"Ramadan Kareem",
-        ramadanSub:"Offers & bonuses on orders",
-        reviewPH:"Write your review...",
-        post:"Post",
-        authNote:"Create account or login.",
+        top:"Top", offers:"Offers", games:"Games", programs:"Programs", accounts:"Accounts", recharge:"Recharge",
+        most:"Most wanted", deals:"Deals",
+        menu:"Menu", quick:"Quick", contact:"Contact", reviews:"Reviews", inbox:"Inbox", bonus:"Gems",
+        filter:"Filter", filterNote:"Choose category, sort, and price then apply.",
+        category:"Category", sort:"Sort", price:"Price", apply:"Apply",
+        all:"All", newest:"Newest", oldest:"Oldest", low:"Low → High", high:"High → Low",
+        register:"Sign in", cart:"Cart", details:"Details", addCart:"Add to Cart", buy:"Buy",
+        ratingNeed:"Please login to rate.",
+        cartTitle:"Cart", total:"Total", checkout:"Checkout",
+        checkoutTitle:"Checkout", confirm:"Confirm", paid:"I Paid", back:"Back",
+        couponOk:"✅ Discount applied.",
+        couponBad:"❌ Invalid or already used coupon.",
+        needLogin:"Please login first.",
+        inboxEmpty:"No messages yet.",
+        bonusNote:(g)=>`💎 Your gems: ${g} — Convert to a discount coupon.`,
+        converted:(code)=>`✅ Coupon created: ${code}`,
+        noCodes:"❌ No available codes for this tier.",
+        authTitle:"Account",
+        login:"Login",
+        create:"Create Account",
         first:"First name",
         last:"Last name",
         email:"Email",
@@ -807,945 +970,1432 @@
         male:"Male",
         female:"Female",
         age:"Age",
-        upload:"Upload image (optional)",
-        create:"Create",
-        login:"Login",
-        saved:"Saved successfully",
-        wrong:"Wrong credentials",
-        exists:"Email already exists",
-        notFound:"Account not found",
-        profile:"Your account",
-        displayName:"Display name",
+        next:"Next",
         save:"Save",
-        newPass:"New password",
-        change:"Change",
+        editProfile:"Edit profile",
         logout:"Logout",
-        emptyCart:"Cart is empty",
-        mustLogin:"Please login first",
-        checkoutInfo:(sum)=>`Your total: ${sum} EGP`,
-        couponPH:"Coupon code (optional)",
-        applyC:"Apply",
-        confirm:"Confirm",
-        payNote:"Choose payment method:",
-        payWarn:"Note: Payment is external. After paying, press Finish.",
-        finish:"Finish",
-        okCoupon:(p)=>`Discount applied: ${p}%`,
-        badCoupon:"Invalid or already used coupon"
+        saveOk:"✅ Saved.",
+        saveErr:"❌ Check your data.",
+        payMethodsTitle:(amount)=>`Final total: ${amount} EGP — Choose payment method`,
+        payNeedConfirm:"❌ Please confirm first.",
+        detailsTitle:"Product Details",
+        rechargeNames:{
+          robux:"Robux",
+          freefire:"Free Fire Diamonds",
+          pubguc:"PUBG UC",
+          efootball:"eFootball Coins"
+        }
       }
-    };
-    const tr = isArabic ? T.ar : T.en;
+    }[LANG];
 
-    /* =========================
-       Helpers / Storage
-       ========================= */
-    const $ = (id)=>document.getElementById(id);
-    const LS = {
-      get(k, d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d; }catch(e){ return d; } },
-      set(k, v){ localStorage.setItem(k, JSON.stringify(v)); }
+    // apply language text
+    $("search").placeholder = t.search;
+    $("titleTop").firstChild.textContent = `🔥 ${t.top} `;
+    $("hintTop").textContent = t.most;
+    $("titleOffers").firstChild.textContent = `🎁 ${t.offers} `;
+    $("hintOffers").textContent = t.deals;
+    $("titleGames").textContent = `🎮 ${t.games}`;
+    $("titlePrograms").textContent = `💻 ${t.programs}`;
+    $("titleAccounts").textContent = `🧾 ${t.accounts}`;
+    $("titleRecharge").textContent = `⚡ ${t.recharge}`;
+
+    $("menuTitle").textContent = t.menu;
+    $("quickLabel").textContent = t.quick;
+    $("mTop").textContent = t.top;
+    $("mOffers").textContent = t.offers;
+    $("mGames").textContent = t.games;
+    $("mPrograms").textContent = t.programs;
+    $("mAccounts").textContent = t.accounts;
+    $("mRecharge").textContent = t.recharge;
+    $("mContact").textContent = t.contact;
+    $("mReviews").textContent = t.reviews;
+    $("mInbox").textContent = t.inbox;
+    $("mBonus").textContent = t.bonus;
+
+    $("filterTitle").textContent = t.filter;
+    $("filterNote").textContent = t.filterNote;
+    $("filterCatLabel").textContent = t.category;
+    $("filterSortLabel").textContent = t.sort;
+    $("filterPriceLabel").textContent = t.price;
+    $("applyFilterBtn").textContent = t.apply;
+
+    // filter options
+    const cat = $("filterCategory");
+    cat.options[0].textContent = t.all;
+    cat.options[1].textContent = t.top;
+    cat.options[2].textContent = t.offers;
+    cat.options[3].textContent = t.games;
+    cat.options[4].textContent = t.programs;
+    cat.options[5].textContent = t.accounts;
+    cat.options[6].textContent = t.recharge;
+
+    const sort = $("filterSort");
+    sort.options[0].textContent = t.newest;
+    sort.options[1].textContent = t.oldest;
+    sort.options[2].textContent = t.low;
+    sort.options[3].textContent = t.high;
+
+    $("contactTitle").textContent = t.contact;
+    $("reviewsTitle").textContent = t.reviews;
+    $("inboxTitle").textContent = t.inbox;
+    $("bonusTitle").textContent = t.bonus;
+
+    $("cartTitle").textContent = t.cartTitle;
+    $("cartTotalText").textContent = t.total;
+    $("cartCheckoutBtn").textContent = t.checkout;
+
+    $("checkoutTitle").textContent = t.checkoutTitle;
+    $("checkoutConfirmBtn").textContent = t.confirm;
+    $("finishPaymentBtn").textContent = t.paid;
+    $("backPaymentBtn").textContent = t.back;
+
+    $("authTitle").textContent = t.authTitle;
+    $("openLoginBtn").textContent = t.login;
+    $("openRegisterBtn").textContent = t.create;
+    $("doLoginBtn").textContent = t.login;
+    $("openRegisterBtn").textContent = t.create;
+
+    // Social labels (keep brand names)
+    $("footerWa").textContent = "WhatsApp";
+    $("footerIg").textContent = "Instagram";
+    $("footerFb").textContent = "Facebook";
+    $("footerMail").textContent = "Email";
+
+    /* ===================== storage ===================== */
+    const KEY = {
+      users:"mgs_users_v1",
+      session:"mgs_session_v1",
+      cart:"mgs_cart_v1",
+      ratings:"mgs_ratings_v1",
+      reviews:"mgs_reviews_v1",
+      inbox:"mgs_inbox_v1",
+      gems:"mgs_gems_v1",
+      usedCoupons:"mgs_usedCoupons_v1"
+    };
+    const load = (k, fallback)=> {
+      try{ const v = JSON.parse(localStorage.getItem(k)); return (v ?? fallback); }
+      catch{ return fallback; }
+    };
+    const save = (k, v)=> localStorage.setItem(k, JSON.stringify(v));
+
+    /* ===================== coupons (hidden, not listed on UI) ===================== */
+    // All codes you provided: MG, MZ, MK, MC, MA, MB, ME, MX, MR, MI from 1..10
+    function buildCodes(prefix){
+      const out=[];
+      for(let i=1;i<=10;i++) out.push(`${prefix}${i}`);
+      return out;
+    }
+    const COUPON_TIERS = {
+      10: buildCodes("MG"),
+      20: buildCodes("MZ"),
+      30: buildCodes("MK"),
+      40: buildCodes("MC"),
+      50: buildCodes("MA"),
+      60: buildCodes("MB"),
+      70: buildCodes("ME"),
+      80: buildCodes("MX"),
+      90: buildCodes("MR"),
+      100: buildCodes("MI"),
     };
 
+    const getUsedCoupons = ()=> new Set(load(KEY.usedCoupons, []));
+    const markCouponUsed = (code)=>{
+      const s = getUsedCoupons(); s.add(code);
+      save(KEY.usedCoupons, Array.from(s));
+    };
+    const isCouponUsed = (code)=> getUsedCoupons().has(code);
+
+    const couponDiscount = (code)=>{
+      const u = code.trim().toUpperCase();
+      for(const [pct, arr] of Object.entries(COUPON_TIERS)){
+        if(arr.includes(u) && !isCouponUsed(u)) return Number(pct);
+      }
+      return 0;
+    };
+
+    /* ===================== products ===================== */
+    // IMPORTANT: 4 each section
+    const PRODUCTS = [
+      // Top (4)
+      {id:"top1", section:"top", name:{ar:"Top Product 1",en:"Top Product 1"}, desc:{ar:"وصف مختصر",en:"Short description"}, price:350, badge:"top", imgs:[]},
+      {id:"top2", section:"top", name:{ar:"Top Product 2",en:"Top Product 2"}, desc:{ar:"وصف مختصر",en:"Short description"}, price:420, badge:"top", imgs:[]},
+      {id:"top3", section:"top", name:{ar:"Top Product 3",en:"Top Product 3"}, desc:{ar:"وصف مختصر",en:"Short description"}, price:280, badge:"top", imgs:[]},
+      {id:"top4", section:"top", name:{ar:"Top Product 4",en:"Top Product 4"}, desc:{ar:"وصف مختصر",en:"Short description"}, price:510, badge:"top", imgs:[]},
+
+      // Offers (4)
+      {id:"off1", section:"offers", name:{ar:"Offer 1",en:"Offer 1"}, desc:{ar:"عرض خاص",en:"Special offer"}, price:199, badge:"offer", imgs:[]},
+      {id:"off2", section:"offers", name:{ar:"Offer 2",en:"Offer 2"}, desc:{ar:"عرض خاص",en:"Special offer"}, price:249, badge:"offer", imgs:[]},
+      {id:"off3", section:"offers", name:{ar:"Offer 3",en:"Offer 3"}, desc:{ar:"عرض خاص",en:"Special offer"}, price:299, badge:"offer", imgs:[]},
+      {id:"off4", section:"offers", name:{ar:"Offer 4",en:"Offer 4"}, desc:{ar:"عرض خاص",en:"Special offer"}, price:179, badge:"offer", imgs:[]},
+
+      // Games (4)
+      {id:"g1", section:"games", name:{ar:"Game 1",en:"Game 1"}, desc:{ar:"وصف اللعبة",en:"Game description"}, price:600, badge:null, imgs:[]},
+      {id:"g2", section:"games", name:{ar:"Game 2",en:"Game 2"}, desc:{ar:"وصف اللعبة",en:"Game description"}, price:750, badge:null, imgs:[]},
+      {id:"g3", section:"games", name:{ar:"Game 3",en:"Game 3"}, desc:{ar:"وصف اللعبة",en:"Game description"}, price:500, badge:null, imgs:[]},
+      {id:"g4", section:"games", name:{ar:"Game 4",en:"Game 4"}, desc:{ar:"وصف اللعبة",en:"Game description"}, price:820, badge:null, imgs:[]},
+
+      // Programs (4)
+      {id:"p1", section:"programs", name:{ar:"Program 1",en:"Program 1"}, desc:{ar:"وصف البرنامج",en:"Program description"}, price:300, badge:null, imgs:[]},
+      {id:"p2", section:"programs", name:{ar:"Program 2",en:"Program 2"}, desc:{ar:"وصف البرنامج",en:"Program description"}, price:450, badge:null, imgs:[]},
+      {id:"p3", section:"programs", name:{ar:"Program 3",en:"Program 3"}, desc:{ar:"وصف البرنامج",en:"Program description"}, price:280, badge:null, imgs:[]},
+      {id:"p4", section:"programs", name:{ar:"Program 4",en:"Program 4"}, desc:{ar:"وصف البرنامج",en:"Program description"}, price:520, badge:null, imgs:[]},
+
+      // Accounts (4) — (بدون PlayStation/Epic/Steam زي ما كنت بتقول قبل)
+      {id:"a1", section:"accounts", name:{ar:"PUBG Account",en:"PUBG Account"}, desc:{ar:"تفاصيل الأكاونت في الديتيلز",en:"Account details in details view"}, price:1200, badge:null, imgs:[]},
+      {id:"a2", section:"accounts", name:{ar:"Free Fire Account",en:"Free Fire Account"}, desc:{ar:"تفاصيل الأكاونت في الديتيلز",en:"Account details in details view"}, price:800, badge:null, imgs:[]},
+      {id:"a3", section:"accounts", name:{ar:"Roblox Account",en:"Roblox Account"}, desc:{ar:"تفاصيل الأكاونت في الديتيلز",en:"Account details in details view"}, price:650, badge:null, imgs:[]},
+      {id:"a4", section:"accounts", name:{ar:"eFootball Account",en:"eFootball Account"}, desc:{ar:"تفاصيل الأكاونت في الديتيلز",en:"Account details in details view"}, price:900, badge:null, imgs:[]},
+
+      // Recharge (4)
+      {id:"r1", section:"recharge", name:{ar:t.rechargeNames.robux,en:t.rechargeNames.robux}, desc:{ar:"شحن عملة اللعبة",en:"Recharge currency"}, price:150, badge:null, imgs:[]},
+      {id:"r2", section:"recharge", name:{ar:t.rechargeNames.freefire,en:t.rechargeNames.freefire}, desc:{ar:"شحن جواهر",en:"Recharge diamonds"}, price:200, badge:null, imgs:[]},
+      {id:"r3", section:"recharge", name:{ar:t.rechargeNames.pubguc,en:t.rechargeNames.pubguc}, desc:{ar:"شحن UC",en:"Recharge UC"}, price:250, badge:null, imgs:[]},
+      {id:"r4", section:"recharge", name:{ar:t.rechargeNames.efootball,en:t.rechargeNames.efootball}, desc:{ar:"شحن كوينز",en:"Recharge coins"}, price:180, badge:null, imgs:[]},
+    ];
+
+    // default images placeholders (5)
+    function defaultImgs(id){
+      // no external links: create simple colored SVG data URIs
+      const mk = (label, c1, c2)=>{
+        const svg = encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" width="900" height="600">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="${c1}"/>
+                <stop offset="1" stop-color="${c2}"/>
+              </linearGradient>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#g)"/>
+            <circle cx="150" cy="140" r="120" fill="rgba(255,255,255,.10)"/>
+            <circle cx="760" cy="90" r="140" fill="rgba(255,255,255,.08)"/>
+            <circle cx="640" cy="520" r="180" fill="rgba(255,255,255,.06)"/>
+            <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle"
+              font-family="Segoe UI, Arial" font-size="54" font-weight="800" fill="rgba(255,255,255,.92)">${label}</text>
+            <text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle"
+              font-family="Segoe UI, Arial" font-size="22" font-weight="700" fill="rgba(255,255,255,.75)">${id}</text>
+          </svg>
+        `);
+        return `data:image/svg+xml;charset=utf-8,${svg}`;
+      };
+
+      return [
+        mk("MAIN", "#0ea5e9", "#e11d48"),
+        mk("VIEW 2", "#111827", "#0ea5e9"),
+        mk("VIEW 3", "#e11d48", "#111827"),
+        mk("VIEW 4", "#22c55e", "#0ea5e9"),
+        mk("VIEW 5", "#f59e0b", "#111827"),
+      ];
+    }
+    PRODUCTS.forEach(p => p.imgs = defaultImgs(p.id));
+
+    /* ===================== session & users ===================== */
+    let users = load(KEY.users, []); // {email, passHash, profile:{first,last,display,gender,age,avatarData}}
+    let session = load(KEY.session, null); // {email}
+    const hash = (s)=> btoa(unescape(encodeURIComponent(s))).slice(0, 64);
+
+    const getUser = (email)=> users.find(u=>u.email.toLowerCase()===email.toLowerCase());
+    const currentUser = ()=> session ? getUser(session.email) : null;
+
+    function setSession(email){
+      session = {email};
+      save(KEY.session, session);
+    }
+    function clearSession(){
+      session = null;
+      save(KEY.session, null);
+    }
+
+    /* ===================== inbox + gems ===================== */
+    function inboxAll(){
+      return load(KEY.inbox, []); // {toEmail|null, text, ts, read}
+    }
+    function pushInbox(text, toEmail=null){
+      const list = inboxAll();
+      list.unshift({toEmail, text, ts: Date.now(), read:false});
+      save(KEY.inbox, list);
+      renderInboxCount();
+    }
+    function userInbox(){
+      const u = currentUser();
+      const list = inboxAll();
+      if(!u) return [];
+      return list.filter(m => m.toEmail === u.email);
+    }
+    function renderInboxCount(){
+      const u = currentUser();
+      if(!u){ $("inboxCount").textContent = "0"; return; }
+      const unread = userInbox().filter(m=>!m.read).length;
+      $("inboxCount").textContent = String(unread);
+    }
+
+    function gemsAll(){
+      return load(KEY.gems, {}); // {email: number}
+    }
+    function getGems(email){
+      const g = gemsAll();
+      return Number(g[email] || 0);
+    }
+    function setGems(email, val){
+      const g = gemsAll();
+      g[email] = Math.max(0, Math.floor(val));
+      save(KEY.gems, g);
+    }
+    function addGems(email, delta){
+      setGems(email, getGems(email) + delta);
+    }
+    function renderGems(){
+      const u = currentUser();
+      $("gemsCount").textContent = u ? String(getGems(u.email)) : "0";
+      $("bonusNote").textContent = t.bonusNote(u ? getGems(u.email) : 0);
+    }
+
+    /* ===================== ratings ===================== */
+    // ratings: {productId: {sum, count, byUser:{email:stars}}}
+    let ratings = load(KEY.ratings, {});
+    function getRating(pid){
+      const r = ratings[pid] || {sum:0,count:0,byUser:{}};
+      return r;
+    }
+    function setRating(pid, r){
+      ratings[pid] = r;
+      save(KEY.ratings, ratings);
+    }
+    function avgRating(pid){
+      const r = getRating(pid);
+      return r.count ? (r.sum / r.count) : 0;
+    }
+
+    /* ===================== cart ===================== */
+    // cart: {productId: qty}
+    let cart = load(KEY.cart, {});
+    function cartCount(){
+      return Object.values(cart).reduce((a,b)=>a+Number(b||0),0);
+    }
+    function setCart(){
+      save(KEY.cart, cart);
+      $("cartCount").textContent = String(cartCount());
+    }
+    function addToCart(pid, qty=1){
+      cart[pid] = (cart[pid] || 0) + qty;
+      if(cart[pid] <= 0) delete cart[pid];
+      setCart();
+    }
+    function removeFromCart(pid){
+      delete cart[pid];
+      setCart();
+    }
+    function cartTotal(){
+      let total=0;
+      for(const [pid,qty] of Object.entries(cart)){
+        const p = PRODUCTS.find(x=>x.id===pid);
+        if(p) total += p.price * qty;
+      }
+      return total;
+    }
+
+    /* ===================== UI open/close ===================== */
     const overlay = $("overlay");
     const menuDrawer = $("menuDrawer");
     const filterDrawer = $("filterDrawer");
 
     function openOverlay(){ overlay.classList.add("show"); }
     function closeOverlay(){ overlay.classList.remove("show"); }
+
     function closeAll(){
       closeOverlay();
       menuDrawer.classList.remove("show");
       filterDrawer.classList.remove("show");
-      $("contactModal").classList.remove("show");
-      $("reviewsModal").classList.remove("show");
-      $("authModal").classList.remove("show");
-      $("cartModal").classList.remove("show");
-      $("detailsModal").classList.remove("show");
-      $("checkoutModal").classList.remove("show");
+      hideModal("contactModal");
+      hideModal("reviewsModal");
+      hideModal("inboxModal");
+      hideModal("bonusModal");
+      hideModal("authModal");
+      hideModal("detailsModal");
+      hideModal("cartModal");
+      hideModal("checkoutModal");
+      menuDrawer.setAttribute("aria-hidden","true");
+      filterDrawer.setAttribute("aria-hidden","true");
+    }
+    function showDrawer(el){
+      openOverlay();
+      el.classList.add("show");
+      el.setAttribute("aria-hidden","false");
+    }
+    function hideDrawer(el){
+      el.classList.remove("show");
+      el.setAttribute("aria-hidden","true");
+      closeOverlay();
+    }
+
+    function showModal(id){
+      openOverlay();
+      $(id).classList.add("show");
+    }
+    function hideModal(id){
+      $(id).classList.remove("show");
     }
 
     overlay.addEventListener("click", closeAll);
 
-    /* =========================
-       UI Text
-       ========================= */
-    $("year").textContent = new Date().getFullYear();
-    $("search").placeholder = tr.search;
-    $("titleTop").childNodes[0].textContent = tr.top + " ";
-    $("hintTop").textContent = tr.topHint;
-    $("titleOffers").childNodes[0].textContent = tr.offers + " ";
-    $("hintOffers").textContent = tr.offersHint;
-    $("titleGames").textContent = tr.games;
-    $("titlePrograms").textContent = tr.programs;
-    $("titleAccounts").textContent = tr.accounts;
+    /* ===================== render products ===================== */
+    function makeCard(p){
+      const card = document.createElement("div");
+      card.className = "card";
 
-    $("menuTitle").textContent = tr.menu;
-    $("quickTitle").textContent = tr.quick;
-    $("mTop").textContent = tr.top;
-    $("mOffers").textContent = tr.offers;
-    $("mGames").textContent = tr.games;
-    $("mPrograms").textContent = tr.programs;
-    $("mAccounts").textContent = tr.accounts;
-    $("mContact").textContent = tr.contact;
-    $("mReviews").textContent = tr.reviews;
+      const thumb = document.createElement("div");
+      thumb.className = "thumb";
+      thumb.textContent = (p.section==="accounts") ? "ACCOUNT" : (p.section==="programs") ? "APP" : (p.section==="recharge") ? "RECHARGE" : "GAME";
 
-    $("filterTitle").textContent = tr.filter;
-    $("filterNote").textContent = tr.filterNote;
-    $("catTitle").textContent = tr.category;
-    $("sortTitle").textContent = tr.sort;
-    $("priceTitle").textContent = tr.price;
-    $("applyFilterBtn").textContent = tr.apply;
-
-    // Filter options
-    const cat = $("filterCategory");
-    cat.innerHTML = `
-      <option value="all">${tr.all}</option>
-      <option value="top">${tr.top}</option>
-      <option value="offers">${tr.offers}</option>
-      <option value="games">${tr.games}</option>
-      <option value="programs">${tr.programs}</option>
-      <option value="accounts">${tr.accounts}</option>
-    `;
-    const sort = $("filterSort");
-    sort.innerHTML = `
-      <option value="new">${tr.newest}</option>
-      <option value="old">${tr.oldest}</option>
-      <option value="low">${tr.lowHigh}</option>
-      <option value="high">${tr.highLow}</option>
-    `;
-
-    $("cartTitle").textContent = tr.cart;
-    $("totalText").textContent = tr.total;
-    $("checkoutBtn").textContent = tr.checkout;
-    $("authText").textContent = tr.account;
-    $("authTitle").textContent = tr.account;
-    $("detailsTitle").textContent = tr.details;
-    $("checkoutTitle").textContent = tr.checkout;
-
-    $("reviewText").placeholder = tr.reviewPH;
-    $("addReviewBtn").textContent = tr.post;
-
-    $("authNote1").textContent = tr.authNote;
-    $("firstName").placeholder = tr.first;
-    $("lastName").placeholder = tr.last;
-    $("email").placeholder = tr.email;
-    $("password").placeholder = tr.pass;
-    $("gender").innerHTML = `
-      <option value="">${tr.gender}</option>
-      <option value="male">${tr.male}</option>
-      <option value="female">${tr.female}</option>
-    `;
-    $("age").placeholder = tr.age;
-    $("avatarHint").textContent = tr.upload;
-    $("createBtn").textContent = tr.create;
-    $("loginBtn").textContent = tr.login;
-
-    $("editProfileBtn").textContent = isArabic ? "تعديل الحساب" : "Edit profile";
-    $("logoutBtn").textContent = tr.logout;
-    $("logoutBtn2").textContent = tr.logout;
-    $("saveNameBtn").textContent = tr.save;
-    $("changePassBtn").textContent = tr.change;
-    $("editName").placeholder = tr.displayName;
-    $("newPass").placeholder = tr.newPass;
-
-    $("detailsAddCart").textContent = tr.addCart;
-    $("detailsBuyNow").textContent = tr.buy;
-
-    $("couponInput").placeholder = tr.couponPH;
-    $("applyCouponBtn").textContent = tr.applyC;
-    $("confirmToPayBtn").textContent = tr.confirm;
-    $("payNote").textContent = tr.payNote;
-    $("payWarn").textContent = tr.payWarn;
-    $("finishOrderBtn").textContent = tr.finish;
-
-    // Ramadan bar (اختياري)
-    const ramadanBar = $("ramadanBar");
-    ramadanBar.style.display = "flex";
-    $("ramadanTitle").textContent = tr.ramadanTitle;
-    $("ramadanSub").textContent = tr.ramadanSub;
-
-    /* =========================
-       Products (نماذج – انت هتغير الصور/الأسماء)
-       ========================= */
-    const products = [
-      // Top
-      {id:"top1", section:"top", name: isArabic?"باقة ألعاب مميزة":"Featured Games Bundle", desc:isArabic?"أفضل اختيار للمستخدمين":"Top pick for users", price:350, top:true, offer:false, img:""},
-      {id:"top2", section:"top", name: isArabic?"أكونت مميز":"Premium Account", desc:isArabic?"مناسب للمهتمين":"Perfect for gamers", price:500, top:true, offer:false, img:""},
-      {id:"top3", section:"top", name: isArabic?"برنامج احترافي":"Pro Software", desc:isArabic?"نسخة احترافية":"Professional version", price:450, top:true, offer:false, img:""},
-      {id:"top4", section:"top", name: isArabic?"عرض وقت محدود":"Limited Deal", desc:isArabic?"خصم لفترة":"Limited time deal", price:299, top:true, offer:true, img:""},
-
-      // Offers
-      {id:"off1", section:"offers", name:isArabic?"عرض 1":"Offer 1", desc:isArabic?"خصم قوي":"Big discount", price:199, top:false, offer:true, img:""},
-      {id:"off2", section:"offers", name:isArabic?"عرض 2":"Offer 2", desc:isArabic?"سعر ممتاز":"Great price", price:249, top:false, offer:true, img:""},
-      {id:"off3", section:"offers", name:isArabic?"عرض 3":"Offer 3", desc:isArabic?"أوفر جامد":"Hot offer", price:149, top:false, offer:true, img:""},
-      {id:"off4", section:"offers", name:isArabic?"عرض 4":"Offer 4", desc:isArabic?"لفترة محدودة":"Limited time", price:99, top:false, offer:true, img:""},
-
-      // Games
-      {id:"g1", section:"games", name:isArabic?"لعبة 1":"Game 1", desc:isArabic?"وصف قصير":"Short description", price:120, top:false, offer:false, img:""},
-      {id:"g2", section:"games", name:isArabic?"لعبة 2":"Game 2", desc:isArabic?"وصف قصير":"Short description", price:180, top:false, offer:false, img:""},
-      {id:"g3", section:"games", name:isArabic?"لعبة 3":"Game 3", desc:isArabic?"وصف قصير":"Short description", price:210, top:false, offer:false, img:""},
-      {id:"g4", section:"games", name:isArabic?"لعبة 4":"Game 4", desc:isArabic?"وصف قصير":"Short description", price:160, top:false, offer:false, img:""},
-
-      // Programs
-      {id:"p1", section:"programs", name:isArabic?"برنامج 1":"Program 1", desc:isArabic?"وصف قصير":"Short description", price:300, top:false, offer:false, img:""},
-      {id:"p2", section:"programs", name:isArabic?"برنامج 2":"Program 2", desc:isArabic?"وصف قصير":"Short description", price:420, top:false, offer:false, img:""},
-      {id:"p3", section:"programs", name:isArabic?"برنامج 3":"Program 3", desc:isArabic?"وصف قصير":"Short description", price:250, top:false, offer:false, img:""},
-      {id:"p4", section:"programs", name:isArabic?"برنامج 4":"Program 4", desc:isArabic?"وصف قصير":"Short description", price:380, top:false, offer:false, img:""},
-
-      // Accounts
-      {id:"a1", section:"accounts", name:isArabic?"أكونت 1":"Account 1", desc:isArabic?"تفاصيل الأكونت":"Account details", price:600, top:false, offer:false, img:""},
-      {id:"a2", section:"accounts", name:isArabic?"أكونت 2":"Account 2", desc:isArabic?"تفاصيل الأكونت":"Account details", price:750, top:false, offer:false, img:""},
-      {id:"a3", section:"accounts", name:isArabic?"أكونت 3":"Account 3", desc:isArabic?"تفاصيل الأكونت":"Account details", price:900, top:false, offer:false, img:""},
-      {id:"a4", section:"accounts", name:isArabic?"أكونت 4":"Account 4", desc:isArabic?"تفاصيل الأكونت":"Account details", price:500, top:false, offer:false, img:""},
-    ];
-
-    /* =========================
-       Coupons (MG / MZ / MK ... إلخ)
-       One-time per user
-       ========================= */
-    function buildCodes(prefix, percent){
-      const arr = [];
-      for(let i=1;i<=10;i++) arr.push({code:`${prefix}${i}`, percent});
-      return arr;
-    }
-    const couponPool = [
-      ...buildCodes("MG",10),
-      ...buildCodes("MZ",20),
-      ...buildCodes("MK",30),
-      ...buildCodes("MC",40),
-      ...buildCodes("MA",50),
-      ...buildCodes("MB",60),
-      ...buildCodes("ME",70),
-      ...buildCodes("MX",80),
-      ...buildCodes("MR",90),
-      ...buildCodes("MI",100),
-    ];
-
-    /* =========================
-       Render
-       ========================= */
-    function formatPrice(n){ return isArabic ? `${n} جنيه` : `${n} EGP`; }
-
-    function cardHTML(p){
-      const badge = p.top ? `<div class="badge top">${isArabic?"توب":"Top"}</div>`
-                 : p.offer ? `<div class="badge offer">${isArabic?"أوفر":"Offer"}</div>` : "";
-      const img = p.img ? `<img src="${p.img}" alt="">` : `<div style="opacity:.9">${isArabic?"صورة":"IMAGE"}</div>`;
-      return `
-        <div class="card">
-          <div class="thumb">${badge}${img}</div>
-          <div class="content">
-            <p class="name">${p.name}</p>
-            <p class="meta">${p.desc}</p>
-            <div class="priceRow">
-              <p class="price">${formatPrice(p.price)}</p>
-            </div>
-            <div class="actions">
-              <button class="btn btnBlue" data-details="${p.id}">${tr.details}</button>
-              <button class="btn btnRed" data-buy="${p.id}">${tr.buy}</button>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderAll(list){
-      const top = list.filter(x=>x.section==="top");
-      const offers = list.filter(x=>x.section==="offers");
-      const games = list.filter(x=>x.section==="games");
-      const programs = list.filter(x=>x.section==="programs");
-      const accounts = list.filter(x=>x.section==="accounts");
-
-      $("gridTop").innerHTML = top.map(cardHTML).join("");
-      $("gridOffers").innerHTML = offers.map(cardHTML).join("");
-      $("gridGames").innerHTML = games.map(cardHTML).join("");
-      $("gridPrograms").innerHTML = programs.map(cardHTML).join("");
-      $("gridAccounts").innerHTML = accounts.map(cardHTML).join("");
-    }
-
-    /* =========================
-       Search + Filter
-       ========================= */
-    let activeList = [...products];
-    function applyFilters(){
-      const q = $("search").value.trim().toLowerCase();
-      const cat = $("filterCategory").value;
-      const sort = $("filterSort").value;
-      const mode = $("priceMode").value;
-      const price = Number($("priceValue").value || 0);
-
-      let list = [...products];
-
-      if(cat !== "all") list = list.filter(x=>x.section===cat);
-
-      if(q){
-        list = list.filter(x =>
-          (x.name||"").toLowerCase().includes(q) ||
-          (x.desc||"").toLowerCase().includes(q)
-        );
+      if(p.badge==="top"){
+        const b = document.createElement("div");
+        b.className = "badge top";
+        b.textContent = t.top;
+        thumb.appendChild(b);
+      } else if(p.badge==="offer"){
+        const b = document.createElement("div");
+        b.className = "badge offer";
+        b.textContent = t.offers;
+        thumb.appendChild(b);
       }
 
-      if(mode !== "off"){
-        list = list.filter(x=>{
-          if(mode==="eq") return x.price===price;
-          if(mode==="lte") return x.price<=price;
-          if(mode==="gte") return x.price>=price;
-          return true;
+      // Open details on thumb click
+      thumb.addEventListener("click", ()=> openDetails(p.id));
+
+      const content = document.createElement("div");
+      content.className = "content";
+
+      const name = document.createElement("p");
+      name.className = "name";
+      name.textContent = p.name[LANG] || p.name.en;
+
+      const meta = document.createElement("p");
+      meta.className = "meta";
+      meta.textContent = p.desc[LANG] || p.desc.en;
+
+      const priceRow = document.createElement("div");
+      priceRow.className = "priceRow";
+      const price = document.createElement("p");
+      price.className = "price";
+      price.textContent = `${p.price} EGP`;
+      priceRow.appendChild(price);
+
+      // rating UI
+      const ratingRow = document.createElement("div");
+      ratingRow.className = "ratingRow";
+      const stars = document.createElement("div");
+      stars.className = "stars";
+      const metaR = document.createElement("div");
+      metaR.className = "ratingMeta";
+
+      const r = getRating(p.id);
+      const av = avgRating(p.id);
+      metaR.textContent = r.count ? `${av.toFixed(1)} (${r.count})` : `0.0 (0)`;
+
+      // clickable rating (needs login)
+      for(let i=1;i<=5;i++){
+        const s = document.createElement("div");
+        s.className = "starBtn" + (i <= Math.round(av) ? " filled" : "");
+        s.textContent = "★";
+        s.title = "Rate";
+        s.addEventListener("click", (e)=>{
+          e.stopPropagation();
+          const u = currentUser();
+          if(!u){
+            toast(t.ratingNeed, "err");
+            return;
+          }
+          const rr = getRating(p.id);
+          const prev = rr.byUser[u.email] || 0;
+          rr.byUser[u.email] = i;
+
+          // update sum/count properly
+          if(prev === 0){ rr.count += 1; rr.sum += i; }
+          else { rr.sum += (i - prev); }
+
+          setRating(p.id, rr);
+          renderAll(); // refresh rating UI
+          pushInbox(`${u.profile.display || (u.profile.first+" "+u.profile.last)} rated "${p.name.en}" ${i}★`, u.email);
+        });
+        stars.appendChild(s);
+      }
+      ratingRow.appendChild(stars);
+      ratingRow.appendChild(metaR);
+
+      const actions = document.createElement("div");
+      actions.className = "actions";
+
+      const detailsBtn = document.createElement("button");
+      detailsBtn.className = "btn btnBlue";
+      detailsBtn.textContent = t.details;
+      detailsBtn.addEventListener("click", (e)=>{ e.stopPropagation(); openDetails(p.id); });
+
+      const addBtn = document.createElement("button");
+      addBtn.className = "btn";
+      addBtn.textContent = `🛒 ${t.addCart}`;
+      addBtn.addEventListener("click", (e)=>{
+        e.stopPropagation();
+        addToCart(p.id, 1);
+        toast(`${t.addCart}: ${p.name[LANG]}`, "ok");
+      });
+
+      const buyBtn = document.createElement("button");
+      buyBtn.className = "btn btnRed";
+      buyBtn.textContent = t.buy;
+      buyBtn.addEventListener("click", (e)=>{
+        e.stopPropagation();
+        openCheckoutSingle(p.id);
+      });
+
+      actions.appendChild(detailsBtn);
+      actions.appendChild(addBtn);
+      actions.appendChild(buyBtn);
+
+      content.appendChild(name);
+      content.appendChild(meta);
+      content.appendChild(priceRow);
+      content.appendChild(ratingRow);
+      content.appendChild(actions);
+
+      card.appendChild(thumb);
+      card.appendChild(content);
+      return card;
+    }
+
+    function renderSection(section, gridId){
+      const grid = $(gridId);
+      grid.innerHTML = "";
+      const list = filteredProducts().filter(p => p.section===section);
+      list.forEach(p => grid.appendChild(makeCard(p)));
+    }
+
+    /* ===================== filter & search ===================== */
+    let filterState = {cat:"all", sort:"new", priceMode:"off", priceValue:0};
+
+    function filteredProducts(){
+      let list = [...PRODUCTS];
+
+      // search
+      const q = ($("search").value || "").trim().toLowerCase();
+      if(q){
+        list = list.filter(p=>{
+          const n = (p.name[LANG] || p.name.en || "").toLowerCase();
+          const d = (p.desc[LANG] || p.desc.en || "").toLowerCase();
+          return n.includes(q) || d.includes(q);
         });
       }
 
-      if(sort==="new") list.sort((a,b)=> (a.id>b.id?-1:1));
-      if(sort==="old") list.sort((a,b)=> (a.id<b.id?-1:1));
-      if(sort==="low") list.sort((a,b)=> a.price-b.price);
-      if(sort==="high") list.sort((a,b)=> b.price-a.price);
+      // category filter
+      if(filterState.cat !== "all"){
+        list = list.filter(p => p.section === filterState.cat);
+      }
 
-      activeList = list;
-      renderAll(activeList);
-      hookCards();
+      // price filter
+      const pv = Number(filterState.priceValue || 0);
+      if(filterState.priceMode !== "off" && pv >= 0){
+        if(filterState.priceMode === "eq") list = list.filter(p => p.price === pv);
+        if(filterState.priceMode === "lte") list = list.filter(p => p.price <= pv);
+        if(filterState.priceMode === "gte") list = list.filter(p => p.price >= pv);
+      }
+
+      // sort
+      if(filterState.sort === "low") list.sort((a,b)=>a.price-b.price);
+      if(filterState.sort === "high") list.sort((a,b)=>b.price-a.price);
+      if(filterState.sort === "new") list.sort((a,b)=> PRODUCTS.indexOf(a) - PRODUCTS.indexOf(b)); // default order
+      if(filterState.sort === "old") list.sort((a,b)=> PRODUCTS.indexOf(b) - PRODUCTS.indexOf(a));
+
+      return list;
     }
 
-    $("search").addEventListener("input", applyFilters);
+    $("applyFilterBtn").addEventListener("click", ()=>{
+      filterState.cat = $("filterCategory").value;
+      filterState.sort = $("filterSort").value;
+      filterState.priceMode = $("priceMode").value;
+      filterState.priceValue = $("priceValue").value;
+      hideDrawer(filterDrawer);
+      renderAll();
+    });
 
-    /* =========================
-       Auth (local only)
-       ========================= */
-    const DB_KEY = "medo_users_v1";
-    const SES_KEY = "medo_session_v1";
+    $("search").addEventListener("input", ()=> renderAll());
 
-    function getUsers(){ return LS.get(DB_KEY, []); }
-    function setUsers(u){ LS.set(DB_KEY, u); }
-    function getSession(){ return LS.get(SES_KEY, null); }
-    function setSession(s){ LS.set(SES_KEY, s); }
+    /* ===================== details modal ===================== */
+    let activeProductId = null;
 
-    function showAuthMsg(type, msg){
-      const err = $("authErr"), ok = $("authOk");
-      err.style.display="none"; ok.style.display="none";
-      if(type==="err"){ err.textContent = msg; err.style.display="block"; }
-      else { ok.textContent = msg; ok.style.display="block"; }
+    function openDetails(pid){
+      activeProductId = pid;
+      const p = PRODUCTS.find(x=>x.id===pid);
+      if(!p) return;
+
+      $("detailsTitle").textContent = t.detailsTitle;
+      $("detailsName").textContent = p.name[LANG] || p.name.en;
+      $("detailsDesc").textContent = p.desc[LANG] || p.desc.en;
+      $("detailsPrice").textContent = `${p.price} EGP`;
+
+      // gallery
+      const big = $("bigPreview");
+      const row = $("thumbRow");
+      row.innerHTML = "";
+      let currentImg = p.imgs[0];
+
+      const setBig = (src)=>{
+        big.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "preview";
+        big.appendChild(img);
+      };
+      setBig(currentImg);
+
+      p.imgs.slice(0,5).forEach((src, idx)=>{
+        const th = document.createElement("div");
+        th.className = "gThumb" + (idx===0 ? " active":"");
+        const im = document.createElement("img");
+        im.src = src;
+        im.alt = "thumb";
+        th.appendChild(im);
+        th.addEventListener("click", ()=>{
+          currentImg = src;
+          setBig(src);
+          [...row.children].forEach(x=>x.classList.remove("active"));
+          th.classList.add("active");
+        });
+        row.appendChild(th);
+      });
+
+      // actions
+      $("detailsAddCart").onclick = ()=> {
+        addToCart(pid, 1);
+        toast(`${t.addCart}: ${p.name[LANG]}`, "ok");
+      };
+      $("detailsBuy").onclick = ()=> openCheckoutSingle(pid);
+
+      showModal("detailsModal");
+    }
+    $("detailsClose").addEventListener("click", ()=>{ hideModal("detailsModal"); closeOverlay(); });
+
+    /* ===================== cart modal ===================== */
+    function renderCart(){
+      const list = $("cartList");
+      list.innerHTML = "";
+      const entries = Object.entries(cart);
+
+      if(entries.length === 0){
+        const n = document.createElement("div");
+        n.className = "note";
+        n.textContent = (LANG==="ar") ? "السلة فاضية." : "Cart is empty.";
+        list.appendChild(n);
+      }
+
+      for(const [pid,qty] of entries){
+        const p = PRODUCTS.find(x=>x.id===pid);
+        if(!p) continue;
+
+        const item = document.createElement("div");
+        item.className = "cartItem";
+
+        const left = document.createElement("div");
+        left.className = "cartLeft";
+
+        const th = document.createElement("div");
+        th.className = "cartThumb";
+        th.textContent = "IMG";
+
+        const mid = document.createElement("div");
+        const nm = document.createElement("div");
+        nm.className = "cartName";
+        nm.textContent = p.name[LANG] || p.name.en;
+
+        const mt = document.createElement("div");
+        mt.className = "cartMeta";
+        mt.textContent = `${p.price} EGP`;
+
+        const qtyRow = document.createElement("div");
+        qtyRow.className = "qtyRow";
+
+        const minus = document.createElement("button");
+        minus.className = "qtyBtn";
+        minus.textContent = "−";
+        minus.onclick = ()=>{
+          addToCart(pid, -1);
+          renderCart();
+        };
+
+        const qn = document.createElement("div");
+        qn.className = "qtyNum";
+        qn.textContent = String(qty);
+
+        const plus = document.createElement("button");
+        plus.className = "qtyBtn";
+        plus.textContent = "+";
+        plus.onclick = ()=>{
+          addToCart(pid, 1);
+          renderCart();
+        };
+
+        const det = document.createElement("button");
+        det.className = "detailsBtn";
+        det.textContent = t.details;
+        det.onclick = ()=> openDetails(pid);
+
+        const rm = document.createElement("button");
+        rm.className = "removeBtn";
+        rm.textContent = "Remove";
+        rm.onclick = ()=>{
+          removeFromCart(pid);
+          renderCart();
+        };
+
+        qtyRow.appendChild(minus);
+        qtyRow.appendChild(qn);
+        qtyRow.appendChild(plus);
+        qtyRow.appendChild(det);
+        qtyRow.appendChild(rm);
+
+        mid.appendChild(nm);
+        mid.appendChild(mt);
+        mid.appendChild(qtyRow);
+
+        left.appendChild(th);
+        left.appendChild(mid);
+
+        item.appendChild(left);
+        list.appendChild(item);
+      }
+
+      $("cartTotalValue").textContent = `${cartTotal()} EGP`;
+      $("cartCount").textContent = String(cartCount());
     }
 
-    function fileToDataUrl(file){
-      return new Promise((resolve)=>{
-        if(!file) return resolve("");
+    $("cartBtn").addEventListener("click", ()=>{
+      renderCart();
+      showModal("cartModal");
+    });
+    $("cartClose").addEventListener("click", ()=>{ hideModal("cartModal"); closeOverlay(); });
+
+    /* ===================== checkout ===================== */
+    let checkoutMode = {type:"cart", singlePid:null};
+    let appliedCoupon = null; // {code, pct}
+
+    function openCheckoutSingle(pid){
+      const u = currentUser();
+      if(!u){
+        toast(t.needLogin, "err");
+        openAuth();
+        return;
+      }
+      checkoutMode = {type:"single", singlePid:pid};
+      appliedCoupon = null;
+      startCheckout();
+    }
+
+    $("cartCheckoutBtn").addEventListener("click", ()=>{
+      const u = currentUser();
+      if(!u){
+        toast(t.needLogin, "err");
+        openAuth();
+        return;
+      }
+      if(Object.keys(cart).length === 0){
+        toast((LANG==="ar")?"السلة فاضية.":"Cart is empty.", "err");
+        return;
+      }
+      checkoutMode = {type:"cart", singlePid:null};
+      appliedCoupon = null;
+      startCheckout();
+    });
+
+    function startCheckout(){
+      $("couponInput").value = "";
+      $("couponOk").style.display="none";
+      $("couponErr").style.display="none";
+      $("checkoutStep1").style.display="flex";
+      $("checkoutStep2").style.display="none";
+      $("payErr").style.display="none";
+
+      const {itemsText, total} = checkoutSummary();
+      $("checkoutSummary").textContent = itemsText + `\n${(LANG==="ar")?"الإجمالي:":"Total:"} ${total} EGP`;
+
+      showModal("checkoutModal");
+    }
+
+    function checkoutSummary(){
+      let total=0;
+      let lines=[];
+      if(checkoutMode.type==="single"){
+        const p = PRODUCTS.find(x=>x.id===checkoutMode.singlePid);
+        total = p ? p.price : 0;
+        lines.push(`• ${p ? (p.name[LANG]||p.name.en) : ""} — ${total} EGP`);
+      } else {
+        for(const [pid,qty] of Object.entries(cart)){
+          const p = PRODUCTS.find(x=>x.id===pid);
+          if(!p) continue;
+          const lineTotal = p.price * qty;
+          total += lineTotal;
+          lines.push(`• ${p.name[LANG]||p.name.en} x${qty} — ${lineTotal} EGP`);
+        }
+      }
+      const itemsText = lines.join("\n");
+      return {itemsText, total};
+    }
+
+    function finalTotal(){
+      const {total} = checkoutSummary();
+      if(!appliedCoupon) return total;
+      const pct = appliedCoupon.pct;
+      return Math.max(0, Math.round(total * (1 - pct/100)));
+    }
+
+    $("applyCouponBtn").addEventListener("click", ()=>{
+      const code = ($("couponInput").value||"").trim().toUpperCase();
+      if(!code){
+        $("couponErr").textContent = (LANG==="ar")?"اكتب كود الأول.":"Enter a code.";
+        $("couponErr").style.display="block";
+        $("couponOk").style.display="none";
+        return;
+      }
+      const pct = couponDiscount(code);
+      if(pct>0){
+        appliedCoupon = {code, pct};
+        $("couponOk").textContent = `${t.couponOk} (-${pct}%)`;
+        $("couponOk").style.display="block";
+        $("couponErr").style.display="none";
+      } else {
+        appliedCoupon = null;
+        $("couponErr").textContent = t.couponBad;
+        $("couponErr").style.display="block";
+        $("couponOk").style.display="none";
+      }
+    });
+
+    $("checkoutConfirmBtn").addEventListener("click", ()=>{
+      // lock coupon as used on confirm (one-time)
+      if(appliedCoupon){
+        markCouponUsed(appliedCoupon.code);
+      }
+
+      const amount = finalTotal();
+      $("payTitleNote").textContent = t.payMethodsTitle(amount);
+
+      $("checkoutStep1").style.display="none";
+      $("checkoutStep2").style.display="flex";
+    });
+
+    $("backPaymentBtn").addEventListener("click", ()=>{
+      $("checkoutStep2").style.display="none";
+      $("checkoutStep1").style.display="flex";
+    });
+
+    function fakeOpenPay(method){
+      const u = currentUser();
+      if(!u){
+        $("payErr").textContent = t.needLogin;
+        $("payErr").style.display="block";
+        return;
+      }
+      // just show toast
+      toast(method, "ok");
+    }
+    $("payVodafone").onclick = ()=> fakeOpenPay("Vodafone Cash");
+    $("payEtisalat").onclick = ()=> fakeOpenPay("Etisalat Cash");
+    $("payOrange").onclick = ()=> fakeOpenPay("Orange Cash");
+    $("payWe").onclick = ()=> fakeOpenPay("WE Pay");
+    $("payInsta").onclick = ()=> fakeOpenPay("InstaPay");
+    $("payVisa").onclick = ()=> fakeOpenPay("Visa");
+    $("payBill").onclick = ()=> fakeOpenPay("Bill Pay");
+    $("payTelda").onclick = ()=> fakeOpenPay("Telda");
+
+    $("finishPaymentBtn").addEventListener("click", ()=>{
+      const u = currentUser();
+      if(!u){
+        $("payErr").textContent = t.needLogin;
+        $("payErr").style.display="block";
+        return;
+      }
+
+      const amount = finalTotal();
+
+      // award gems (balanced): 1 gem per 100 EGP, min 1
+      const earned = Math.max(1, Math.floor(amount / 100));
+      addGems(u.email, earned);
+      renderGems();
+
+      // inbox message
+      pushInbox((LANG==="ar")
+        ? `✅ تم تسجيل عملية شراء بقيمة ${amount} جنيه. حصلت على 💎 ${earned} جواهر.`
+        : `✅ Purchase recorded: ${amount} EGP. You earned 💎 ${earned} gems.`,
+        u.email
+      );
+
+      // clear cart only if checkout from cart
+      if(checkoutMode.type==="cart"){
+        cart = {};
+        setCart();
+      }
+
+      // close checkout + cart
+      hideModal("checkoutModal");
+      hideModal("cartModal");
+      closeOverlay();
+      renderCart();
+      renderInboxCount();
+      toast((LANG==="ar")?"تم!":"Done!", "ok");
+    });
+
+    $("checkoutClose").addEventListener("click", ()=>{ hideModal("checkoutModal"); closeOverlay(); });
+
+    /* ===================== reviews ===================== */
+    function reviewsAll(){ return load(KEY.reviews, []); } // {text, ts, name}
+    function renderReviews(){
+      const list = $("reviewsList");
+      list.innerHTML = "";
+      const rev = reviewsAll();
+      if(rev.length===0){
+        const n = document.createElement("div");
+        n.className="note";
+        n.textContent = (LANG==="ar")?"مفيش مراجعات لسه.":"No reviews yet.";
+        list.appendChild(n);
+        return;
+      }
+      rev.slice(0,30).forEach(r=>{
+        const div = document.createElement("div");
+        div.className="note";
+        const dt = new Date(r.ts).toLocaleString();
+        div.textContent = `${r.name}: ${r.text} — ${dt}`;
+        list.appendChild(div);
+      });
+    }
+    $("addReviewBtn").addEventListener("click", ()=>{
+      const u = currentUser();
+      if(!u){ toast(t.needLogin, "err"); openAuth(); return; }
+      const txt = ($("reviewText").value||"").trim();
+      if(!txt) return;
+      const rev = reviewsAll();
+      rev.unshift({text:txt, ts:Date.now(), name: u.profile.display || (u.profile.first+" "+u.profile.last)});
+      save(KEY.reviews, rev);
+      $("reviewText").value="";
+      renderReviews();
+      toast((LANG==="ar")?"اتنشر":"Posted", "ok");
+    });
+
+    /* ===================== inbox modal ===================== */
+    function renderInbox(){
+      const u = currentUser();
+      const box = $("inboxList");
+      box.innerHTML = "";
+      if(!u){
+        const n = document.createElement("div");
+        n.className="note err";
+        n.textContent = t.needLogin;
+        box.appendChild(n);
+        return;
+      }
+      const msgs = userInbox();
+      if(msgs.length===0){
+        const n = document.createElement("div");
+        n.className="note";
+        n.textContent = t.inboxEmpty;
+        box.appendChild(n);
+        return;
+      }
+      msgs.forEach(m=>{
+        const div = document.createElement("div");
+        div.className="note";
+        const dt = new Date(m.ts).toLocaleString();
+        div.textContent = `${m.text}\n${dt}`;
+        box.appendChild(div);
+        m.read = true;
+      });
+      // mark read back to storage
+      const all = inboxAll();
+      all.forEach(x=>{
+        if(x.toEmail===u.email) x.read = true;
+      });
+      save(KEY.inbox, all);
+      renderInboxCount();
+    }
+
+    /* ===================== gems convert to REAL coupon ===================== */
+    // Gems cost per tier (balanced)
+    const GEMS_COST = {10:5,20:8,30:12,40:16,50:20,60:26,70:32,80:40,90:55,100:80};
+
+    function allocateCoupon(pct){
+      const arr = COUPON_TIERS[pct] || [];
+      for(const code of arr){
+        if(!isCouponUsed(code)) return code; // available
+      }
+      return null;
+    }
+
+    $("convertBtn").addEventListener("click", ()=>{
+      const u = currentUser();
+      if(!u){ toast(t.needLogin, "err"); openAuth(); return; }
+
+      $("convertOk").style.display="none";
+      $("convertErr").style.display="none";
+
+      const pct = Number($("convertTier").value);
+      const cost = GEMS_COST[pct] || 999999;
+      const have = getGems(u.email);
+
+      if(have < cost){
+        $("convertErr").textContent = (LANG==="ar")
+          ? `❌ جواهرك مش كفاية. المطلوب: ${cost}`
+          : `❌ Not enough gems. Required: ${cost}`;
+        $("convertErr").style.display="block";
+        return;
+      }
+
+      const code = allocateCoupon(pct);
+      if(!code){
+        $("convertErr").textContent = t.noCodes;
+        $("convertErr").style.display="block";
+        return;
+      }
+
+      // mark as used? NO — we give it to user, and it should be usable ONCE when applied at checkout.
+      // To prevent "re-issuing" the same code to another convert, we reserve it by marking it used on issue,
+      // BUT that would block usage. So we reserve by storing it to user's wallet.
+      // We'll store issued coupons under inbox as message and store a wallet list.
+      const walletKey = "mgs_wallet_v1";
+      const walletAll = load(walletKey, {});
+      const list = walletAll[u.email] || [];
+      // prevent duplicates in same wallet
+      if(!list.includes(code)) list.push(code);
+      walletAll[u.email] = list;
+      save(walletKey, walletAll);
+
+      // deduct gems
+      setGems(u.email, have - cost);
+      renderGems();
+
+      // message
+      pushInbox((LANG==="ar")
+        ? `💎 تم التحويل! كوبون خصم ${pct}%: ${code} (مستخدم مرة واحدة)`
+        : `💎 Converted! ${pct}% coupon: ${code} (one-time)`,
+        u.email
+      );
+
+      $("convertOk").textContent = t.converted(code);
+      $("convertOk").style.display="block";
+      toast("✅", "ok");
+    });
+
+    /* ===================== auth ===================== */
+    function openAuth(){
+      showModal("authModal");
+      showAuthHome();
+    }
+    function showAuthHome(){
+      $("authHome").style.display="flex";
+      $("loginBox").style.display="none";
+      $("regBox").style.display="none";
+      $("profileBox").style.display="none";
+      $("authErr").style.display="none";
+    }
+
+    function showLogin(){
+      $("authHome").style.display="none";
+      $("loginBox").style.display="flex";
+      $("regBox").style.display="none";
+      $("profileBox").style.display="none";
+      $("loginErr").style.display="none";
+    }
+
+    function showRegister(){
+      $("authHome").style.display="none";
+      $("loginBox").style.display="none";
+      $("regBox").style.display="flex";
+      $("profileBox").style.display="none";
+      // step1 visible
+      $("regStep1").style.display="flex";
+      $("regStep2").style.display="none";
+      $("regStep3").style.display="none";
+      $("regStep4").style.display="none";
+      $("regErr1").style.display="none";
+      $("regErr2").style.display="none";
+      $("regErr3").style.display="none";
+      $("regErr4").style.display="none";
+    }
+
+    function showProfile(){
+      const u = currentUser();
+      if(!u) return;
+      $("authHome").style.display="none";
+      $("loginBox").style.display="none";
+      $("regBox").style.display="none";
+      $("profileBox").style.display="flex";
+      $("profileErr").style.display="none";
+      $("profileOk").style.display="none";
+
+      $("profileHello").textContent = (LANG==="ar")
+        ? `أهلاً ${u.profile.display || (u.profile.first+" "+u.profile.last)}`
+        : `Hello ${u.profile.display || (u.profile.first+" "+u.profile.last)}`;
+
+      $("profileName").value = u.profile.display || (u.profile.first+" "+u.profile.last);
+      $("profileAge").value = u.profile.age || "";
+      $("profileGender").value = u.profile.gender || "";
+      $("profileNewPass").value = "";
+      $("profileAvatar").value = "";
+    }
+
+    $("authBtn").addEventListener("click", ()=>{
+      const u = currentUser();
+      if(u){
+        showDrawer(menuDrawer); // open menu for logged user quickly
+      } else {
+        openAuth();
+      }
+    });
+    $("authClose").addEventListener("click", ()=>{ hideModal("authModal"); closeOverlay(); });
+
+    $("openLoginBtn").addEventListener("click", showLogin);
+    $("openRegisterBtn").addEventListener("click", showRegister);
+    $("backAuth1").addEventListener("click", showAuthHome);
+    $("backAuth2").addEventListener("click", showAuthHome);
+
+    // eye toggles
+    document.querySelectorAll(".pwEye").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const id = btn.getAttribute("data-eye");
+        const inp = $(id);
+        inp.type = (inp.type === "password") ? "text" : "password";
+      });
+    });
+
+    $("doLoginBtn").addEventListener("click", ()=>{
+      const email = ($("loginEmail").value||"").trim();
+      const pass = ($("loginPass").value||"");
+      const u = getUser(email);
+      if(!u || u.passHash !== hash(pass)){
+        $("loginErr").textContent = (LANG==="ar") ? "بيانات الدخول غلط." : "Invalid login.";
+        $("loginErr").style.display="block";
+        return;
+      }
+      setSession(u.email);
+      hideModal("authModal");
+      closeOverlay();
+      syncAuthUI();
+      pushInbox((LANG==="ar")?"✅ تم تسجيل الدخول.":"✅ Logged in.", u.email);
+    });
+
+    // Register steps
+    $("regNext1").addEventListener("click", ()=>{
+      const first = ($("regFirst").value||"").trim();
+      const last = ($("regLast").value||"").trim();
+      if(!first || !last){
+        $("regErr1").textContent = (LANG==="ar")?"اكتب الاسم الأول والثاني.":"Enter first & last name.";
+        $("regErr1").style.display="block";
+        return;
+      }
+      $("regErr1").style.display="none";
+      $("regStep1").style.display="none";
+      $("regStep2").style.display="flex";
+    });
+    $("regBack2").addEventListener("click", ()=>{
+      $("regStep2").style.display="none";
+      $("regStep1").style.display="flex";
+    });
+
+    $("regNext2").addEventListener("click", ()=>{
+      const email = ($("regEmail").value||"").trim().toLowerCase();
+      const pass = ($("regPass").value||"");
+      if(!email || !email.includes("@") || pass.length < 6){
+        $("regErr2").textContent = (LANG==="ar")?"اكتب بريد صحيح وباسورد 6 حروف+":"Enter valid email and 6+ password.";
+        $("regErr2").style.display="block";
+        return;
+      }
+      if(getUser(email)){
+        $("regErr2").textContent = (LANG==="ar")?"البريد ده مستخدم قبل كده.":"Email already exists.";
+        $("regErr2").style.display="block";
+        return;
+      }
+      $("regErr2").style.display="none";
+      $("regStep2").style.display="none";
+      $("regStep3").style.display="flex";
+    });
+    $("regBack3").addEventListener("click", ()=>{
+      $("regStep3").style.display="none";
+      $("regStep2").style.display="flex";
+    });
+
+    $("regNext3").addEventListener("click", ()=>{
+      const gender = $("regGender").value;
+      const age = Number($("regAge").value||0);
+      if(!gender || age < 8 || age > 80){
+        $("regErr3").textContent = (LANG==="ar")?"اختار النوع واكتب سن صحيح.":"Choose gender and valid age.";
+        $("regErr3").style.display="block";
+        return;
+      }
+      $("regErr3").style.display="none";
+      $("regStep3").style.display="none";
+      $("regStep4").style.display="flex";
+    });
+    $("regBack4").addEventListener("click", ()=>{
+      $("regStep4").style.display="none";
+      $("regStep3").style.display="flex";
+    });
+
+    function fileToDataURL(file){
+      return new Promise((resolve,reject)=>{
         const r = new FileReader();
-        r.onload = ()=>resolve(String(r.result||""));
+        r.onload = ()=> resolve(String(r.result));
+        r.onerror = reject;
         r.readAsDataURL(file);
       });
     }
 
-    async function createAccount(){
-      const fn = $("firstName").value.trim();
-      const ln = $("lastName").value.trim();
-      const email = $("email").value.trim().toLowerCase();
-      const pass = $("password").value;
-      const gender = $("gender").value;
-      const age = Number($("age").value || 0);
+    $("regFinish").addEventListener("click", async ()=>{
+      try{
+        const first = ($("regFirst").value||"").trim();
+        const last = ($("regLast").value||"").trim();
+        const email = ($("regEmail").value||"").trim().toLowerCase();
+        const pass = ($("regPass").value||"");
+        const gender = $("regGender").value;
+        const age = Number($("regAge").value||0);
 
-      if(!fn || !ln || !email || !pass){
-        return showAuthMsg("err", isArabic ? "املأ البيانات المطلوبة" : "Fill required fields");
+        if(!first || !last || !email || !pass || !gender || age<8) throw new Error("bad");
+
+        let avatarData = null;
+        const f = $("regAvatar").files[0];
+        if(f){
+          avatarData = await fileToDataURL(f);
+        }
+
+        const display = `${first} ${last}`;
+        const newUser = {
+          email,
+          passHash: hash(pass),
+          profile: {first,last,display,gender,age,avatarData}
+        };
+        users.push(newUser);
+        save(KEY.users, users);
+        setSession(email);
+
+        // init gems
+        if(getGems(email) === 0) setGems(email, 0);
+
+        hideModal("authModal");
+        closeOverlay();
+        syncAuthUI();
+        pushInbox((LANG==="ar")?"🎉 تم إنشاء الحساب بنجاح.":"🎉 Account created.", email);
+
+      } catch {
+        $("regErr4").textContent = t.saveErr;
+        $("regErr4").style.display="block";
       }
+    });
 
-      const users = getUsers();
-      if(users.some(u=>u.email===email)){
-        return showAuthMsg("err", tr.exists);
-      }
-
-      const avatarData = await fileToDataUrl($("avatar").files[0]);
-
-      const user = {
-        email,
-        pass,              // تنبيه: ده Local فقط
-        firstName: fn,
-        lastName: ln,
-        gender,
-        age,
-        avatar: avatarData,
-        displayName: `${fn} ${ln}`,
-        gems: 0,
-        inbox: [],
-        usedCoupons: []
-      };
-
-      users.push(user);
-      setUsers(users);
-      setSession({email});
-      showAuthMsg("ok", tr.saved);
-      refreshUserUI();
-      openProfileView();
-    }
-
-    function loginAccount(){
-      const email = $("email").value.trim().toLowerCase();
-      const pass = $("password").value;
-      const users = getUsers();
-      const u = users.find(x=>x.email===email && x.pass===pass);
-      if(!u) return showAuthMsg("err", tr.wrong);
-      setSession({email});
-      showAuthMsg("ok", tr.saved);
-      refreshUserUI();
-      openProfileView();
-    }
-
-    function currentUser(){
-      const s = getSession();
-      if(!s?.email) return null;
-      return getUsers().find(u=>u.email===s.email) || null;
-    }
-
-    function updateUser(patch){
-      const s = getSession();
-      if(!s?.email) return;
-      const users = getUsers();
-      const idx = users.findIndex(u=>u.email===s.email);
-      if(idx<0) return;
-      users[idx] = {...users[idx], ...patch};
-      setUsers(users);
-      refreshUserUI();
-    }
-
-    function logout(){
-      setSession(null);
-      refreshUserUI();
-      closeAll();
-    }
-
-    function refreshUserUI(){
+    // profile save
+    $("saveProfileBtn").addEventListener("click", async ()=>{
       const u = currentUser();
+      if(!u) return;
+      $("profileErr").style.display="none";
+      $("profileOk").style.display="none";
 
-      $("drawerUserBox").style.display = u ? "block" : "none";
-      if(u){
-        $("drawerUserNote").textContent = isArabic ? `مرحبًا ${u.displayName}` : `Hi ${u.displayName}`;
+      const display = ($("profileName").value||"").trim();
+      const age = Number($("profileAge").value||0);
+      const gender = $("profileGender").value;
+
+      if(!display || !gender || age<8 || age>80){
+        $("profileErr").textContent = t.saveErr;
+        $("profileErr").style.display="block";
+        return;
       }
 
+      // avatar
+      const f = $("profileAvatar").files[0];
+      if(f){
+        u.profile.avatarData = await fileToDataURL(f);
+      }
+
+      // password change (optional)
+      const np = ($("profileNewPass").value||"");
+      if(np && np.length < 6){
+        $("profileErr").textContent = (LANG==="ar")?"الباسورد لازم 6 حروف+":"Password must be 6+";
+        $("profileErr").style.display="block";
+        return;
+      }
+      if(np){
+        u.passHash = hash(np);
+      }
+
+      u.profile.display = display;
+      u.profile.age = age;
+      u.profile.gender = gender;
+
+      save(KEY.users, users);
+      syncAuthUI();
+      $("profileOk").textContent = t.saveOk;
+      $("profileOk").style.display="block";
+    });
+
+    $("closeProfileBtn").addEventListener("click", ()=>{
+      hideModal("authModal");
+      closeOverlay();
+    });
+
+    /* ===================== menu actions ===================== */
+    $("menuBtn").addEventListener("click", ()=> showDrawer(menuDrawer));
+    $("menuClose").addEventListener("click", ()=> hideDrawer(menuDrawer));
+
+    $("filterBtn").addEventListener("click", ()=> showDrawer(filterDrawer));
+    $("filterClose").addEventListener("click", ()=> hideDrawer(filterDrawer));
+
+    document.querySelectorAll(".linkRow[data-scroll]").forEach(row=>{
+      row.addEventListener("click", ()=>{
+        const id = row.getAttribute("data-scroll");
+        hideDrawer(menuDrawer);
+        const el = $(id);
+        if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+      });
+    });
+
+    $("openContactRow").addEventListener("click", ()=>{
+      hideDrawer(menuDrawer);
+      showModal("contactModal");
+    });
+    $("contactClose").addEventListener("click", ()=>{ hideModal("contactModal"); closeOverlay(); });
+
+    $("openReviewsRow").addEventListener("click", ()=>{
+      hideDrawer(menuDrawer);
+      renderReviews();
+      showModal("reviewsModal");
+    });
+    $("reviewsClose").addEventListener("click", ()=>{ hideModal("reviewsModal"); closeOverlay(); });
+
+    $("openInboxRow").addEventListener("click", ()=>{
+      hideDrawer(menuDrawer);
+      renderInbox();
+      showModal("inboxModal");
+    });
+    $("inboxClose").addEventListener("click", ()=>{ hideModal("inboxModal"); closeOverlay(); });
+
+    $("openBonusRow").addEventListener("click", ()=>{
+      hideDrawer(menuDrawer);
+      const u = currentUser();
+      if(!u){ toast(t.needLogin, "err"); openAuth(); return; }
+      renderGems();
+      $("convertOk").style.display="none";
+      $("convertErr").style.display="none";
+      showModal("bonusModal");
+    });
+    $("bonusClose").addEventListener("click", ()=>{ hideModal("bonusModal"); closeOverlay(); });
+
+    $("inboxBtn").addEventListener("click", ()=>{
+      const u = currentUser();
+      if(!u){ toast(t.needLogin, "err"); openAuth(); return; }
+      renderInbox();
+      showModal("inboxModal");
+    });
+    $("gemsBtn").addEventListener("click", ()=>{
+      const u = currentUser();
+      if(!u){ toast(t.needLogin, "err"); openAuth(); return; }
+      renderGems();
+      $("convertOk").style.display="none";
+      $("convertErr").style.display="none";
+      showModal("bonusModal");
+    });
+
+    // profile in menu
+    $("editProfileBtn").addEventListener("click", ()=>{
+      hideDrawer(menuDrawer);
+      showModal("authModal");
+      showProfile();
+    });
+    $("logoutBtn").addEventListener("click", ()=>{
+      const u = currentUser();
+      if(u) pushInbox((LANG==="ar")?"👋 تم تسجيل الخروج.":"👋 Logged out.", u.email);
+      clearSession();
+      syncAuthUI();
+      hideDrawer(menuDrawer);
+    });
+
+    /* ===================== toast ===================== */
+    let toastTimer=null;
+    function toast(msg, type="ok"){
+      let el = document.getElementById("toastBox");
+      if(!el){
+        el = document.createElement("div");
+        el.id = "toastBox";
+        el.style.position="fixed";
+        el.style.bottom="16px";
+        el.style.left="16px";
+        el.style.right="16px";
+        el.style.zIndex="120";
+        el.style.display="flex";
+        el.style.justifyContent="center";
+        el.style.pointerEvents="none";
+        document.body.appendChild(el);
+      }
+      el.innerHTML = "";
+      const b = document.createElement("div");
+      b.style.pointerEvents="auto";
+      b.style.maxWidth="760px";
+      b.style.width="100%";
+      b.style.borderRadius="14px";
+      b.style.border="1px solid rgba(255,255,255,.12)";
+      b.style.padding="12px 12px";
+      b.style.fontWeight="900";
+      b.style.boxShadow="0 10px 30px rgba(0,0,0,.35)";
+      b.style.background = type==="err" ? "rgba(225,29,72,.22)" : "rgba(34,197,94,.18)";
+      b.style.backdropFilter="blur(10px)";
+      b.textContent = msg;
+      el.appendChild(b);
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=>{ el.innerHTML=""; }, 1800);
+    }
+
+    /* ===================== sync auth UI ===================== */
+    function syncAuthUI(){
+      const u = currentUser();
       if(!u){
+        $("authText").textContent = t.register;
         $("authBtn").style.display="inline-flex";
         $("userChip").style.display="none";
+        $("drawerUserBox").style.display="none";
         $("inboxCount").textContent = "0";
         $("gemsCount").textContent = "0";
-      }else{
-        $("authBtn").style.display="none";
-        $("userChip").style.display="inline-flex";
-        $("userNameText").textContent = u.displayName;
-        if(u.avatar){
-          $("avatarSmall").innerHTML = `<img src="${u.avatar}" alt="">`;
-        }else{
-          $("avatarSmall").textContent = (u.displayName||"U").slice(0,1).toUpperCase();
-        }
-        $("inboxCount").textContent = String((u.inbox||[]).length);
-        $("gemsCount").textContent = String(u.gems||0);
-      }
-    }
-
-    function openProfileView(){
-      const u = currentUser();
-      if(!u) return;
-      $("authStep1").style.display="none";
-      $("authStep2").style.display="flex";
-      $("profileNote").textContent = tr.profile + ": " + u.email;
-      $("editName").value = u.displayName || "";
-    }
-
-    function openAuthForm(){
-      $("authStep1").style.display="flex";
-      $("authStep2").style.display="none";
-      $("authErr").style.display="none";
-      $("authOk").style.display="none";
-    }
-
-    $("togglePassBtn").addEventListener("click", ()=>{
-      const p = $("password");
-      p.type = p.type==="password" ? "text" : "password";
-    });
-
-    $("createBtn").addEventListener("click", createAccount);
-    $("loginBtn").addEventListener("click", loginAccount);
-    $("logoutBtn").addEventListener("click", logout);
-    $("logoutBtn2").addEventListener("click", logout);
-
-    $("saveNameBtn").addEventListener("click", ()=>{
-      const v = $("editName").value.trim();
-      if(!v) return;
-      updateUser({displayName:v});
-      $("profileNote").textContent = tr.saved;
-      setTimeout(()=>openProfileView(), 600);
-    });
-
-    $("changePassBtn").addEventListener("click", ()=>{
-      const np = $("newPass").value;
-      if(!np) return;
-      updateUser({pass:np});
-      $("profileNote").textContent = tr.saved;
-      $("newPass").value="";
-      setTimeout(()=>openProfileView(), 600);
-    });
-
-    /* =========================
-       Cart
-       ========================= */
-    const CART_KEY = "medo_cart_v1";
-    function getCart(){ return LS.get(CART_KEY, []); }
-    function setCart(c){ LS.set(CART_KEY, c); $("cartCount").textContent=String(c.reduce((a,x)=>a+x.qty,0)); }
-    function addToCart(id){
-      const p = products.find(x=>x.id===id);
-      if(!p) return;
-      const c = getCart();
-      const idx = c.findIndex(x=>x.id===id);
-      if(idx>=0) c[idx].qty += 1;
-      else c.push({id, qty:1});
-      setCart(c);
-    }
-    function cartTotal(){
-      const c = getCart();
-      let sum = 0;
-      for(const item of c){
-        const p = products.find(x=>x.id===item.id);
-        if(p) sum += p.price * item.qty;
-      }
-      return sum;
-    }
-
-    function renderCart(){
-      const c = getCart();
-      const list = $("cartList");
-      list.innerHTML = "";
-
-      if(!c.length){
-        list.innerHTML = `<div class="note">${tr.emptyCart}</div>`;
-        $("totalBar").style.display="none";
-        $("checkoutBtn").style.display="none";
         return;
       }
+      $("authBtn").style.display="none";
+      $("userChip").style.display="inline-flex";
+      $("userNameText").textContent = u.profile.display || (u.profile.first+" "+u.profile.last);
+      $("drawerUserBox").style.display="block";
+      $("drawerUserNote").textContent = (LANG==="ar")
+        ? `👤 ${u.profile.display || (u.profile.first+" "+u.profile.last)}`
+        : `👤 ${u.profile.display || (u.profile.first+" "+u.profile.last)}`;
 
-      for(const item of c){
-        const p = products.find(x=>x.id===item.id);
-        if(!p) continue;
-        const img = p.img ? `<img src="${p.img}" alt="">` : `${isArabic?"صورة":"IMG"}`;
-        const el = document.createElement("div");
-        el.className="cartItem";
-        el.innerHTML = `
-          <div class="cartLeft">
-            <div class="cartThumb">${img}</div>
-            <div style="flex:1">
-              <p class="cartName">${p.name}</p>
-              <p class="cartMeta">${formatPrice(p.price)} • ${isArabic?"الكمية":"Qty"}: ${item.qty}</p>
-              <div class="qtyRow">
-                <button class="qtyBtn" data-minus="${p.id}">-</button>
-                <span class="qtyNum">${item.qty}</span>
-                <button class="qtyBtn" data-plus="${p.id}">+</button>
-                <button class="detailsBtn" data-details="${p.id}">${tr.details}</button>
-              </div>
-            </div>
-          </div>
-          <button class="removeBtn" data-remove="${p.id}">${isArabic?"حذف":"Remove"}</button>
-        `;
-        list.appendChild(el);
+      // avatar
+      const av = $("avatarSmall");
+      av.innerHTML="";
+      if(u.profile.avatarData){
+        const img = document.createElement("img");
+        img.src = u.profile.avatarData;
+        av.appendChild(img);
+      } else {
+        av.textContent = (u.profile.display || "U").slice(0,1).toUpperCase();
       }
 
-      $("totalBar").style.display="flex";
-      $("totalValue").textContent = formatPrice(cartTotal());
-      $("checkoutBtn").style.display="inline-flex";
+      renderInboxCount();
+      renderGems();
     }
 
-    function cartHooks(){
-      $("cartList").addEventListener("click", (e)=>{
-        const t = e.target;
-        const id = t.getAttribute?.("data-plus") || t.getAttribute?.("data-minus") || t.getAttribute?.("data-remove") || t.getAttribute?.("data-details");
-        if(!id) return;
-        const c = getCart();
-        const idx = c.findIndex(x=>x.id===id);
-        if(idx<0 && !t.getAttribute("data-details")) return;
-
-        if(t.getAttribute("data-plus")){
-          c[idx].qty += 1;
-          setCart(c);
-          renderCart();
-          return;
-        }
-        if(t.getAttribute("data-minus")){
-          c[idx].qty -= 1;
-          if(c[idx].qty<=0) c.splice(idx,1);
-          setCart(c);
-          renderCart();
-          return;
-        }
-        if(t.getAttribute("data-remove")){
-          c.splice(idx,1);
-          setCart(c);
-          renderCart();
-          return;
-        }
-        if(t.getAttribute("data-details")){
-          openDetails(id);
-          return;
-        }
-      });
+    /* ===================== main render ===================== */
+    function renderAll(){
+      renderSection("top", "gridTop");
+      renderSection("offers", "gridOffers");
+      renderSection("games", "gridGames");
+      renderSection("programs", "gridPrograms");
+      renderSection("accounts", "gridAccounts");
+      renderSection("recharge", "gridRecharge");
+      setCart();
+      syncAuthUI();
     }
 
-    /* =========================
-       Details
-       ========================= */
-    let currentDetailsId = null;
-    function openDetails(id){
-      const p = products.find(x=>x.id===id);
-      if(!p) return;
-      currentDetailsId = id;
+    /* init */
+    setCart();
+    syncAuthUI();
+    renderAll();
 
-      $("detailsName").textContent = p.name;
-      $("detailsDesc").textContent = p.desc;
-      $("detailsPrice").textContent = formatPrice(p.price);
-
-      const box = $("detailsThumb");
-      if(p.img) box.innerHTML = `<img src="${p.img}" alt="" style="width:100%;height:100%;object-fit:cover">`;
-      else box.innerHTML = `<div style="opacity:.9">${isArabic?"صورة كبيرة":"BIG IMAGE"}</div>`;
-
-      openModal("detailsModal");
-    }
-
-    $("detailsAddCart").addEventListener("click", ()=>{
-      if(!currentDetailsId) return;
-      addToCart(currentDetailsId);
-    });
-    $("detailsBuyNow").addEventListener("click", ()=>{
-      if(!currentDetailsId) return;
-      addToCart(currentDetailsId);
-      openCart();
-    });
-
-    /* =========================
-       Reviews
-       ========================= */
-    const REV_KEY = "medo_reviews_v1";
-    function getReviews(){ return LS.get(REV_KEY, []); }
-    function setReviews(r){ LS.set(REV_KEY, r); }
-
-    function renderReviews(){
-      const r = getReviews();
-      const list = $("reviewsList");
-      list.innerHTML = "";
-      r.slice().reverse().forEach(x=>{
-        const div = document.createElement("div");
-        div.className = "note";
-        div.textContent = x;
-        list.appendChild(div);
-      });
-    }
-
-    $("addReviewBtn").addEventListener("click", ()=>{
-      const txt = $("reviewText").value.trim();
-      if(!txt) return;
-      const r = getReviews();
-      const u = currentUser();
-      const name = u ? u.displayName : (isArabic?"زائر":"Guest");
-      r.push(`${name}: ${txt}`);
-      setReviews(r);
-      $("reviewText").value = "";
-      renderReviews();
-    });
-
-    /* =========================
-       Checkout + Coupons + Bonus
-       ========================= */
-    let checkoutDiscountPercent = 0;
-
-    function resetCouponUI(){
-      $("couponOk").style.display="none";
-      $("couponErr").style.display="none";
-      checkoutDiscountPercent = 0;
-    }
-
-    function userHasUsed(code){
-      const u = currentUser();
-      if(!u) return false;
-      return (u.usedCoupons||[]).includes(code);
-    }
-
-    function markUsed(code){
-      const u = currentUser();
-      if(!u) return;
-      const used = new Set(u.usedCoupons||[]);
-      used.add(code);
-      updateUser({usedCoupons:[...used]});
-    }
-
-    function applyCoupon(){
-      resetCouponUI();
-      const code = ($("couponInput").value||"").trim().toUpperCase();
-      if(!code) return;
-
-      const u = currentUser();
-      if(!u){
-        $("couponErr").textContent = tr.mustLogin;
-        $("couponErr").style.display="block";
-        return;
-      }
-      if(userHasUsed(code)){
-        $("couponErr").textContent = tr.badCoupon;
-        $("couponErr").style.display="block";
-        return;
-      }
-
-      const found = couponPool.find(x=>x.code===code);
-      if(!found){
-        $("couponErr").textContent = tr.badCoupon;
-        $("couponErr").style.display="block";
-        return;
-      }
-
-      checkoutDiscountPercent = found.percent;
-      $("couponOk").textContent = tr.okCoupon(found.percent);
-      $("couponOk").style.display="block";
-    }
-
-    $("applyCouponBtn").addEventListener("click", applyCoupon);
-
-    function openCheckout(){
-      const u = currentUser();
-      if(!u){
-        // لو مش مسجل: افتح التسجيل
-        openModal("authModal");
-        openAuthForm();
-        showAuthMsg("err", tr.mustLogin);
-        return;
-      }
-
-      const sum = cartTotal();
-      $("checkoutInfo").textContent = tr.checkoutInfo(sum);
-      $("couponInput").value = "";
-      resetCouponUI();
-
-      $("checkoutStepA").style.display="flex";
-      $("checkoutStepB").style.display="none";
-      openModal("checkoutModal");
-    }
-
-    $("confirmToPayBtn").addEventListener("click", ()=>{
-      // لو فيه كود واتفعل: اعتبره مستخدم مرة واحدة بعد التأكيد
-      const code = ($("couponInput").value||"").trim().toUpperCase();
-      if(code && checkoutDiscountPercent>0 && !userHasUsed(code)){
-        markUsed(code);
-      }
-
-      $("checkoutStepA").style.display="none";
-      $("checkoutStepB").style.display="flex";
-
-      const sum = cartTotal();
-      const discount = Math.round(sum * (checkoutDiscountPercent/100));
-      const final = Math.max(0, sum - discount);
-      $("payNote").textContent = isArabic
-        ? `الإجمالي: ${formatPrice(sum)} • الخصم: ${formatPrice(discount)} • النهائي: ${formatPrice(final)}`
-        : `Total: ${formatPrice(sum)} • Discount: ${formatPrice(discount)} • Final: ${formatPrice(final)}`;
-    });
-
-    function addInbox(msg){
-      const u = currentUser();
-      if(!u) return;
-      const inbox = Array.isArray(u.inbox) ? u.inbox.slice() : [];
-      inbox.push(msg);
-      updateUser({inbox});
-    }
-
-    function addGemsFromOrder(finalAmount){
-      // نظام بسيط: كل 200 جنيه = 1 جوهرة
-      const u = currentUser();
-      if(!u) return;
-      const add = Math.floor(finalAmount / 200);
-      if(add<=0) return;
-      updateUser({gems:(u.gems||0)+add});
-      addInbox(isArabic ? `تم إضافة ${add} جوهرة لحسابك.` : `Added ${add} gems to your account.`);
-    }
-
-    $("finishOrderBtn").addEventListener("click", ()=>{
-      const sum = cartTotal();
-      const discount = Math.round(sum * (checkoutDiscountPercent/100));
-      const final = Math.max(0, sum - discount);
-
-      // سجل إشعار + بونص
-      addInbox(isArabic ? `تم إنشاء طلب جديد بقيمة ${formatPrice(final)}.` : `New order created: ${formatPrice(final)}.`);
-      addGemsFromOrder(final);
-
-      // فضّي السلة
-      setCart([]);
-      renderCart();
-      closeAll();
-    });
-
-    /* =========================
-       Inbox + Bonus (gems)
-       ========================= */
-    function openInbox(){
-      const u = currentUser();
-      if(!u){
-        openModal("authModal");
-        openAuthForm();
-        showAuthMsg("err", tr.mustLogin);
-        return;
-      }
-      // نعرض الإشعارات في Reviews modal عشان منبوظش التصميم
-      openModal("reviewsModal");
-      $("reviewsTitle").textContent = isArabic ? "الإشعارات" : "Inbox";
-      const list = $("reviewsList");
-      list.innerHTML = "";
-      (u.inbox||[]).slice().reverse().forEach(x=>{
-        const div = document.createElement("div");
-        div.className = "note ok";
-        div.textContent = x;
-        list.appendChild(div);
-      });
-      $("reviewText").style.display="none";
-      $("addReviewBtn").style.display="none";
-    }
-
-    function openReviews(){
-      openModal("reviewsModal");
-      $("reviewsTitle").textContent = tr.reviews;
-      $("reviewText").style.display="block";
-      $("addReviewBtn").style.display="inline-flex";
-      renderReviews();
-    }
-
-    function openBonus(){
-      const u = currentUser();
-      if(!u){
-        openModal("authModal");
-        openAuthForm();
-        showAuthMsg("err", tr.mustLogin);
-        return;
-      }
-      openModal("reviewsModal");
-      $("reviewsTitle").textContent = isArabic ? "الجواهر" : "Gems";
-      $("reviewText").style.display="none";
-      $("addReviewBtn").style.display="none";
-      const list = $("reviewsList");
-      list.innerHTML = `
-        <div class="note ok">${isArabic ? "جواهرك الحالية:" : "Your gems:"} <strong>${u.gems||0}</strong></div>
-        <div class="note">${isArabic ? "هتزيد الجواهر بعد كل طلب." : "Gems increase after orders."}</div>
-      `;
-    }
-
-    /* =========================
-       Open/Close Modals & Drawers
-       ========================= */
-    function openModal(id){
-      closeOverlay();
-      openOverlay();
-      $(id).classList.add("show");
-    }
-
-    function openMenu(){
-      closeOverlay(); openOverlay();
-      filterDrawer.classList.remove("show");
-      menuDrawer.classList.add("show");
-    }
-    function openFilter(){
-      closeOverlay(); openOverlay();
-      menuDrawer.classList.remove("show");
-      filterDrawer.classList.add("show");
-    }
-
-    $("menuBtn").addEventListener("click", openMenu);
-    $("menuClose").addEventListener("click", closeAll);
-
-    $("filterBtn").addEventListener("click", openFilter);
-    $("filterClose").addEventListener("click", closeAll);
-
-    $("contactClose").addEventListener("click", closeAll);
-    $("reviewsClose").addEventListener("click", closeAll);
-    $("authClose").addEventListener("click", closeAll);
-    $("cartClose").addEventListener("click", closeAll);
-    $("detailsClose").addEventListener("click", closeAll);
-    $("checkoutClose").addEventListener("click", closeAll);
-
-    $("openContactRow").addEventListener("click", ()=>openModal("contactModal"));
-    $("openReviewsRow").addEventListener("click", openReviews);
-
-    // Drawer scroll links
-    document.querySelectorAll(".linkRow[data-scroll]").forEach(el=>{
-      el.addEventListener("click", ()=>{
-        const id = el.getAttribute("data-scroll");
-        closeAll();
-        setTimeout(()=>document.getElementById(id).scrollIntoView({behavior:"smooth"}), 80);
-      });
-    });
-
-    // Apply Filter button
-    $("applyFilterBtn").addEventListener("click", ()=>{
-      applyFilters();
-      closeAll();
-    });
-
-    /* =========================
-       Card clicks (Details/Buy)
-       ========================= */
-    function hookCards(){
-      document.body.querySelectorAll("[data-details]").forEach(btn=>{
-        btn.addEventListener("click", ()=>openDetails(btn.getAttribute("data-details")));
-      });
-      document.body.querySelectorAll("[data-buy]").forEach(btn=>{
-        btn.addEventListener("click", ()=>{
-          const id = btn.getAttribute("data-buy");
-          addToCart(id);
-          openCart();
-        });
-      });
-    }
-
-    function openCart(){
-      renderCart();
-      openModal("cartModal");
-    }
-
-    $("cartBtn").addEventListener("click", openCart);
-
-    $("checkoutBtn").addEventListener("click", ()=>{
-      closeAll();
-      openCheckout();
-    });
-
-    $("authBtn").addEventListener("click", ()=>{
-      openModal("authModal");
-      openAuthForm();
-    });
-
-    $("userChip").addEventListener("click", ()=>{
-      openModal("authModal");
-      openProfileView();
-    });
-
-    $("editProfileBtn").addEventListener("click", ()=>{
-      openModal("authModal");
-      openProfileView();
-    });
-
-    $("inboxBtn").addEventListener("click", openInbox);
-    $("gemsBtn").addEventListener("click", openBonus);
-
-    /* Payment buttons (روابط خارجية مثال) */
-    function openPay(url){ window.open(url, "_blank"); }
-    $("payVod").addEventListener("click", ()=>openPay("https://www.vodafone.com.eg/"));
-    $("payEt").addEventListener("click", ()=>openPay("https://www.etisalat.eg/"));
-    $("payWe").addEventListener("click", ()=>openPay("https://te.eg/"));
-    $("payOr").addEventListener("click", ()=>openPay("https://www.orange.eg/"));
-    $("payVisa").addEventListener("click", ()=>openPay("https://www.visa.com/"));
-    $("payInsta").addEventListener("click", ()=>openPay("https://instapay.com.eg/"));
-    $("payBill").addEventListener("click", ()=>openPay("https://www.fawry.com/"));
-    $("payTelda").addEventListener("click", ()=>openPay("https://www.telda.app/"));
-
-    /* =========================
-       Init
-       ========================= */
-    function init(){
-      // Set ramadan bar always visible (خفيف)
-      // Render products
-      renderAll(products);
-      hookCards();
-
-      // Cart count init
-      setCart(getCart());
-
-      // Reviews init
-      renderReviews();
-
-      // Auth UI init
-      refreshUserUI();
-    }
-    init();
   </script>
 </body>
 </html>
