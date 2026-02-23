@@ -1,3 +1,55 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Medo Gaming Store</title>
+
+  <style>
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1230;
+      --panel:#0E183B;
+      --card:#0C1736;
+      --text:#F6F7FF;
+      --muted:#B9C1D9;
+      --border:rgba(255,255,255,.10);
+      --accent:#E11D48;
+      --accent2:#38BDF8;
+      --good:#22C55E;
+      --warn:#F59E0B;
+
+      --radius:14px;
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Segoe UI", Tahoma, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 15% 8%, rgba(56,189,248,.16), transparent 60%),
+        radial-gradient(900px 600px at 85% 0%, rgba(225,29,72,.14), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
+      min-height:100vh;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1500px;margin:0 auto;padding:10px 16px}
+
+    /* Sticky header */
+    .nav{
+      position:sticky;top:0;z-index:60;
+      background:rgba(7,10,18,.72);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px;white-space:nowrap}
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 0 0 4px rgba(56,189,248,.10);
     }
 
     .searchWrap{flex:1;min-width:220px;display:flex;align-items:center;gap:8px}
@@ -24,7 +76,6 @@
     }
     .iconBtn:hover{filter:brightness(1.08)}
     .rightBox{margin-inline-start:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-
     .pillCount{
       min-width:22px;height:22px;border-radius:999px;
       display:inline-flex;align-items:center;justify-content:center;
@@ -48,15 +99,8 @@
       display:inline-flex;align-items:center;justify-content:center;
       overflow:hidden;
       font-size:11px;
-      flex:0 0 auto;
     }
     .avatarSmall img{width:100%;height:100%;object-fit:cover}
-
-    /* Filter button - looks like app */
-    .filterIcon{
-      width:18px;height:18px;display:inline-block;line-height:0;
-    }
-    .filterIcon svg{display:block}
 
     /* Sections */
     .sectionTitle{
@@ -68,27 +112,24 @@
     .sectionHint{color:var(--muted);font-weight:800;font-size:12px}
     .spacer{height:18px}
 
-    /* Grid: desktop = 4, tablet = 3, mobile = 2, small = 1 */
+    /* ✅ GRID: ALWAYS 4 (no media) */
     .grid{
       display:grid;
       grid-template-columns:repeat(4, minmax(0,1fr));
-      gap:16px; /* requested: more space */
+      gap:12px;
     }
-    @media (max-width:1050px){ .grid{grid-template-columns:repeat(3, minmax(0,1fr));} }
-    @media (max-width:760px){ .grid{grid-template-columns:repeat(2, minmax(0,1fr));} }
-    @media (max-width:460px){ .grid{grid-template-columns:1fr;} }
 
     .card{
-      background:var(--card);
+      background:rgba(12,23,54,.72);
       border:1px solid var(--border);
       border-radius:var(--radius);
       overflow:hidden;
       box-shadow: var(--shadow);
       display:flex;flex-direction:column;
-      min-height:246px;
+      min-height:250px;
     }
     .thumb{
-      height:110px;
+      height:96px;
       background:
         radial-gradient(180px 120px at 25% 30%, rgba(56,189,248,.22), transparent 65%),
         radial-gradient(180px 120px at 75% 0%, rgba(225,29,72,.18), transparent 60%),
@@ -97,8 +138,8 @@
       display:flex;align-items:center;justify-content:center;
       font-weight:900;letter-spacing:.7px;font-size:12px;
       position:relative;
-      cursor:pointer;
     }
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
     .badge{
       position:absolute;top:8px;inset-inline-start:8px;
       padding:6px 8px;border-radius:999px;
@@ -110,18 +151,9 @@
     .badge.top{border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.12)}
     .badge.offer{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.12)}
 
-    .content{padding:12px 12px 12px;display:flex;flex-direction:column;gap:8px;flex:1}
+    .content{padding:10px 10px 12px;display:flex;flex-direction:column;gap:8px;flex:1}
     .name{margin:0;font-size:13px;font-weight:900}
     .meta{margin:0;font-size:12px;color:var(--muted);line-height:1.4}
-    .stars{display:flex;gap:2px;align-items:center;font-size:14px;letter-spacing:1px; opacity:.95}
-    .stars button{
-      background:transparent;border:none;color:rgba(246,247,255,.88);
-      cursor:pointer;padding:0;line-height:1;
-      font-size:16px;
-    }
-    .stars .mutedStar{opacity:.45}
-    .ratingInfo{font-size:11px;color:var(--muted);font-weight:800}
-
     .priceRow{display:flex;align-items:center;justify-content:space-between;gap:8px}
     .price{margin:0;font-size:12px;font-weight:900}
 
@@ -136,32 +168,30 @@
       font-weight:900;font-size:12px;
       cursor:pointer;
       display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      min-width:120px;
+      min-width:0; /* مهم عشان مايكبرش الكارت */
     }
     .btn:hover{filter:brightness(1.08)}
     .btnRed{background:linear-gradient(135deg, rgba(225,29,72,1), rgba(225,29,72,.82));border-color:transparent}
     .btnBlue{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.35)}
-    .btnWarn{background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.35)}
 
-    /* Overlay / Drawer / Modal */
+    /* Overlay / drawer / modal */
     .overlay{position:fixed;inset:0;background:rgba(0,0,0,.58);display:none;z-index:80}
     .overlay.show{display:block}
 
+    /* Drawer (hidden by default) */
     .drawer{
       position:fixed;top:0;bottom:0;
       width:min(360px, 92vw);
-      background:rgba(12,23,58,.92);
+      background:rgba(14,24,59,.92);
       backdrop-filter: blur(10px);
       border:1px solid var(--border);
       box-shadow: var(--shadow);
       z-index:90;
-      transition: transform .22s ease;
       display:flex;flex-direction:column;
-      transform: translateX(110%); /* hidden by default */
+      right:-420px; /* hidden */
+      transition:right .22s ease;
     }
-    html[dir="rtl"] .drawer{ right:0; transform: translateX(110%); }
-    html[dir="ltr"] .drawer{ left:auto; right:0; transform: translateX(110%); }
-    .drawer.show{ transform: translateX(0); }
+    .drawer.show{ right:0; }
 
     .drawerHeader{
       padding:12px;border-bottom:1px solid var(--border);
@@ -194,25 +224,19 @@
     .modal{position:fixed;inset:0;display:none;z-index:95;align-items:center;justify-content:center;padding:14px}
     .modal.show{display:flex}
     .modalBox{
-      width:min(820px, 96vw);
-      max-height:min(86vh, 760px);
-      overflow:auto;
-      background:rgba(12,23,58,.94);
+      width:min(760px, 96vw);
+      background:rgba(14,24,59,.94);
       border:1px solid var(--border);
       border-radius:16px;
       box-shadow: var(--shadow);
-      overflow-x:hidden;
+      overflow:hidden;
     }
     .modalHeader{
-      position:sticky;top:0;
-      background:rgba(12,23,58,.94);
       padding:12px;border-bottom:1px solid var(--border);
       display:flex;align-items:center;justify-content:space-between;gap:10px;
-      z-index:2;
     }
     .modalTitle{font-weight:900}
     .modalBody{padding:12px}
-
     .stack{display:flex;flex-direction:column;gap:10px}
     .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
     .row > *{flex:1}
@@ -258,8 +282,8 @@
       flex:0 0 auto;
       display:flex;align-items:center;justify-content:center;
       font-weight:900;font-size:11px;opacity:.9;
-      cursor:pointer;
     }
+    .cartThumb img{width:100%;height:100%;object-fit:cover}
     .cartName{font-weight:900;font-size:13px;margin:0 0 4px}
     .cartMeta{margin:0;color:var(--muted);font-size:12px;font-weight:800}
     .qtyRow{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
@@ -280,7 +304,238 @@
       padding:8px 10px;border-radius:10px;
       white-space:nowrap;
     }
+    .detailsBtn{
+      border:1px solid rgba(56,189,248,.35);
+      background:rgba(56,189,248,.10);
+      color:rgba(246,247,255,.95);
+      font-weight:900;cursor:pointer;
+      padding:8px 10px;border-radius:10px;
+      white-space:nowrap;
+    }
     .totalBar{
       margin-top:10px;
       border:1px solid rgba(56,189,248,.35);
       background:rgba(56,189,248,.10);
+      border-radius:14px;
+      padding:10px;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    /* Footer */
+    .footer{
+      margin-top:18px;border-top:1px solid var(--border);
+      padding:14px 0 22px;
+      color:var(--muted);
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+    }
+    .social{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:9px 10px;border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      font-weight:900;font-size:12px;
+    }
+    .social:hover{filter:brightness(1.08)}
+    .mutedRight{margin-inline-start:auto;font-weight:900;font-size:12px;color:rgba(185,193,217,.9)}
+
+    /* Small helper: Ramadan vibe (خفيف ومش مزعج) */
+    .ramadanBar{
+      margin:10px 0 0;
+      padding:10px 12px;
+      border:1px solid rgba(245,158,11,.28);
+      background:rgba(245,158,11,.08);
+      border-radius:14px;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      font-weight:900;
+    }
+    .ramadanBar .miniTxt{color:rgba(246,247,255,.9);font-weight:800;font-size:12px}
+  </style>
+</head>
+
+<body>
+  <div class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <span class="dot"></span>
+        <span id="brandText">Medo Gaming Store</span>
+      </div>
+
+      <div class="searchWrap">
+        <input id="search" class="search" placeholder="🔍 ابحث..." />
+        <button class="iconBtn" id="filterBtn" title="Filter">
+          <span style="display:inline-block;line-height:0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 6h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M7 12h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M10 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M4 3h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".75"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="rightBox">
+        <button class="iconBtn" id="inboxBtn" title="Inbox">🔔 <span class="pillCount" id="inboxCount">0</span></button>
+        <button class="iconBtn" id="gemsBtn" title="Bonus">💎 <span class="pillCount" id="gemsCount">0</span></button>
+        <button class="iconBtn" id="cartBtn" title="Cart">🛒 <span class="pillCount" id="cartCount">0</span></button>
+
+        <button class="iconBtn" id="authBtn" title="Account">👤 <span id="authText">تسجيل</span></button>
+
+        <div class="userChip" id="userChip" style="display:none" title="User">
+          <span class="avatarSmall" id="avatarSmall">U</span>
+          <span id="userNameText">User</span>
+        </div>
+
+        <button class="iconBtn" id="menuBtn" title="Menu">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="ramadanBar" id="ramadanBar" style="display:none">
+      <div>🌙 <span id="ramadanTitle">رمضان كريم</span></div>
+      <div class="miniTxt" id="ramadanSub">عروض وبونصات على الطلبات</div>
+    </div>
+
+    <div class="sectionTitle" id="titleTop">🔥 Top <span class="sectionHint" id="hintTop">الأكثر طلبًا</span></div>
+    <div id="gridTop" class="grid"></div>
+
+    <div class="spacer"></div>
+
+    <div class="sectionTitle" id="titleOffers">🎁 Offers <span class="sectionHint" id="hintOffers">عروض</span></div>
+    <div id="gridOffers" class="grid"></div>
+
+    <div class="spacer"></div>
+
+    <div class="sectionTitle" id="titleGames">🎮 Games</div>
+    <div id="gridGames" class="grid"></div>
+
+    <div class="spacer"></div>
+
+    <div class="sectionTitle" id="titlePrograms">💻 Programs</div>
+    <div id="gridPrograms" class="grid"></div>
+
+    <div class="spacer"></div>
+
+    <div class="sectionTitle" id="titleAccounts">🧾 Accounts</div>
+    <div id="gridAccounts" class="grid"></div>
+
+    <div class="footer">
+      <a class="social" href="https://wa.me/201006760663" target="_blank" rel="noreferrer" id="socWhats">WhatsApp</a>
+      <a class="social" href="https://www.instagram.com/medo__rami" target="_blank" rel="noreferrer" id="socInst">Instagram</a>
+      <a class="social" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" rel="noreferrer" id="socFb">Facebook</a>
+      <a class="social" href="mailto:medorami77@gmail.com" id="socMail">Email</a>
+      <span class="mutedRight">© <span id="year"></span> Medo Gaming</span>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- MENU DRAWER -->
+  <div class="drawer" id="menuDrawer" aria-hidden="true">
+    <div class="drawerHeader">
+      <div class="drawerTitle" id="menuTitle">Menu</div>
+      <button class="iconBtn" id="menuClose">✕</button>
+    </div>
+    <div class="drawerBody">
+      <div class="drawerSection" id="drawerUserBox" style="display:none">
+        <div class="note ok" id="drawerUserNote"></div>
+        <div class="row">
+          <button class="btn" id="editProfileBtn">Edit profile</button>
+          <button class="btn" id="logoutBtn">Logout</button>
+        </div>
+      </div>
+
+      <div class="drawerSection">
+        <p class="drawerLabel" id="quickTitle">Quick</p>
+        <div class="drawerList">
+          <div class="linkRow" data-scroll="gridTop"><span id="mTop">Top</span><span class="mini">→</span></div>
+          <div class="linkRow" data-scroll="gridOffers"><span id="mOffers">Offers</span><span class="mini">→</span></div>
+          <div class="linkRow" data-scroll="gridGames"><span id="mGames">Games</span><span class="mini">→</span></div>
+          <div class="linkRow" data-scroll="gridPrograms"><span id="mPrograms">Programs</span><span class="mini">→</span></div>
+          <div class="linkRow" data-scroll="gridAccounts"><span id="mAccounts">Accounts</span><span class="mini">→</span></div>
+
+          <div class="linkRow" id="openContactRow"><span id="mContact">Contact</span><span class="mini">→</span></div>
+          <div class="linkRow" id="openReviewsRow"><span id="mReviews">Reviews</span><span class="mini">→</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER DRAWER -->
+  <div class="drawer" id="filterDrawer" aria-hidden="true">
+    <div class="drawerHeader">
+      <div class="drawerTitle" id="filterTitle">Filter</div>
+      <button class="iconBtn" id="filterClose">✕</button>
+    </div>
+    <div class="drawerBody">
+      <div class="note" id="filterNote">اختار القسم والترتيب والسعر وبعدين تطبيق.</div>
+
+      <div class="drawerSection">
+        <p class="drawerLabel" id="catTitle">Category</p>
+        <select class="select" id="filterCategory">
+          <option value="all">All</option>
+          <option value="top">Top</option>
+          <option value="offers">Offers</option>
+          <option value="games">Games</option>
+          <option value="programs">Programs</option>
+          <option value="accounts">Accounts</option>
+        </select>
+      </div>
+
+      <div class="drawerSection">
+        <p class="drawerLabel" id="sortTitle">Sort</p>
+        <select class="select" id="filterSort">
+          <option value="new">Newest</option>
+          <option value="old">Oldest</option>
+          <option value="low">Low → High</option>
+          <option value="high">High → Low</option>
+        </select>
+      </div>
+
+      <div class="drawerSection">
+        <p class="drawerLabel" id="priceTitle">Price</p>
+        <div class="row">
+          <select class="select" id="priceMode">
+            <option value="off">Off</option>
+            <option value="eq">Equal</option>
+            <option value="lte">≤</option>
+            <option value="gte">≥</option>
+          </select>
+          <input class="input" id="priceValue" type="number" min="0" placeholder="مثلاً 300" />
+        </div>
+      </div>
+
+      <button class="btn btnRed" id="applyFilterBtn">Apply</button>
+    </div>
+  </div>
+
+  <!-- CONTACT MODAL -->
+  <div class="modal" id="contactModal">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="contactTitle">Contact</div>
+        <button class="iconBtn" id="contactClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="stack">
+          <a class="btn" href="https://wa.me/201006760663" target="_blank" id="cWhats">WhatsApp</a>
+          <a class="btn" href="https://www.instagram.com/medo__rami" target="_blank" id="cInst">Instagram</a>
+          <a class="btn" href="https://www.facebook.com/share/1AScQqiSqq/" target="_blank" id="cFb">Facebook</a>
+          <a class="btn" href="mailto:medorami77@gmail.com" id="cMail">Email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEWS MODAL -->
+  <div class="modal" id="reviewsModal">
+    <div class="modalBox">
+      <div class="modalHeader">
+        <div class="modalTitle" id="reviewsTitle">Reviews</div>
+        <button class="iconBtn" id="reviewsClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class
